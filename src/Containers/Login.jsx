@@ -16,7 +16,7 @@ export const Login = () => {
         <CG.Input style={{ marginBottom: 20 }} name='textInput' placeholder='Username' label='Label' required />
         <CG.Input style={{ marginBottom: 20 }} name='textInput' placeholder='Password' label='Label' required />
 
-        <Link to='dashboard' >
+        <Link to='/protectedRoute/dashboard' >
           <CG.Button text='Login' />
         </Link>
       </Col>

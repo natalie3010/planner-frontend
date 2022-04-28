@@ -2,14 +2,23 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import { App } from './App'
 import { Dashboard } from './Containers/Dashboard'
-
+import { Login } from './Containers/Login'
+import { ProtectedRoute } from './ProtectedRoute'
 const Router = (
   <BrowserRouter>
     <Routes>
-      <Route path='/' element={<App />} />
-      <Route path='/dashboard' element={<Dashboard />} />
+      <Route path='/*' element={<Login />} />
+      <Route path='/login' element={<Login />} />
+      <Route
+        path='/protectedRoute/dashboard'
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      {/* <ProtectedRoute path='dashboard' element={<Dashboard />} /> */}
     </Routes>
   </BrowserRouter>
 )
