@@ -1,4 +1,4 @@
-const groupedData = {
+export const groupedData = {
     labels: ['React JS', 'Java', 'Kotlin', 'Node JS', 'Angular JS', 'AWS'],
     datasets: [
       {
@@ -16,7 +16,7 @@ const groupedData = {
     ],
   }
   
-  const groupedOptions = {
+export const groupedOptions = {
     scales: {
       yAxes: [
         {
