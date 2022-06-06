@@ -34,6 +34,14 @@ export const SupplyPage = () => {
     console.log(data)
   }
 
+  const sendata = (data) => {
+    const requestObject = {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }
+    fetch('https://wpp-be.capdigiops.com:4001/api/supply ', requestObject)
+  }
+
   return (
     <Row justify='between'>
       <Col md={12} align='center' justify='center'>
@@ -43,25 +51,28 @@ export const SupplyPage = () => {
           <CG.Container>
             <CG.Input
               label={'ID'}
+              borderRadius='20'
+              width='20'
               onInput={(e) => setId(e.target.value)}
               topLabel={false}
               margin={0.5}
-              width={'small'}
             />
-            <CG.Input label={'Fist name'} onInput={(e) => setFName(e.target.value)} margin={0.5} />
+            <CG.Input label={'First name'} onInput={(e) => setFName(e.target.value)} margin={0.5} />
             <CG.Input label={'Last name'} onInput={(e) => setLName(e.target.value)} margin={0.5} />
             <CG.Input label={'Status'} onInput={(e) => setStatus(e.target.value)} margin={0.5} />
             <CG.Input label={'Skill ID'} onInput={(e) => setSkillId(e.target.value)} margin={0.5} />
             <CG.Input label={'Notes'} onInput={(e) => setNotes(e.target.value)} margin={0.5} />
             <CG.Input label={'Location'} onInput={(e) => setLocation(e.target.value)} margin={0.5} />
             <CG.Input label={'Applicant type'} onInput={(e) => setType(e.target.value)} margin={0.5} />
-            <CG.Button text='submit' onClick={handleSubmit} />
-            <CG.Button
-              text='cancel'
-              onClick={() => {
-                navigate('/protectedRoute/dashboard')
-              }}
-            />
+            <Row justify='around'>
+              <CG.Button text='submit' onClick={handleSubmit} />
+              <CG.Button
+                text='cancel'
+                onClick={() => {
+                  navigate('/protectedRoute/dashboard')
+                }}
+              />
+            </Row>
           </CG.Container>
         </div>
         <Footer />
