@@ -14,13 +14,13 @@ export const myContext = React.createContext()
 const Router = () => {
   const [state, dispatch] = useReducer(loginReducer, initState)
 
-  const chcekFlag = async () => {
-    console.log('checkFlag function')
-    await dispatch({ type: 'USER_LOGIN' })
+  const requestDispatch = (authToken) => {
+    console.log('-------------- Requesting dispatch --------------')
+    dispatch({ type: 'USER_LOGIN', authToken: authToken })
   }
 
   return (
-    <myContext.Provider value={{ state, chcekFlag }}>
+    <myContext.Provider value={{ state, requestDispatch }}>
       <BrowserRouter>
         <Routes>
           <Route path='/*' element={<Login />} />

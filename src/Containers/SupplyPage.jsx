@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react/cjs/react.development'
 import { Navigation } from '../Components/Navigation'
 import { Footer } from '../Components/Footer'
 import { Col, Row } from 'react-grid-system'
+import { myContext } from '../index'
 
 import { CG } from 'cap-shared-components'
 
 import { useNavigate } from 'react-router-dom'
 
 export const SupplyPage = () => {
+  const appContext = useContext(myContext)
   const navigate = useNavigate()
   const [id, setId] = useState()
   const [fName, setFName] = useState('')
@@ -19,6 +21,7 @@ export const SupplyPage = () => {
   const [type, setType] = useState('')
   const [location, setLocation] = useState('')
 
+  console.log('state value------------', appContext.state)
   // end point /api/supply
   const handleSubmit = (e) => {
     const data = {
@@ -39,7 +42,7 @@ export const SupplyPage = () => {
       method: 'POST',
       body: JSON.stringify(data),
     }
-    fetch('https://wpp-be.capdigiops.com:4001/api/supply ', requestObject)
+    fetch('https://localhost:4001/api/supply ', requestObject)
   }
 
   return (
@@ -57,22 +60,38 @@ export const SupplyPage = () => {
               topLabel={false}
               margin={0.5}
             />
-            <CG.Input label={'First name'} onInput={(e) => setFName(e.target.value)} margin={0.5} />
-            <CG.Input label={'Last name'} onInput={(e) => setLName(e.target.value)} margin={0.5} />
-            <CG.Input label={'Status'} onInput={(e) => setStatus(e.target.value)} margin={0.5} />
-            <CG.Input label={'Skill ID'} onInput={(e) => setSkillId(e.target.value)} margin={0.5} />
-            <CG.Input label={'Notes'} onInput={(e) => setNotes(e.target.value)} margin={0.5} />
-            <CG.Input label={'Location'} onInput={(e) => setLocation(e.target.value)} margin={0.5} />
-            <CG.Input label={'Applicant type'} onInput={(e) => setType(e.target.value)} margin={0.5} />
-            <Row justify='around'>
-              <CG.Button text='submit' onClick={handleSubmit} />
-              <CG.Button
-                text='cancel'
-                onClick={() => {
-                  navigate('/protectedRoute/dashboard')
-                }}
-              />
-            </Row>
+            <CG.Container margin='10px'>
+              <CG.Input label={'First name'} onInput={(e) => setFName(e.target.value)} margin={0.5} />
+            </CG.Container>
+            <CG.Container margin='10px'>
+              <CG.Input label={'Last name'} onInput={(e) => setLName(e.target.value)} margin={0.5} />
+            </CG.Container>
+            <CG.Container margin='10px'>
+              <CG.Input label={'Status'} onInput={(e) => setStatus(e.target.value)} margin={0.5} />
+            </CG.Container>
+            <CG.Container margin='10px'>
+              <CG.Input label={'Skill ID'} onInput={(e) => setSkillId(e.target.value)} margin={0.5} />
+            </CG.Container>
+            <CG.Container margin='10px'>
+              <CG.Input label={'Notes'} onInput={(e) => setNotes(e.target.value)} margin={0.5} />
+            </CG.Container>
+            <CG.Container margin='10px'>
+              <CG.Input label={'Location'} onInput={(e) => setLocation(e.target.value)} margin={0.5} />
+            </CG.Container>
+            <CG.Container margin='10px'>
+              <CG.Input label={'Applicant type'} onInput={(e) => setType(e.target.value)} margin={0.5} />
+            </CG.Container>
+            <CG.Container margin='10px'>
+              <Row justify='around'>
+                <CG.Button text='submit' onClick={handleSubmit} />
+                <CG.Button
+                  text='cancel'
+                  onClick={() => {
+                    navigate('/protectedRoute/dashboard')
+                  }}
+                />
+              </Row>
+            </CG.Container>
           </CG.Container>
         </div>
         <Footer />
