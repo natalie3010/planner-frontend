@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { useState, useEffect } from 'react/cjs/react.development'
+import { useState } from 'react/cjs/react.development'
 import { Navigation } from '../Components/Navigation'
 import { Footer } from '../Components/Footer'
 import { Col, Row } from 'react-grid-system'
@@ -21,11 +21,6 @@ export const SupplyPage = () => {
   const [type, setType] = useState('')
   const [location, setLocation] = useState('')
 
-  useEffect(() => {
-    console.log('state value------------', appContext.state)
-  }, [])
-
-  // end point /api/supply
   const handleSubmit = (e) => {
     const data = {
       applicantID: id,

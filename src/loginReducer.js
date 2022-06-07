@@ -1,10 +1,10 @@
 function loginReducer(state, action) {
   switch (action.type) {
     case 'USER_LOGIN':
-      console.log('Login Reducer')
       return { ...state, isLoggedIn: true, authToken: action.authToken, refreshToken: action.refreshToken }
+    case 'USER_LOGOUT':
+      return { isLoggedIn: false }
     case 'New_TOKEN':
-      console.log('Token Reducer' + JSON.stringify({ ...state, authToken: action.authToken }))
       return { ...state, authToken: action.authToken }
     default:
       return state

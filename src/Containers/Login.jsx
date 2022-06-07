@@ -13,9 +13,8 @@ export const Login = () => {
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
-  // navigate to supply page if user is logged in
+  // navigate to protected page if user is logged in
   useEffect(() => {
-    console.log(appContext.state)
     if (appContext.state.isLoggedIn) {
       navigate('/protectedRoute/dashboard')
     }
@@ -31,19 +30,18 @@ export const Login = () => {
     fetch('https://localhost:4001/auth/login ', requestObject)
       .then((res) => {
         if (!res.ok) {
-          throw Error(res.status)
+          throw Error(res)
         }
         return res.json()
       })
       .then((data) => {
-        console.log(data)
         const authToken = data.token
         const refreshToken = data.refreshToken
-        appContext.requestDispatch(authToken, refreshToken)
+        appContext.requestDispatch({ type: 'USER_LOGIN', authToken: authToken, refreshToken: refreshToken })
         navigate('/protectedRoute/dashboard')
       })
       .catch((error) => {
-        console.log('Error: ', error)
+        console.log(error.response)
       })
   }
 

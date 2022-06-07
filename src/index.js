@@ -14,9 +14,8 @@ export const myContext = React.createContext()
 const Router = () => {
   const [state, dispatch] = useReducer(loginReducer, initState)
 
-  const requestDispatch = (authToken, refreshToken) => {
-    console.log('-------------- Requesting dispatch --------------')
-    dispatch({ type: 'USER_LOGIN', authToken: authToken, refreshToken })
+  const requestDispatch = (dispatchParameters) => {
+    dispatch(dispatchParameters)
   }
 
   return (
@@ -25,7 +24,14 @@ const Router = () => {
         <Routes>
           <Route path='/*' element={<Login />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/supply' element={<SupplyPage />} />
+          <Route
+            path='/supply'
+            element={
+              <ProtectedRoute>
+                <SupplyPage />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path='/protectedRoute/dashboard'
             element={
