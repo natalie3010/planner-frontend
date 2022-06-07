@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { useState } from 'react/cjs/react.development'
+import { useState, useEffect } from 'react/cjs/react.development'
 import { Navigation } from '../Components/Navigation'
 import { Footer } from '../Components/Footer'
 import { Col, Row } from 'react-grid-system'
@@ -21,7 +21,10 @@ export const SupplyPage = () => {
   const [type, setType] = useState('')
   const [location, setLocation] = useState('')
 
-  console.log('state value------------', appContext.state)
+  useEffect(() => {
+    console.log('state value------------', appContext.state)
+  }, [])
+
   // end point /api/supply
   const handleSubmit = (e) => {
     const data = {
@@ -34,15 +37,31 @@ export const SupplyPage = () => {
       applicantType: type,
       location: location,
     }
-    console.log(data)
+    sendata(data)
   }
 
   const sendata = (data) => {
+    const authToken = appContext.state.authToken
     const requestObject = {
       method: 'POST',
+      headers: {
+        'x-access-token': authToken,
+      },
       body: JSON.stringify(data),
     }
     fetch('https://localhost:4001/api/supply ', requestObject)
+      .then((res) => {
+        if (!res.ok) {
+          throw Error(res.status)
+        }
+        return res.json()
+      })
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((error) => {
+        console.log('Error: ', error)
+      })
   }
 
   return (

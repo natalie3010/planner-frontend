@@ -36,9 +36,11 @@ export const Login = () => {
         return res.json()
       })
       .then((data) => {
+        console.log(data)
         const authToken = data.token
-        appContext.requestDispatch(authToken)
-        navigate('/supply')
+        const refreshToken = data.refreshToken
+        appContext.requestDispatch(authToken, refreshToken)
+        navigate('/protectedRoute/dashboard')
       })
       .catch((error) => {
         console.log('Error: ', error)
@@ -59,7 +61,7 @@ export const Login = () => {
           onInput={(e) => setUserName(e.target.value)}
           name='textInput'
           placeholder='Username'
-          label='Label'
+          label='Username'
           required
         />
         <CG.Input
@@ -67,7 +69,7 @@ export const Login = () => {
           onInput={(e) => setPassword(e.target.value)}
           name='textInput'
           placeholder='Password'
-          label='Label'
+          label='Password'
           inputType='password'
           required
         />

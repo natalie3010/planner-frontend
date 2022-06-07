@@ -14,9 +14,9 @@ export const myContext = React.createContext()
 const Router = () => {
   const [state, dispatch] = useReducer(loginReducer, initState)
 
-  const requestDispatch = (authToken) => {
+  const requestDispatch = (authToken, refreshToken) => {
     console.log('-------------- Requesting dispatch --------------')
-    dispatch({ type: 'USER_LOGIN', authToken: authToken })
+    dispatch({ type: 'USER_LOGIN', authToken: authToken, refreshToken })
   }
 
   return (
