@@ -2,17 +2,47 @@ import React, { useContext } from 'react'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { Row, Col } from 'react-grid-system'
-import initState from '../store'
-import loginReducer from '../loginReducer'
 import { myContext } from '../index'
+import { useState, useEffect } from 'react/cjs/react.development'
 
 export const Login = () => {
   let navigate = useNavigate()
-  const value = useContext(myContext)
-  console.log(value, 'login')
-  const chcekFlag = async () => {
-    value.chcekFlag()
-    navigate('/protectedRoute/dashboard')
+  const appContext = useContext(myContext)
+
+  const [userName, setUserName] = useState('')
+  const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+
+  // navigate to protected page if user is logged in
+  useEffect(() => {
+    if (appContext.state.isLoggedIn) {
+      navigate('/protectedRoute/dashboard')
+    }
+  }, [])
+
+  const logIn = () => {
+    const data = { username: userName, password: btoa(password) }
+    const requestObject = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }
+    fetch('https://localhost:4001/auth/login ', requestObject)
+      .then((res) => {
+        if (!res.ok) {
+          throw Error(res)
+        }
+        return res.json()
+      })
+      .then((data) => {
+        const authToken = data.token
+        const refreshToken = data.refreshToken
+        appContext.requestDispatch({ type: 'USER_LOGIN', authToken: authToken, refreshToken: refreshToken })
+        navigate('/protectedRoute/dashboard')
+      })
+      .catch((error) => {
+        console.log(error.response)
+      })
   }
 
   return (
@@ -24,9 +54,25 @@ export const Login = () => {
         <CG.Heading weight='bold' size='S'>
           Login
         </CG.Heading>
-        <CG.Input style={{ marginBottom: 20 }} name='textInput' placeholder='Username' label='Label' required />
-        <CG.Input style={{ marginBottom: 20 }} name='textInput' placeholder='Password' label='Label' required />
-        <CG.Button text='Login' onClick={chcekFlag} />
+        <CG.Input
+          style={{ marginBottom: 20 }}
+          onInput={(e) => setUserName(e.target.value)}
+          name='textInput'
+          placeholder='Username'
+          label='Username'
+          required
+        />
+        <CG.Input
+          style={{ marginBottom: 20 }}
+          onInput={(e) => setPassword(e.target.value)}
+          name='textInput'
+          placeholder='Password'
+          label='Password'
+          inputType='password'
+          required
+        />
+        <CG.Body size='S'>{errorMessage}</CG.Body>
+        <CG.Button text='Login' onClick={logIn} />
       </Col>
     </Row>
   )
