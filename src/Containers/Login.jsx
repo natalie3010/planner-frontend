@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Row, Col } from 'react-grid-system'
 import { myContext } from '../index'
 import { useState, useEffect } from 'react/cjs/react.development'
+import { submitUserLogin } from '../API'
 
 export const Login = () => {
   let navigate = useNavigate()
@@ -13,7 +14,6 @@ export const Login = () => {
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
-  // navigate to protected page if user is logged in
   useEffect(() => {
     if (appContext.state.isLoggedIn) {
       navigate('/protectedRoute/dashboard')
@@ -21,28 +21,31 @@ export const Login = () => {
   }, [])
 
   const logIn = () => {
-    const data = { username: userName, password: btoa(password) }
-    const requestObject = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    }
-    fetch('https://localhost:4001/auth/login ', requestObject)
-      .then((res) => {
-        if (!res.ok) {
-          throw Error(res)
-        }
-        return res.json()
-      })
-      .then((data) => {
-        const authToken = data.token
-        const refreshToken = data.refreshToken
+    const request = submitUserLogin(userName, password)
+    request.then((result) => {
+      if (result.token) {
+        const authToken = result.token
+        const refreshToken = result.refreshToken
         appContext.requestDispatch({ type: 'USER_LOGIN', authToken: authToken, refreshToken: refreshToken })
         navigate('/protectedRoute/dashboard')
-      })
-      .catch((error) => {
-        console.log(error.response)
-      })
+      } else {
+        console.log(result)
+        let message = ''
+        switch (result) {
+          case (result = 403):
+            message = 'Wrong username or password'
+            break
+          default:
+            message = `Error: ${result}`
+            break
+        }
+        setErrorMessage(message)
+        const timeoutError = setTimeout(() => {
+          setErrorMessage('')
+        }, 5000)
+        timeoutError
+      }
+    })
   }
 
   return (
