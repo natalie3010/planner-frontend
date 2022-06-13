@@ -1,12 +1,22 @@
-import React from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Row, Col } from 'react-grid-system'
 import { Navigation } from '../Components/Navigation'
 import { Footer } from '../Components/Footer'
 import { BarChart } from '../Components/BarChart'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
+import { getDashboard } from '../API'
+import { myContext } from '../index'
 export const Dashboard = () => {
   const navigate = useNavigate()
+  const appContext = useContext(myContext)
+  useEffect(() => {
+    const authToken = appContext.state.authToken
+    const request = getDashboard(authToken)
+    request.then((result) => {
+      console.log(result)
+    })
+  }, [])
   return (
     <Row justify='between'>
       <Col md={12} align='center' justify='center'>
