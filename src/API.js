@@ -12,9 +12,11 @@ export function submitUserLogin(username, password) {
       }
       return res.json()
     })
+
     .then((data) => {
       return data
     })
+
     .catch((error) => {
       return error.status
     })

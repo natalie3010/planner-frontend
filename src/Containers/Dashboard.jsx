@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import { Row, Col } from 'react-grid-system'
 import { Navigation } from '../Components/Navigation'
 import { Footer } from '../Components/Footer'
@@ -10,11 +10,12 @@ import { myContext } from '../index'
 export const Dashboard = () => {
   const navigate = useNavigate()
   const appContext = useContext(myContext)
+  const [chartData, setChartData] = useState()
   useEffect(() => {
     const authToken = appContext.state.authToken
     const request = getDashboard(authToken)
     request.then((result) => {
-      console.log(result)
+      setChartData(result)
     })
   }, [])
   return (
@@ -25,7 +26,7 @@ export const Dashboard = () => {
           <CG.Heading size='M' weight='bold'>
             Skills Based On Supply and Demand
           </CG.Heading>
-          <BarChart />
+          <BarChart data={chartData} />
           <>
             <CG.Button text='Add a supply' onClick={() => navigate('/supply')}></CG.Button>
           </>
