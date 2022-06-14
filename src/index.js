@@ -7,12 +7,12 @@ import { Login } from './Containers/Login'
 import { ProtectedRoute } from './ProtectedRoute'
 import { SupplyPage } from './Containers/SupplyPage'
 import initState from '../src/store'
-import loginReducer from '../src/loginReducer'
+import allReducers from './Reducers/allReducers'
 
 export const myContext = React.createContext()
 
 const Router = () => {
-  const [state, dispatch] = useReducer(loginReducer, initState)
+  const [state, dispatch] = useReducer(allReducers, initState)
 
   const requestDispatch = (dispatchParameters) => {
     dispatch(dispatchParameters)
