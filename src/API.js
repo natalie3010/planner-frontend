@@ -5,7 +5,7 @@ export function submitUserLogin(username, password) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   }
-  return fetch('https://localhost:4001/auth/login ', requestObject)
+  return fetch('https://localhost:4001/auth/login', requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -24,7 +24,7 @@ export function submitUserLogin(username, password) {
 
 export function getDashboard(token) {
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch('https://localhost:4001/api/dashboard ', requestObject)
+  return fetch('https://localhost:4001/api/dashboard', requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res

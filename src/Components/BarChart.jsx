@@ -4,7 +4,6 @@ import { groupedData, groupedOptions } from '../Data/Data'
 
 export const BarChart = (chartData) => {
   const formatChartData = (data) => {
-    data = data.data
     const formatted_data = {
       labels: [],
       datasets: [
@@ -23,17 +22,15 @@ export const BarChart = (chartData) => {
       ],
     }
     if (data) {
-      for (let i = 0; i < data.length; i++) {
-        const skill_name = data[i]['skill_name']
-        const demand_count = data[i]['demand_count']
-        const supply_count = data[i]['supply_count']
-        formatted_data.labels.push(skill_name)
-        formatted_data.datasets[1].data.push(demand_count)
-        formatted_data.datasets[0].data.push(supply_count)
-      }
+      data.forEach((item) => {
+        formatted_data.labels.push(item['skill_name'])
+        formatted_data.datasets[1].data.push(item['demand_count'])
+        formatted_data.datasets[0].data.push(item['supply_count'])
+      })
     }
+
     return formatted_data
   }
 
-  return <CG.BarChart data={formatChartData(chartData)} options={groupedOptions} />
+  return <CG.BarChart data={formatChartData(chartData.data)} options={groupedOptions} />
 }

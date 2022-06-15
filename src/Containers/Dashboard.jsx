@@ -31,7 +31,7 @@ export const Dashboard = () => {
             Skills Based On Supply and Demand
           </CG.Heading>
           {appContext.state.dashboardData == undefined ? (
-            'loading...'
+            <CG.Body>'loading...'</CG.Body>
           ) : (
             <BarChart data={appContext.state.dashboardData} />
           )}
