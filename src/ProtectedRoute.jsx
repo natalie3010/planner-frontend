@@ -4,7 +4,6 @@ import { myContext } from '../src/index'
 
 export const ProtectedRoute = ({ element: element, ...rest }) => {
   const value = useContext(myContext)
-  console.log('protected route' + JSON.stringify(value))
   if (!value.state.isLoggedIn) return <Navigate replace to='/login' noThrow />
   return <element {...rest} />
 }
