@@ -1,26 +1,9 @@
 import React from 'react'
 import { CG } from 'cap-shared-components'
-import { groupedData, groupedOptions } from '../Data/Data'
+import { formatted_data, grouped_options } from '../Data/Format'
 
 export const BarChart = (chartData) => {
   const formatChartData = (data) => {
-    const formatted_data = {
-      labels: [],
-      datasets: [
-        {
-          label: 'Supply',
-          data: [],
-          backgroundColor: '#268D6C',
-          stack: 'Stack 0',
-        },
-        {
-          label: 'Demand',
-          data: [],
-          backgroundColor: '#DA7B11',
-          stack: 'Stack 1',
-        },
-      ],
-    }
     if (data) {
       data.forEach((item) => {
         formatted_data.labels.push(item['skill_name'])
@@ -32,5 +15,5 @@ export const BarChart = (chartData) => {
     return formatted_data
   }
 
-  return <CG.BarChart data={formatChartData(chartData.data)} options={groupedOptions} />
+  return <CG.BarChart data={formatChartData(chartData.data)} options={grouped_options} />
 }
