@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { CG } from 'cap-shared-components'
+import { myContext } from '../index'
 
 export const Navigation = () => {
+  const appContext = useContext(myContext)
+  const logout = () => {
+    appContext.requestDispatch({ type: 'USER_LOGOUT' })
+    console.log('logout requested')
+  }
   return (
     <CG.Navigation
       inputPlaceholder='Search'
@@ -22,7 +28,9 @@ export const Navigation = () => {
         },
         {
           buttonText: 'Logout',
-          onClick: () => {},
+          onClick: () => {
+            logout()
+          },
         },
       ]}
     />

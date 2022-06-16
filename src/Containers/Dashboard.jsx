@@ -37,6 +37,7 @@ export const Dashboard = () => {
           )}
           <>
             <CG.Button text='Add a supply' onClick={() => navigate('/supply')}></CG.Button>
+            <CG.Button text='Edit a supply' onClick={() => navigate('/edit-supply')}></CG.Button>
           </>
         </Col>
         <Footer />

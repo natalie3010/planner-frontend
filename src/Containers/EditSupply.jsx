@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useState } from 'react/cjs/react.development'
 import { Navigation } from '../Components/Navigation'
 import { Footer } from '../Components/Footer'
@@ -8,9 +8,9 @@ import { myContext } from '../index'
 import { CG } from 'cap-shared-components'
 
 import { useNavigate } from 'react-router-dom'
-import { addSupply } from '../API'
+import { getSingleSupply, updateSupply } from '../API'
 
-export const SupplyPage = () => {
+export const EditSupply = () => {
   const appContext = useContext(myContext)
   const navigate = useNavigate()
   const [id, setId] = useState()
@@ -21,6 +21,22 @@ export const SupplyPage = () => {
   const [notes, setNotes] = useState('')
   const [type, setType] = useState('')
   const [location, setLocation] = useState('')
+
+  const applicantID = 29 //appContext.state.supplyId
+  const authToken = appContext.state.authToken
+  useEffect(() => {
+    const request = getSingleSupply(applicantID, authToken)
+    request.then((result) => {
+      // state value isn't being passed down to the input component
+      setFName(result.ApplicantFirstName)
+      setLName(result.ApplicantLastName)
+      setStatus(result.ApplicantStatus)
+      setType(result.ApplicantType)
+      setLocation(result.Location)
+      setNotes(result.Notes)
+      setSkillId(result.SkillsID)
+    })
+  }, [])
 
   const handleSubmit = (e) => {
     const data = {
@@ -33,15 +49,11 @@ export const SupplyPage = () => {
       applicantType: type,
       location: location,
     }
-    sendata(data)
-  }
-
-  const sendata = (data) => {
-    const authToken = appContext.state.authToken
-    const request = addSupply(authToken, data)
+    const request = updateSupply(authToken, applicantID, data)
     request.then((result) => {
-      // update state of object to incule data
-      // navigate away
+      console.log(result)
+      // set supplyid state to undefined
+      //navigate to dashboard
     })
   }
 
@@ -99,3 +111,8 @@ export const SupplyPage = () => {
     </Row>
   )
 }
+/**
+ * On page load supply page loads with data from the database
+ * for the given candidate
+ * Save id to store, then on page load use the id for get request
+ */

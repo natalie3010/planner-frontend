@@ -6,6 +6,7 @@ import { Dashboard } from './Containers/Dashboard'
 import { Login } from './Containers/Login'
 import { ProtectedRoute } from './ProtectedRoute'
 import { SupplyPage } from './Containers/SupplyPage'
+import { EditSupply } from './Containers/EditSupply'
 import initState from '../src/store'
 import allReducers from './Reducers/allReducers'
 
@@ -29,6 +30,14 @@ const Router = () => {
             element={
               <ProtectedRoute>
                 <SupplyPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/edit-supply'
+            element={
+              <ProtectedRoute>
+                <EditSupply />
               </ProtectedRoute>
             }
           />
