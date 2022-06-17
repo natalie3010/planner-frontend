@@ -101,3 +101,20 @@ export function updateSupply(token, applicantID, data) {
       return error
     })
 }
+
+export function getSkills(token) {
+  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+  return fetch('https://localhost:4001/api/skills', requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error.status
+    })
+}

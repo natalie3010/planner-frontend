@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useState } from 'react/cjs/react.development'
 import { Navigation } from '../Components/Navigation'
 import { Footer } from '../Components/Footer'
@@ -8,7 +8,9 @@ import { myContext } from '../index'
 import { CG } from 'cap-shared-components'
 
 import { useNavigate } from 'react-router-dom'
-import { addSupply } from '../API'
+import { addSupply, getSkills } from '../API'
+import { formatSkills } from '../Data/Format'
+import { applicant_status, applicant_type } from '../Data/Data'
 
 export const SupplyPage = () => {
   const appContext = useContext(myContext)
@@ -21,7 +23,17 @@ export const SupplyPage = () => {
   const [notes, setNotes] = useState('')
   const [type, setType] = useState('')
   const [location, setLocation] = useState('')
+  // skill
+  const [allSkills, setAllSkills] = useState()
 
+  useEffect(() => {
+    const authToken = appContext.state.authToken
+    const requestSkills = getSkills(authToken)
+    requestSkills.then((skillResult) => {
+      const myArray = formatSkills(skillResult, 0)
+      setAllSkills(myArray[0])
+    })
+  }, [])
   const handleSubmit = (e) => {
     const data = {
       applicantID: id,
@@ -44,12 +56,14 @@ export const SupplyPage = () => {
       // navigate away
     })
   }
-
+  if (!allSkills) {
+    return <CG.Body>loading...</CG.Body>
+  }
   return (
     <Row justify='between'>
       <Col md={12} align='center' justify='center'>
         <Navigation />
-        <div>
+        <div style={{ width: 600 }}>
           <CG.Heading>Add a new supply</CG.Heading>
           <CG.Container>
             <CG.Input
@@ -67,10 +81,31 @@ export const SupplyPage = () => {
               <CG.Input label={'Last name'} onInput={(e) => setLName(e.target.value)} margin={0.5} />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Status'} onInput={(e) => setStatus(e.target.value)} margin={0.5} />
+              {/*<CG.Input label={'Status'} onInput={(e) => setStatus(e.target.value)} margin={0.5} />*/}
+              <CG.Picker
+                id='Picker'
+                name='Picker'
+                pattern='*'
+                topLabel
+                onChange={(val) => console.log('change: ', val)}
+                options={applicant_status}
+                labelKey='name'
+                placeholder='Select status'
+                label='Status'
+              />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Skill ID'} onInput={(e) => setSkillId(e.target.value)} margin={0.5} />
+              <CG.Picker
+                id='Picker'
+                name='Picker'
+                pattern='*'
+                topLabel
+                onChange={(value) => console.log('change: ', value)}
+                options={allSkills}
+                labelKey='name'
+                placeholder='Select a skill'
+                label='Skill'
+              />
             </CG.Container>
             <CG.Container margin='10px'>
               <CG.Input label={'Notes'} onInput={(e) => setNotes(e.target.value)} margin={0.5} />
@@ -79,7 +114,18 @@ export const SupplyPage = () => {
               <CG.Input label={'Location'} onInput={(e) => setLocation(e.target.value)} margin={0.5} />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Applicant type'} onInput={(e) => setType(e.target.value)} margin={0.5} />
+              {/*<CG.Input label={'Applicant type'} onInput={(e) => setType(e.target.value)} margin={0.5} />*/}
+              <CG.Picker
+                id='Picker'
+                name='Picker'
+                pattern='*'
+                topLabel
+                onChange={(value) => console.log('change: ', value)}
+                options={applicant_type}
+                labelKey='name'
+                placeholder='Select type'
+                label='Applicant type'
+              />
             </CG.Container>
             <CG.Container margin='10px'>
               <Row justify='around'>
