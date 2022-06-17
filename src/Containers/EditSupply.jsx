@@ -13,85 +13,126 @@ import { getSingleSupply, updateSupply } from '../API'
 export const EditSupply = () => {
   const appContext = useContext(myContext)
   const navigate = useNavigate()
+  const [supply, setSupply] = useState()
   const [id, setId] = useState()
-  const [fName, setFName] = useState('')
-  const [lName, setLName] = useState('')
-  const [status, setStatus] = useState('')
+  const [fName, setFName] = useState()
+  const [lName, setLName] = useState()
+  const [status, setStatus] = useState()
   const [skillId, setSkillId] = useState()
-  const [notes, setNotes] = useState('')
-  const [type, setType] = useState('')
-  const [location, setLocation] = useState('')
+  const [notes, setNotes] = useState()
+  const [type, setType] = useState()
+  const [location, setLocation] = useState()
 
-  const applicantID = 29 //appContext.state.supplyId
+  /**
+   * After the edit list supply page is created change
+   * applicantID, to refer to the state supplyid
+   */
+  const applicantID = 1 //appContext.state.supplyId
   const authToken = appContext.state.authToken
+
   useEffect(() => {
     const request = getSingleSupply(applicantID, authToken)
     request.then((result) => {
-      // state value isn't being passed down to the input component
-      setFName(result.ApplicantFirstName)
-      setLName(result.ApplicantLastName)
-      setStatus(result.ApplicantStatus)
-      setType(result.ApplicantType)
-      setLocation(result.Location)
-      setNotes(result.Notes)
-      setSkillId(result.SkillsID)
+      setSupply(result)
     })
   }, [])
 
   const handleSubmit = (e) => {
     const data = {
-      applicantID: id,
-      applicantFirstName: fName,
-      applicantLastName: lName,
-      applicantStatus: status,
-      skillsID: skillId,
-      notes: notes,
-      applicantType: type,
-      location: location,
+      applicantID: id || supply.ApplicantID,
+      applicantFirstName: fName || supply.ApplicantFirstName,
+      applicantLastName: lName || supply.ApplicantLastName,
+      applicantStatus: status || supply.ApplicantStatus,
+      skillsID: skillId || supply.SkillsID,
+      notes: notes || supply.Notes,
+      applicantType: type || supply.ApplicantType,
+      location: location || supply.Location,
     }
-    const request = updateSupply(authToken, applicantID, data)
+    console.log(data)
+    /* const request = updateSupply(authToken, applicantID, data)
     request.then((result) => {
       console.log(result)
       // set supplyid state to undefined
       //navigate to dashboard
-    })
+    }) */
   }
-
+  if (!supply) {
+    return <CG.Body>Loading...</CG.Body>
+  }
   return (
     <Row justify='between'>
       <Col md={12} align='center' justify='center'>
         <Navigation />
         <div>
-          <CG.Heading>Add a new supply</CG.Heading>
+          <CG.Heading>Edit a supply</CG.Heading>
           <CG.Container>
             <CG.Input
               label={'ID'}
               borderRadius='20'
               width='20'
+              initValue={supply.ApplicantID}
               onInput={(e) => setId(e.target.value)}
               topLabel={false}
               margin={0.5}
+              disabled
             />
             <CG.Container margin='10px'>
-              <CG.Input label={'First name'} onInput={(e) => setFName(e.target.value)} margin={0.5} />
+              <CG.Input
+                label={'First name'}
+                initValue={supply.ApplicantFirstName}
+                onInput={(e) => {
+                  setFName(e.target.value)
+                }}
+                margin={0.5}
+              />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Last name'} onInput={(e) => setLName(e.target.value)} margin={0.5} />
+              <CG.Input
+                label={'Last name'}
+                initValue={supply.ApplicantLastName}
+                onInput={(e) => setLName(e.target.value)}
+                margin={0.5}
+              />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Status'} onInput={(e) => setStatus(e.target.value)} margin={0.5} />
+              <CG.Input
+                label={'Status'}
+                initValue={supply.ApplicantStatus}
+                onInput={(e) => setStatus(e.target.value)}
+                margin={0.5}
+              />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Skill ID'} onInput={(e) => setSkillId(e.target.value)} margin={0.5} />
+              <CG.Input
+                label={'Skill ID'}
+                initValue={supply.SkillsID}
+                onInput={(e) => setSkillId(e.target.value)}
+                margin={0.5}
+              />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Notes'} onInput={(e) => setNotes(e.target.value)} margin={0.5} />
+              <CG.Input
+                label={'Notes'}
+                initValue={supply.Notes}
+                onInput={(e) => setNotes(e.target.value)}
+                margin={0.5}
+              />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Location'} onInput={(e) => setLocation(e.target.value)} margin={0.5} />
+              <CG.Input
+                label={'Location'}
+                initValue={supply.Location}
+                onInput={(e) => setLocation(e.target.value)}
+                margin={0.5}
+              />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Applicant type'} onInput={(e) => setType(e.target.value)} margin={0.5} />
+              <CG.Input
+                label={'Applicant type'}
+                initValue={supply.ApplicantType}
+                onInput={(e) => setType(e.target.value)}
+                margin={0.5}
+              />
             </CG.Container>
             <CG.Container margin='10px'>
               <Row justify='around'>
@@ -111,8 +152,3 @@ export const EditSupply = () => {
     </Row>
   )
 }
-/**
- * On page load supply page loads with data from the database
- * for the given candidate
- * Save id to store, then on page load use the id for get request
- */
