@@ -15,48 +15,48 @@ import { applicant_status, applicant_type } from '../Data/Data'
 export const SupplyPage = () => {
   const appContext = useContext(myContext)
   const navigate = useNavigate()
-  const [id, setId] = useState()
-  const [fName, setFName] = useState('')
-  const [lName, setLName] = useState('')
-  const [status, setStatus] = useState('')
-  const [skillId, setSkillId] = useState()
-  const [notes, setNotes] = useState('')
-  const [type, setType] = useState('')
-  const [location, setLocation] = useState('')
-  // skill
-  const [allSkills, setAllSkills] = useState()
+  // from state
+  const authToken = appContext.state.authToken
+  // supply is data about the applicant from the backend
+  const [dataAllSkills, setDataAllSkills] = useState()
+  // form data
+  const [supplyFName, setSupplyFName] = useState()
+  const [supplyLName, setSupplyLName] = useState()
+  const [supplyStatus, setSupplyStatus] = useState()
+  const [supplySkillId, setSupplySkillId] = useState()
+  const [supplyNotes, setSupplyNotes] = useState()
+  const [supplyType, setSupplyType] = useState()
+  const [supplyLocation, setSupplyLocation] = useState()
 
   useEffect(() => {
-    const authToken = appContext.state.authToken
     const requestSkills = getSkills(authToken)
     requestSkills.then((skillResult) => {
       const myArray = formatSkills(skillResult, 0)
-      setAllSkills(myArray[0])
+      setDataAllSkills(myArray[0])
     })
   }, [])
   const handleSubmit = (e) => {
     const data = {
-      applicantID: id,
-      applicantFirstName: fName,
-      applicantLastName: lName,
-      applicantStatus: status,
-      skillsID: skillId,
-      notes: notes,
-      applicantType: type,
-      location: location,
+      applicantFirstName: supplyFName,
+      applicantLastName: supplyLName,
+      applicantStatus: supplyStatus,
+      skillsID: supplySkillId,
+      notes: supplyNotes,
+      applicantType: supplyType,
+      location: supplyLocation,
     }
     sendata(data)
   }
 
   const sendata = (data) => {
-    const authToken = appContext.state.authToken
     const request = addSupply(authToken, data)
     request.then((result) => {
       // update state of object to incule data
-      // navigate away
+      console.log(result)
+      navigate('/protectedRoute/dashboard')
     })
   }
-  if (!allSkills) {
+  if (!dataAllSkills) {
     return <CG.Body>loading...</CG.Body>
   }
   return (
@@ -66,28 +66,19 @@ export const SupplyPage = () => {
         <div style={{ width: 600 }}>
           <CG.Heading>Add a new supply</CG.Heading>
           <CG.Container>
-            <CG.Input
-              label={'ID'}
-              borderRadius='20'
-              width='20'
-              onInput={(e) => setId(e.target.value)}
-              topLabel={false}
-              margin={0.5}
-            />
             <CG.Container margin='10px'>
-              <CG.Input label={'First name'} onInput={(e) => setFName(e.target.value)} margin={0.5} />
+              <CG.Input label={'First name'} onInput={(e) => setSupplyFName(e.target.value)} margin={0.5} />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Last name'} onInput={(e) => setLName(e.target.value)} margin={0.5} />
+              <CG.Input label={'Last name'} onInput={(e) => setSupplyLName(e.target.value)} margin={0.5} />
             </CG.Container>
             <CG.Container margin='10px'>
-              {/*<CG.Input label={'Status'} onInput={(e) => setStatus(e.target.value)} margin={0.5} />*/}
               <CG.Picker
                 id='Picker'
                 name='Picker'
                 pattern='*'
                 topLabel
-                onChange={(val) => console.log('change: ', val)}
+                onChange={(val) => setSupplyStatus(val)}
                 options={applicant_status}
                 labelKey='name'
                 placeholder='Select status'
@@ -100,27 +91,26 @@ export const SupplyPage = () => {
                 name='Picker'
                 pattern='*'
                 topLabel
-                onChange={(value) => console.log('change: ', value)}
-                options={allSkills}
+                onChange={(val) => setSupplySkillId(val)}
+                options={dataAllSkills}
                 labelKey='name'
                 placeholder='Select a skill'
                 label='Skill'
               />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Notes'} onInput={(e) => setNotes(e.target.value)} margin={0.5} />
+              <CG.Input label={'Notes'} onInput={(e) => setSupplyNotes(e.target.value)} margin={0.5} />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Location'} onInput={(e) => setLocation(e.target.value)} margin={0.5} />
+              <CG.Input label={'Location'} onInput={(e) => setSupplyLocation(e.target.value)} margin={0.5} />
             </CG.Container>
             <CG.Container margin='10px'>
-              {/*<CG.Input label={'Applicant type'} onInput={(e) => setType(e.target.value)} margin={0.5} />*/}
               <CG.Picker
                 id='Picker'
                 name='Picker'
                 pattern='*'
                 topLabel
-                onChange={(value) => console.log('change: ', value)}
+                onChange={(val) => setSupplyType(val)}
                 options={applicant_type}
                 labelKey='name'
                 placeholder='Select type'

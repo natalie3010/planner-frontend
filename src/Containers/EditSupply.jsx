@@ -15,58 +15,56 @@ import { applicant_status, applicant_type } from '../Data/Data'
 export const EditSupply = () => {
   const appContext = useContext(myContext)
   const navigate = useNavigate()
-  // data about the supply from the backend
-  const [supply, setSupply] = useState()
-  // form data
-  const [id, setId] = useState()
-  const [fName, setFName] = useState()
-  const [lName, setLName] = useState()
-  const [status, setStatus] = useState()
-  const [skillId, setSkillId] = useState()
-  const [notes, setNotes] = useState()
-  const [type, setType] = useState()
-  const [location, setLocation] = useState()
-  // data about the skills from the backend
-  const [allSkills, setAllSkills] = useState()
-  const [skillName, setSkillName] = useState()
-
-  const applicantID = 1 //appContext.state.supplyId
+  // from state
+  const applicantID = 34 //appContext.state.supplyId
   const authToken = appContext.state.authToken
+  // supply is data about the applicant from the backend
+  const [dataSupply, setDataSupply] = useState()
+  const [dataAllSkills, setDataAllSkills] = useState()
+  const [dataSkillName, setDataSkillName] = useState()
+  // form data
+  const [supplyFName, setSupplyFName] = useState()
+  const [supplyLName, setSupplyLName] = useState()
+  const [supplyStatus, setSupplyStatus] = useState()
+  const [supplySkillId, setSupplySkillId] = useState()
+  const [supplyNotes, setSupplyNotes] = useState()
+  const [supplyType, setSupplyType] = useState()
+  const [supplyLocation, setSupplyLocation] = useState()
 
   useEffect(() => {
     const request = getSingleSupply(applicantID, authToken)
     request.then((supplyResult) => {
-      setSupply(supplyResult)
+      setDataSupply(supplyResult)
 
       const requestSkills = getSkills(authToken)
       requestSkills.then((skillResult) => {
         const myArray = formatSkills(skillResult, supplyResult.SkillsID)
-        setAllSkills(myArray[0])
-        setSkillName(myArray[1])
+        setDataAllSkills(myArray[0])
+        setDataSkillName(myArray[1])
       })
     })
   }, [])
 
   const handleSubmit = (e) => {
     const data = {
-      applicantID: id || supply.ApplicantID,
-      applicantFirstName: fName || supply.ApplicantFirstName,
-      applicantLastName: lName || supply.ApplicantLastName,
-      applicantStatus: status || supply.ApplicantStatus,
-      skillsID: skillId || supply.SkillsID,
-      notes: notes || supply.Notes,
-      applicantType: type || supply.ApplicantType,
-      location: location || supply.Location,
+      applicantID: dataSupply.ApplicantID,
+      applicantFirstName: supplyFName || dataSupply.ApplicantFirstName,
+      applicantLastName: supplyLName || dataSupply.ApplicantLastName,
+      applicantStatus: supplyStatus || dataSupply.ApplicantStatus,
+      skillsID: supplySkillId || dataSupply.SkillsID,
+      notes: supplyNotes || dataSupply.Notes,
+      applicantType: supplyType || dataSupply.ApplicantType,
+      location: supplyLocation || dataSupply.Location,
     }
     console.log(data)
     /* const request = updateSupply(authToken, applicantID, data)
     request.then((result) => {
       console.log(result)
       // set supplyid state to undefined
-      //navigate to dashboard
+      // navigate('/protectedRoute/dashboard')
     }) */
   }
-  if (!supply) {
+  if (!dataSupply) {
     return <CG.Body>Loading...</CG.Body>
   }
   return (
@@ -77,22 +75,12 @@ export const EditSupply = () => {
           {/* replace div with box component */}
           <CG.Heading>Edit a supply</CG.Heading>
           <CG.Container>
-            <CG.Input
-              label={'ID'}
-              borderRadius='20'
-              width='20'
-              initValue={supply.ApplicantID}
-              onInput={(e) => setId(e.target.value)}
-              topLabel={false}
-              margin={0.5}
-              disabled
-            />
             <CG.Container margin='10px'>
               <CG.Input
                 label={'First name'}
-                initValue={supply.ApplicantFirstName}
+                initValue={dataSupply.ApplicantFirstName}
                 onInput={(e) => {
-                  setFName(e.target.value)
+                  setSupplyFName(e.target.value)
                 }}
                 margin={0.5}
               />
@@ -100,8 +88,8 @@ export const EditSupply = () => {
             <CG.Container margin='10px'>
               <CG.Input
                 label={'Last name'}
-                initValue={supply.ApplicantLastName}
-                onInput={(e) => setLName(e.target.value)}
+                initValue={dataSupply.ApplicantLastName}
+                onInput={(e) => setSupplyLName(e.target.value)}
                 margin={0.5}
               />
             </CG.Container>
@@ -111,10 +99,10 @@ export const EditSupply = () => {
                 name='Picker'
                 pattern='*'
                 topLabel
-                onChange={(val) => setStatus(val)}
+                onChange={(val) => setSupplyStatus(val)}
                 options={applicant_status}
                 labelKey='name'
-                placeholder={supply.ApplicantStatus}
+                placeholder={dataSupply.ApplicantStatus}
                 label='Status'
               />
             </CG.Container>
@@ -124,26 +112,26 @@ export const EditSupply = () => {
                 name='Picker'
                 pattern='*'
                 topLabel
-                onChange={(value) => console.log('change: ', value)}
-                options={allSkills}
+                onChange={(val) => setSupplySkillId(val)}
+                options={dataAllSkills}
                 labelKey='name'
-                placeholder={skillName} // change this from number to string
+                placeholder={dataSkillName} // change this from number to string
                 label='Skill'
               />
             </CG.Container>
             <CG.Container margin='10px'>
               <CG.Input
                 label={'Notes'}
-                initValue={supply.Notes}
-                onInput={(e) => setNotes(e.target.value)}
+                initValue={dataSupply.Notes}
+                onInput={(e) => setSupplyNotes(e.target.value)}
                 margin={0.5}
               />
             </CG.Container>
             <CG.Container margin='10px'>
               <CG.Input
                 label={'Location'}
-                initValue={supply.Location}
-                onInput={(e) => setLocation(e.target.value)}
+                initValue={dataSupply.Location}
+                onInput={(e) => setSupplyLocation(e.target.value)}
                 margin={0.5}
               />
             </CG.Container>
@@ -153,10 +141,10 @@ export const EditSupply = () => {
                 name='Picker'
                 pattern='*'
                 topLabel
-                onChange={(value) => setType(value)}
+                onChange={(val) => setSupplyType(val)}
                 options={applicant_type}
                 labelKey='name'
-                placeholder={supply.ApplicantType}
+                placeholder={dataSupply.ApplicantType}
                 label='Applicant type'
               />
             </CG.Container>
