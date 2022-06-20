@@ -16,26 +16,26 @@ export const EditSupply = () => {
   const appContext = useContext(myContext)
   const navigate = useNavigate()
   // from state
-  const applicantID = 34 //appContext.state.supplyId
+  const applicantID = 25 //appContext.state.supplyId
   const authToken = appContext.state.authToken
   // supply is data about the applicant from the backend
-  const [dataSupply, setDataSupply] = useState()
-  const [dataAllSkills, setDataAllSkills] = useState()
+  const [dataSupply, setDataSupply] = useState(null)
+  const [dataAllSkills, setDataAllSkills] = useState(null)
   const [dataSkillName, setDataSkillName] = useState()
   // form data
-  const [supplyFName, setSupplyFName] = useState()
-  const [supplyLName, setSupplyLName] = useState()
-  const [supplyStatus, setSupplyStatus] = useState()
-  const [supplySkillId, setSupplySkillId] = useState()
-  const [supplyNotes, setSupplyNotes] = useState()
-  const [supplyType, setSupplyType] = useState()
-  const [supplyLocation, setSupplyLocation] = useState()
+  const [supplyFName, setSupplyFName] = useState(null)
+  const [supplyLName, setSupplyLName] = useState(null)
+  const [supplyStatus, setSupplyStatus] = useState(null)
+  const [supplySkillId, setSupplySkillId] = useState(null)
+  const [supplyNotes, setSupplyNotes] = useState(null)
+  const [supplyType, setSupplyType] = useState(null)
+  const [supplyLocation, setSupplyLocation] = useState(null)
 
   useEffect(() => {
     const request = getSingleSupply(applicantID, authToken)
     request.then((supplyResult) => {
       setDataSupply(supplyResult)
-
+      console.log('loaded data: ', supplyResult)
       const requestSkills = getSkills(authToken)
       requestSkills.then((skillResult) => {
         const myArray = formatSkills(skillResult, supplyResult.SkillsID)
@@ -45,26 +45,26 @@ export const EditSupply = () => {
     })
   }, [])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     const data = {
       applicantID: dataSupply.ApplicantID,
-      applicantFirstName: supplyFName || dataSupply.ApplicantFirstName,
-      applicantLastName: supplyLName || dataSupply.ApplicantLastName,
-      applicantStatus: supplyStatus || dataSupply.ApplicantStatus,
-      skillsID: supplySkillId || dataSupply.SkillsID,
-      notes: supplyNotes || dataSupply.Notes,
-      applicantType: supplyType || dataSupply.ApplicantType,
-      location: supplyLocation || dataSupply.Location,
+      applicantFirstName: supplyFName ?? 'c', //dataSupply.ApplicantFirstName,
+      applicantLastName: supplyLName ?? 'c', //dataSupply.ApplicantLastName,
+      applicantStatus: supplyStatus ?? 'c', //dataSupply.ApplicantStatus,
+      skillsID: supplySkillId ?? 'c', //dataSupply.SkillsID,
+      notes: supplyNotes ?? 'c', //dataSupply.Notes,
+      applicantType: supplyType ?? 'c', //dataSupply.ApplicantType,
+      location: supplyLocation ?? 'c', //dataSupply.Location,
     }
-    console.log(data)
-    /* const request = updateSupply(authToken, applicantID, data)
+    console.log('changed data: ', data)
+    const request = updateSupply(authToken, applicantID, data)
     request.then((result) => {
-      console.log(result)
+      console.log('result: ', result)
       // set supplyid state to undefined
-      // navigate('/protectedRoute/dashboard')
-    }) */
+      navigate('/protectedRoute/dashboard')
+    })
   }
-  if (!dataSupply) {
+  if (!dataSupply || !dataAllSkills) {
     return <CG.Body>Loading...</CG.Body>
   }
   return (
@@ -78,7 +78,7 @@ export const EditSupply = () => {
             <CG.Container margin='10px'>
               <CG.Input
                 label={'First name'}
-                initValue={dataSupply.ApplicantFirstName}
+                initValue={dataSupply.ApplicantFirstName ?? ''} // Nullish coalescing operator
                 onInput={(e) => {
                   setSupplyFName(e.target.value)
                 }}
@@ -88,7 +88,7 @@ export const EditSupply = () => {
             <CG.Container margin='10px'>
               <CG.Input
                 label={'Last name'}
-                initValue={dataSupply.ApplicantLastName}
+                initValue={dataSupply.ApplicantLastName ?? ''}
                 onInput={(e) => setSupplyLName(e.target.value)}
                 margin={0.5}
               />
@@ -122,7 +122,7 @@ export const EditSupply = () => {
             <CG.Container margin='10px'>
               <CG.Input
                 label={'Notes'}
-                initValue={dataSupply.Notes}
+                initValue={dataSupply.Notes ?? ''}
                 onInput={(e) => setSupplyNotes(e.target.value)}
                 margin={0.5}
               />
@@ -130,7 +130,7 @@ export const EditSupply = () => {
             <CG.Container margin='10px'>
               <CG.Input
                 label={'Location'}
-                initValue={dataSupply.Location}
+                initValue={dataSupply.Location ?? ''}
                 onInput={(e) => setSupplyLocation(e.target.value)}
                 margin={0.5}
               />
@@ -144,8 +144,9 @@ export const EditSupply = () => {
                 onChange={(val) => setSupplyType(val)}
                 options={applicant_type}
                 labelKey='name'
-                placeholder={dataSupply.ApplicantType}
+                placeholder={dataSupply.ApplicantType ?? ''}
                 label='Applicant type'
+                margin={0.5}
               />
             </CG.Container>
             <CG.Container margin='10px'>
