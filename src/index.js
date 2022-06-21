@@ -7,51 +7,52 @@ import { Login } from './Containers/Login'
 import { ProtectedRoute } from './ProtectedRoute'
 import { SupplyPage } from './Containers/SupplyPage'
 import { EditSupply } from './Containers/EditSupply'
-import initState from '../src/store'
+import { store } from '../src/store'
 import allReducers from './Reducers/allReducers'
+import { Provider } from 'react-redux'
 
-export const myContext = React.createContext()
-
-const Router = () => {
-  const [state, dispatch] = useReducer(allReducers, initState)
+const App = () => {
+  /* const [state, dispatch] = useReducer(allReducers, initState)
 
   const requestDispatch = (dispatchParameters) => {
     dispatch(dispatchParameters)
-  }
+  } */
 
   return (
-    <myContext.Provider value={{ state, requestDispatch }}>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/*' element={<Login />} />
-          <Route path='/login' element={<Login />} />
-          <Route
-            path='/supply'
-            element={
-              <ProtectedRoute>
-                <SupplyPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path='/edit-supply'
-            element={
-              <ProtectedRoute>
-                <EditSupply />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path='/protectedRoute/dashboard'
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    </myContext.Provider>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/*' element={<Login />} />
+        <Route path='/login' element={<Login />} />
+        <Route
+          path='/supply'
+          element={
+            <ProtectedRoute>
+              <SupplyPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/edit-supply'
+          element={
+            <ProtectedRoute>
+              <EditSupply />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/protectedRoute/dashboard'
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   )
 }
-createRoot(document.getElementById('root')).render(<Router />)
+createRoot(document.getElementById('root')).render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+)

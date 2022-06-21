@@ -1,21 +1,23 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { Row, Col } from 'react-grid-system'
-import { myContext } from '../index'
 import { useState, useEffect } from 'react/cjs/react.development'
 import { submitUserLogin } from '../API'
+import { useSelector, useDispatch } from 'react-redux'
+import { login } from '../Slices/LoginSlice'
 
 export const Login = () => {
+  const userLoggedIn = useSelector((state) => state.user.userLoggedIn)
+  const dispatch = useDispatch()
   let navigate = useNavigate()
-  const appContext = useContext(myContext)
 
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
-    if (appContext.state.isLoggedIn) {
+    if (userLoggedIn) {
       navigate('/protectedRoute/dashboard')
     }
   }, [])
@@ -25,8 +27,7 @@ export const Login = () => {
     request.then((result) => {
       if (result.token) {
         const authToken = result.token
-        const refreshToken = result.refreshToken
-        appContext.requestDispatch({ type: 'USER_LOGIN', authToken: authToken, refreshToken: refreshToken })
+        dispatch(login(authToken))
         navigate('/protectedRoute/dashboard')
       } else {
         console.log(result)

@@ -1,13 +1,11 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { CG } from 'cap-shared-components'
-import { myContext } from '../index'
+import { useDispatch } from 'react-redux'
+import { logout } from '../Slices/LoginSlice'
 
 export const Navigation = () => {
-  const appContext = useContext(myContext)
-  const logout = () => {
-    appContext.requestDispatch({ type: 'USER_LOGOUT' })
-    console.log('logout requested')
-  }
+  const dispatch = useDispatch()
+
   return (
     <CG.Navigation
       inputPlaceholder='Search'
@@ -29,7 +27,7 @@ export const Navigation = () => {
         {
           buttonText: 'Logout',
           onClick: () => {
-            logout()
+            dispatch(logout())
           },
         },
       ]}

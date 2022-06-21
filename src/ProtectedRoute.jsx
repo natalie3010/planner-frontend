@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Navigate } from 'react-router-dom'
-import { myContext } from '../src/index'
+import { useSelector } from 'react-redux'
 
 export const ProtectedRoute = ({ element: element, ...rest }) => {
-  const value = useContext(myContext)
-  if (!value.state.isLoggedIn) return <Navigate replace to='/login' noThrow />
+  const userLoggedIn = useSelector((state) => state.user.userLoggedIn)
+  if (!userLoggedIn) return <Navigate replace to='/login' noThrow />
   return <element {...rest} />
 }

@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react/cjs/react.development'
 import { Navigation } from '../Components/Navigation'
 import { Footer } from '../Components/Footer'
 import { Col, Row } from 'react-grid-system'
-import { myContext } from '../index'
 
 import { CG } from 'cap-shared-components'
 
@@ -13,10 +12,9 @@ import { formatSkills } from '../Data/Format'
 import { applicant_status, applicant_type } from '../Data/Data'
 
 export const SupplyPage = () => {
-  const appContext = useContext(myContext)
   const navigate = useNavigate()
   // from state
-  const authToken = appContext.state.authToken
+  const authToken = '' //appContext.state.authToken
   // supply is data about the applicant from the backend
   const [dataAllSkills, setDataAllSkills] = useState()
   // form data
