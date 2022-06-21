@@ -1,3 +1,5 @@
+const url = 'https://localhost:4001/'
+
 export function submitUserLogin(username, password) {
   const data = { username: username, password: btoa(password) }
   const requestObject = {
@@ -5,7 +7,7 @@ export function submitUserLogin(username, password) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   }
-  return fetch('https://localhost:4001/auth/login', requestObject)
+  return fetch(`${url}auth/login`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -24,7 +26,7 @@ export function submitUserLogin(username, password) {
 
 export function getDashboard(token) {
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch('https://localhost:4001/api/dashboard', requestObject)
+  return fetch(`${url}api/dashboard`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -47,7 +49,7 @@ export function addSupply(token, data) {
     },
     body: JSON.stringify(data),
   }
-  return fetch('https://localhost:4001/api/supply ', requestObject)
+  return fetch(`${url}api/supply`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -64,7 +66,7 @@ export function addSupply(token, data) {
 
 export function getSingleSupply(applicantID, token) {
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch(`https://localhost:4001/api/supply/${applicantID}`, requestObject)
+  return fetch(`${url}api/supply/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -87,7 +89,7 @@ export function updateSupply(token, applicantID, data) {
     },
     body: JSON.stringify(data),
   }
-  return fetch(`https://localhost:4001/api/supply/${applicantID}`, requestObject)
+  return fetch(`${url}api/supply/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -104,7 +106,7 @@ export function updateSupply(token, applicantID, data) {
 
 export function getSkills(token) {
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch('https://localhost:4001/api/skills', requestObject)
+  return fetch(`${url}api/skills`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res

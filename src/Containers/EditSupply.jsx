@@ -16,7 +16,7 @@ export const EditSupply = () => {
   const appContext = useContext(myContext)
   const navigate = useNavigate()
   // from state
-  const applicantID = 25 //appContext.state.supplyId
+  const applicantID = 47 //appContext.state.supplyId
   const authToken = appContext.state.authToken
   // supply is data about the applicant from the backend
   const [dataSupply, setDataSupply] = useState(null)
@@ -35,7 +35,6 @@ export const EditSupply = () => {
     const request = getSingleSupply(applicantID, authToken)
     request.then((supplyResult) => {
       setDataSupply(supplyResult)
-      console.log('loaded data: ', supplyResult)
       const requestSkills = getSkills(authToken)
       requestSkills.then((skillResult) => {
         const myArray = formatSkills(skillResult, supplyResult.SkillsID)
@@ -47,20 +46,18 @@ export const EditSupply = () => {
 
   const handleSubmit = () => {
     const data = {
-      applicantID: dataSupply.ApplicantID,
-      applicantFirstName: supplyFName ?? 'c', //dataSupply.ApplicantFirstName,
-      applicantLastName: supplyLName ?? 'c', //dataSupply.ApplicantLastName,
-      applicantStatus: supplyStatus ?? 'c', //dataSupply.ApplicantStatus,
-      skillsID: supplySkillId ?? 'c', //dataSupply.SkillsID,
-      notes: supplyNotes ?? 'c', //dataSupply.Notes,
-      applicantType: supplyType ?? 'c', //dataSupply.ApplicantType,
-      location: supplyLocation ?? 'c', //dataSupply.Location,
+      applicantID: applicantID,
+      applicantFirstName: supplyFName ?? dataSupply.ApplicantFirstName,
+      applicantLastName: supplyLName ?? dataSupply.ApplicantLastName,
+      applicantStatus: supplyStatus ?? dataSupply.ApplicantStatus,
+      skillsID: supplySkillId ?? dataSupply.SkillsID,
+      notes: supplyNotes ?? dataSupply.Notes,
+      applicantType: supplyType ?? dataSupply.ApplicantType,
+      location: supplyLocation ?? dataSupply.Location,
     }
-    console.log('changed data: ', data)
+
     const request = updateSupply(authToken, applicantID, data)
     request.then((result) => {
-      console.log('result: ', result)
-      // set supplyid state to undefined
       navigate('/protectedRoute/dashboard')
     })
   }

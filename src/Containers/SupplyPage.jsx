@@ -37,13 +37,13 @@ export const SupplyPage = () => {
   }, [])
   const handleSubmit = (e) => {
     const data = {
-      applicantFirstName: supplyFName,
-      applicantLastName: supplyLName,
-      applicantStatus: supplyStatus,
-      skillsID: supplySkillId,
-      notes: supplyNotes,
-      applicantType: supplyType,
-      location: supplyLocation,
+      applicantFirstName: supplyFName ?? 'c',
+      applicantLastName: supplyLName ?? 'c',
+      applicantStatus: supplyStatus ?? 'c',
+      skillsID: supplySkillId ?? 3,
+      notes: supplyNotes ?? 'c',
+      applicantType: supplyType ?? 'c',
+      location: supplyLocation ?? 'c',
     }
     sendata(data)
   }
@@ -51,8 +51,6 @@ export const SupplyPage = () => {
   const sendata = (data) => {
     const request = addSupply(authToken, data)
     request.then((result) => {
-      // update state of object to incule data
-      console.log(result)
       navigate('/protectedRoute/dashboard')
     })
   }
