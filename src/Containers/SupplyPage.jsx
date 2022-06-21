@@ -20,13 +20,13 @@ export const SupplyPage = () => {
   // supply is data about the applicant from the backend
   const [dataAllSkills, setDataAllSkills] = useState()
   // form data
-  const [supplyFName, setSupplyFName] = useState()
-  const [supplyLName, setSupplyLName] = useState()
-  const [supplyStatus, setSupplyStatus] = useState()
-  const [supplySkillId, setSupplySkillId] = useState()
-  const [supplyNotes, setSupplyNotes] = useState()
-  const [supplyType, setSupplyType] = useState()
-  const [supplyLocation, setSupplyLocation] = useState()
+  const [supplyFName, setSupplyFName] = useState(null)
+  const [supplyLName, setSupplyLName] = useState(null)
+  const [supplyStatus, setSupplyStatus] = useState(null)
+  const [supplySkillId, setSupplySkillId] = useState(null)
+  const [supplyNotes, setSupplyNotes] = useState(null)
+  const [supplyType, setSupplyType] = useState(null)
+  const [supplyLocation, setSupplyLocation] = useState(null)
 
   useEffect(() => {
     const requestSkills = getSkills(authToken)
@@ -37,13 +37,13 @@ export const SupplyPage = () => {
   }, [])
   const handleSubmit = (e) => {
     const data = {
-      applicantFirstName: supplyFName ?? 'c',
-      applicantLastName: supplyLName ?? 'c',
-      applicantStatus: supplyStatus ?? 'c',
-      skillsID: supplySkillId ?? 3,
-      notes: supplyNotes ?? 'c',
-      applicantType: supplyType ?? 'c',
-      location: supplyLocation ?? 'c',
+      applicantFirstName: supplyFName,
+      applicantLastName: supplyLName,
+      applicantStatus: supplyStatus,
+      skillsID: supplySkillId,
+      notes: supplyNotes,
+      applicantType: supplyType,
+      location: supplyLocation,
     }
     sendata(data)
   }
