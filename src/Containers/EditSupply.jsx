@@ -10,16 +10,17 @@ import { useNavigate } from 'react-router-dom'
 import { getSingleSupply, updateSupply, getSkills } from '../API'
 import { formatSkills } from '../Data/Format'
 import { applicant_status, applicant_type } from '../Data/Data'
+import { useSelector, useDispatch } from 'react-redux'
 
 export const EditSupply = () => {
   const navigate = useNavigate()
-  // from state
-  const applicantID = 47 //appContext.state.supplyId
-  const authToken = '' //appContext.state.authToken
-  // supply is data about the applicant from the backend
+  const dispatch = useDispatch()
+  const authToken = useSelector((state) => state.user.authToken)
+  const applicantID = useSelector((state) => state.dashboard.selectedApplicant)
+  // dataSupply - selected supply from get request
   const [dataSupply, setDataSupply] = useState(null)
   const [dataAllSkills, setDataAllSkills] = useState(null)
-  const [dataSkillName, setDataSkillName] = useState()
+  const [dataSkillName, setDataSkillName] = useState(null)
   // form data
   const [supplyFName, setSupplyFName] = useState(null)
   const [supplyLName, setSupplyLName] = useState(null)
@@ -45,13 +46,13 @@ export const EditSupply = () => {
   const handleSubmit = () => {
     const data = {
       applicantID: applicantID,
-      applicantFirstName: supplyFName ?? dataSupply.ApplicantFirstName,
-      applicantLastName: supplyLName ?? dataSupply.ApplicantLastName,
-      applicantStatus: supplyStatus ?? dataSupply.ApplicantStatus,
-      skillsID: supplySkillId ?? dataSupply.SkillsID,
-      notes: supplyNotes ?? dataSupply.Notes,
-      applicantType: supplyType ?? dataSupply.ApplicantType,
-      location: supplyLocation ?? dataSupply.Location,
+      applicantFirstName: supplyFName,
+      applicantLastName: supplyLName,
+      applicantStatus: supplyStatus,
+      skillsID: supplySkillId,
+      notes: supplyNotes,
+      applicantType: supplyType,
+      location: supplyLocation,
     }
 
     const request = updateSupply(authToken, applicantID, data)
@@ -67,7 +68,6 @@ export const EditSupply = () => {
       <Col md={12} align='center' justify='center'>
         <Navigation />
         <div style={{ width: 600 }}>
-          {/* replace div with box component */}
           <CG.Heading>Edit a supply</CG.Heading>
           <CG.Container>
             <CG.Container margin='10px'>
