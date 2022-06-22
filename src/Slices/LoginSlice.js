@@ -6,7 +6,7 @@ const initialState = {
 }
 
 export const userSlice = createSlice({
-  name: 'counter',
+  name: 'user',
   initialState,
   reducers: {
     logout: (state) => {
@@ -25,5 +25,7 @@ export const userSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { logout, login } = userSlice.actions
-
+/**
+ * We export the action creators as named exports
+ */
 export default userSlice.reducer

@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
@@ -8,16 +8,9 @@ import { ProtectedRoute } from './ProtectedRoute'
 import { SupplyPage } from './Containers/SupplyPage'
 import { EditSupply } from './Containers/EditSupply'
 import { store } from '../src/store'
-import allReducers from './Reducers/allReducers'
 import { Provider } from 'react-redux'
 
 const App = () => {
-  /* const [state, dispatch] = useReducer(allReducers, initState)
-
-  const requestDispatch = (dispatchParameters) => {
-    dispatch(dispatchParameters)
-  } */
-
   return (
     <BrowserRouter>
       <Routes>
