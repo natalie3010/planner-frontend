@@ -10,12 +10,14 @@ import { useNavigate } from 'react-router-dom'
 import { addSupply, getSkills } from '../API'
 import { formatSkills } from '../Data/Format'
 import { applicant_status, applicant_type } from '../Data/Data'
+import { useSelector, useDispatch } from 'react-redux'
+import { addSupplyToDashboard } from '../Slices/DashboardSlice'
 
 export const SupplyPage = () => {
   const navigate = useNavigate()
-  // from state
-  const authToken = '' //appContext.state.authToken
-  // supply is data about the applicant from the backend
+  const dispatch = useDispatch()
+  const authToken = useSelector((state) => state.user.authToken)
+  // dataAllSkills are all the skill, formatted for the picker component
   const [dataAllSkills, setDataAllSkills] = useState()
   // form data
   const [supplyFName, setSupplyFName] = useState(null)
@@ -33,6 +35,7 @@ export const SupplyPage = () => {
       setDataAllSkills(myArray[0])
     })
   }, [])
+
   const handleSubmit = (e) => {
     const data = {
       applicantFirstName: supplyFName,
@@ -49,6 +52,8 @@ export const SupplyPage = () => {
   const sendata = (data) => {
     const request = addSupply(authToken, data)
     request.then((result) => {
+      console.log(result)
+      dispatch(addSupplyToDashboard(data.skillsID))
       navigate('/protectedRoute/dashboard')
     })
   }

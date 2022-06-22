@@ -9,9 +9,13 @@ export const dashboardSlice = createSlice({
     setupDashboard: (state, action) => {
       state.dashboardData = action.payload
     },
+    addSupplyToDashboard: (state, action) => {
+      console.log(action.payload)
+      state.dashboardData[action.payload].supply_count += 1
+    },
   },
 })
 
-export const { setupDashboard } = dashboardSlice.actions
+export const { setupDashboard, addSupplyToDashboard } = dashboardSlice.actions
 
 export default dashboardSlice.reducer
