@@ -1,4 +1,4 @@
-export const formatted_data = {
+export const formatted_data_template = {
   labels: [],
   datasets: [
     {
