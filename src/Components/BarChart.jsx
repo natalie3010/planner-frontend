@@ -11,7 +11,8 @@ export const BarChart = (chartData) => {
         formatted_data.datasets[0].data.push(item['supply_count'])
       })
     }
-
+    // dashboard bug occurs here, array size doubles after component rerender
+    console.log(formatted_data)
     return formatted_data
   }
 

@@ -14,7 +14,6 @@ export const Dashboard = () => {
   const dispatch = useDispatch()
   const dashboardData = useSelector((state) => state.dashboard.dashboardData)
   const authToken = useSelector((state) => state.user.authToken)
-
   useEffect(() => {
     // makes a request to the backend on page load if dashboard data isn't in the state
     if (!dashboardData) {

@@ -13,9 +13,12 @@ export const dashboardSlice = createSlice({
     addSupplyToDashboard: (state, action) => {
       state.dashboardData[action.payload].supply_count += 1
     },
+    removeSupplyFromDashboard: (state, action) => {
+      state.dashboardData[action.payload].supply_count -= 1
+    },
   },
 })
 
-export const { setupDashboard, addSupplyToDashboard } = dashboardSlice.actions
+export const { setupDashboard, addSupplyToDashboard, removeSupplyFromDashboard } = dashboardSlice.actions
 
 export default dashboardSlice.reducer

@@ -11,6 +11,7 @@ import { getSingleSupply, updateSupply, getSkills } from '../API'
 import { formatSkills } from '../Data/Format'
 import { applicant_status, applicant_type } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
+import { addSupplyToDashboard, removeSupplyFromDashboard } from '../Slices/DashboardSlice'
 
 export const EditSupply = () => {
   const navigate = useNavigate()
@@ -45,18 +46,26 @@ export const EditSupply = () => {
 
   const handleSubmit = () => {
     const data = {
-      applicantID: applicantID,
-      applicantFirstName: supplyFName,
-      applicantLastName: supplyLName,
-      applicantStatus: supplyStatus,
-      skillsID: supplySkillId,
-      notes: supplyNotes,
-      applicantType: supplyType,
-      location: supplyLocation,
+      applicantID: applicantID ?? dataSupply.ApplicantID,
+      applicantFirstName: supplyFName ?? dataSupply.ApplicantFirstName,
+      applicantLastName: supplyLName ?? dataSupply.ApplicantLastName,
+      applicantStatus: supplyStatus ?? dataSupply.ApplicantStatus,
+      skillsID: supplySkillId ?? dataSupply.SkillsID,
+      notes: supplyNotes ?? dataSupply.Notes,
+      applicantType: supplyType ?? dataSupply.ApplicantType,
+      location: supplyLocation ?? dataSupply.Location,
     }
 
     const request = updateSupply(authToken, applicantID, data)
     request.then((result) => {
+      console.log(result)
+      // updating the supply state if the supply has changed
+      if (supplySkillId && dataSupply.SkillsID) {
+        dispatch(removeSupplyFromDashboard(dataSupply.SkillsID))
+        dispatch(addSupplyToDashboard(supplySkillId))
+      } else if (supplySkillId) {
+        dispatch(addSupplyToDashboard(supplySkillId))
+      }
       navigate('/protectedRoute/dashboard')
     })
   }
@@ -110,7 +119,7 @@ export const EditSupply = () => {
                 onChange={(val) => setSupplySkillId(val)}
                 options={dataAllSkills}
                 labelKey='name'
-                placeholder={dataSkillName} // change this from number to string
+                placeholder={dataSkillName}
                 label='Skill'
               />
             </CG.Container>
