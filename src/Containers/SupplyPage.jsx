@@ -50,10 +50,11 @@ export const SupplyPage = () => {
   }
 
   const sendata = (data) => {
+    const skillName = dataAllSkills[data.skillsID - 1].name
     const request = addSupply(authToken, data)
     request.then((result) => {
       console.log(result)
-      dispatch(addSupplyToDashboard(data.skillsID))
+      dispatch(addSupplyToDashboard(skillName))
       navigate('/protectedRoute/dashboard')
     })
   }

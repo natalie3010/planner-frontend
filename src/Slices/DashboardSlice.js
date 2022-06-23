@@ -11,10 +11,12 @@ export const dashboardSlice = createSlice({
       state.dashboardData = action.payload
     },
     addSupplyToDashboard: (state, action) => {
-      state.dashboardData[action.payload].supply_count += 1
+      const skillName = action.payload
+      state.dashboardData.filter((skill) => skill.skill_name === skillName)[0].supply_count += 1
     },
     removeSupplyFromDashboard: (state, action) => {
-      state.dashboardData[action.payload].supply_count -= 1
+      const skillName = action.payload
+      state.dashboardData.filter((skill) => skill.skill_name === skillName)[0].supply_count -= 1
     },
   },
 })

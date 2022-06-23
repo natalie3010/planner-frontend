@@ -58,13 +58,15 @@ export const EditSupply = () => {
 
     const request = updateSupply(authToken, applicantID, data)
     request.then((result) => {
+      const newSkillName = dataAllSkills[data.skillsID - 1].name
+      const oldSkillName = dataAllSkills[dataSupply.SkillsID - 1].name
       console.log(result)
       // updating the supply state if the supply has changed
       if (supplySkillId && dataSupply.SkillsID) {
-        dispatch(removeSupplyFromDashboard(dataSupply.SkillsID))
-        dispatch(addSupplyToDashboard(supplySkillId))
+        dispatch(removeSupplyFromDashboard(oldSkillName))
+        dispatch(addSupplyToDashboard(newSkillName))
       } else if (supplySkillId) {
-        dispatch(addSupplyToDashboard(supplySkillId))
+        dispatch(addSupplyToDashboard(newSkillName))
       }
       navigate('/protectedRoute/dashboard')
     })
