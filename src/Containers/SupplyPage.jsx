@@ -53,7 +53,6 @@ export const SupplyPage = () => {
     const skillName = dataAllSkills[data.skillsID - 1].name
     const request = addSupply(authToken, data)
     request.then((result) => {
-      console.log(result)
       dispatch(addSupplyToDashboard(skillName))
       navigate('/protectedRoute/dashboard')
     })

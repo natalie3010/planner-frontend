@@ -60,7 +60,6 @@ export const EditSupply = () => {
     request.then((result) => {
       const newSkillName = dataAllSkills[data.skillsID - 1].name
       const oldSkillName = dataAllSkills[dataSupply.SkillsID - 1].name
-      console.log(result)
       // updating the supply state if the supply has changed
       if (supplySkillId && dataSupply.SkillsID) {
         dispatch(removeSupplyFromDashboard(oldSkillName))
