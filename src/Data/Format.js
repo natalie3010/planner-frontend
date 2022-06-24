@@ -26,4 +26,13 @@ export const grouped_options = {
       },
     ],
   },
+  onClick: function(evt){
+    console.log(formatted_data);
+    console.log(evt);
+    console.log(data.datasets[0].data[BarChart.getElementAtEvent(evt)[0]._index])
+    const value = chart.scales.x.getValueForPixel(EventTarget)
+    console.log(value)
+
+  //  alert(data.datasets[0].data[myLineChart.getElementAtEvent(evt)[0]._index]);
+  }
 }

@@ -1,0 +1,39 @@
+
+
+[
+    {
+        "ApplicantID": 1,
+        "ApplicantFirstName": "Bob",
+        "ApplicantLastName": "Cratchitt",
+        "ApplicantStatus": "Selected",
+        "SkillsID": "1"
+    },
+    {
+        "ApplicantID": 2,
+        "ApplicantFirstName": "James",
+        "ApplicantLastName": "Ford",
+        "ApplicantStatus": "Rejected",
+        "SkillsID": "3"
+    },
+    {
+        "ApplicantID": 3,
+        "ApplicantFirstName": "Abraham",
+        "ApplicantLastName": "Lincoln",
+        "ApplicantStatus": "Rejected",
+        "SkillsID": "2"
+    },
+    {
+        "ApplicantID": 4,
+        "ApplicantFirstName": "Ada",
+        "ApplicantLastName": "Lovelace",
+        "ApplicantStatus": "Selected",
+        "SkillsID": "1"
+    },
+    {
+        "ApplicantID": 5,
+        "ApplicantFirstName": "Phillip",
+        "ApplicantLastName": "Seymour Hoffman",
+        "ApplicantStatus": "Selected",
+        "SkillsID": "3"
+    }
+]

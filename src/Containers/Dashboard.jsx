@@ -23,6 +23,7 @@ export const Dashboard = () => {
     }
   }, [])
   return (
+    <div style={{height:'900px'}}>
     <Row justify='between'>
       <Col md={12} align='center' justify='center'>
         <Navigation />
@@ -33,14 +34,19 @@ export const Dashboard = () => {
           {appContext.state.dashboardData == undefined ? (
             <CG.Body>'loading...'</CG.Body>
           ) : (
-            <BarChart data={appContext.state.dashboardData} />
+         <BarChart data={appContext.state.dashboardData }
+          />
           )}
           <>
-            <CG.Button text='Add a supply' onClick={() => navigate('/supply')}></CG.Button>
+            <CG.Button text='Add a supply' onClick={() => navigate('/supply')} ></CG.Button>
+            <CG.Button text='Supply info' onClick={() => navigate('/supplyinfo')}></CG.Button>
+            <CG.Button text='Demand info' onClick={() => navigate('/demandinfo')}></CG.Button>
+
           </>
         </Col>
         <Footer />
       </Col>
     </Row>
+    </div>
   )
 }

@@ -6,6 +6,9 @@ import { Dashboard } from './Containers/Dashboard'
 import { Login } from './Containers/Login'
 import { ProtectedRoute } from './ProtectedRoute'
 import { SupplyPage } from './Containers/SupplyPage'
+import { About } from './Containers/About'
+import {Information} from './Containers/SupplyInfo'
+import {DemandInformation} from './Containers/DemandInfo'
 import initState from '../src/store'
 import allReducers from './Reducers/allReducers'
 
@@ -37,6 +40,36 @@ const Router = () => {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+           
+           <Route
+            path='/about'
+            element={
+            <ProtectedRoute>
+                <About />
+                </ProtectedRoute>
+            }
+          />
+        
+              
+            
+            <Route
+            path='/supplyinfo/:skill_name'
+            element={
+              <ProtectedRoute>
+           <Information />
+           </ProtectedRoute>
+              
+            }
+          />
+            
+            <Route
+            path='/demandinfo'
+            element={
+              <ProtectedRoute>
+                <DemandInformation />
               </ProtectedRoute>
             }
           />

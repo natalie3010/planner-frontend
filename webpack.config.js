@@ -12,7 +12,7 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      '/api': 'http://localhost:3000',
+      '/': 'http://localhost:4001',
     },
     hot: true,
     port: 4200, // port 4200 is whitelisted by the backend

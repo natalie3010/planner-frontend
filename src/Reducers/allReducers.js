@@ -8,6 +8,7 @@ function allReducers(state, action) {
       return { ...state, authToken: action.authToken }
     case 'DASHBOARD_UPDATE':
       return { ...state, dashboardData: action.data }
+    
     default:
       return state
   }
