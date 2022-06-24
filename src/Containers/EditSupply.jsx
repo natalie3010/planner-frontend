@@ -7,18 +7,21 @@ import { Col, Row } from 'react-grid-system'
 import { CG } from 'cap-shared-components'
 
 import { useNavigate } from 'react-router-dom'
-import { addSupply, getSkills } from '../API'
+import { getSingleSupply, updateSupply, getSkills } from '../API'
 import { formatSkills } from '../Data/Format'
 import { applicant_status, applicant_type } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
-import { addSupplyToDashboard } from '../Slices/DashboardSlice'
+import { addSupplyToDashboard, removeSupplyFromDashboard } from '../Slices/DashboardSlice'
 
-export const SupplyPage = () => {
+export const EditSupply = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const authToken = useSelector((state) => state.user.authToken)
-  // dataAllSkills are all the skill, formatted for the picker component
-  const [dataAllSkills, setDataAllSkills] = useState()
+  const applicantID = useSelector((state) => state.dashboard.selectedApplicant)
+  // dataSupply - selected supply from get request
+  const [dataSupply, setDataSupply] = useState(null)
+  const [dataAllSkills, setDataAllSkills] = useState(null)
+  const [dataSkillName, setDataSkillName] = useState(null)
   // form data
   const [supplyFName, setSupplyFName] = useState(null)
   const [supplyLName, setSupplyLName] = useState(null)
@@ -29,49 +32,71 @@ export const SupplyPage = () => {
   const [supplyLocation, setSupplyLocation] = useState(null)
 
   useEffect(() => {
-    const requestSkills = getSkills(authToken)
-    requestSkills.then((skillResult) => {
-      const myArray = formatSkills(skillResult, 0)
-      setDataAllSkills(myArray[0])
+    const request = getSingleSupply(applicantID, authToken)
+    request.then((supplyResult) => {
+      setDataSupply(supplyResult)
+      const requestSkills = getSkills(authToken)
+      requestSkills.then((skillResult) => {
+        const myArray = formatSkills(skillResult, supplyResult.SkillsID)
+        setDataAllSkills(myArray[0])
+        setDataSkillName(myArray[1])
+      })
     })
   }, [])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     const data = {
-      applicantFirstName: supplyFName,
-      applicantLastName: supplyLName,
-      applicantStatus: supplyStatus,
-      skillsID: supplySkillId,
-      notes: supplyNotes,
-      applicantType: supplyType,
-      location: supplyLocation,
+      applicantID: applicantID ?? dataSupply.ApplicantID,
+      applicantFirstName: supplyFName ?? dataSupply.ApplicantFirstName,
+      applicantLastName: supplyLName ?? dataSupply.ApplicantLastName,
+      applicantStatus: supplyStatus ?? dataSupply.ApplicantStatus,
+      skillsID: supplySkillId ?? dataSupply.SkillsID,
+      notes: supplyNotes ?? dataSupply.Notes,
+      applicantType: supplyType ?? dataSupply.ApplicantType,
+      location: supplyLocation ?? dataSupply.Location,
     }
-    sendata(data)
-  }
 
-  const sendata = (data) => {
-    const skillName = dataAllSkills[data.skillsID - 1].name
-    const request = addSupply(authToken, data)
+    const request = updateSupply(authToken, applicantID, data)
     request.then((result) => {
-      dispatch(addSupplyToDashboard(skillName))
+      const newSkillName = dataAllSkills[data.skillsID - 1].name
+      const oldSkillName = dataAllSkills[dataSupply.SkillsID - 1].name
+      // updating the supply state if the supply has changed
+      if (supplySkillId && dataSupply.SkillsID) {
+        dispatch(removeSupplyFromDashboard(oldSkillName))
+        dispatch(addSupplyToDashboard(newSkillName))
+      } else if (supplySkillId) {
+        dispatch(addSupplyToDashboard(newSkillName))
+      }
       navigate('/protectedRoute/dashboard')
     })
   }
-  if (!dataAllSkills) {
-    return <CG.Body>loading...</CG.Body>
+  if (!dataSupply || !dataAllSkills) {
+    return <CG.Body>Loading...</CG.Body>
   }
   return (
     <Row justify='between'>
       <Col md={12} align='center' justify='center'>
         <Navigation />
         <div style={{ width: 600 }}>
-          <CG.Heading>Add a new supply</CG.Heading>
+          <CG.Heading>Edit a supply</CG.Heading>
           <CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'First name'} onInput={(e) => setSupplyFName(e.target.value)} margin={0.5} />
+              <CG.Input
+                label={'First name'}
+                initValue={dataSupply.ApplicantFirstName ?? ''} // Nullish coalescing operator
+                onInput={(e) => {
+                  setSupplyFName(e.target.value)
+                }}
+                margin={0.5}
+              />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Last name'} onInput={(e) => setSupplyLName(e.target.value)} margin={0.5} />
+              <CG.Input
+                label={'Last name'}
+                initValue={dataSupply.ApplicantLastName ?? ''}
+                onInput={(e) => setSupplyLName(e.target.value)}
+                margin={0.5}
+              />
             </CG.Container>
             <CG.Container margin='10px'>
               <CG.Picker
@@ -82,7 +107,7 @@ export const SupplyPage = () => {
                 onChange={(val) => setSupplyStatus(val)}
                 options={applicant_status}
                 labelKey='name'
-                placeholder='Select status'
+                placeholder={dataSupply.ApplicantStatus}
                 label='Status'
               />
             </CG.Container>
@@ -95,15 +120,25 @@ export const SupplyPage = () => {
                 onChange={(val) => setSupplySkillId(val)}
                 options={dataAllSkills}
                 labelKey='name'
-                placeholder='Select a skill'
+                placeholder={dataSkillName}
                 label='Skill'
               />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Notes'} onInput={(e) => setSupplyNotes(e.target.value)} margin={0.5} />
+              <CG.Input
+                label={'Notes'}
+                initValue={dataSupply.Notes ?? ''}
+                onInput={(e) => setSupplyNotes(e.target.value)}
+                margin={0.5}
+              />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Location'} onInput={(e) => setSupplyLocation(e.target.value)} margin={0.5} />
+              <CG.Input
+                label={'Location'}
+                initValue={dataSupply.Location ?? ''}
+                onInput={(e) => setSupplyLocation(e.target.value)}
+                margin={0.5}
+              />
             </CG.Container>
             <CG.Container margin='10px'>
               <CG.Picker
@@ -114,8 +149,9 @@ export const SupplyPage = () => {
                 onChange={(val) => setSupplyType(val)}
                 options={applicant_type}
                 labelKey='name'
-                placeholder='Select type'
+                placeholder={dataSupply.ApplicantType ?? ''}
                 label='Applicant type'
+                margin={0.5}
               />
             </CG.Container>
             <CG.Container margin='10px'>

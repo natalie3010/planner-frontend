@@ -1,8 +1,9 @@
 import React from 'react'
 import { CG } from 'cap-shared-components'
-import { formatted_data, grouped_options } from '../Data/Format'
+import { formatted_data_template, grouped_options } from '../Data/Format'
 
 export const BarChart = (chartData) => {
+  const formatted_data = structuredClone(formatted_data_template)
   const formatChartData = (data) => {
     if (data) {
       data.forEach((item) => {

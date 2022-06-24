@@ -1,7 +1,11 @@
 import React from 'react'
 import { CG } from 'cap-shared-components'
+import { useDispatch } from 'react-redux'
+import { logout } from '../Slices/LoginSlice'
 
 export const Navigation = () => {
+  const dispatch = useDispatch()
+
   return (
     <CG.Navigation
       inputPlaceholder='Search'
@@ -22,7 +26,9 @@ export const Navigation = () => {
         },
         {
           buttonText: 'Logout',
-          onClick: () => {},
+          onClick: () => {
+            dispatch(logout())
+          },
         },
       ]}
     />
