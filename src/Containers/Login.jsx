@@ -9,6 +9,7 @@ import { login } from '../Slices/LoginSlice'
 
 export const Login = () => {
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn)
+  const pathname = useSelector((state) => state.user.pathname) ?? '/protectedRoute/dashboard'
   const dispatch = useDispatch()
   let navigate = useNavigate()
 
@@ -18,7 +19,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (userLoggedIn) {
-      navigate('/protectedRoute/dashboard')
+      navigate(pathname)
     }
   }, [])
 
@@ -28,9 +29,8 @@ export const Login = () => {
       if (result.token) {
         const authToken = result.token
         dispatch(login(authToken))
-        navigate('/protectedRoute/dashboard')
+        navigate(pathname)
       } else {
-        console.log(result)
         let message = ''
         switch (result) {
           case (result = 403):
