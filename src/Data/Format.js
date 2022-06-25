@@ -1,4 +1,4 @@
-export const formatted_data = {
+export const formatted_data_template = {
   labels: [],
   datasets: [
     {
@@ -26,13 +26,19 @@ export const grouped_options = {
       },
     ],
   },
-  onClick: function(evt){
-    console.log(formatted_data);
-    console.log(evt);
-    console.log(data.datasets[0].data[BarChart.getElementAtEvent(evt)[0]._index])
-    const value = chart.scales.x.getValueForPixel(EventTarget)
-    console.log(value)
+}
 
-  //  alert(data.datasets[0].data[myLineChart.getElementAtEvent(evt)[0]._index]);
-  }
+export const formatSkills = (data, skillId) => {
+  const formatted_skills = []
+  var default_skill
+  data.forEach((skill) => {
+    if (skill.SkillsID === skillId) {
+      default_skill = skill.SkillName
+    }
+    formatted_skills.push({
+      name: skill.SkillName,
+      value: skill.SkillsID,
+    })
+  })
+  return [formatted_skills, default_skill]
 }

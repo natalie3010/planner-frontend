@@ -7,8 +7,8 @@ import { Login } from './Containers/Login'
 import { ProtectedRoute } from './ProtectedRoute'
 import { SupplyPage } from './Containers/SupplyPage'
 import { About } from './Containers/About'
-import {Information} from './Containers/SupplyInfo'
-import {DemandInformation} from './Containers/DemandInfo'
+import { Information } from './Containers/SupplyInfo'
+import { DemandInformation } from './Containers/DemandInfo'
 import initState from '../src/store'
 import allReducers from './Reducers/allReducers'
 
@@ -43,29 +43,26 @@ const Router = () => {
               </ProtectedRoute>
             }
           />
-           
-           <Route
+
+          <Route
             path='/about'
             element={
-            <ProtectedRoute>
+              <ProtectedRoute>
                 <About />
-                </ProtectedRoute>
+              </ProtectedRoute>
             }
           />
-        
-              
-            
-            <Route
-            path='/supplyinfo/:skill_name'
+
+          <Route
+            path='/supplyinfo'
             element={
               <ProtectedRoute>
-           <Information />
-           </ProtectedRoute>
-              
+                <Information />
+              </ProtectedRoute>
             }
           />
-            
-            <Route
+
+          <Route
             path='/demandinfo'
             element={
               <ProtectedRoute>
