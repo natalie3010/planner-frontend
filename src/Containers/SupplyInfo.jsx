@@ -17,7 +17,7 @@ export const Information = () => {
   }, [])
 
   const fetchData = (skill_name) => {
-    fetch('https://localhost:4001/api/supply?selectedSkills=skill_name', requestObject)
+    fetch(`https://localhost:4001/api/supply?selectedSkills=${skill_name}`, requestObject)
       .then((res) => res.json())
 
       .then((response) => {
