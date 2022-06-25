@@ -40,7 +40,9 @@ export const BarChart = (chartData) => {
       const value = chart.scales.x.getValueForPixel(EventTarget)
       console.log(value) */
           // navigate(`/supplyinfo/:${skill_name}`)
-          console.log(formatChartData(chartData.data).datasets[chart.getElementAtEvent(evt)[0]._datasetIndex].label)
+          //  console.log(formatChartData(chartData.data).datasets[chart.getElementAtEvent(evt)[0]._datasetIndex].label)
+          console.log(formatted_data.datasets[element[0].datasetIndex].label)
+          console.log(chartData.data[element[0].index].skill_name)
           //  alert(data.datasets[0].data[myLineChart.getElementAtEvent(evt)[0]._index]);
         },
       }}
