@@ -26,7 +26,7 @@ const Router = () => {
     <myContext.Provider value={{ state, requestDispatch }}>
       <BrowserRouter>
         <Routes>
-          {/*  <Route path='/*' element={<Login />} /> */}
+          <Route path='/*' element={<Login />} />
           {/* <Route path='/' element={<Home />} /> */}
           <Route path='/login' element={<Login />} />
           <Route

@@ -11,9 +11,6 @@ module.exports = {
     publicPath: '/',
   },
   devServer: {
-    proxy: {
-      '/': 'http://localhost:4001',
-    },
     hot: true,
     port: 4200, // port 4200 is whitelisted by the backend
     historyApiFallback: true,
