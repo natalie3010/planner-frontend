@@ -1,5 +1,10 @@
-const initState = {
-  isLoggedIn: false,
-}
+import { configureStore } from '@reduxjs/toolkit'
+import userReducer from './Slices/LoginSlice'
+import dashboardReducer from './Slices/DashboardSlice'
 
-export default initState
+export const store = configureStore({
+  reducer: {
+    user: userReducer,
+    dashboard: dashboardReducer,
+  },
+})

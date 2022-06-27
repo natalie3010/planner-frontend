@@ -1,31 +1,46 @@
 import React from 'react'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { logout } from '../Slices/LoginSlice'
+
 export const Navigation = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   return (
-    <CG.NavbarContainer>
-      <CG.NavbarContent>
-        <CG.HomeLink
-          homeLink={{ url: '?path=/story/template-cashorted--cashorted' }}
-          homeIcon={{
-            type: 'WorkforcePlanner',
-            height: '50px',
-            width: '200px',
-          }}
-        />
-        <div style={{ alignSelf: 'center' }}>
-          <CG.Button text='Home'  onClick={() => navigate('/dashboard')}/>
-          <span> </span>
-          <CG.Button text='Supply'  onClick={() => navigate('/supplyinfo')}/>
-          <span> </span>
-          <CG.Button text='Demand'  onClick={() => navigate('/demandinfo')}/>
-          <span> </span>
-          <CG.Button text='About'  onClick={() => navigate('/about')}/>
-          <span> </span>
-          <CG.Button text='Logout' />
-        </div>
-      </CG.NavbarContent>
-    </CG.NavbarContainer>
+    <CG.Navigation
+      inputPlaceholder='Search'
+      withButtons
+      homeIcon={{
+        type: 'Building',
+        height: '26px',
+        width: '26px',
+      }}
+      homeLink={{
+        name: 'Workforce Planner',
+        url: '/dashboard',
+      }}
+      buttons={[
+        {
+          buttonText: 'Home',
+          onClick: () => {
+            navigate('/dashboard')
+          },
+        },
+        {
+          buttonText: 'About',
+          onClick: () => {
+            navigate('/about')
+          },
+        },
+        {
+          buttonText: 'Logout',
+          onClick: () => {
+            dispatch(logout())
+          },
+        },
+      ]}
+    />
   )
 }
