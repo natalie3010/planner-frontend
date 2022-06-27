@@ -11,6 +11,7 @@ import { Information } from './Containers/SupplyInfo'
 import { DemandInformation } from './Containers/DemandInfo'
 import initState from '../src/store'
 import allReducers from './Reducers/allReducers'
+import { Home } from './Components/Home'
 
 export const myContext = React.createContext()
 
@@ -25,7 +26,8 @@ const Router = () => {
     <myContext.Provider value={{ state, requestDispatch }}>
       <BrowserRouter>
         <Routes>
-          <Route path='/*' element={<Login />} />
+          {/*  <Route path='/*' element={<Login />} /> */}
+          {/* <Route path='/' element={<Home />} /> */}
           <Route path='/login' element={<Login />} />
           <Route
             path='/supply'
@@ -54,7 +56,7 @@ const Router = () => {
           />
 
           <Route
-            path='/supplyinfo'
+            path='/supplyinfo/:skillname'
             element={
               <ProtectedRoute>
                 <Information />
@@ -63,7 +65,7 @@ const Router = () => {
           />
 
           <Route
-            path='/demandinfo'
+            path='/demandinfo/:skillname'
             element={
               <ProtectedRoute>
                 <DemandInformation />
@@ -75,4 +77,8 @@ const Router = () => {
     </myContext.Provider>
   )
 }
-createRoot(document.getElementById('root')).render(<Router />)
+createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <Router />
+  </React.StrictMode>
+)
