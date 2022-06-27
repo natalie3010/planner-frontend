@@ -6,7 +6,7 @@ import { logout } from '../Slices/LoginSlice'
 export const Navigation = () => {
   const dispatch = useDispatch()
 
-  return (
+  return <div>yoo</div> /* (
     <CG.Navigation
       inputPlaceholder='Search'
       withButtons
@@ -32,5 +32,5 @@ export const Navigation = () => {
         },
       ]}
     />
-  )
+  ) */
 }

@@ -1,0 +1,113 @@
+{
+  "supplyForm": {
+    "inputs": {
+      "supplyFirstName": {
+        "validators": [
+          {
+            "errorDisplayed": "Please put a first name",
+            "required": true
+          }
+        ]
+      },
+      "supplyLastName": {
+        "validators": [
+          {
+            "errorDisplayed": "Please put a last name",
+            "required": true
+          }
+        ]
+      },
+      "supplyStatus": {
+        "validators": [
+          {
+            "errorDisplayed": "Please select a status",
+            "required": true
+          }
+        ]
+      },
+      "supplySkills": {
+        "validators": [
+          {
+            "errorDisplayed": "Please select a skill",
+            "required": true
+          }
+        ]
+      },
+      "supplyNotes": {
+        "validators": []
+      },
+      "supplyApplicantType": {
+        "validators": [
+          {
+            "errorDisplayed": "Please select a type",
+            "required": true
+          }
+        ]
+      },
+      "supplyLocation": {
+        "validators": []
+      }
+    }
+  },
+
+  "demandForm": {
+    "inputs": {
+      "demandCodeRequisition": {
+        "validators": []
+      },
+      "demandStartDate": {
+        "validators": [
+          {
+            "errorDisplayed": "Please put a valid date following the pattern dd/MM/yyyy",
+            "pattern": "(([12][0-9]{1})|(0[1-9]{1})|(3[01]{1}))/((0[1-9])|(1[012]))/(2([0-9]{3}))"
+          }
+        ]
+      },
+      "demandOriginator": {
+        "validators": []
+      },
+      "demandProbability": {
+        "validators": []
+      },
+      "demandSelectedApplicant": {
+        "validators": []
+      },
+      "demandNotes": {
+        "validators": []
+      },
+      "demandProposedApplicant": {
+        "validators": []
+      },
+      "demandCreationDate": {
+        "validators": [
+          {
+            "errorDisplayed": "Please put a valid date following the pattern dd/MM/yyyy",
+            "required": true,
+            "pattern": "(([12][0-9]{1})|(0[1-9]{1})|(3[01]{1}))/((0[1-9])|(1[012]))/(2([0-9]{3}))"
+          }
+        ]
+      },
+      "demandLocation": {
+        "validators": []
+      }
+    }
+  },
+  "loginForm": {
+    "inputs": {
+      "usernameLogin": {
+        "validators": [
+          {
+            "required": true
+          }
+        ]
+      },
+      "passwordLogin": {
+        "validators": [
+          {
+            "required": true
+          }
+        ]
+      }
+    }
+  }
+}
