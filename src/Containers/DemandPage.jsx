@@ -10,9 +10,11 @@ import { getClients, getSkills } from '../API'
 import { formatSkills, formatClients } from '../Data/Format'
 import { demand_status, demand_grade } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
+import { addDemandToDashboard } from '../Slices/DashboardSlice'
 
 export const DemandPage = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const authToken = useSelector((state) => state.user.authToken)
   const [pickerSkills, setPickerSkills] = useState(null)
   const [pickerClients, setPickerClients] = useState(null)
@@ -41,35 +43,44 @@ export const DemandPage = () => {
   }
   const [formData, setFormData] = useState(form)
   // picker input fields
-  const pickerInput = {
-    clientID: { options: pickerClients },
-    skillsID: { options: pickerSkills },
-    grade: { options: demand_grade },
-    status: { options: demand_status },
+  const inputDefaults = {
+    codeRequisition: { label: 'Code Requisition' },
+    startDate: { label: 'Start date' },
+    originatorName: { label: 'Originator' },
+    probability: { label: 'Probability' },
+    selectedApplicant: { label: 'Selected Applicant' },
+    notes: { label: 'Notes' },
+    proposedApplicant: { label: 'Proposed Applicant' },
+    creationDate: { label: 'Creation date' },
+    location: { label: 'Location' },
+    clientID: { options: pickerClients, label: 'Client', placeholder: 'Select a client' },
+    skillsID: { options: pickerSkills, label: 'Skill', placeholder: 'Select a skill' },
+    grade: { options: demand_grade, label: 'Grade', placeholder: 'Select a grade' },
+    status: { options: demand_status, label: 'Status', placeholder: 'Select a status' },
   }
 
-  const inputs = Object.keys(form).map((formItem) => {
+  const inputs = Object.keys(form).map((formItem, index) => {
     if (formItem === 'clientID' || formItem === 'skillsID' || formItem === 'grade' || formItem === 'status') {
       return (
-        <CG.Container margin='10px'>
+        <CG.Container margin='10px' key={index}>
           <CG.Picker
             id='Picker'
             name='Picker'
             pattern='*'
             topLabel
             onChange={(val) => setFormData({ ...formData, [formItem]: val })}
-            options={pickerInput[formItem].options}
+            options={inputDefaults[formItem].options}
             labelKey='name'
             placeholder={`Select ${formItem}`}
-            label={formItem}
+            label={inputDefaults[formItem].label}
           />
         </CG.Container>
       )
     }
     return (
-      <CG.Container margin='10px'>
+      <CG.Container margin='10px' key={index}>
         <CG.Input
-          label={formItem}
+          label={inputDefaults[formItem].label}
           onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} //computed property names
           margin={0.5}
         />
@@ -78,7 +89,9 @@ export const DemandPage = () => {
   })
 
   const handleSubmit = () => {
-    console.log('submitted form: ', formData)
+    const skillName = pickerSkills[formData.skillsID - 1].name
+    dispatch(addDemandToDashboard(skillName))
+    navigate('/protectedRoute/dashboard')
   }
   if (!pickerClients || !pickerSkills) {
     return <CG.Body>loading...</CG.Body>
