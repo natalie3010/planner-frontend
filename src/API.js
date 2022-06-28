@@ -122,3 +122,20 @@ export function getSkills(token) {
       return error.status
     })
 }
+
+export function getClients(token) {
+  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+  return fetch(`${URL}/api/clients`, requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error.status
+    })
+}

@@ -35,6 +35,7 @@ export const Dashboard = () => {
           {!dashboardData ? <CG.Body>'loading...'</CG.Body> : <BarChart data={dashboardData} />}
           <>
             <CG.Button text='Add a supply' onClick={() => navigate('/supply')}></CG.Button>
+            <CG.Button text='Add a demand' onClick={() => navigate('/demand')}></CG.Button>
             <CG.Button text='Edit a supply' onClick={() => navigate('/edit-supply')}></CG.Button>
           </>
         </Col>

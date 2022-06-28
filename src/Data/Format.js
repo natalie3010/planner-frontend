@@ -42,3 +42,14 @@ export const formatSkills = (data, skillId) => {
   })
   return [formatted_skills, default_skill]
 }
+
+export const formatClients = (data) => {
+  const formatted_Clients = []
+  data.forEach((client) => {
+    formatted_Clients.push({
+      name: client.ClientID,
+      value: client.ClientName,
+    })
+  })
+  return formatted_Clients
+}
