@@ -6,7 +6,7 @@ import { Col, Row } from 'react-grid-system'
 import { CG } from 'cap-shared-components'
 
 import { useNavigate } from 'react-router-dom'
-import { getClients, getSkills } from '../API'
+import { getClients, getSkills, addDemand } from '../API'
 import { formatSkills, formatClients } from '../Data/Format'
 import { demand_status, demand_grade } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
@@ -90,8 +90,12 @@ export const DemandPage = () => {
 
   const handleSubmit = () => {
     const skillName = pickerSkills[formData.skillsID - 1].name
-    dispatch(addDemandToDashboard(skillName))
-    navigate('/protectedRoute/dashboard')
+    const request = addDemand(authToken, formData)
+    request.then((result) => {
+      console.log('result', result)
+      dispatch(addDemandToDashboard(skillName))
+      navigate('/protectedRoute/dashboard')
+    })
   }
   if (!pickerClients || !pickerSkills) {
     return <CG.Body>loading...</CG.Body>
