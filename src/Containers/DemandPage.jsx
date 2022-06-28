@@ -7,8 +7,8 @@ import { CG } from 'cap-shared-components'
 
 import { useNavigate } from 'react-router-dom'
 import { getClients, getSkills, addDemand } from '../API'
-import { formatSkills, formatClients } from '../Data/Format'
-import { demand_status, demand_grade } from '../Data/Data'
+import { formatSkills, formatClients, demandFormFormatter } from '../Data/Format'
+import { demand_status, demand_grade, form } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addDemandToDashboard } from '../Slices/DashboardSlice'
 
@@ -18,6 +18,7 @@ export const DemandPage = () => {
   const authToken = useSelector((state) => state.user.authToken)
   const [pickerSkills, setPickerSkills] = useState(null)
   const [pickerClients, setPickerClients] = useState(null)
+
   useEffect(() => {
     const requestClients = getClients(authToken)
     requestClients.then((clientsResult) => setPickerClients(formatClients(clientsResult)))
@@ -25,40 +26,12 @@ export const DemandPage = () => {
     const requestSkills = getSkills(authToken)
     requestSkills.then((skillsResult) => setPickerSkills(formatSkills(skillsResult)[0]))
   }, [])
-  // form data
-  let form = {
-    codeRequisition: null, //string
-    startDate: null, //string
-    clientID: null, //number picker
-    originatorName: null, //string
-    skillsID: null, //number picker
-    probability: null, //number
-    grade: null, //string picker
-    selectedApplicant: null, //string
-    status: null, //string picker
-    notes: null, //string
-    proposedApplicant: null, //string
-    creationDate: null, //string
-    location: null, //string
-  }
-  const [formData, setFormData] = useState(form)
-  // picker input fields
-  const inputDefaults = {
-    codeRequisition: { label: 'Code Requisition' },
-    startDate: { label: 'Start date' },
-    originatorName: { label: 'Originator' },
-    probability: { label: 'Probability' },
-    selectedApplicant: { label: 'Selected Applicant' },
-    notes: { label: 'Notes' },
-    proposedApplicant: { label: 'Proposed Applicant' },
-    creationDate: { label: 'Creation date' },
-    location: { label: 'Location' },
-    clientID: { options: pickerClients, label: 'Client', placeholder: 'Select a client' },
-    skillsID: { options: pickerSkills, label: 'Skill', placeholder: 'Select a skill' },
-    grade: { options: demand_grade, label: 'Grade', placeholder: 'Select a grade' },
-    status: { options: demand_status, label: 'Status', placeholder: 'Select a status' },
-  }
 
+  const [formData, setFormData] = useState(form)
+  // input component default values
+  const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
+
+  // mapping input components
   const inputs = Object.keys(form).map((formItem, index) => {
     if (formItem === 'clientID' || formItem === 'skillsID' || formItem === 'grade' || formItem === 'status') {
       return (
@@ -81,7 +54,7 @@ export const DemandPage = () => {
       <CG.Container margin='10px' key={index}>
         <CG.Input
           label={inputDefaults[formItem].label}
-          onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} //computed property names
+          onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
           margin={0.5}
         />
       </CG.Container>
@@ -92,15 +65,14 @@ export const DemandPage = () => {
     const skillName = pickerSkills[formData.skillsID - 1].name
     const request = addDemand(authToken, formData)
     request.then((result) => {
-      console.log('result', result)
       dispatch(addDemandToDashboard(skillName))
       navigate('/protectedRoute/dashboard')
     })
   }
+
   if (!pickerClients || !pickerSkills) {
     return <CG.Body>loading...</CG.Body>
   }
-
   return (
     <Row justify='between'>
       <Col md={12} align='center' justify='center'>

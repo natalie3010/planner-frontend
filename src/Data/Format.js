@@ -53,3 +53,22 @@ export const formatClients = (data) => {
   })
   return formatted_Clients
 }
+
+export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, demand_status) => {
+  const inputDefaults = {
+    codeRequisition: { label: 'Code Requisition' },
+    startDate: { label: 'Start date' },
+    originatorName: { label: 'Originator' },
+    probability: { label: 'Probability' },
+    selectedApplicant: { label: 'Selected Applicant' },
+    notes: { label: 'Notes' },
+    proposedApplicant: { label: 'Proposed Applicant' },
+    creationDate: { label: 'Creation date' },
+    location: { label: 'Location' },
+    clientID: { options: pickerClients, label: 'Client', placeholder: 'Select a client' },
+    skillsID: { options: pickerSkills, label: 'Skill', placeholder: 'Select a skill' },
+    grade: { options: demand_grade, label: 'Grade', placeholder: 'Select a grade' },
+    status: { options: demand_status, label: 'Status', placeholder: 'Select a status' },
+  }
+  return inputDefaults
+}
