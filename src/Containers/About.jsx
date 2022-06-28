@@ -9,178 +9,52 @@ import { useNavigate } from 'react-router-dom'
 export const About = () => {
   const navigate = useNavigate()
   return (
-    <div style={{ height: '900px' }}>
+    <div style={{ height: '1000px' }}>
       <Navigation />
       <div style={{ padding: 20 }}>
         <Row>
           <Col style={{ padding: '20', width: '50%', display: 'block', float: 'left' }}>
-            <h1
-              style={{
-                fontFamily:
-                  "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif",
-                fontWeight: '200',
-                marginTop: '20px',
-                marginBottom: '20px',
-                fontSize: '22pt',
-                textAlign: 'center',
-              }}
-            >
+            <CG.Heading size='M' weight='bold'>
               Helping millions grow better.
-            </h1>
-            <img src='public\images\thames-g77b9e635d_1280.jpg' width='100%' height='300' alt='pic' />
+            </CG.Heading>
 
-            <h3
-              style={{
-                fontFamily:
-                  "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif",
-                fontWeight: '200',
-                marginTop: '20px',
-                marginBottom: '20px',
-                fontSize: '18pt',
-                textAlign: 'center',
-              }}
-            >
+            <img src='/images/thames-g77b9e635d_1280.jpg' width='100%' height='300' alt='pic' />
+
+            <CG.Heading size='S' weight='bold'>
               Our Mission
-            </h3>
-            <p
-              style={{
-                fontSize: '1rem',
-                fontFamily:
-                  " -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif",
-                fontWeight: '400',
-                lineHeight: '1.6rem',
-                paddingLeft: '20px',
-                paddingRight: '20px',
-              }}
-            >
+            </CG.Heading>
+            <CG.Body size='M'>
               The supply and demand app is used to centralise the request coming from a customer to get a new resource.
-            </p>
-            <p
-              style={{
-                fontSize: '1rem',
-                fontFamily:
-                  " -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif",
-                fontWeight: '400',
-                lineHeight: '1.6rem',
-                paddingLeft: '20px',
-                paddingRight: '20px',
-              }}
-            >
-              The request is the demand and the new resource recruited is the supply.
-            </p>
+            </CG.Body>
+            <CG.Body size='M'>The request is the demand and the new resource recruited is the supply.</CG.Body>
           </Col>
           <Col style={{ padding: '20', width: '50%', display: 'block', float: 'right' }}>
-            <div style={{ textAlign: 'center' }}>
-              <h1
-                style={{
-                  fontFamily:
-                    "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif",
-                  fontWeight: '200',
-                  marginTop: '20px',
-                  marginBottom: '20px',
-                  fontSize: '22pt',
-                }}
-              >
-                Get in touch
-              </h1>
-              <h3
-                style={{
-                  fontFamily:
-                    "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif",
-                  fontWeight: '200',
-                  marginTop: '20px',
-                  marginBottom: '20px',
-                  fontSize: '18pt',
-                }}
-              >
-                Contact customer support
-              </h3>
-              <p
-                style={{
-                  fontSize: '1rem',
-                  fontFamily:
-                    " -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif",
-                  fontWeight: '400',
-                  lineHeight: '1.6rem',
-                  paddingLeft: '20px',
-                  paddingRight: '20px',
-                }}
-              >
-                Sometimes you need a little help from your friends. Or a hubspot support rep. Don't worry...we're here
-                for you.
-              </p>
-              <p
-                style={{
-                  fontSize: '1rem',
-                  fontFamily:
-                    " -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif",
-                  fontWeight: '400',
-                  lineHeight: '1.6rem',
-                  paddingLeft: '20px',
-                  paddingRight: '20px',
-                }}
-              >
-                +44 7444999999
-              </p>
-            </div>
-            <h4
-              style={{
-                fontFamily:
-                  "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif",
-                fontWeight: '200',
-                marginTop: '20px',
-                marginBottom: '20px',
-                fontSize: '16pt',
-              }}
-            >
+            <CG.Heading size='M' weight='bold'>
+              Get in touch
+            </CG.Heading>
+
+            <CG.Heading size='S' weight='bold'>
+              Contact customer support
+            </CG.Heading>
+            <CG.Body size='M'>
+              Sometimes you need a little help from your friends. Or a hubspot support rep. Don't worry...we're here for
+              you.
+            </CG.Body>
+            <CG.Body size='M'>+44 7444999999</CG.Body>
+
+            <CG.Heading size='XS' weight='bold'>
               London (UK Office)
-            </h4>
-            <h4
-              style={{
-                fontFamily:
-                  "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif",
-                fontWeight: '200',
-                marginTop: '20px',
-                marginBottom: '20px',
-                fontSize: '16pt',
-              }}
-            >
+            </CG.Heading>
+            <CG.Heading size='XS' weight='bold'>
               Address
-            </h4>
-            <p
-              style={{
-                fontSize: '1rem',
-                fontFamily:
-                  " -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif",
-                fontWeight: '400',
-                lineHeight: '1.6rem',
-              }}
-            >
-              40 Holborn Viaduct, London EC1N 2PB
-            </p>
-            <h4
-              style={{
-                fontFamily:
-                  "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif",
-                fontWeight: '200',
-                marginTop: '20px',
-                marginBottom: '20px',
-                fontSize: '16pt',
-              }}
-            >
+            </CG.Heading>
+            <CG.Body size='M'>40 Holborn Viaduct, </CG.Body>
+            <CG.Body size='M'> London,</CG.Body>
+            <CG.Body size='M'>EC1N 2PB</CG.Body>
+            <CG.Heading size='XS' weight='bold'>
               Phone
-            </h4>
-            <p
-              style={{
-                fontSize: '1rem',
-                fontFamily:
-                  " -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif",
-                fontWeight: '400',
-                lineHeight: '1.6rem',
-              }}
-            >
-              +44 99999999
-            </p>
+            </CG.Heading>
+            <CG.Body size='M'>+44 99999999</CG.Body>
           </Col>
         </Row>
       </div>

@@ -9,38 +9,30 @@ export const Navigation = () => {
   const dispatch = useDispatch()
 
   return (
-    <CG.Navigation
-      inputPlaceholder='Search'
-      withButtons
-      homeIcon={{
-        type: 'Building',
-        height: '26px',
-        width: '26px',
-      }}
-      homeLink={{
-        name: 'Workforce Planner',
-        url: '/dashboard',
-      }}
-      buttons={[
-        {
-          buttonText: 'Home',
-          onClick: () => {
-            navigate('/dashboard')
-          },
-        },
-        {
-          buttonText: 'About',
-          onClick: () => {
-            navigate('/about')
-          },
-        },
-        {
-          buttonText: 'Logout',
-          onClick: () => {
-            dispatch(logout())
-          },
-        },
-      ]}
-    />
+    <CG.NavbarContainer>
+      <CG.NavbarContent>
+        <CG.HomeLink
+          homeLink={{ url: '?path=/story/template-cashorted--cashorted' }}
+          homeIcon={{
+            type: 'WorkforcePlanner',
+            height: '50px',
+            width: '200px',
+          }}
+        />
+        <div style={{ alignSelf: 'center' }}>
+          <CG.Button text='Home' onClick={() => navigate('/protectedRoute/dashboard')} />
+          <span> </span>
+
+          <CG.Button text='About' onClick={() => navigate('/about')} />
+          <span> </span>
+          <CG.Button
+            text='Logout'
+            onClick={() => {
+              dispatch(logout())
+            }}
+          />
+        </div>
+      </CG.NavbarContent>
+    </CG.NavbarContainer>
   )
 }

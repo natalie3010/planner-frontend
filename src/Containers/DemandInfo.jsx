@@ -1,16 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Navigation } from '../Components/Navigation'
 import { Footer } from '../Components/Footer'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
-import { myContext } from '../index'
+
 import { useParams } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+
 export const DemandInformation = () => {
   let { skillname } = useParams()
   console.log(window.location.pathname)
   console.log(window.location.href)
   console.log(skillname)
-  const token = useContext(myContext).state.authToken
+  const token = useSelector((state) => state.user.authToken)
   console.log(token)
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
 
@@ -407,7 +409,7 @@ export const DemandInformation = () => {
           </tbody>
         </table>
         <div style={{ marginTop: '50px' }}>
-          <CG.Button text='Return to dashboard' onClick={() => navigate('/dashboard')}></CG.Button>
+          <CG.Button text='Return to dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
         </div>
       </div>
       <Footer />

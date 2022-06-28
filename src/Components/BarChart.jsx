@@ -6,13 +6,7 @@ import { useNavigate } from 'react-router-dom'
 export const BarChart = (chartData) => {
   const navigate = useNavigate()
   const formatted_data = structuredClone(formatted_data_template)
-  const clickedElementPassUp = (element) => {
-    const type = formatted_data.datasets[element[0].datasetIndex].label
-    const skillName = chartData.data[element[0].index].skill_name
-    console.log(skillName)
 
-    console.log(type, skillName)
-  }
   const formatChartData = (data) => {
     if (data) {
       console.log(data)
@@ -45,15 +39,25 @@ export const BarChart = (chartData) => {
           const skillName = await formatted_data.labels[num]
           console.log(num)
           console.log(skillName)
+          console.log(formatted_data.datasets[index[0].datasetIndex].label)
+          const type = formatted_data.datasets[index[0].datasetIndex].label
 
-          if (skillName === 'UI/UX Designer') {
-            navigate('/demandinfo/UI UX Designer')
-          } else {
-            navigate(`/demandinfo/${skillName}`)
+          if (type === 'Demand') {
+            if (skillName === 'UI/UX Designer') {
+              navigate('/demandinfo/UI UX Designer')
+            } else {
+              navigate(`/demandinfo/${skillName}`)
+            }
+          }
+          if (type === 'Supply') {
+            if (skillName === 'UI/UX Designer') {
+              navigate('/supplyinfo/UI UX Designer')
+            } else {
+              navigate(`/supplyinfo/${skillName}`)
+            }
           }
         },
       }}
-      clickedElementPassUp={clickedElementPassUp}
     />
   )
 }

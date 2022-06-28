@@ -61,78 +61,80 @@ export const SupplyPage = () => {
     return <CG.Body>loading...</CG.Body>
   }
   return (
-    <Row justify='between'>
-      <Col md={12} align='center' justify='center'>
-        <Navigation />
-        <div style={{ width: 600 }}>
-          <CG.Heading>Add a new supply</CG.Heading>
-          <CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input label={'First name'} onInput={(e) => setSupplyFName(e.target.value)} margin={0.5} />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input label={'Last name'} onInput={(e) => setSupplyLName(e.target.value)} margin={0.5} />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Picker
-                id='Picker'
-                name='Picker'
-                pattern='*'
-                topLabel
-                onChange={(val) => setSupplyStatus(val)}
-                options={applicant_status}
-                labelKey='name'
-                placeholder='Select status'
-                label='Status'
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Picker
-                id='Picker'
-                name='Picker'
-                pattern='*'
-                topLabel
-                onChange={(val) => setSupplySkillId(val)}
-                options={dataAllSkills}
-                labelKey='name'
-                placeholder='Select a skill'
-                label='Skill'
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input label={'Notes'} onInput={(e) => setSupplyNotes(e.target.value)} margin={0.5} />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input label={'Location'} onInput={(e) => setSupplyLocation(e.target.value)} margin={0.5} />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Picker
-                id='Picker'
-                name='Picker'
-                pattern='*'
-                topLabel
-                onChange={(val) => setSupplyType(val)}
-                options={applicant_type}
-                labelKey='name'
-                placeholder='Select type'
-                label='Applicant type'
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <Row justify='around'>
-                <CG.Button text='submit' onClick={handleSubmit} />
-                <CG.Button
-                  text='cancel'
-                  onClick={() => {
-                    navigate('/protectedRoute/dashboard')
-                  }}
+    <div style={{ height: '900px' }}>
+      <Row justify='between'>
+        <Col md={12} align='center' justify='center'>
+          <Navigation />
+          <div style={{ width: 600 }}>
+            <CG.Heading>Add a new supply</CG.Heading>
+            <CG.Container>
+              <CG.Container margin='10px'>
+                <CG.Input label={'First name'} onInput={(e) => setSupplyFName(e.target.value)} margin={0.5} />
+              </CG.Container>
+              <CG.Container margin='10px'>
+                <CG.Input label={'Last name'} onInput={(e) => setSupplyLName(e.target.value)} margin={0.5} />
+              </CG.Container>
+              <CG.Container margin='10px'>
+                <CG.Picker
+                  id='Picker'
+                  name='Picker'
+                  pattern='*'
+                  topLabel
+                  onChange={(val) => setSupplyStatus(val)}
+                  options={applicant_status}
+                  labelKey='name'
+                  placeholder='Select status'
+                  label='Status'
                 />
-              </Row>
+              </CG.Container>
+              <CG.Container margin='10px'>
+                <CG.Picker
+                  id='Picker'
+                  name='Picker'
+                  pattern='*'
+                  topLabel
+                  onChange={(val) => setSupplySkillId(val)}
+                  options={dataAllSkills}
+                  labelKey='name'
+                  placeholder='Select a skill'
+                  label='Skill'
+                />
+              </CG.Container>
+              <CG.Container margin='10px'>
+                <CG.Input label={'Notes'} onInput={(e) => setSupplyNotes(e.target.value)} margin={0.5} />
+              </CG.Container>
+              <CG.Container margin='10px'>
+                <CG.Input label={'Location'} onInput={(e) => setSupplyLocation(e.target.value)} margin={0.5} />
+              </CG.Container>
+              <CG.Container margin='10px'>
+                <CG.Picker
+                  id='Picker'
+                  name='Picker'
+                  pattern='*'
+                  topLabel
+                  onChange={(val) => setSupplyType(val)}
+                  options={applicant_type}
+                  labelKey='name'
+                  placeholder='Select type'
+                  label='Applicant type'
+                />
+              </CG.Container>
+              <CG.Container margin='10px'>
+                <Row justify='around'>
+                  <CG.Button text='submit' onClick={handleSubmit} />
+                  <CG.Button
+                    text='cancel'
+                    onClick={() => {
+                      navigate('/protectedRoute/dashboard')
+                    }}
+                  />
+                </Row>
+              </CG.Container>
             </CG.Container>
-          </CG.Container>
-        </div>
-        <Footer />
-      </Col>
-    </Row>
+          </div>
+          <Footer />
+        </Col>
+      </Row>
+    </div>
   )
 }
