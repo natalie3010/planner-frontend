@@ -1,0 +1,130 @@
+import React, { useEffect, useState } from 'react'
+import { Navigation } from '../Components/Navigation'
+import { Footer } from '../Components/Footer'
+import { Col, Row } from 'react-grid-system'
+
+import { CG } from 'cap-shared-components'
+
+import { useNavigate } from 'react-router-dom'
+import { getClients, getSkills, getSingleDemand, updateDemand } from '../API'
+import { formatSkills, formatClients, demandFormFormatter } from '../Data/Format'
+import { demand_status, demand_grade, form } from '../Data/Data'
+import { useSelector, useDispatch } from 'react-redux'
+import { addDemandToDashboard } from '../Slices/DashboardSlice'
+
+export const EditDemand = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const authToken = useSelector((state) => state.user.authToken)
+  const demandID = useSelector((state) => state.dashboard.selectedDemand)
+  const [pickerSkills, setPickerSkills] = useState(null)
+  //const [pickkerSkillName, setPickerSkillName] = useState(null)
+  const [pickerClients, setPickerClients] = useState(null)
+  const [formData, setFormData] = useState(null)
+
+  useEffect(() => {
+    const requestClients = getClients(authToken)
+    requestClients.then((clientsResult) => setPickerClients(formatClients(clientsResult)))
+
+    const requestSkills = getSkills(authToken)
+    requestSkills.then((skillsResult) => setPickerSkills(formatSkills(skillsResult)[0]))
+
+    const requestDemand = getSingleDemand(demandID, authToken)
+    requestDemand.then((demandResult) => {
+      setFormData(demandResult)
+      const requestSkills = getSkills(authToken)
+      requestSkills.then((skillsResult) => {
+        const myArray = formatSkills(skillsResult, demandResult.SkillsID)
+        setPickerSkills(myArray[0])
+        //setPickerSkillName(myArray[1])
+      })
+    })
+  }, [])
+
+  // input component default values
+  const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
+
+  const handleSubmit = () => {
+    const data = {
+      demandID: demandID,
+      codeRequisition: formData.CodeRequisition,
+      startDate: formData.StartDate,
+      clientID: formData.ClientID, //number showing string??
+      originatorName: formData.OriginatorName,
+      skillsID: formData.SkillsID, //number
+      probability: formData.Probability, //number
+      grade: formData.Grade,
+      selectedApplicant: formData.SelectedApplicant,
+      status: formData.Status,
+      notes: formData.Notes,
+      proposedApplicant: formData.ProposedApplicant,
+      creationDate: formData.CreationDate,
+      location: formData.Location,
+    }
+    const skillName = pickerSkills[formData.SkillsID - 1].name
+    console.log(skillName)
+    console.log(data)
+    /* const request = updateDemand(authToken, demandID ,data)
+    request.then((result) => {
+      dispatch(addDemandToDashboard(skillName))
+      navigate('/protectedRoute/dashboard')
+    }) */
+  }
+
+  if (!pickerClients || !pickerSkills || !formData) {
+    return <CG.Body>loading...</CG.Body>
+  }
+  return (
+    <Row justify='between'>
+      <Col md={12} align='center' justify='center'>
+        <Navigation />
+        <div style={{ width: 600 }}>
+          <CG.Heading>Edit a demand</CG.Heading>
+          <CG.Container>
+            {Object.keys(form).map((formItem, index) => {
+              if (formItem === 'clientID' || formItem === 'skillsID' || formItem === 'grade' || formItem === 'status') {
+                return (
+                  <CG.Container margin='10px' key={index}>
+                    <CG.Picker
+                      id='Picker'
+                      name='Picker'
+                      pattern='*'
+                      topLabel
+                      onChange={(val) => setFormData({ ...formData, [formItem]: val })}
+                      options={inputDefaults[formItem].options}
+                      labelKey='name'
+                      placeholder={formData[inputDefaults[formItem].responseKey]}
+                      label={inputDefaults[formItem].label}
+                    />
+                  </CG.Container>
+                )
+              }
+              return (
+                <CG.Container margin='10px' key={index}>
+                  <CG.Input
+                    initValue={formData[inputDefaults[formItem].responseKey] ?? ''}
+                    label={inputDefaults[formItem].label}
+                    onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
+                    margin={0.5}
+                  />
+                </CG.Container>
+              )
+            })}
+            <CG.Container margin='10px'>
+              <Row justify='around'>
+                <CG.Button text='submit' onClick={handleSubmit} />
+                <CG.Button
+                  text='cancel'
+                  onClick={() => {
+                    navigate('/protectedRoute/dashboard')
+                  }}
+                />
+              </Row>
+            </CG.Container>
+          </CG.Container>
+        </div>
+        <Footer />
+      </Col>
+    </Row>
+  )
+}

@@ -56,19 +56,19 @@ export const formatClients = (data) => {
 
 export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, demand_status) => {
   const inputDefaults = {
-    codeRequisition: { label: 'Code Requisition' },
-    startDate: { label: 'Start date' },
-    originatorName: { label: 'Originator' },
-    probability: { label: 'Probability' },
-    selectedApplicant: { label: 'Selected Applicant' },
-    notes: { label: 'Notes' },
-    proposedApplicant: { label: 'Proposed Applicant' },
-    creationDate: { label: 'Creation date' },
-    location: { label: 'Location' },
-    clientID: { options: pickerClients, label: 'Client', placeholder: 'Select a client' },
-    skillsID: { options: pickerSkills, label: 'Skill', placeholder: 'Select a skill' },
-    grade: { options: demand_grade, label: 'Grade', placeholder: 'Select a grade' },
-    status: { options: demand_status, label: 'Status', placeholder: 'Select a status' },
+    codeRequisition: { label: 'Code Requisition', responseKey: 'CodeRequisition' },
+    startDate: { label: 'Start date', responseKey: 'StartDate' },
+    originatorName: { label: 'Originator', responseKey: 'OriginatorName' },
+    probability: { label: 'Probability', responseKey: 'Probability' },
+    selectedApplicant: { label: 'Selected Applicant', responseKey: 'SelectedApplicant' },
+    notes: { label: 'Notes', responseKey: 'Notes' },
+    proposedApplicant: { label: 'Proposed Applicant', responseKey: 'ProposedApplicant' },
+    creationDate: { label: 'Creation date', responseKey: 'CreationDate' },
+    location: { label: 'Location', responseKey: 'Location' },
+    clientID: { options: pickerClients, label: 'Client', placeholder: 'Select a client', responseKey: 'ClientID' },
+    skillsID: { options: pickerSkills, label: 'Skill', placeholder: 'Select a skill', responseKey: 'SkillsID' },
+    grade: { options: demand_grade, label: 'Grade', placeholder: 'Select a grade', responseKey: 'Grade' },
+    status: { options: demand_status, label: 'Status', placeholder: 'Select a status', responseKey: 'Status' },
   }
   return inputDefaults
 }

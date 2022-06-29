@@ -106,6 +106,23 @@ export function getSingleSupply(applicantID, token) {
     })
 }
 
+export function getSingleDemand(applicantID, token) {
+  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+  return fetch(`${URL}/api/demand/${applicantID}`, requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error.status
+    })
+}
+
 export function updateSupply(token, applicantID, data) {
   const requestObject = {
     method: 'PUT',
@@ -116,6 +133,30 @@ export function updateSupply(token, applicantID, data) {
     body: JSON.stringify(data),
   }
   return fetch(`${URL}/api/supply/${applicantID}`, requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error
+    })
+}
+
+export function updateDemand(token, applicantID, data) {
+  const requestObject = {
+    method: 'PUT',
+    headers: {
+      'x-access-token': token,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  }
+  return fetch(`${URL}/api/demand/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res

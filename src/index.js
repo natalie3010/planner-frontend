@@ -8,6 +8,7 @@ import { ProtectedRoute } from './ProtectedRoute'
 import { SupplyPage } from './Containers/SupplyPage'
 import { DemandPage } from './Containers/DemandPage'
 import { EditSupply } from './Containers/EditSupply'
+import { EditDemand } from './Containers/EditDemand'
 import { store } from '../src/store'
 import { Provider } from 'react-redux'
 
@@ -22,6 +23,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <DemandPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/edit-demand'
+          element={
+            <ProtectedRoute>
+              <EditDemand />
             </ProtectedRoute>
           }
         />
