@@ -8,7 +8,7 @@ import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { getClients, getSkills, getSingleDemand, updateDemand } from '../API'
 import { formatSkills, formatClients, demandFormFormatter, lowerCaseKeys } from '../Data/Format'
-import { demand_status, demand_grade, form } from '../Data/Data'
+import { demand_status, demand_grade, demandForm as form } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addDemandToDashboard, removeDemandFromDashboard } from '../Slices/DashboardSlice'
 
@@ -80,10 +80,7 @@ export const EditDemand = () => {
                       name='Picker'
                       pattern='*'
                       topLabel
-                      onChange={(val) => {
-                        console.log(val, formItem)
-                        setFormData({ ...formData, [formItem]: val })
-                      }}
+                      onChange={(val) => setFormData({ ...formData, [formItem]: val })}
                       options={inputDefaults[formItem].options}
                       labelKey='name'
                       placeholder={formItem === 'skillsID' ? defaultSkillName : formData[formItem]}

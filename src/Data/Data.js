@@ -3,7 +3,7 @@ export const applicant_status = [
   { name: 'Unavailable', value: 'Unavailable' },
   { name: 'Screening', value: 'Screening' },
   { name: 'L1 select', value: 'L1 select' },
-  { name: 'L2 select', value: 5 },
+  { name: 'L2 select', value: 'L2 select' },
   { name: 'Client select', value: 'Client select' },
   { name: 'Offered', value: 'Offered' },
 ]
@@ -15,7 +15,7 @@ export const applicant_type = [
 ]
 
 export const demand_status = [
-  { name: 'Proposed', value: 'proposed' },
+  { name: 'Proposed', value: 'Proposed' },
   { name: 'Profiles Required', value: 'Profiles Required' },
   { name: 'Resource Identified', value: 'Resource Identified' },
   { name: 'Demand Validation', value: 'Demand Validation' },
@@ -36,7 +36,7 @@ export const demand_grade = [
   { name: 'E2', value: 'E2' },
 ]
 
-export let form = {
+export let demandForm = {
   codeRequisition: null,
   startDate: null,
   clientID: null,

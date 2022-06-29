@@ -8,7 +8,7 @@ import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { getClients, getSkills, addDemand } from '../API'
 import { formatSkills, formatClients, demandFormFormatter } from '../Data/Format'
-import { demand_status, demand_grade, form } from '../Data/Data'
+import { demand_status, demand_grade, demandForm as form } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addDemandToDashboard } from '../Slices/DashboardSlice'
 
@@ -28,38 +28,7 @@ export const DemandPage = () => {
   }, [])
 
   const [formData, setFormData] = useState(form)
-  // input component default values
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
-
-  // mapping input components
-  const inputs = Object.keys(form).map((formItem, index) => {
-    if (formItem === 'clientID' || formItem === 'skillsID' || formItem === 'grade' || formItem === 'status') {
-      return (
-        <CG.Container margin='10px' key={index}>
-          <CG.Picker
-            id='Picker'
-            name='Picker'
-            pattern='*'
-            topLabel
-            onChange={(val) => setFormData({ ...formData, [formItem]: val })}
-            options={inputDefaults[formItem].options}
-            labelKey='name'
-            placeholder={`Select ${formItem}`}
-            label={inputDefaults[formItem].label}
-          />
-        </CG.Container>
-      )
-    }
-    return (
-      <CG.Container margin='10px' key={index}>
-        <CG.Input
-          label={inputDefaults[formItem].label}
-          onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
-          margin={0.5}
-        />
-      </CG.Container>
-    )
-  })
 
   const handleSubmit = () => {
     const skillName = pickerSkills[formData.skillsID - 1].name
@@ -80,7 +49,35 @@ export const DemandPage = () => {
         <div style={{ width: 600 }}>
           <CG.Heading>Add a new demand</CG.Heading>
           <CG.Container>
-            {inputs}
+            {Object.keys(form).map((formItem, index) => {
+              if (formItem === 'clientID' || formItem === 'skillsID' || formItem === 'grade' || formItem === 'status') {
+                return (
+                  <CG.Container margin='10px' key={index}>
+                    <CG.Picker
+                      id='Picker'
+                      name='Picker'
+                      pattern='*'
+                      topLabel
+                      onChange={(val) => setFormData({ ...formData, [formItem]: val })}
+                      options={inputDefaults[formItem].options}
+                      labelKey='name'
+                      placeholder={inputDefaults[formItem].placeholder}
+                      label={inputDefaults[formItem].label}
+                    />
+                  </CG.Container>
+                )
+              }
+              return (
+                <CG.Container margin='10px' key={index}>
+                  <CG.Input
+                    label={inputDefaults[formItem].label}
+                    onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
+                    margin={0.5}
+                    placeholder={inputDefaults[formItem].placeholder}
+                  />
+                </CG.Container>
+              )
+            })}
             <CG.Container margin='10px'>
               <Row justify='around'>
                 <CG.Button text='submit' onClick={handleSubmit} />
