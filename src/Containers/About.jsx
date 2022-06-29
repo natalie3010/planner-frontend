@@ -9,18 +9,19 @@ import { useNavigate } from 'react-router-dom'
 export const About = () => {
   const navigate = useNavigate()
   return (
-    <div style={{ height: '1000px' }}>
+    <div>
       <Navigation />
       <div style={{ padding: 20 }}>
         <Row>
           <Col style={{ padding: '20', width: '50%', display: 'block', float: 'left' }}>
-            <CG.Heading size='M' weight='bold' margin='10px'>
-              Helping millions grow better.
-            </CG.Heading>
-
+            <CG.Container marginBottom='10px'>
+              <CG.Heading size='M' weight='bold' style={{ marginBottom: '10px' }}>
+                Helping millions grow better.
+              </CG.Heading>
+            </CG.Container>
             <img src='/images/thames-g77b9e635d_1280.jpg' width='100%' height='300' alt='pic' />
 
-            <CG.Heading size='S' weight='bold' marginBottom='10px' style={{ marginBottom: '10px' }}>
+            <CG.Heading size='S' weight='bold' style={{ marginBottom: '10px', marginTop: '10px' }}>
               Our Mission
             </CG.Heading>
             <CG.Body size='M'>
@@ -29,29 +30,33 @@ export const About = () => {
             <CG.Body size='M'>The request is the demand and the new resource recruited is the supply.</CG.Body>
           </Col>
           <Col style={{ padding: '20', width: '50%', display: 'block', float: 'right' }}>
-            <CG.Heading size='M' weight='bold'>
+            <CG.Heading size='M' weight='bold' style={{ marginBottom: '10px' }}>
               Get in touch
             </CG.Heading>
 
-            <CG.Heading size='S' weight='bold'>
+            <CG.Heading size='S' weight='bold' style={{ marginBottom: '10px' }}>
               Contact customer support
             </CG.Heading>
             <CG.Body size='M'>
               Sometimes you need a little help from your friends. Or a hubspot support rep. Don't worry...we're here for
               you.
             </CG.Body>
-            <CG.Body size='M'>+44 7444999999</CG.Body>
+            <CG.Body size='M' style={{ marginBottom: '0' }}>
+              +44 7444999999
+            </CG.Body>
 
-            <CG.Heading size='XS' weight='bold'>
+            <CG.Heading size='XS' weight='bold' style={{ marginTop: '10px', marginBottom: '10px' }}>
               London (UK Office)
             </CG.Heading>
-            <CG.Heading size='XS' weight='bold'>
+            <CG.Heading size='XS' weight='bold' style={{ marginTop: '0', marginBottom: '10px' }}>
               Address
             </CG.Heading>
             <CG.Body size='M'>40 Holborn Viaduct, </CG.Body>
             <CG.Body size='M'> London,</CG.Body>
-            <CG.Body size='M'>EC1N 2PB</CG.Body>
-            <CG.Heading size='XS' weight='bold'>
+            <CG.Body size='M' style={{ marginBottom: '0' }}>
+              EC1N 2PB
+            </CG.Body>
+            <CG.Heading size='XS' weight='bold' style={{ marginBottom: '10px', marginTop: '10px' }}>
               Phone
             </CG.Heading>
             <CG.Body size='M'>+44 99999999</CG.Body>

@@ -6,6 +6,7 @@ import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { Row, Col } from 'react-grid-system'
 
 export const Information = () => {
   let { skillname } = useParams()
@@ -46,11 +47,9 @@ export const Information = () => {
         })
     }
   }
-  const deleterow = (i, e) => {
-    getData(data.filter((v, index) => index !== i))
-  }
+
   return (
-    <div style={{ height: '900px' }}>
+    <div>
       <Navigation />
       <div style={{ marginLeft: '35px' }}>
         <CG.Heading>Supply information for {skillname} </CG.Heading>
@@ -70,9 +69,9 @@ export const Information = () => {
             divider
             selectedKeys={[
               'ApplicantID',
-              'FirstName',
-              'Surname',
-              'Status',
+              'ApplicantFirstName',
+              'ApplicantLastName',
+              'ApplicantStatus',
               'SkillsID',
               'Notes',
               'ApplicantType',
@@ -87,14 +86,14 @@ export const Information = () => {
               {
                 tableHeader: 'Delete',
                 label: 'Delete',
-                handler: (index) => splice(index, 1),
+                handler: (i) => data.splice(i, 1),
               },
             ]}
           />
         </Col>
       </Row>
 
-      <div style={{ marginTop: '50px', marginLeft: '35px' }}>
+      <div style={{ marginTop: '50px', marginLeft: '35px', marginBottom: '100px' }}>
         <CG.Button text='Return to dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
       </div>
 

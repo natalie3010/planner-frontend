@@ -51,6 +51,7 @@ export const DemandInformation = () => {
   const deleterow = (i, e) => {
     getData(data.filter((v, index) => index !== i))
   }
+
   return (
     <div style={{ textAlign: 'center', height: '1200px' }}>
       <Navigation />

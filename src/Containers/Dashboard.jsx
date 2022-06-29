@@ -24,7 +24,7 @@ export const Dashboard = () => {
   }, [])
 
   return (
-    <div style={{ height: '900px' }}>
+    <div>
       <Row justify='between'>
         <Col md={12} align='center' justify='center'>
           <Navigation />

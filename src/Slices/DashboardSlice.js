@@ -4,7 +4,7 @@ export const dashboardSlice = createSlice({
   name: 'dashboard',
   initialState: {
     dashboardData: null,
-    selectedApplicant: 32,
+    selectedApplicant: 5,
   },
   reducers: {
     setupDashboard: (state, action) => {

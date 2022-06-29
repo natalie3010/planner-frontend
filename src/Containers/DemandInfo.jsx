@@ -51,7 +51,7 @@ export const DemandInformation = () => {
   }
 
   return (
-    <div style={{ height: '1200px' }}>
+    <div>
       <Navigation />
       <div style={{ marginLeft: '35px' }}>
         <CG.Heading>Demand information for {skillname}</CG.Heading>
@@ -89,14 +89,14 @@ export const DemandInformation = () => {
               {
                 tableHeader: 'Delete',
                 label: 'Delete',
-                handler: (index) => splice(index, 1),
+                handler: (i) => data.splice(i, 1),
               },
             ]}
           />
         </Col>
       </Row>
 
-      <div style={{ marginTop: '50px', marginLeft: '35px' }}>
+      <div style={{ marginTop: '50px', marginLeft: '35px', marginBottom: '100px' }}>
         <CG.Button text='Return to dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
       </div>
 
