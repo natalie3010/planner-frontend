@@ -72,3 +72,13 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
   }
   return inputDefaults
 }
+
+export const lowerCaseKeys = (obj) => {
+  let lowerCased = {}
+
+  for (const key in obj) {
+    const newKey = key[0].toLowerCase() + key.slice(1)
+    lowerCased[newKey] = obj[key]
+  }
+  return lowerCased
+}

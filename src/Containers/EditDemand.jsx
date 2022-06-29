@@ -7,10 +7,10 @@ import { CG } from 'cap-shared-components'
 
 import { useNavigate } from 'react-router-dom'
 import { getClients, getSkills, getSingleDemand, updateDemand } from '../API'
-import { formatSkills, formatClients, demandFormFormatter } from '../Data/Format'
+import { formatSkills, formatClients, demandFormFormatter, lowerCaseKeys } from '../Data/Format'
 import { demand_status, demand_grade, form } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
-import { addDemandToDashboard } from '../Slices/DashboardSlice'
+import { addDemandToDashboard, removeDemandFromDashboard } from '../Slices/DashboardSlice'
 
 export const EditDemand = () => {
   const navigate = useNavigate()
@@ -18,7 +18,7 @@ export const EditDemand = () => {
   const authToken = useSelector((state) => state.user.authToken)
   const demandID = useSelector((state) => state.dashboard.selectedDemand)
   const [pickerSkills, setPickerSkills] = useState(null)
-  //const [pickkerSkillName, setPickerSkillName] = useState(null)
+  const [defaultSkillName, setDefaultSkillName] = useState(null)
   const [pickerClients, setPickerClients] = useState(null)
   const [formData, setFormData] = useState(null)
 
@@ -31,47 +31,37 @@ export const EditDemand = () => {
 
     const requestDemand = getSingleDemand(demandID, authToken)
     requestDemand.then((demandResult) => {
-      setFormData(demandResult)
+      setFormData(lowerCaseKeys(demandResult))
       const requestSkills = getSkills(authToken)
       requestSkills.then((skillsResult) => {
         const myArray = formatSkills(skillsResult, demandResult.SkillsID)
         setPickerSkills(myArray[0])
-        //setPickerSkillName(myArray[1])
+        setDefaultSkillName(myArray[1])
       })
     })
   }, [])
 
-  // input component default values
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
 
   const handleSubmit = () => {
-    const data = {
-      demandID: demandID,
-      codeRequisition: formData.CodeRequisition,
-      startDate: formData.StartDate,
-      clientID: formData.ClientID, //number showing string??
-      originatorName: formData.OriginatorName,
-      skillsID: formData.SkillsID, //number
-      probability: formData.Probability, //number
-      grade: formData.Grade,
-      selectedApplicant: formData.SelectedApplicant,
-      status: formData.Status,
-      notes: formData.Notes,
-      proposedApplicant: formData.ProposedApplicant,
-      creationDate: formData.CreationDate,
-      location: formData.Location,
-    }
-    const skillName = pickerSkills[formData.SkillsID - 1].name
-    console.log(skillName)
-    console.log(data)
-    /* const request = updateDemand(authToken, demandID ,data)
+    const newskillname = pickerSkills[formData.skillsID - 1].name
+
+    const request = updateDemand(authToken, demandID, formData)
     request.then((result) => {
-      dispatch(addDemandToDashboard(skillName))
-      navigate('/protectedRoute/dashboard')
-    }) */
+      if (defaultSkillName === newskillname) {
+        navigate('/protectedRoute/dashboard')
+      } else if (newskillname && defaultSkillName) {
+        dispatch(removeDemandFromDashboard(defaultSkillName))
+        dispatch(addDemandToDashboard(newskillname))
+        navigate('/protectedRoute/dashboard')
+      } else if (newskillname) {
+        dispatch(addDemandToDashboard(newskillname))
+        navigate('/protectedRoute/dashboard')
+      }
+    })
   }
 
-  if (!pickerClients || !pickerSkills || !formData) {
+  if (!pickerClients || !pickerSkills || !formData || !defaultSkillName) {
     return <CG.Body>loading...</CG.Body>
   }
   return (
@@ -90,10 +80,13 @@ export const EditDemand = () => {
                       name='Picker'
                       pattern='*'
                       topLabel
-                      onChange={(val) => setFormData({ ...formData, [formItem]: val })}
+                      onChange={(val) => {
+                        console.log(val, formItem)
+                        setFormData({ ...formData, [formItem]: val })
+                      }}
                       options={inputDefaults[formItem].options}
                       labelKey='name'
-                      placeholder={formData[inputDefaults[formItem].responseKey]}
+                      placeholder={formItem === 'skillsID' ? defaultSkillName : formData[formItem]}
                       label={inputDefaults[formItem].label}
                     />
                   </CG.Container>
@@ -102,7 +95,7 @@ export const EditDemand = () => {
               return (
                 <CG.Container margin='10px' key={index}>
                   <CG.Input
-                    initValue={formData[inputDefaults[formItem].responseKey] ?? ''}
+                    initValue={formData[formItem] ?? ''}
                     label={inputDefaults[formItem].label}
                     onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
                     margin={0.5}
