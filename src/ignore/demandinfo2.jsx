@@ -3,7 +3,6 @@ import { Navigation } from '../Components/Navigation'
 import { Footer } from '../Components/Footer'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
-import { Row, Col } from 'react-grid-system'
 
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -51,55 +50,46 @@ export const DemandInformation = () => {
   }
 
   return (
-    <div style={{ height: '1200px' }}>
+    <div style={{ textAlign: 'center', height: '1200px' }}>
       <Navigation />
-      <div style={{ marginLeft: '35px' }}>
+      <div style={{ textAlign: 'center' }}>
         <CG.Heading>Demand information for {skillname}</CG.Heading>
-      </div>
-      <Row
-        justify='center'
-        nogutter={false}
-        style={{ margin: '20px', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}
-      >
-        <Col md={18}>
-          <CG.Table
-            customKeyNames={{
-              firstname: 'ApplicantFirstName',
-              lastname: 'ApplicantLastName',
-            }}
-            data={data}
-            divider
-            selectedKeys={[
-              'DemandID',
-              'CodeRequisition',
-              'ClientID',
-              'SkillsID',
-              'Probability',
-              'StartDate',
-              'Grade',
-              'ApplicantID',
-              'Status',
-            ]}
-            buttons={[
-              {
-                tableHeader: 'Edit',
-                label: 'Edit',
-                handler: (value) => window.open('/edit-supply'),
-              },
-              {
-                tableHeader: 'Delete',
-                label: 'Delete',
-                handler: (index) => splice(index, 1),
-              },
-            ]}
-          />
-        </Col>
-      </Row>
+        <Row justify="around">
+    <Col md={3}>
+      <b>
+        Divider
+      </b>
+    </Col>
+    <Col>
+      <CG.Table
+        {data.map((item,i) => ( 
+          <tr key={i}></tr>
+        data={[
+          {
+            DemandID: {item.DemandID},
+            CodeRequisition:  {item.CodeRequisition},
+            ClientID: {item.ClientID},
+            SkillsID: {item.SkillsID},
+            Probability: {item.Probability},
+            StartDate: {item.StartDate},
+            Grade:  {item.Grade},
+            SelectedApplicantID: {item.SelectedApplicantID},
+            Status:{item.Status}
 
-      <div style={{ marginTop: '50px', marginLeft: '35px' }}>
-        <CG.Button text='Return to dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
+          },
+          
+        ]}))}
+        divider
+        
+      />
+    </Col>
+  </Row>
+       
+       
+        <div style={{ marginTop: '50px' }}>
+          <CG.Button text='Return to dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
+        </div>
       </div>
-
       <Footer />
     </div>
   )

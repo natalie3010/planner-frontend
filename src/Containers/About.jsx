@@ -14,13 +14,13 @@ export const About = () => {
       <div style={{ padding: 20 }}>
         <Row>
           <Col style={{ padding: '20', width: '50%', display: 'block', float: 'left' }}>
-            <CG.Heading size='M' weight='bold'>
+            <CG.Heading size='M' weight='bold' margin='10px'>
               Helping millions grow better.
             </CG.Heading>
 
             <img src='/images/thames-g77b9e635d_1280.jpg' width='100%' height='300' alt='pic' />
 
-            <CG.Heading size='S' weight='bold'>
+            <CG.Heading size='S' weight='bold' marginBottom='10px' style={{ marginBottom: '10px' }}>
               Our Mission
             </CG.Heading>
             <CG.Body size='M'>
