@@ -16,6 +16,7 @@ export const Information = () => {
   const token = useSelector((state) => state.user.authToken)
   console.log(token)
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+  const requestObject2 = { method: 'DELETE', headers: { 'x-access-token': token } }
   const [data, getData] = useState([])
   const navigate = useNavigate()
 
@@ -47,12 +48,17 @@ export const Information = () => {
         })
     }
   }
-
+  const deleterow = (ApplicantID) => {
+    let url = `https://localhost:4001/api/supply/${ApplicantID}`
+    fetch(url, requestObject2).then(() => this.setState({ status: 'Delete successful' }))
+  }
   return (
     <div>
       <Navigation />
       <div style={{ marginLeft: '35px' }}>
-        <CG.Heading>Supply information for {skillname} </CG.Heading>
+        <CG.Heading size='M' weight='bold'>
+          Supply information for {skillname}{' '}
+        </CG.Heading>
       </div>
       <Row
         justify='center'
@@ -86,7 +92,7 @@ export const Information = () => {
               {
                 tableHeader: 'Delete',
                 label: 'Delete',
-                handler: (i) => data.splice(i, 1),
+                handler: (value) => deleterow(value.ApplicantID),
               },
             ]}
           />
