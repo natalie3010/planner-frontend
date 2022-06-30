@@ -51,10 +51,8 @@ export const SupplyPage = () => {
       location: supplyLocation,
     }
     if (checkIfFormIsValidated()) {
-      console.log('validated')
       sendata(data)
     } else {
-      console.log('not validated')
       setFormValidated(false)
     }
   }
@@ -62,7 +60,6 @@ export const SupplyPage = () => {
   const checkIfFormIsValidated = () => {
     let validated = false
     if (supplyFName && supplyLName && supplyStatus && supplySkillId && supplyType) {
-      console.log('validated turned true')
       validated = true
     }
     return validated

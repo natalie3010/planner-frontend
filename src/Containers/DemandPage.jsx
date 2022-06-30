@@ -75,6 +75,10 @@ export const DemandPage = () => {
                     margin={0.5}
                     placeholder={inputDefaults[formItem].placeholder}
                   />
+
+                  <span>
+                    {inputDefaults[formItem].validators[0] && inputDefaults[formItem].validators[0].errorDisplayed}
+                  </span>
                 </CG.Container>
               )
             })}
