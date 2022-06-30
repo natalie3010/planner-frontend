@@ -27,6 +27,14 @@ export const dashboardSlice = createSlice({
       const skillName = action.payload
       state.dashboardData.filter((skill) => skill.skill_name === skillName)[0].demand_count -= 1
     },
+    selectDemandID: (state, action) => {
+      const demandID = action.payload
+      state.selectedDemand = demandID
+    },
+    selectApplicantID: (state, action) => {
+      const applicantID = action.payload
+      state.selectedApplicant = applicantID
+    },
   },
 })
 
@@ -36,6 +44,8 @@ export const {
   removeSupplyFromDashboard,
   addDemandToDashboard,
   removeDemandFromDashboard,
+  selectDemandID,
+  selectApplicantID,
 } = dashboardSlice.actions
 
 export default dashboardSlice.reducer

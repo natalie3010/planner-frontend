@@ -6,9 +6,12 @@ import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { selectApplicantID } from '../Slices/DashboardSlice'
 import { Row, Col } from 'react-grid-system'
 
-export const Information = () => {
+export const SupplyInformation = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   let { skillname } = useParams()
   console.log(window.location.pathname)
   console.log(window.location.href)
@@ -18,36 +21,24 @@ export const Information = () => {
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
   const requestObject2 = { method: 'DELETE', headers: { 'x-access-token': token } }
   const [data, getData] = useState([])
-  const navigate = useNavigate()
 
   useEffect(() => {
     fetchData()
   }, [skillname])
 
-  const fetchData = (skill_name) => {
-    if (skillname === 'UI UX Designer') {
-      let url = 'https://localhost:4001/api/supply?selectedSkills=UI/UX Designer'
-      console.log(url)
-      fetch(url, requestObject)
-        .then((res) => res.json())
+  const fetchData = () => {
+    let url = `https://localhost:4001/api/supply?selectedSkills=${skillname}`
+    console.log('url is:', url)
 
-        .then((response) => {
-          console.log(response)
-          getData(response)
-        })
-    } else {
-      let url = 'https://localhost:4001/api/supply?selectedSkills=' + skillname
-      console.log(url)
+    fetch(url, requestObject)
+      .then((res) => res.json())
 
-      fetch(url, requestObject)
-        .then((res) => res.json())
-
-        .then((response) => {
-          console.log(response)
-          getData(response)
-        })
-    }
+      .then((response) => {
+        console.log(response)
+        getData(response)
+      })
   }
+
   const deleterow = (ApplicantID) => {
     let url = `https://localhost:4001/api/supply/${ApplicantID}`
     fetch(url, requestObject2).then(() => this.setState({ status: 'Delete successful' }))
@@ -87,7 +78,10 @@ export const Information = () => {
               {
                 tableHeader: 'Edit',
                 label: 'Edit',
-                handler: (value) => window.open('/edit-supply'),
+                handler: (value) => {
+                  dispatch(selectApplicantID(value.ApplicantID))
+                  navigate('/edit-supply')
+                },
               },
               {
                 tableHeader: 'Delete',

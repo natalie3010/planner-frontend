@@ -7,7 +7,7 @@ import { Login } from './Containers/Login'
 import { ProtectedRoute } from './ProtectedRoute'
 import { SupplyPage } from './Containers/SupplyPage'
 import { About } from './Containers/About'
-import { Information } from './Containers/SupplyInfo'
+import { SupplyInformation } from './Containers/SupplyInfo'
 import { DemandInformation } from './Containers/DemandInfo'
 
 import allReducers from './Reducers/allReducers'
@@ -75,16 +75,16 @@ const App = () => {
         />
 
         <Route
-          path='/supplyinfo/:skillname'
+          path='/list-supply/:skillname'
           element={
             <ProtectedRoute>
-              <Information />
+              <SupplyInformation /> {/* rename */}
             </ProtectedRoute>
           }
         />
 
         <Route
-          path='/demandinfo/:skillname'
+          path='/list-demand/:skillname'
           element={
             <ProtectedRoute>
               <DemandInformation />

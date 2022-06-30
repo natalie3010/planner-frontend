@@ -23,6 +23,10 @@ export const Dashboard = () => {
     }
   }, [])
 
+  const onChartClickNavigate = (page, skillName) => {
+    navigate(`/list-${page}/${skillName}`)
+  }
+
   return (
     <div>
       <Row justify='between'>
@@ -32,7 +36,11 @@ export const Dashboard = () => {
             <CG.Heading size='M' weight='bold'>
               Skills Based On Supply and Demand
             </CG.Heading>
-            {!dashboardData ? <CG.Body>'loading...'</CG.Body> : <BarChart data={dashboardData} />}
+            {!dashboardData ? (
+              <CG.Body>'loading...'</CG.Body>
+            ) : (
+              <BarChart chartData={dashboardData} navigateToListPage={onChartClickNavigate} />
+            )}
             <>
               <CG.Button text='Add a supply' onClick={() => navigate('/supply')}></CG.Button>
               <CG.Button text='Add a demand' onClick={() => navigate('/demand')}></CG.Button>

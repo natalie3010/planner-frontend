@@ -6,9 +6,12 @@ import { useNavigate } from 'react-router-dom'
 import { Row, Col } from 'react-grid-system'
 
 import { useParams } from 'react-router-dom'
+import { selectDemandID } from '../Slices/DashboardSlice'
 import { useSelector, useDispatch } from 'react-redux'
 
 export const DemandInformation = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   let { skillname } = useParams()
   console.log(window.location.pathname)
   console.log(window.location.href)
@@ -19,35 +22,21 @@ export const DemandInformation = () => {
   const requestObject2 = { method: 'DELETE', headers: { 'x-access-token': token } }
   const [data, getData] = useState([])
 
-  const navigate = useNavigate()
   useEffect(() => {
     fetchData()
   }, [skillname])
 
   const fetchData = () => {
-    if (skillname === 'UI UX Designer') {
-      let url = 'https://localhost:4001/api/demand?selectedSkills=UI/UX Designer'
-      console.log(url)
+    let url = `https://localhost:4001/api/demand?selectedSkills=${skillname}`
+    console.log('url is: ', url)
 
-      fetch(url, requestObject)
-        .then((res) => res.json())
+    fetch(url, requestObject)
+      .then((res) => res.json())
 
-        .then((response) => {
-          console.log(response)
-          getData(response)
-        })
-    } else {
-      let url = 'https://localhost:4001/api/demand?selectedSkills=' + skillname
-      console.log(url)
-
-      fetch(url, requestObject)
-        .then((res) => res.json())
-
-        .then((response) => {
-          console.log(response)
-          getData(response)
-        })
-    }
+      .then((response) => {
+        console.log(response)
+        getData(response)
+      })
   }
   const deleterow = (DemandID) => {
     let url = `https://localhost:4001/api/demand/${DemandID}`
@@ -89,7 +78,10 @@ export const DemandInformation = () => {
               {
                 tableHeader: 'Edit',
                 label: 'Edit',
-                handler: (value) => window.open('/edit-supply'),
+                handler: (value) => {
+                  dispatch(selectDemandID(value.DemandID))
+                  navigate('/edit-demand')
+                },
               },
               {
                 tableHeader: 'Delete',
