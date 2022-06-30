@@ -11,6 +11,8 @@ import { EditSupply } from './Containers/EditSupply'
 import { EditDemand } from './Containers/EditDemand'
 import { store } from '../src/store'
 import { Provider } from 'react-redux'
+import { CG } from 'cap-shared-components'
+import { WorkforcePlanner } from '../themes/workforcePlanner'
 
 const App = () => {
   return (
@@ -64,6 +66,8 @@ const App = () => {
 }
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <App />
+    <CG.ThemeProvider theme={WorkforcePlanner}>
+      <App />
+    </CG.ThemeProvider>
   </Provider>
 )
