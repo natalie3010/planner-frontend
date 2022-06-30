@@ -6,31 +6,28 @@ import { logout } from '../Slices/LoginSlice'
 export const Navigation = () => {
   const dispatch = useDispatch()
 
-  return <div>yoo</div> /* (
-    <CG.Navigation
-      inputPlaceholder='Search'
-      withButtons
-      homeIcon={{
-        type: 'Building',
-        height: '26px',
-        width: '26px',
-      }}
-      homeLink={{
-        name: 'Workforce Planner',
-        url: '/dashboard',
-      }}
-      buttons={[
-        {
-          buttonText: 'Contact Us',
-          onClick: () => {},
-        },
-        {
-          buttonText: 'Logout',
-          onClick: () => {
-            dispatch(logout())
-          },
-        },
-      ]}
-    />
-  ) */
+  return (
+    <CG.NavbarContainer>
+      <CG.NavbarContent>
+        <CG.HomeLink
+          homeLink={{ url: '?path=/story/template-cashorted--cashorted' }}
+          homeIcon={{
+            type: 'WorkforcePlanner',
+            height: '50px',
+            width: '200px',
+          }}
+        />
+        <div style={{ alignSelf: 'center' }}>
+          <CG.Button text='Contact Us' />
+          <span> </span>
+          <CG.Button
+            text='Logout'
+            onClick={() => {
+              dispatch(logout())
+            }}
+          />
+        </div>
+      </CG.NavbarContent>
+    </CG.NavbarContainer>
+  )
 }
