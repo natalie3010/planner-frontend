@@ -55,7 +55,6 @@ export const DemandPage = () => {
     requiredInputs.forEach((input) => {
       const inputData = formData[input[0]]
       const regexPattern = new RegExp(input[1])
-      console.log(regexPattern)
       if (!inputData) {
         validated = false
       } else if (!regexPattern.test(inputData)) {
