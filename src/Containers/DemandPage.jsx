@@ -67,6 +67,13 @@ export const DemandPage = () => {
                   </CG.Container>
                 )
               }
+              let displayErrorBox = false
+              let regexPattern
+              if (inputDefaults[formItem].validators[0]) {
+                displayErrorBox = true
+                regexPattern = new RegExp(inputDefaults[formItem].validators[0].pattern)
+              }
+
               return (
                 <CG.Container margin='10px' key={index}>
                   <CG.Input
@@ -75,10 +82,9 @@ export const DemandPage = () => {
                     margin={0.5}
                     placeholder={inputDefaults[formItem].placeholder}
                   />
-
-                  <span>
-                    {inputDefaults[formItem].validators[0] && inputDefaults[formItem].validators[0].errorDisplayed}
-                  </span>
+                  {formData[formItem] && displayErrorBox && !regexPattern.test(formData[formItem]) ? (
+                    <span>{inputDefaults[formItem].validators[0].errorDisplayed}</span>
+                  ) : null}
                 </CG.Container>
               )
             })}
