@@ -6,7 +6,9 @@ import { Dashboard } from './Containers/Dashboard'
 import { Login } from './Containers/Login'
 import { ProtectedRoute } from './ProtectedRoute'
 import { SupplyPage } from './Containers/SupplyPage'
+import { DemandPage } from './Containers/DemandPage'
 import { EditSupply } from './Containers/EditSupply'
+import { EditDemand } from './Containers/EditDemand'
 import { store } from '../src/store'
 import { Provider } from 'react-redux'
 
@@ -16,6 +18,22 @@ const App = () => {
       <Routes>
         <Route path='/*' element={<Login />} />
         <Route path='/login' element={<Login />} />
+        <Route
+          path='/demand'
+          element={
+            <ProtectedRoute>
+              <DemandPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/edit-demand'
+          element={
+            <ProtectedRoute>
+              <EditDemand />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path='/supply'
           element={
