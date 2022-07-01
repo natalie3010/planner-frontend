@@ -13,28 +13,24 @@ export const SupplyInformation = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   let { skillname } = useParams()
-  console.log(window.location.pathname)
-  console.log(window.location.href)
-  console.log(skillname)
+
   const token = useSelector((state) => state.user.authToken)
-  console.log(token)
+
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
   const requestObject2 = { method: 'DELETE', headers: { 'x-access-token': token } }
   const [data, getData] = useState([])
 
   useEffect(() => {
     fetchData()
-  }, [skillname])
+  }, [skillname, data])
 
   const fetchData = () => {
     let url = `https://localhost:4001/api/supply?selectedSkills=${skillname}`
-    console.log('url is:', url)
 
     fetch(url, requestObject)
       .then((res) => res.json())
 
       .then((response) => {
-        console.log(response)
         getData(response)
       })
   }
@@ -51,6 +47,7 @@ export const SupplyInformation = () => {
           Supply information for {skillname}{' '}
         </CG.Heading>
       </div>
+
       <Row
         justify='center'
         nogutter={false}
@@ -87,6 +84,11 @@ export const SupplyInformation = () => {
                 tableHeader: 'Delete',
                 label: 'Delete',
                 handler: (value) => deleterow(value.ApplicantID),
+                Icon: {
+                  type: 'Edit',
+                  height: '20px',
+                  width: '20px',
+                },
               },
             ]}
           />
