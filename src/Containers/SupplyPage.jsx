@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react/cjs/react.development'
-import { Navigation } from '../Components/Navigation'
-import { Footer } from '../Components/Footer'
 import { Col, Row } from 'react-grid-system'
 
 import { CG } from 'cap-shared-components'
@@ -63,7 +61,6 @@ export const SupplyPage = () => {
   return (
     <Row justify='between'>
       <Col md={12} align='center' justify='center'>
-        <Navigation />
         <div style={{ width: 600 }}>
           <CG.Heading>Add a new supply</CG.Heading>
           <CG.Container>
@@ -131,7 +128,6 @@ export const SupplyPage = () => {
             </CG.Container>
           </CG.Container>
         </div>
-        <Footer />
       </Col>
     </Row>
   )
