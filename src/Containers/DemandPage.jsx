@@ -32,7 +32,7 @@ export const DemandPage = () => {
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
 
   const handleSubmit = () => {
-    //const skillName = pickerSkills[formData.skillsID - 1].name
+    const skillName = pickerSkills[formData.skillsID - 1].name
     if (checkIfFormIsValidated()) {
       const request = addDemand(authToken, formData)
       request.then((result) => {
