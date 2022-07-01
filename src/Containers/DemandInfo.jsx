@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { Row, Col } from 'react-grid-system'
 
 import { useParams } from 'react-router-dom'
-import { selectDemandID } from '../Slices/DashboardSlice'
+import { selectDemandID, removeDemandFromDashboard } from '../Slices/DashboardSlice'
 import { useSelector, useDispatch } from 'react-redux'
 
 export const DemandInformation = () => {
@@ -36,7 +36,11 @@ export const DemandInformation = () => {
   }
   const deleterow = (DemandID) => {
     let url = `https://localhost:4001/api/demand/${DemandID}`
-    fetch(url, requestObject2).then(() => this.setState({ status: 'Delete successful' }))
+    fetch(url, requestObject2).then(
+      () => {
+        dispatch(removeDemandFromDashboard(skillname))
+      } //this.setState({ status: 'Delete successful' }))
+    )
   }
   return (
     <div>

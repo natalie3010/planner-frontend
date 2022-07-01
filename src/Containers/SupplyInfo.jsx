@@ -6,7 +6,7 @@ import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectApplicantID } from '../Slices/DashboardSlice'
+import { selectApplicantID, removeSupplyFromDashboard } from '../Slices/DashboardSlice'
 import { Row, Col } from 'react-grid-system'
 
 export const SupplyInformation = () => {
@@ -37,8 +37,16 @@ export const SupplyInformation = () => {
 
   const deleterow = (ApplicantID) => {
     let url = `https://localhost:4001/api/supply/${ApplicantID}`
-    fetch(url, requestObject2).then(() => this.setState({ status: 'Delete successful' }))
+    fetch(url, requestObject2).then(
+      () => {
+        dispatch(removeSupplyFromDashboard(skillname))
+        console.log('from supply info' + skillname)
+      }
+
+      //  this.setState({ status: 'Delete successful' })
+    )
   }
+  console.log(skillname)
   return (
     <div>
       <Navigation />
