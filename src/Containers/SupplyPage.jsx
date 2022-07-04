@@ -31,6 +31,14 @@ export const SupplyPage = () => {
   const [supplyLocation, setSupplyLocation] = useState(null)
   // validators
   const [formValidated, setFormValidated] = useState(true)
+  // error state
+  const [showErrors, setShowErrors] = useState({
+    applicantFirstName: false,
+    applicantLastName: false,
+    notes: false,
+    applicantType: false,
+    location: false,
+  })
 
   useEffect(() => {
     const requestSkills = getSkills(authToken)
@@ -59,6 +67,9 @@ export const SupplyPage = () => {
 
   const checkIfFormIsValidated = () => {
     let validated = false
+    supplyFName
+      ? setShowErrors({ ...showErrors, applicantFirstName: false })
+      : setShowErrors({ ...showErrors, applicantFirstName: true })
     if (supplyFName && supplyLName && supplyStatus && supplySkillId && supplyType) {
       validated = true
     }
@@ -84,16 +95,27 @@ export const SupplyPage = () => {
           <CG.Heading>Add a new supply</CG.Heading>
           <CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'First name'} onInput={(e) => setSupplyFName(e.target.value)} margin={0.5} required />
-              {supplyFName ? null : formValidated ? null : (
-                <span>{supplyFormValidators.supplyFirstName.validators[0].errorDisplayed}</span>
-              )}
+              <CG.Input
+                label={'First name'}
+                onInput={(e) => {
+                  setSupplyFName(e.target.value)
+                  setShowErrors({ ...showErrors, applicantFirstName: false })
+                }}
+                margin={0.5}
+                hasError={showErrors.applicantFirstName}
+              />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Last name'} onInput={(e) => setSupplyLName(e.target.value)} margin={0.5} required />
-              {supplyLName ? null : formValidated ? null : (
-                <span>{supplyFormValidators.supplyLastName.validators[0].errorDisplayed}</span>
-              )}
+              <CG.Input
+                label={'Last name'}
+                onInput={(e) => {
+                  setSupplyLName(e.target.value)
+                  setShowErrors({ ...showErrors, applicantLastName: false })
+                }}
+                margin={0.5}
+                hasError={showErrors.applicantFirstName}
+                required
+              />
             </CG.Container>
             <CG.Container margin='10px'>
               <CG.Picker
