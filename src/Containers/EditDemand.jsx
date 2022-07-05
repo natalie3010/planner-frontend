@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-grid-system'
 
 import { CG } from 'cap-shared-components'
-
+import { Navigation } from '../Components/Navigation'
+import { Footer } from '../Components/Footer'
 import { useNavigate } from 'react-router-dom'
 import { getClients, getSkills, getSingleDemand, updateDemand } from '../API'
 import { formatSkills, formatClients, demandFormFormatter, lowerCaseKeys } from '../Data/Format'
@@ -86,63 +87,73 @@ export const EditDemand = () => {
     return <CG.Body>loading...</CG.Body>
   }
   return (
-    <Row justify='between'>
-      <Col md={12} align='center' justify='center'>
-        <div style={{ width: 600 }}>
-          <CG.Heading>Edit a demand</CG.Heading>
-          <CG.Container>
-            {Object.keys(form).map((formItem, index) => {
-              if (formItem === 'clientID' || formItem === 'skillsID' || formItem === 'grade' || formItem === 'status') {
+    <div>
+      <Navigation />
+
+      <Row justify='between'>
+        <Col md={12} align='center' justify='center'>
+          <div style={{ width: 600 }}>
+            <CG.Heading>Edit a demand</CG.Heading>
+            <CG.Container>
+              {Object.keys(form).map((formItem, index) => {
+                if (
+                  formItem === 'clientID' ||
+                  formItem === 'skillsID' ||
+                  formItem === 'grade' ||
+                  formItem === 'status'
+                ) {
+                  return (
+                    <CG.Container margin='10px' key={index}>
+                      <CG.Picker
+                        id='Picker'
+                        name='Picker'
+                        pattern='*'
+                        topLabel
+                        onChange={(val) => setFormData({ ...formData, [formItem]: val })}
+                        options={inputDefaults[formItem].options}
+                        labelKey='name'
+                        placeholder={formItem === 'skillsID' ? defaultSkillName : formData[formItem]}
+                        label={inputDefaults[formItem].label}
+                      />
+                    </CG.Container>
+                  )
+                }
+                let displayErrorBox = false
+                let regexPattern
+                if (inputDefaults[formItem].validators[0]) {
+                  displayErrorBox = true
+                  regexPattern = new RegExp(inputDefaults[formItem].validators[0].pattern)
+                }
                 return (
                   <CG.Container margin='10px' key={index}>
-                    <CG.Picker
-                      id='Picker'
-                      name='Picker'
-                      pattern='*'
-                      topLabel
-                      onChange={(val) => setFormData({ ...formData, [formItem]: val })}
-                      options={inputDefaults[formItem].options}
-                      labelKey='name'
-                      placeholder={formItem === 'skillsID' ? defaultSkillName : formData[formItem]}
+                    <CG.Input
+                      initValue={formData[formItem] ?? ''}
                       label={inputDefaults[formItem].label}
+                      onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
+                      margin={0.5}
                     />
+                    {formData[formItem] && displayErrorBox && !regexPattern.test(formData[formItem]) ? (
+                      <span>{inputDefaults[formItem].validators[0].errorDisplayed}</span>
+                    ) : null}
                   </CG.Container>
                 )
-              }
-              let displayErrorBox = false
-              let regexPattern
-              if (inputDefaults[formItem].validators[0]) {
-                displayErrorBox = true
-                regexPattern = new RegExp(inputDefaults[formItem].validators[0].pattern)
-              }
-              return (
-                <CG.Container margin='10px' key={index}>
-                  <CG.Input
-                    initValue={formData[formItem] ?? ''}
-                    label={inputDefaults[formItem].label}
-                    onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
-                    margin={0.5}
+              })}
+              <CG.Container margin='10px'>
+                <Row justify='around'>
+                  <CG.Button text='submit' onClick={handleSubmit} />
+                  <CG.Button
+                    text='cancel'
+                    onClick={() => {
+                      navigate('/protectedRoute/dashboard')
+                    }}
                   />
-                  {formData[formItem] && displayErrorBox && !regexPattern.test(formData[formItem]) ? (
-                    <span>{inputDefaults[formItem].validators[0].errorDisplayed}</span>
-                  ) : null}
-                </CG.Container>
-              )
-            })}
-            <CG.Container margin='10px'>
-              <Row justify='around'>
-                <CG.Button text='submit' onClick={handleSubmit} />
-                <CG.Button
-                  text='cancel'
-                  onClick={() => {
-                    navigate('/protectedRoute/dashboard')
-                  }}
-                />
-              </Row>
+                </Row>
+              </CG.Container>
             </CG.Container>
-          </CG.Container>
-        </div>
-      </Col>
-    </Row>
+          </div>
+        </Col>
+      </Row>
+      <Footer />
+    </div>
   )
 }

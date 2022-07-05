@@ -21,9 +21,11 @@ export const Navigation = () => {
         />
         <div style={{ alignSelf: 'center' }}>
           <CG.Button text='Home' onClick={() => navigate('/protectedRoute/dashboard')} />
+
           <span> </span>
 
           <CG.Button text='About' onClick={() => navigate('/about')} />
+
           <span> </span>
 
           <CG.Button

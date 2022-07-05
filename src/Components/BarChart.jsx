@@ -11,7 +11,6 @@ export const BarChart = ({ chartData, navigateToListPage }) => {
 
     navigateToListPage(type, skillName)
   }
-
   const formatChartData = (data) => {
     if (data) {
       data.forEach((item) => {

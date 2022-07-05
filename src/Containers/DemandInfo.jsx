@@ -25,7 +25,7 @@ export const DemandInformation = () => {
   }, [skillname, data])
 
   const fetchData = () => {
-    let url = `https://localhost:4001/api/demand?selectedSkills=${skillname}`
+    let url = 'https://localhost:4001/api/demand?selectedSkills=' + skillname
 
     fetch(url, requestObject)
       .then((res) => res.json())
@@ -34,18 +34,17 @@ export const DemandInformation = () => {
         getData(response)
       })
   }
+
   const deleterow = (DemandID) => {
     let url = `https://localhost:4001/api/demand/${DemandID}`
-    fetch(url, requestObject2).then(
-      () => {
-        dispatch(removeDemandFromDashboard(skillname))
-      } //this.setState({ status: 'Delete successful' }))
-    )
+    fetch(url, requestObject2).then(() => {
+      dispatch(removeDemandFromDashboard(skillname))
+    })
   }
   return (
     <div>
       <Navigation />
-      <div style={{ marginLeft: '35px' }}>
+      <div style={{ marginLeft: '20px' }}>
         <CG.Heading size='M' weight='bold'>
           Demand information for {skillname}
         </CG.Heading>
@@ -53,13 +52,18 @@ export const DemandInformation = () => {
       <Row
         justify='center'
         nogutter={false}
-        style={{ margin: '20px', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}
+        style={{ margin: '0px', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}
       >
-        <Col md={18}>
+        <Col>
           <CG.Table
             customKeyNames={{
               firstname: 'ApplicantFirstName',
               lastname: 'ApplicantLastName',
+              DemandID: 'Demand ID',
+              CodeRequisition: 'Code Requisition',
+              ClientID: 'Client ID',
+              SkillsID: 'Skills ID',
+              StartDate: 'Start Date',
             }}
             data={data}
             divider
@@ -71,13 +75,13 @@ export const DemandInformation = () => {
               'Probability',
               'StartDate',
               'Grade',
-              'ApplicantID',
               'Status',
             ]}
             buttons={[
               {
                 tableHeader: 'Edit',
                 label: 'Edit',
+                icon: 'Edit2',
                 handler: (value) => {
                   dispatch(selectDemandID(value.DemandID))
                   navigate('/edit-demand')
@@ -86,14 +90,24 @@ export const DemandInformation = () => {
               {
                 tableHeader: 'Delete',
                 label: 'Delete',
+                icon: 'X',
                 handler: (value) => deleterow(value.DemandID),
+              },
+            ]}
+            icons={[
+              {
+                tableHeader: 'Edit',
+                type: 'Edit2',
+                width: '20px',
+                height: '20px',
+                url: (value) => deleterow(value.DemandID),
               },
             ]}
           />
         </Col>
       </Row>
 
-      <div style={{ marginTop: '50px', marginLeft: '35px', marginBottom: '100px' }}>
+      <div style={{ marginTop: '50px', marginLeft: '20px', marginBottom: '100px' }}>
         <CG.Button text='Return to dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
       </div>
 

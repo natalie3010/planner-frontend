@@ -25,7 +25,7 @@ export const SupplyInformation = () => {
   }, [skillname, data])
 
   const fetchData = () => {
-    let url = `https://localhost:4001/api/supply?selectedSkills=${skillname}`
+    let url = 'https://localhost:4001/api/supply?selectedSkills=' + skillname
 
     fetch(url, requestObject)
       .then((res) => res.json())
@@ -37,20 +37,15 @@ export const SupplyInformation = () => {
 
   const deleterow = (ApplicantID) => {
     let url = `https://localhost:4001/api/supply/${ApplicantID}`
-    fetch(url, requestObject2).then(
-      () => {
-        dispatch(removeSupplyFromDashboard(skillname))
-        console.log('from supply info' + skillname)
-      }
-
-      //  this.setState({ status: 'Delete successful' })
-    )
+    fetch(url, requestObject2).then(() => {
+      dispatch(removeSupplyFromDashboard(skillname))
+    })
   }
-  console.log(skillname)
+
   return (
     <div>
       <Navigation />
-      <div style={{ marginLeft: '35px' }}>
+      <div style={{ marginLeft: '20px' }}>
         <CG.Heading size='M' weight='bold'>
           Supply information for {skillname}{' '}
         </CG.Heading>
@@ -59,13 +54,19 @@ export const SupplyInformation = () => {
       <Row
         justify='center'
         nogutter={false}
-        style={{ margin: '20px', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}
+        style={{ margin: '0px', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}
       >
-        <Col md={18}>
+        <Col>
           <CG.Table
             customKeyNames={{
               firstname: 'ApplicantFirstName',
               lastname: 'ApplicantLastName',
+              ApplicantID: 'Applicant ID',
+              ApplicantFirstName: 'Applicant First Name',
+              ApplicantLastName: 'Applicant Last Name',
+              ApplicantStatus: 'Applicant Status',
+              SkillsID: 'Skills ID',
+              ApplicantType: 'Applicant Type',
             }}
             data={data}
             divider
@@ -83,6 +84,8 @@ export const SupplyInformation = () => {
               {
                 tableHeader: 'Edit',
                 label: 'Edit',
+                icon: 'Edit2',
+
                 handler: (value) => {
                   dispatch(selectApplicantID(value.ApplicantID))
                   navigate('/edit-supply')
@@ -91,19 +94,15 @@ export const SupplyInformation = () => {
               {
                 tableHeader: 'Delete',
                 label: 'Delete',
+                icon: 'X',
                 handler: (value) => deleterow(value.ApplicantID),
-                Icon: {
-                  type: 'Edit',
-                  height: '20px',
-                  width: '20px',
-                },
               },
             ]}
           />
         </Col>
       </Row>
 
-      <div style={{ marginTop: '50px', marginLeft: '35px', marginBottom: '100px' }}>
+      <div style={{ marginTop: '50px', marginLeft: '20px', marginBottom: '100px' }}>
         <CG.Button text='Return to dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
       </div>
 

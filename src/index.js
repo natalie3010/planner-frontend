@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
 import { Navigation } from './Components/Navigation'
 import { Footer } from './Components/Footer'
 import { Dashboard } from './Containers/Dashboard'
@@ -79,7 +79,7 @@ const App = () => {
           path='/list-supply/:skillname'
           element={
             <ProtectedRoute>
-              <SupplyInformation /> {/* rename */}
+              <SupplyInformation />
             </ProtectedRoute>
           }
         />
@@ -99,8 +99,6 @@ const App = () => {
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <Navigation />
     <App />
-    <Footer />
   </Provider>
 )
