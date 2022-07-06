@@ -63,54 +63,49 @@ export const EditDemand = () => {
     return <CG.Body>loading...</CG.Body>
   }
   return (
-    <Row justify='between'>
-      <Col md={12} align='center' justify='center'>
-        <div style={{ width: 600 }}>
-          <CG.Heading>Edit a demand</CG.Heading>
-          <CG.Container>
-            {Object.keys(form).map((formItem, index) => {
-              if (formItem === 'clientID' || formItem === 'skillsID' || formItem === 'grade' || formItem === 'status') {
-                return (
-                  <CG.Container margin='10px' key={index}>
-                    <CG.Picker
-                      id='Picker'
-                      name='Picker'
-                      pattern='*'
-                      topLabel
-                      onChange={(val) => setFormData({ ...formData, [formItem]: val })}
-                      options={inputDefaults[formItem].options}
-                      labelKey='name'
-                      placeholder={formItem === 'skillsID' ? defaultSkillName : formData[formItem]}
-                      label={inputDefaults[formItem].label}
-                    />
-                  </CG.Container>
-                )
-              }
-              return (
-                <CG.Container margin='10px' key={index}>
-                  <CG.Input
-                    initValue={formData[formItem] ?? ''}
-                    label={inputDefaults[formItem].label}
-                    onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
-                    margin={0.5}
-                  />
-                </CG.Container>
-              )
-            })}
-            <CG.Container margin='10px'>
-              <Row justify='around'>
-                <CG.Button text='submit' onClick={handleSubmit} />
-                <CG.Button
-                  text='cancel'
-                  onClick={() => {
-                    navigate('/protectedRoute/dashboard')
-                  }}
+    <Col md={12} align='center' justify='center'>
+      <CG.Box width='400px' mt={10}>
+        <CG.Heading>Edit a demand</CG.Heading>
+        {Object.keys(form).map((formItem, index) => {
+          if (formItem === 'clientID' || formItem === 'skillsID' || formItem === 'grade' || formItem === 'status') {
+            return (
+              <CG.Container margin='10px' key={index}>
+                <CG.Picker
+                  id='Picker'
+                  name='Picker'
+                  pattern='*'
+                  topLabel
+                  onChange={(val) => setFormData({ ...formData, [formItem]: val })}
+                  options={inputDefaults[formItem].options}
+                  labelKey='name'
+                  placeholder={formItem === 'skillsID' ? defaultSkillName : formData[formItem]}
+                  label={inputDefaults[formItem].label}
                 />
-              </Row>
+              </CG.Container>
+            )
+          }
+          return (
+            <CG.Container margin='10px' key={index}>
+              <CG.Input
+                initValue={formData[formItem] ?? ''}
+                label={inputDefaults[formItem].label}
+                onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
+                margin={0.5}
+              />
             </CG.Container>
-          </CG.Container>
-        </div>
-      </Col>
-    </Row>
+          )
+        })}
+        <CG.Box ml='38px' mr='20px' mb={10} mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
+          <CG.Button primary text='submit' onClick={handleSubmit} />
+          <CG.Button
+            primary
+            text='cancel'
+            onClick={() => {
+              navigate('/protectedRoute/dashboard')
+            }}
+          />
+        </CG.Box>
+      </CG.Box>
+    </Col>
   )
 }

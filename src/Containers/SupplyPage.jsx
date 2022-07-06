@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react/cjs/react.development'
-import { Col, Row } from 'react-grid-system'
+import { Col } from 'react-grid-system'
 
 import { CG } from 'cap-shared-components'
 
@@ -59,76 +59,62 @@ export const SupplyPage = () => {
     return <CG.Body>loading...</CG.Body>
   }
   return (
-    <Row justify='between'>
-      <Col md={12} align='center' justify='center'>
-        <div style={{ width: 600 }}>
-          <CG.Heading>Add a new supply</CG.Heading>
-          <CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input label={'First name'} onInput={(e) => setSupplyFName(e.target.value)} margin={0.5} />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input label={'Last name'} onInput={(e) => setSupplyLName(e.target.value)} margin={0.5} />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Picker
-                id='Picker'
-                name='Picker'
-                pattern='*'
-                topLabel
-                onChange={(val) => setSupplyStatus(val)}
-                options={applicant_status}
-                labelKey='name'
-                placeholder='Select status'
-                label='Status'
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Picker
-                id='Picker'
-                name='Picker'
-                pattern='*'
-                topLabel
-                onChange={(val) => setSupplySkillId(val)}
-                options={dataAllSkills}
-                labelKey='name'
-                placeholder='Select a skill'
-                label='Skill'
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input label={'Notes'} onInput={(e) => setSupplyNotes(e.target.value)} margin={0.5} />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input label={'Location'} onInput={(e) => setSupplyLocation(e.target.value)} margin={0.5} />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Picker
-                id='Picker'
-                name='Picker'
-                pattern='*'
-                topLabel
-                onChange={(val) => setSupplyType(val)}
-                options={applicant_type}
-                labelKey='name'
-                placeholder='Select type'
-                label='Applicant type'
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <Row justify='around'>
-                <CG.Button text='submit' onClick={handleSubmit} />
-                <CG.Button
-                  text='cancel'
-                  onClick={() => {
-                    navigate('/protectedRoute/dashboard')
-                  }}
-                />
-              </Row>
-            </CG.Container>
-          </CG.Container>
-        </div>
-      </Col>
-    </Row>
+    <Col md={12} align='center' justify='center'>
+      <CG.Heading>Add a new supply</CG.Heading>
+      <CG.Box width='400px' mt={10}>
+        <CG.Input label={'First name'} onInput={(e) => setSupplyFName(e.target.value)} margin={0.5} />
+
+        <CG.Input label={'Last name'} onInput={(e) => setSupplyLName(e.target.value)} margin={0.5} />
+
+        <CG.Picker
+          id='Picker'
+          name='Picker'
+          pattern='*'
+          topLabel
+          onChange={(val) => setSupplyStatus(val)}
+          options={applicant_status}
+          labelKey='name'
+          placeholder='Select status'
+          label='Status'
+        />
+        <CG.Picker
+          id='Picker'
+          name='Picker'
+          pattern='*'
+          topLabel
+          onChange={(val) => setSupplySkillId(val)}
+          options={dataAllSkills}
+          labelKey='name'
+          placeholder='Select a skill'
+          label='Skill'
+        />
+        <CG.Input label={'Notes'} onInput={(e) => setSupplyNotes(e.target.value)} margin={0.5} />
+
+        <CG.Input label={'Location'} onInput={(e) => setSupplyLocation(e.target.value)} margin={0.5} />
+
+        <CG.Picker
+          id='Picker'
+          name='Picker'
+          pattern='*'
+          topLabel
+          onChange={(val) => setSupplyType(val)}
+          options={applicant_type}
+          labelKey='name'
+          placeholder='Select type'
+          label='Applicant type'
+        />
+
+        <CG.Box ml='20px' mr='20px' mb={10} mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
+          <CG.Button primary text='submit' onClick={handleSubmit} />
+          <CG.Button
+            primary
+            text='cancel'
+            onClick={() => {
+              navigate('/protectedRoute/dashboard')
+            }}
+          />
+        </CG.Box>
+      </CG.Box>
+    </Col>
   )
 }

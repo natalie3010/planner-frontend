@@ -50,11 +50,20 @@ export const Login = () => {
   }
 
   return (
-    <Row justify='between'>
-      <Col md={4} style={{ width: 300 }} offset={{ md: 4 }} align='center' justify='center'>
-        <CG.Heading weight='bold' size='S'>
-          Workforce Planner
-        </CG.Heading>
+    <Col md={4} style={{ width: 300 }} offset={{ md: 4 }} align='center' justify='center'>
+      <CG.Box
+        width='300px'
+        mt='15px'
+        mb={15}
+        borderBottomWidth={1}
+        borderLeftWidth={1}
+        borderRightWidth={1}
+        borderStyle='solid'
+        borderTopWidth={1}
+        borderWidth={1}
+        p='25px'
+        m='40px'
+      >
         <CG.Heading weight='bold' size='S'>
           Login
         </CG.Heading>
@@ -75,9 +84,11 @@ export const Login = () => {
           inputType='password'
           required
         />
-        <CG.Body size='S'>{errorMessage}</CG.Body>
-        <CG.Button text='Login' onClick={logIn} />
-      </Col>
-    </Row>
+        <CG.Box mb='20px' m='10px' p='10px'>
+          <CG.Body size='S'>{errorMessage}</CG.Body>
+          <CG.Button text='Login' onClick={logIn} />
+        </CG.Box>
+      </CG.Box>
+    </Col>
   )
 }
