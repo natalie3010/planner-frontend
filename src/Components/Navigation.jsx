@@ -29,7 +29,7 @@ export const Navigation = () => {
           <span> </span>
 
           <CG.Button
-            text='Logout'
+            text='Log out'
             onClick={() => {
               dispatch(logout())
             }}
