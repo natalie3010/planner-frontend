@@ -36,13 +36,6 @@ export const Dashboard = () => {
               Skills Based On Supply and Demand
             </CG.Heading>
 
-            {/*  <div>
-              <CG.Link href='www.google.com'>
-                <a href='http://www.google.com'>
-                  <CG.Icon type='Edit2' />
-                </a>
-              </CG.Link>
-            </div> */}
             {!dashboardData ? (
               <CG.Body>'loading...'</CG.Body>
             ) : (

@@ -12,12 +12,13 @@ import { SupplyInformation } from './Containers/SupplyInfo'
 import { DemandInformation } from './Containers/DemandInfo'
 
 import allReducers from './Reducers/allReducers'
-import { Home } from './Components/Home'
+
 import { DemandPage } from './Containers/DemandPage'
 import { EditSupply } from './Containers/EditSupply'
 import { EditDemand } from './Containers/EditDemand'
 import { store } from '../src/store'
 import { Provider } from 'react-redux'
+import { WorkforcePlanner } from 'cap-shared-components'
 
 const App = () => {
   return (

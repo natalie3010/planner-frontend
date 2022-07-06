@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react/cjs/react.development'
 import { submitUserLogin } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
 import { login } from '../Slices/LoginSlice'
-import { Navigation } from '../Components/Navigation'
+import { Navbar } from '../Components/Navbar'
 import { Footer } from '../Components/Footer'
 export const Login = () => {
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn)
@@ -52,7 +52,7 @@ export const Login = () => {
 
   return (
     <div>
-      <Navigation />
+      <Navbar />
       <Row justify='between'>
         <Col md={4} style={{ width: 300 }} offset={{ md: 4 }} align='center' justify='center'>
           <CG.Heading weight='bold' size='S'>
