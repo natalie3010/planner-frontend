@@ -23,7 +23,6 @@ export const About = () => {
         <Row>
           <Col style={{ padding: '20', width: '50%', display: 'block', float: 'left' }}>
             <CG.Body size='L' fontWeight='bold'>
-              {' '}
               How to use the website
             </CG.Body>
             <CG.Body size='L' fontWeight='bold'>
@@ -47,7 +46,7 @@ export const About = () => {
             <CG.Body size='M'>
               To view the supply information click on a green bar on the bar chart on the homepage for a certain skill
               and it will take you to the supply information page for that particular skill and show all of the supply
-              information in a table.{' '}
+              information in a table.
             </CG.Body>
             <CG.Body size='L' fontWeight='bold'>
               View the demand information
@@ -55,7 +54,7 @@ export const About = () => {
             <CG.Body size='M'>
               To view the demand information click on an orange bar on the bar chart on the homepage for a certain skill
               and it will take you to the supply information page for that particular skill and show all of the supply
-              information in a table.{' '}
+              information in a table.
             </CG.Body>
             <CG.Body size='L' fontWeight='bold'>
               Edit a supply
