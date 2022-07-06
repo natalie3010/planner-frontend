@@ -80,12 +80,12 @@ export const SupplyInformation = () => {
               'ApplicantType',
               'Location',
             ]}
-            buttons={[
+            icons={[
               {
                 tableHeader: 'Edit',
-                label: 'Edit',
-                icon: 'Edit2',
-
+                height: '20px',
+                width: '20px',
+                type: 'Edit2',
                 handler: (value) => {
                   dispatch(selectApplicantID(value.ApplicantID))
                   navigate('/edit-supply')
@@ -93,8 +93,9 @@ export const SupplyInformation = () => {
               },
               {
                 tableHeader: 'Delete',
-                label: 'Delete',
-                icon: 'X',
+                height: '20px',
+                width: '20px',
+                type: 'X',
                 handler: (value) => deleterow(value.ApplicantID),
               },
             ]}

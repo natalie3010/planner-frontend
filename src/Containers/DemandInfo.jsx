@@ -77,11 +77,12 @@ export const DemandInformation = () => {
               'Grade',
               'Status',
             ]}
-            buttons={[
+            icons={[
               {
                 tableHeader: 'Edit',
-                label: 'Edit',
-                icon: 'Edit2',
+                height: '20px',
+                width: '20px',
+                type: 'Edit2',
                 handler: (value) => {
                   dispatch(selectDemandID(value.DemandID))
                   navigate('/edit-demand')
@@ -89,18 +90,10 @@ export const DemandInformation = () => {
               },
               {
                 tableHeader: 'Delete',
-                label: 'Delete',
-                icon: 'X',
-                handler: (value) => deleterow(value.DemandID),
-              },
-            ]}
-            icons={[
-              {
-                tableHeader: 'Edit',
-                type: 'Edit2',
-                width: '20px',
                 height: '20px',
-                url: (value) => deleterow(value.DemandID),
+                width: '20px',
+                type: 'X',
+                handler: (value) => deleterow(value.DemandID),
               },
             ]}
           />
