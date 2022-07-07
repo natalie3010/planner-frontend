@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react/cjs/react.development'
 import { submitUserLogin } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
 import { login } from '../Slices/LoginSlice'
-
 export const Login = () => {
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn)
   const pathname = useSelector((state) => state.user.pathname) ?? '/protectedRoute/dashboard'

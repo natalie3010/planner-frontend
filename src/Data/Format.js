@@ -1,3 +1,5 @@
+import formValidators from '../../formValidatorsConfig.json'
+
 export const formatted_data_template = {
   labels: [],
   datasets: [
@@ -55,16 +57,57 @@ export const formatClients = (data) => {
 }
 
 export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, demand_status) => {
+  const inputValidator = formValidators.demandForm.inputs
   const inputDefaults = {
-    codeRequisition: { label: 'Code Requisition', placeholder: '', responseKey: 'CodeRequisition' },
-    startDate: { label: 'Start date', placeholder: 'DD/MM/YYYY', responseKey: 'StartDate' },
-    originatorName: { label: 'Originator', placeholder: '', responseKey: 'OriginatorName' },
-    probability: { label: 'Probability', placeholder: '', responseKey: 'Probability' },
-    selectedApplicant: { label: 'Selected Applicant', placeholder: '', responseKey: 'SelectedApplicant' },
-    notes: { label: 'Notes', placeholder: '', responseKey: 'Notes' },
-    proposedApplicant: { label: 'Proposed Applicant', placeholder: '', responseKey: 'ProposedApplicant' },
-    creationDate: { label: 'Creation date', placeholder: 'DD/MM/YYYY', responseKey: 'CreationDate' },
-    location: { label: 'Location', placeholder: '', responseKey: 'Location' },
+    codeRequisition: {
+      label: 'Code Requisition',
+      placeholder: '',
+      responseKey: 'CodeRequisition',
+      validators: inputValidator.demandCodeRequisition.validators,
+    },
+    startDate: {
+      label: 'Start date',
+      placeholder: 'DD/MM/YYYY',
+      responseKey: 'StartDate',
+      validators: inputValidator.demandStartDate.validators,
+    },
+    originatorName: {
+      label: 'Originator',
+      placeholder: '',
+      responseKey: 'OriginatorName',
+      validators: inputValidator.demandOriginator.validators,
+    },
+    probability: {
+      label: 'Probability',
+      placeholder: '',
+      responseKey: 'Probability',
+      validators: inputValidator.demandProbability.validators,
+    },
+    selectedApplicant: {
+      label: 'Selected Applicant',
+      placeholder: '',
+      responseKey: 'SelectedApplicant',
+      validators: inputValidator.demandSelectedApplicant.validators,
+    },
+    notes: { label: 'Notes', placeholder: '', responseKey: 'Notes', validators: inputValidator.demandNotes.validators },
+    proposedApplicant: {
+      label: 'Proposed Applicant',
+      placeholder: '',
+      responseKey: 'ProposedApplicant',
+      validators: inputValidator.demandProposedApplicant.validators,
+    },
+    creationDate: {
+      label: 'Creation date',
+      placeholder: 'DD/MM/YYYY',
+      responseKey: 'CreationDate',
+      validators: inputValidator.demandCreationDate.validators,
+    },
+    location: {
+      label: 'Location',
+      placeholder: '',
+      responseKey: 'Location',
+      validators: inputValidator.demandLocation.validators,
+    },
     clientID: { options: pickerClients, label: 'Client', placeholder: 'Select a client', responseKey: 'ClientID' },
     skillsID: { options: pickerSkills, label: 'Skill', placeholder: 'Select a skill', responseKey: 'SkillsID' },
     grade: { options: demand_grade, label: 'Grade', placeholder: 'Select a grade', responseKey: 'Grade' },

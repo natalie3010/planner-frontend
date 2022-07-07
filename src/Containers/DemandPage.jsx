@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-grid-system'
-
 import { CG } from 'cap-shared-components'
 
 import { useNavigate } from 'react-router-dom'
@@ -16,6 +15,8 @@ export const DemandPage = () => {
   const authToken = useSelector((state) => state.user.authToken)
   const [pickerSkills, setPickerSkills] = useState(null)
   const [pickerClients, setPickerClients] = useState(null)
+  const [formData, setFormData] = useState(form)
+  const [formValidated, setFormValidated] = useState()
 
   useEffect(() => {
     const requestClients = getClients(authToken)
@@ -25,18 +26,40 @@ export const DemandPage = () => {
     requestSkills.then((skillsResult) => setPickerSkills(formatSkills(skillsResult)[0]))
   }, [])
 
-  const [formData, setFormData] = useState(form)
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
 
   const handleSubmit = () => {
     const skillName = pickerSkills[formData.skillsID - 1].name
-    const request = addDemand(authToken, formData)
-    request.then((result) => {
-      dispatch(addDemandToDashboard(skillName))
-      navigate('/protectedRoute/dashboard')
-    })
+    if (checkIfFormIsValidated()) {
+      const request = addDemand(authToken, formData)
+      request.then((result) => {
+        dispatch(addDemandToDashboard(skillName))
+        navigate('/protectedRoute/dashboard')
+      })
+    }
   }
 
+  const checkIfFormIsValidated = () => {
+    let validated = true
+    const requiredInputs = []
+    for (const key in inputDefaults) {
+      try {
+        const required = inputDefaults[key].validators[0].required
+        const pattern = inputDefaults[key].validators[0].pattern
+        required && requiredInputs.push([key, pattern])
+      } catch {}
+    }
+    requiredInputs.forEach((input) => {
+      const inputData = formData[input[0]]
+      const regexPattern = new RegExp(input[1])
+      if (!inputData) {
+        validated = false
+      } else if (!regexPattern.test(inputData)) {
+        validated = false
+      }
+    })
+    return validated
+  }
   if (!pickerClients || !pickerSkills) {
     return <CG.Body>loading...</CG.Body>
   }
@@ -44,7 +67,6 @@ export const DemandPage = () => {
     <Col md={12} align='center' justify='center'>
       <CG.Box width='400px' mt={10}>
         <CG.Heading>Add a new demand</CG.Heading>
-
         {Object.keys(form).map((formItem, index) => {
           if (formItem === 'clientID' || formItem === 'skillsID' || formItem === 'grade' || formItem === 'status') {
             return (
@@ -63,6 +85,13 @@ export const DemandPage = () => {
               </CG.Container>
             )
           }
+          let displayErrorBox = false
+          let regexPattern
+          if (inputDefaults[formItem].validators[0]) {
+            displayErrorBox = true
+            regexPattern = new RegExp(inputDefaults[formItem].validators[0].pattern)
+          }
+
           return (
             <CG.Container margin='10px' key={index}>
               <CG.Input
@@ -71,9 +100,13 @@ export const DemandPage = () => {
                 margin={0.5}
                 placeholder={inputDefaults[formItem].placeholder}
               />
+              {formData[formItem] && displayErrorBox && !regexPattern.test(formData[formItem]) ? (
+                <span>{inputDefaults[formItem].validators[0].errorDisplayed}</span>
+              ) : null}
             </CG.Container>
           )
         })}
+
         <CG.Box mr='10px' ml='30px' mb={10} display='flex' flexDirection='row' justifyContent='space-between'>
           <CG.Button primary text='submit' onClick={handleSubmit} />
           <CG.Button

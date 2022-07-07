@@ -10,10 +10,12 @@ import { formatSkills } from '../Data/Format'
 import { applicant_status, applicant_type } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addSupplyToDashboard } from '../Slices/DashboardSlice'
+import formValidators from '../../formValidatorsConfig.json'
 
 export const SupplyPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const supplyFormValidators = formValidators.supplyForm.inputs
   const authToken = useSelector((state) => state.user.authToken)
   // dataAllSkills are all the skill, formatted for the picker component
   const [dataAllSkills, setDataAllSkills] = useState()
@@ -25,6 +27,8 @@ export const SupplyPage = () => {
   const [supplyNotes, setSupplyNotes] = useState(null)
   const [supplyType, setSupplyType] = useState(null)
   const [supplyLocation, setSupplyLocation] = useState(null)
+  // validators
+  const [formValidated, setFormValidated] = useState(true)
 
   useEffect(() => {
     const requestSkills = getSkills(authToken)
@@ -44,7 +48,19 @@ export const SupplyPage = () => {
       applicantType: supplyType,
       location: supplyLocation,
     }
-    sendata(data)
+    if (checkIfFormIsValidated()) {
+      sendata(data)
+    } else {
+      setFormValidated(false)
+    }
+  }
+
+  const checkIfFormIsValidated = () => {
+    let validated = false
+    if (supplyFName && supplyLName && supplyStatus && supplySkillId && supplyType) {
+      validated = true
+    }
+    return validated
   }
 
   const sendata = (data) => {
@@ -62,9 +78,15 @@ export const SupplyPage = () => {
     <Col md={12} align='center' justify='center'>
       <CG.Heading>Add a new supply</CG.Heading>
       <CG.Box width='400px' mt={10}>
-        <CG.Input label={'First name'} onInput={(e) => setSupplyFName(e.target.value)} margin={0.5} />
+        <CG.Input label={'First name'} onInput={(e) => setSupplyFName(e.target.value)} margin={0.5} required />
+        {supplyFName ? null : formValidated ? null : (
+          <span>{supplyFormValidators.supplyFirstName.validators[0].errorDisplayed}</span>
+        )}
 
-        <CG.Input label={'Last name'} onInput={(e) => setSupplyLName(e.target.value)} margin={0.5} />
+        <CG.Input label={'Last name'} onInput={(e) => setSupplyLName(e.target.value)} margin={0.5} required />
+        {supplyLName ? null : formValidated ? null : (
+          <span>{supplyFormValidators.supplyLastName.validators[0].errorDisplayed}</span>
+        )}
 
         <CG.Picker
           id='Picker'
@@ -77,6 +99,10 @@ export const SupplyPage = () => {
           placeholder='Select status'
           label='Status'
         />
+        {supplyStatus ? null : formValidated ? null : (
+          <span>{supplyFormValidators.supplyStatus.validators[0].errorDisplayed}</span>
+        )}
+
         <CG.Picker
           id='Picker'
           name='Picker'
@@ -88,9 +114,13 @@ export const SupplyPage = () => {
           placeholder='Select a skill'
           label='Skill'
         />
-        <CG.Input label={'Notes'} onInput={(e) => setSupplyNotes(e.target.value)} margin={0.5} />
+        {supplySkillId ? null : formValidated ? null : (
+          <span>{supplyFormValidators.supplySkills.validators[0].errorDisplayed}</span>
+        )}
 
-        <CG.Input label={'Location'} onInput={(e) => setSupplyLocation(e.target.value)} margin={0.5} />
+        <CG.Input label={'Notes'} onInput={(e) => setSupplyNotes(e.target.value)} margin={0.5} required />
+
+        <CG.Input label={'Location'} onInput={(e) => setSupplyLocation(e.target.value)} margin={0.5} required />
 
         <CG.Picker
           id='Picker'
@@ -103,6 +133,9 @@ export const SupplyPage = () => {
           placeholder='Select type'
           label='Applicant type'
         />
+        {supplyType ? null : formValidated ? null : (
+          <span>{supplyFormValidators.supplyApplicantType.validators[0].errorDisplayed}</span>
+        )}
 
         <CG.Box ml='20px' mr='20px' mb={10} mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
           <CG.Button primary text='submit' onClick={handleSubmit} />

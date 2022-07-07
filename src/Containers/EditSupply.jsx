@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react/cjs/react.development'
 import { Col } from 'react-grid-system'
-
 import { CG } from 'cap-shared-components'
 
 import { useNavigate } from 'react-router-dom'
@@ -75,6 +74,7 @@ export const EditSupply = () => {
     <Col md={12} align='center' justify='center'>
       <CG.Box width='400px' mt={10}>
         <CG.Heading>Edit a supply</CG.Heading>
+
         <CG.Input
           label={'First name'}
           initValue={dataSupply.ApplicantFirstName ?? ''} // Nullish coalescing operator
@@ -83,12 +83,14 @@ export const EditSupply = () => {
           }}
           margin={0.5}
         />
+
         <CG.Input
           label={'Last name'}
           initValue={dataSupply.ApplicantLastName ?? ''}
           onInput={(e) => setSupplyLName(e.target.value)}
           margin={0.5}
         />
+
         <CG.Picker
           id='Picker'
           name='Picker'
@@ -100,6 +102,7 @@ export const EditSupply = () => {
           placeholder={dataSupply.ApplicantStatus}
           label='Status'
         />
+
         <CG.Picker
           id='Picker'
           name='Picker'
@@ -111,18 +114,21 @@ export const EditSupply = () => {
           placeholder={dataSkillName}
           label='Skill'
         />
+
         <CG.Input
           label={'Notes'}
           initValue={dataSupply.Notes ?? ''}
           onInput={(e) => setSupplyNotes(e.target.value)}
           margin={0.5}
         />
+
         <CG.Input
           label={'Location'}
           initValue={dataSupply.Location ?? ''}
           onInput={(e) => setSupplyLocation(e.target.value)}
           margin={0.5}
         />
+
         <CG.Picker
           id='Picker'
           name='Picker'
@@ -135,6 +141,7 @@ export const EditSupply = () => {
           label='Applicant type'
           margin={0.5}
         />
+
         <CG.Box ml='20px' mr='20px' mb={10} mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
           <CG.Button primary text='submit' onClick={handleSubmit} />
           <CG.Button

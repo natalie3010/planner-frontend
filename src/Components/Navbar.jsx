@@ -1,12 +1,9 @@
 import React from 'react'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { logout } from '../Slices/LoginSlice'
 
-export const Navigation = () => {
+export const Navbar = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
 
   return (
     <CG.NavbarContainer>
@@ -27,13 +24,6 @@ export const Navigation = () => {
           <CG.Button text='About' onClick={() => navigate('/about')} />
 
           <span> </span>
-
-          <CG.Button
-            text='Log out'
-            onClick={() => {
-              dispatch(logout())
-            }}
-          />
         </div>
       </CG.NavbarContent>
     </CG.NavbarContainer>

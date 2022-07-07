@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Row } from 'react-grid-system'
+import { Col } from 'react-grid-system'
 
 import { CG } from 'cap-shared-components'
-
 import { useNavigate } from 'react-router-dom'
 import { getClients, getSkills, getSingleDemand, updateDemand } from '../API'
 import { formatSkills, formatClients, demandFormFormatter, lowerCaseKeys } from '../Data/Format'
@@ -44,19 +43,42 @@ export const EditDemand = () => {
   const handleSubmit = () => {
     const newskillname = pickerSkills[formData.skillsID - 1].name
 
-    const request = updateDemand(authToken, demandID, formData)
-    request.then((result) => {
-      if (defaultSkillName === newskillname) {
-        navigate('/protectedRoute/dashboard')
-      } else if (newskillname && defaultSkillName) {
-        dispatch(removeDemandFromDashboard(defaultSkillName))
-        dispatch(addDemandToDashboard(newskillname))
-        navigate('/protectedRoute/dashboard')
-      } else if (newskillname) {
-        dispatch(addDemandToDashboard(newskillname))
-        navigate('/protectedRoute/dashboard')
+    if (checkIfFormIsValidated()) {
+      const request = updateDemand(authToken, demandID, formData)
+      request.then((result) => {
+        if (defaultSkillName === newskillname) {
+          navigate('/protectedRoute/dashboard')
+        } else if (newskillname && defaultSkillName) {
+          dispatch(removeDemandFromDashboard(defaultSkillName))
+          dispatch(addDemandToDashboard(newskillname))
+          navigate('/protectedRoute/dashboard')
+        } else if (newskillname) {
+          dispatch(addDemandToDashboard(newskillname))
+          navigate('/protectedRoute/dashboard')
+        }
+      })
+    }
+  }
+  const checkIfFormIsValidated = () => {
+    let validated = true
+    const requiredInputs = []
+    for (const key in inputDefaults) {
+      try {
+        const required = inputDefaults[key].validators[0].required
+        const pattern = inputDefaults[key].validators[0].pattern
+        required && requiredInputs.push([key, pattern])
+      } catch {}
+    }
+    requiredInputs.forEach((input) => {
+      const inputData = formData[input[0]]
+      const regexPattern = new RegExp(input[1])
+      if (!inputData) {
+        validated = false
+      } else if (!regexPattern.test(inputData)) {
+        validated = false
       }
     })
+    return validated
   }
 
   if (!pickerClients || !pickerSkills || !formData || !defaultSkillName) {
@@ -84,6 +106,12 @@ export const EditDemand = () => {
               </CG.Container>
             )
           }
+          let displayErrorBox = false
+          let regexPattern
+          if (inputDefaults[formItem].validators[0]) {
+            displayErrorBox = true
+            regexPattern = new RegExp(inputDefaults[formItem].validators[0].pattern)
+          }
           return (
             <CG.Container margin='10px' key={index}>
               <CG.Input
@@ -92,6 +120,9 @@ export const EditDemand = () => {
                 onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
                 margin={0.5}
               />
+              {formData[formItem] && displayErrorBox && !regexPattern.test(formData[formItem]) ? (
+                <span>{inputDefaults[formItem].validators[0].errorDisplayed}</span>
+              ) : null}
             </CG.Container>
           )
         })}

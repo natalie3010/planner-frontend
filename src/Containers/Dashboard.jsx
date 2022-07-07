@@ -6,14 +6,12 @@ import { useNavigate } from 'react-router-dom'
 import { getDashboard } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
 import { setupDashboard } from '../Slices/DashboardSlice'
-
 export const Dashboard = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const dashboardData = useSelector((state) => state.dashboard.dashboardData)
   const authToken = useSelector((state) => state.user.authToken)
   useEffect(() => {
-    // makes a request to the backend on page load if dashboard data isn't in the state
     if (!dashboardData) {
       const request = getDashboard(authToken)
       request.then((result) => {
@@ -22,6 +20,10 @@ export const Dashboard = () => {
     }
   }, [])
 
+  const onChartClickNavigate = (page, skillName) => {
+    navigate(`/list-${page}/${skillName}`)
+  }
+
   return (
     <Col md={12} align='center' justify='center'>
       <CG.Box width='60rem'>
@@ -29,13 +31,15 @@ export const Dashboard = () => {
           <CG.Heading size='S' weight='bold'>
             Skills Based On Supply and Demand
           </CG.Heading>
-          {!dashboardData ? <CG.Body>'loading...'</CG.Body> : <BarChart data={dashboardData} />}
+          {!dashboardData ? (
+            <CG.Body>'loading...'</CG.Body>
+          ) : (
+            <BarChart chartData={dashboardData} navigateToListPage={onChartClickNavigate} />
+          )}
           <CG.Box ml='15px' display='flex' flexDirection='row' justifyContent='space-between'>
             <>
               <CG.Button primary text='Add a supply' onClick={() => navigate('/supply')}></CG.Button>
               <CG.Button primary text='Add a demand' onClick={() => navigate('/demand')}></CG.Button>
-              {/* <CG.Button text='Edit a supply' onClick={() => navigate('/edit-supply')}></CG.Button>
-              <CG.Button text='Edit a demand' onClick={() => navigate('/edit-demand')}></CG.Button> */}
             </>
           </CG.Box>
         </Col>
