@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react/cjs/react.development'
 import { Col, Row } from 'react-grid-system'
-
+import { Navigation } from '../Components/Navigation'
+import { Footer } from '../Components/Footer'
 import { CG } from 'cap-shared-components'
 
 import { useNavigate } from 'react-router-dom'
@@ -72,99 +73,104 @@ export const EditSupply = () => {
     return <CG.Body>Loading...</CG.Body>
   }
   return (
-    <Row justify='between'>
-      <Col md={12} align='center' justify='center'>
-        <div style={{ width: 600 }}>
-          <CG.Heading>Edit a supply</CG.Heading>
-          <CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input
-                label={'First name'}
-                initValue={dataSupply.ApplicantFirstName ?? ''} // Nullish coalescing operator
-                onInput={(e) => {
-                  setSupplyFName(e.target.value)
-                }}
-                margin={0.5}
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input
-                label={'Last name'}
-                initValue={dataSupply.ApplicantLastName ?? ''}
-                onInput={(e) => setSupplyLName(e.target.value)}
-                margin={0.5}
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Picker
-                id='Picker'
-                name='Picker'
-                pattern='*'
-                topLabel
-                onChange={(val) => setSupplyStatus(val)}
-                options={applicant_status}
-                labelKey='name'
-                placeholder={dataSupply.ApplicantStatus}
-                label='Status'
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Picker
-                id='Picker'
-                name='Picker'
-                pattern='*'
-                topLabel
-                onChange={(val) => setSupplySkillId(val)}
-                options={dataAllSkills}
-                labelKey='name'
-                placeholder={dataSkillName}
-                label='Skill'
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input
-                label={'Notes'}
-                initValue={dataSupply.Notes ?? ''}
-                onInput={(e) => setSupplyNotes(e.target.value)}
-                margin={0.5}
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input
-                label={'Location'}
-                initValue={dataSupply.Location ?? ''}
-                onInput={(e) => setSupplyLocation(e.target.value)}
-                margin={0.5}
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Picker
-                id='Picker'
-                name='Picker'
-                pattern='*'
-                topLabel
-                onChange={(val) => setSupplyType(val)}
-                options={applicant_type}
-                labelKey='name'
-                placeholder={dataSupply.ApplicantType ?? ''}
-                label='Applicant type'
-                margin={0.5}
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <Row justify='around'>
-                <CG.Button text='submit' onClick={handleSubmit} />
-                <CG.Button
-                  text='cancel'
-                  onClick={() => {
-                    navigate('/protectedRoute/dashboard')
+    <div>
+      <Navigation />
+
+      <Row justify='between'>
+        <Col md={12} align='center' justify='center'>
+          <div style={{ width: 600 }}>
+            <CG.Heading>Edit a supply</CG.Heading>
+            <CG.Container>
+              <CG.Container margin='10px'>
+                <CG.Input
+                  label={'First name'}
+                  initValue={dataSupply.ApplicantFirstName ?? ''} // Nullish coalescing operator
+                  onInput={(e) => {
+                    setSupplyFName(e.target.value)
                   }}
+                  margin={0.5}
                 />
-              </Row>
+              </CG.Container>
+              <CG.Container margin='10px'>
+                <CG.Input
+                  label={'Last name'}
+                  initValue={dataSupply.ApplicantLastName ?? ''}
+                  onInput={(e) => setSupplyLName(e.target.value)}
+                  margin={0.5}
+                />
+              </CG.Container>
+              <CG.Container margin='10px'>
+                <CG.Picker
+                  id='Picker'
+                  name='Picker'
+                  pattern='*'
+                  topLabel
+                  onChange={(val) => setSupplyStatus(val)}
+                  options={applicant_status}
+                  labelKey='name'
+                  placeholder={dataSupply.ApplicantStatus}
+                  label='Status'
+                />
+              </CG.Container>
+              <CG.Container margin='10px'>
+                <CG.Picker
+                  id='Picker'
+                  name='Picker'
+                  pattern='*'
+                  topLabel
+                  onChange={(val) => setSupplySkillId(val)}
+                  options={dataAllSkills}
+                  labelKey='name'
+                  placeholder={dataSkillName}
+                  label='Skill'
+                />
+              </CG.Container>
+              <CG.Container margin='10px'>
+                <CG.Input
+                  label={'Notes'}
+                  initValue={dataSupply.Notes ?? ''}
+                  onInput={(e) => setSupplyNotes(e.target.value)}
+                  margin={0.5}
+                />
+              </CG.Container>
+              <CG.Container margin='10px'>
+                <CG.Input
+                  label={'Location'}
+                  initValue={dataSupply.Location ?? ''}
+                  onInput={(e) => setSupplyLocation(e.target.value)}
+                  margin={0.5}
+                />
+              </CG.Container>
+              <CG.Container margin='10px'>
+                <CG.Picker
+                  id='Picker'
+                  name='Picker'
+                  pattern='*'
+                  topLabel
+                  onChange={(val) => setSupplyType(val)}
+                  options={applicant_type}
+                  labelKey='name'
+                  placeholder={dataSupply.ApplicantType ?? ''}
+                  label='Applicant type'
+                  margin={0.5}
+                />
+              </CG.Container>
+              <CG.Container margin='10px'>
+                <Row justify='around'>
+                  <CG.Button text='submit' onClick={handleSubmit} />
+                  <CG.Button
+                    text='cancel'
+                    onClick={() => {
+                      navigate('/protectedRoute/dashboard')
+                    }}
+                  />
+                </Row>
+              </CG.Container>
             </CG.Container>
-          </CG.Container>
-        </div>
-      </Col>
-    </Row>
+          </div>
+        </Col>
+      </Row>
+      <Footer />
+    </div>
   )
 }
