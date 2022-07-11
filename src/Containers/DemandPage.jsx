@@ -19,7 +19,7 @@ export const DemandPage = () => {
   const [pickerSkills, setPickerSkills] = useState(null)
   const [pickerClients, setPickerClients] = useState(null)
   const [formData, setFormData] = useState(form)
-  const [formValidated, setFormValidated] = useState()
+  const [formValidated, setFormValidated] = useState(true)
 
   useEffect(() => {
     const requestClients = getClients(authToken)
@@ -32,11 +32,11 @@ export const DemandPage = () => {
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
 
   const handleSubmit = () => {
-    const skillName = pickerSkills[formData.skillsID - 1].name
     if (checkIfFormIsValidated()) {
+      const skillName = formData.skillsID && pickerSkills[formData.skillsID - 1].name
       const request = addDemand(authToken, formData)
       request.then((result) => {
-        dispatch(addDemandToDashboard(skillName))
+        skillName && dispatch(addDemandToDashboard(skillName))
         navigate('/protectedRoute/dashboard')
       })
     }
@@ -44,23 +44,20 @@ export const DemandPage = () => {
 
   const checkIfFormIsValidated = () => {
     let validated = true
-    const requiredInputs = []
     for (const key in inputDefaults) {
       try {
-        const required = inputDefaults[key].validators[0].required
-        const pattern = inputDefaults[key].validators[0].pattern
-        required && requiredInputs.push([key, pattern])
+        var required = inputDefaults[key].validators[0].required
+        var pattern = inputDefaults[key].validators[0].pattern
       } catch {}
-    }
-    requiredInputs.forEach((input) => {
-      const inputData = formData[input[0]]
-      const regexPattern = new RegExp(input[1])
-      if (!inputData) {
-        validated = false
-      } else if (!regexPattern.test(inputData)) {
-        validated = false
+
+      if (pattern !== undefined) {
+        const regexPattern = new RegExp(pattern)
+        if (regexPattern.test(formData[key]) === false) {
+          validated = false
+          setFormValidated(false)
+        }
       }
-    })
+    }
     return validated
   }
   if (!pickerClients || !pickerSkills) {
@@ -91,10 +88,10 @@ export const DemandPage = () => {
                   </CG.Container>
                 )
               }
-              let displayErrorBox = false
+              let hasRegex = false
               let regexPattern
-              if (inputDefaults[formItem].validators[0]) {
-                displayErrorBox = true
+              if (inputDefaults[formItem].validators[0].pattern) {
+                hasRegex = true
                 regexPattern = new RegExp(inputDefaults[formItem].validators[0].pattern)
               }
 
@@ -105,10 +102,12 @@ export const DemandPage = () => {
                     onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
                     margin={0.5}
                     placeholder={inputDefaults[formItem].placeholder}
+                    hasError={
+                      ((formData[formItem] && hasRegex && !regexPattern.test(formData[formItem])) ||
+                        (!formValidated && hasRegex && !regexPattern.test(formData[formItem]))) &&
+                      true
+                    }
                   />
-                  {formData[formItem] && displayErrorBox && !regexPattern.test(formData[formItem]) ? (
-                    <span>{inputDefaults[formItem].validators[0].errorDisplayed}</span>
-                  ) : null}
                 </CG.Container>
               )
             })}
