@@ -61,30 +61,31 @@
   "demandForm": {
     "inputs": {
       "demandCodeRequisition": {
-        "validators": []
+        "validators": [{ "required": false }]
       },
       "demandStartDate": {
         "validators": [
           {
+            "required": true,
             "errorDisplayed": "Please put a valid date following the pattern dd/MM/yyyy",
             "pattern": "(([12][0-9]{1})|(0[1-9]{1})|(3[01]{1}))\\/((0[1-9])|(1[012]))\\/(2([0-9]{3}))"
           }
         ]
       },
       "demandOriginator": {
-        "validators": []
+        "validators": [{ "required": false }]
       },
       "demandProbability": {
-        "validators": []
+        "validators": [{ "required": false }]
       },
       "demandSelectedApplicant": {
-        "validators": []
+        "validators": [{ "required": false }]
       },
       "demandNotes": {
-        "validators": []
+        "validators": [{ "required": false }]
       },
       "demandProposedApplicant": {
-        "validators": []
+        "validators": [{ "required": false }]
       },
       "demandCreationDate": {
         "validators": [
@@ -96,7 +97,7 @@
         ]
       },
       "demandLocation": {
-        "validators": []
+        "validators": [{ "required": false }]
       }
     }
   },
