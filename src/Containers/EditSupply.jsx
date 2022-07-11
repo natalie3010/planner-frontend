@@ -12,25 +12,30 @@ import { formatSkills } from '../Data/Format'
 import { applicant_status, applicant_type } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addSupplyToDashboard, removeSupplyFromDashboard } from '../Slices/DashboardSlice'
+import formValidators from '../../formValidatorsConfig.json'
 
 export const EditSupply = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const authToken = useSelector((state) => state.user.authToken)
   const applicantID = useSelector((state) => state.dashboard.selectedApplicant)
+  const supplyFormValidators = formValidators.supplyForm.inputs
   // dataSupply - selected supply from get request
   const [dataSupply, setDataSupply] = useState(null)
   const [dataAllSkills, setDataAllSkills] = useState(null)
   const [dataSkillName, setDataSkillName] = useState(null)
   // form data
-  const [supplyFName, setSupplyFName] = useState(null)
-  const [supplyLName, setSupplyLName] = useState(null)
-  const [supplyStatus, setSupplyStatus] = useState(null)
-  const [supplySkillId, setSupplySkillId] = useState(null)
-  const [supplyNotes, setSupplyNotes] = useState(null)
-  const [supplyType, setSupplyType] = useState(null)
-  const [supplyLocation, setSupplyLocation] = useState(null)
-
+  const [formData, setFormData] = useState({
+    supplyFName: null,
+    supplyLName: null,
+    supplyStatus: null,
+    supplySkillId: null,
+    supplyNotes: null,
+    supplyType: null,
+    supplyLocation: null,
+  })
+  // error handler
+  const [showErrors, setShowErrors] = useState(null)
   useEffect(() => {
     const request = getSingleSupply(applicantID, authToken)
     request.then((supplyResult) => {
@@ -44,16 +49,51 @@ export const EditSupply = () => {
     })
   }, [])
 
+  const checkIfValid = () => {
+    let valid = true
+    /*for (const key in supplyFormValidators) {
+      const required = supplyFormValidators[key].validators[0].required
+       if (required === true) {
+        console.log(key, '--', formData[key])
+        !formData[key] ? setShowErrors({ ...showErrors, [key]: true }) : null
+      } 
+    }*/
+    let nonValidForm = {}
+    if (!formData.supplyFName && !dataSupply.ApplicantFirstName) {
+      nonValidForm.supplyFName = true
+      valid = false
+    } else if (!formData.supplyFName && !dataSupply.ApplicantFirstName) {
+      nonValidForm.supplyLName = true
+      valid = false
+    } else if (!formData.supplyStatus && !dataSupply.ApplicantStatus) {
+      nonValidForm.supplyStatus = true
+      valid = false
+    } else if (!formData.supplySkillId && !dataSupply.SkillsID) {
+      nonValidForm.supplySkillId = true
+      valid = false
+    } else if (!formData.supplyType && !dataSupply.ApplicantType) {
+      nonValidForm.supplyType = true
+      valid = false
+    }
+    setShowErrors(nonValidForm)
+    return valid
+  }
   const handleSubmit = () => {
+    if (checkIfValid()) {
+      sendData()
+    }
+  }
+
+  const sendData = () => {
     const data = {
       applicantID: applicantID ?? dataSupply.ApplicantID,
-      applicantFirstName: supplyFName ?? dataSupply.ApplicantFirstName,
-      applicantLastName: supplyLName ?? dataSupply.ApplicantLastName,
-      applicantStatus: supplyStatus ?? dataSupply.ApplicantStatus,
-      skillsID: supplySkillId ?? dataSupply.SkillsID,
-      notes: supplyNotes ?? dataSupply.Notes,
-      applicantType: supplyType ?? dataSupply.ApplicantType,
-      location: supplyLocation ?? dataSupply.Location,
+      applicantFirstName: formData.supplyFName ?? dataSupply.ApplicantFirstName,
+      applicantLastName: formData.supplyLName ?? dataSupply.ApplicantLastName,
+      applicantStatus: formData.supplyStatus ?? dataSupply.ApplicantStatus,
+      skillsID: formData.supplySkillId ?? dataSupply.SkillsID,
+      notes: formData.supplyNotes ?? dataSupply.Notes,
+      applicantType: formData.supplyType ?? dataSupply.ApplicantType,
+      location: formData.supplyLocation ?? dataSupply.Location,
     }
 
     const request = updateSupply(authToken, applicantID, data)
@@ -61,15 +101,16 @@ export const EditSupply = () => {
       const newSkillName = dataAllSkills[data.skillsID - 1].name
       const oldSkillName = dataAllSkills[dataSupply.SkillsID - 1].name
       // updating the supply state if the supply has changed
-      if (supplySkillId && dataSupply.SkillsID) {
+      if (formData.supplySkillId && dataSupply.SkillsID) {
         dispatch(removeSupplyFromDashboard(oldSkillName))
         dispatch(addSupplyToDashboard(newSkillName))
-      } else if (supplySkillId) {
+      } else if (formData.supplySkillId) {
         dispatch(addSupplyToDashboard(newSkillName))
       }
       navigate('/protectedRoute/dashboard')
     })
   }
+
   if (!dataSupply || !dataAllSkills) {
     return <CG.Body>Loading...</CG.Body>
   }
@@ -85,17 +126,21 @@ export const EditSupply = () => {
                 label={'First name'}
                 initValue={dataSupply.ApplicantFirstName ?? ''} // Nullish coalescing operator
                 onInput={(e) => {
-                  setSupplyFName(e.target.value)
+                  setFormData({ ...formData, supplyFName: e.target.value })
                 }}
                 margin={0.5}
+                required
+                hasError={showErrors && showErrors.supplyFName}
               />
             </CG.Container>
             <CG.Container margin='10px'>
               <CG.Input
                 label={'Last name'}
                 initValue={dataSupply.ApplicantLastName ?? ''}
-                onInput={(e) => setSupplyLName(e.target.value)}
+                onInput={(e) => setFormData({ ...formData, supplyLName: e.target.value })}
                 margin={0.5}
+                required
+                hasError={showErrors && showErrors.supplyLName}
               />
             </CG.Container>
             <CG.Container margin='10px'>
@@ -104,11 +149,13 @@ export const EditSupply = () => {
                 name='Picker'
                 pattern='*'
                 topLabel
-                onChange={(val) => setSupplyStatus(val)}
+                onChange={(val) => setFormData({ ...formData, supplyStatus: val })}
                 options={applicant_status}
                 labelKey='name'
                 placeholder={dataSupply.ApplicantStatus}
                 label='Status'
+                required
+                hasError={!formData.supplyStatus && !dataSupply.ApplicantStatus && true}
               />
             </CG.Container>
             <CG.Container margin='10px'>
@@ -117,18 +164,20 @@ export const EditSupply = () => {
                 name='Picker'
                 pattern='*'
                 topLabel
-                onChange={(val) => setSupplySkillId(val)}
+                onChange={(val) => setFormData({ ...formData, supplySkillId: val })}
                 options={dataAllSkills}
                 labelKey='name'
                 placeholder={dataSkillName}
                 label='Skill'
+                required
+                hasError={!formData.supplySkillId && !dataSupply.SkillsID && true}
               />
             </CG.Container>
             <CG.Container margin='10px'>
               <CG.Input
                 label={'Notes'}
                 initValue={dataSupply.Notes ?? ''}
-                onInput={(e) => setSupplyNotes(e.target.value)}
+                onInput={(e) => setFormData({ ...formData, supplyNotes: e.target.value })}
                 margin={0.5}
               />
             </CG.Container>
@@ -136,7 +185,7 @@ export const EditSupply = () => {
               <CG.Input
                 label={'Location'}
                 initValue={dataSupply.Location ?? ''}
-                onInput={(e) => setSupplyLocation(e.target.value)}
+                onInput={(e) => setFormData({ ...formData, supplyLocation: e.target.value })}
                 margin={0.5}
               />
             </CG.Container>
@@ -146,12 +195,14 @@ export const EditSupply = () => {
                 name='Picker'
                 pattern='*'
                 topLabel
-                onChange={(val) => setSupplyType(val)}
+                onChange={(val) => setFormData({ ...formData, supplyType: val })}
                 options={applicant_type}
                 labelKey='name'
                 placeholder={dataSupply.ApplicantType ?? ''}
                 label='Applicant type'
                 margin={0.5}
+                required
+                hasError={!formData.supplyType && !dataSupply.ApplicantType && true}
               />
             </CG.Container>
             <CG.Container margin='10px'>

@@ -35,9 +35,11 @@ export const SupplyPage = () => {
   const [showErrors, setShowErrors] = useState({
     applicantFirstName: false,
     applicantLastName: false,
+    applicantStatus: false,
+    skillsID: false,
     notes: false,
-    applicantType: false,
     location: false,
+    applicantType: false,
   })
 
   useEffect(() => {
@@ -102,6 +104,7 @@ export const SupplyPage = () => {
                   setShowErrors({ ...showErrors, applicantFirstName: false })
                 }}
                 margin={0.5}
+                required
                 hasError={showErrors.applicantFirstName}
               />
             </CG.Container>
@@ -113,8 +116,8 @@ export const SupplyPage = () => {
                   setShowErrors({ ...showErrors, applicantLastName: false })
                 }}
                 margin={0.5}
-                hasError={showErrors.applicantFirstName}
                 required
+                hasError={showErrors.applicantFirstName}
               />
             </CG.Container>
             <CG.Container margin='10px'>
@@ -128,10 +131,9 @@ export const SupplyPage = () => {
                 labelKey='name'
                 placeholder='Select status'
                 label='Status'
+                required
+                hasError={!supplyStatus && !formValidated && true}
               />
-              {supplyStatus ? null : formValidated ? null : (
-                <span>{supplyFormValidators.supplyStatus.validators[0].errorDisplayed}</span>
-              )}
             </CG.Container>
             <CG.Container margin='10px'>
               <CG.Picker
@@ -144,16 +146,15 @@ export const SupplyPage = () => {
                 labelKey='name'
                 placeholder='Select a skill'
                 label='Skill'
+                required
+                hasError={!supplySkillId && !formValidated && true}
               />
-              {supplySkillId ? null : formValidated ? null : (
-                <span>{supplyFormValidators.supplySkills.validators[0].errorDisplayed}</span>
-              )}
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Notes'} onInput={(e) => setSupplyNotes(e.target.value)} margin={0.5} required />
+              <CG.Input label={'Notes'} onInput={(e) => setSupplyNotes(e.target.value)} margin={0.5} />
             </CG.Container>
             <CG.Container margin='10px'>
-              <CG.Input label={'Location'} onInput={(e) => setSupplyLocation(e.target.value)} margin={0.5} required />
+              <CG.Input label={'Location'} onInput={(e) => setSupplyLocation(e.target.value)} margin={0.5} />
             </CG.Container>
             <CG.Container margin='10px'>
               <CG.Picker
@@ -166,10 +167,9 @@ export const SupplyPage = () => {
                 labelKey='name'
                 placeholder='Select type'
                 label='Applicant type'
+                required
+                hasError={!supplyType && !formValidated && true}
               />
-              {supplyType ? null : formValidated ? null : (
-                <span>{supplyFormValidators.supplyApplicantType.validators[0].errorDisplayed}</span>
-              )}
             </CG.Container>
             <CG.Container margin='10px'>
               <Row justify='around'>
