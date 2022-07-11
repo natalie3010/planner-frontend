@@ -8,7 +8,7 @@ import { CG } from 'cap-shared-components'
 
 import { useNavigate } from 'react-router-dom'
 import { getSingleSupply, updateSupply, getSkills } from '../API'
-import { formatSkills } from '../Data/Format'
+import { formatSkills, supplyFormFormatter } from '../Data/Format'
 import { applicant_status, applicant_type } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addSupplyToDashboard, removeSupplyFromDashboard } from '../Slices/DashboardSlice'
@@ -35,7 +35,10 @@ export const EditSupply = () => {
     supplyLocation: null,
   })
   // error handler
-  const [showErrors, setShowErrors] = useState(null)
+  const [formValidated, setFormValidated] = useState(true)
+
+  const supplyDefaults = supplyFormFormatter()
+
   useEffect(() => {
     const request = getSingleSupply(applicantID, authToken)
     request.then((supplyResult) => {
@@ -51,31 +54,14 @@ export const EditSupply = () => {
 
   const checkIfValid = () => {
     let valid = true
-    /*for (const key in supplyFormValidators) {
+    for (const key in supplyFormValidators) {
       const required = supplyFormValidators[key].validators[0].required
-       if (required === true) {
-        console.log(key, '--', formData[key])
-        !formData[key] ? setShowErrors({ ...showErrors, [key]: true }) : null
-      } 
-    }*/
-    let nonValidForm = {}
-    if (!formData.supplyFName && !dataSupply.ApplicantFirstName) {
-      nonValidForm.supplyFName = true
-      valid = false
-    } else if (!formData.supplyFName && !dataSupply.ApplicantFirstName) {
-      nonValidForm.supplyLName = true
-      valid = false
-    } else if (!formData.supplyStatus && !dataSupply.ApplicantStatus) {
-      nonValidForm.supplyStatus = true
-      valid = false
-    } else if (!formData.supplySkillId && !dataSupply.SkillsID) {
-      nonValidForm.supplySkillId = true
-      valid = false
-    } else if (!formData.supplyType && !dataSupply.ApplicantType) {
-      nonValidForm.supplyType = true
-      valid = false
+      const responseKey = supplyDefaults[key].responseKey
+      if (required === true && !dataSupply[responseKey] && !formData[key]) {
+        valid = false
+      }
     }
-    setShowErrors(nonValidForm)
+    valid === false && setFormValidated(false)
     return valid
   }
   const handleSubmit = () => {
@@ -130,7 +116,7 @@ export const EditSupply = () => {
                 }}
                 margin={0.5}
                 required
-                hasError={showErrors && showErrors.supplyFName}
+                hasError={!formValidated && !dataSupply.ApplicantFirstName && !formData.supplyFName && true}
               />
             </CG.Container>
             <CG.Container margin='10px'>
@@ -140,7 +126,7 @@ export const EditSupply = () => {
                 onInput={(e) => setFormData({ ...formData, supplyLName: e.target.value })}
                 margin={0.5}
                 required
-                hasError={showErrors && showErrors.supplyLName}
+                hasError={!formValidated && !dataSupply.ApplicantLastName && !formData.supplyLName && true}
               />
             </CG.Container>
             <CG.Container margin='10px'>
@@ -155,7 +141,7 @@ export const EditSupply = () => {
                 placeholder={dataSupply.ApplicantStatus}
                 label='Status'
                 required
-                hasError={!formData.supplyStatus && !dataSupply.ApplicantStatus && true}
+                hasError={!formValidated && !dataSupply.ApplicantStatus && !formData.supplyStatus && true}
               />
             </CG.Container>
             <CG.Container margin='10px'>
@@ -170,7 +156,7 @@ export const EditSupply = () => {
                 placeholder={dataSkillName}
                 label='Skill'
                 required
-                hasError={!formData.supplySkillId && !dataSupply.SkillsID && true}
+                hasError={!formValidated && !dataSkillName && !formData.supplySkillId && true}
               />
             </CG.Container>
             <CG.Container margin='10px'>
@@ -202,7 +188,7 @@ export const EditSupply = () => {
                 label='Applicant type'
                 margin={0.5}
                 required
-                hasError={!formData.supplyType && !dataSupply.ApplicantType && true}
+                hasError={!formValidated && !dataSupply.ApplicantType && !formData.supplyType && true}
               />
             </CG.Container>
             <CG.Container margin='10px'>
