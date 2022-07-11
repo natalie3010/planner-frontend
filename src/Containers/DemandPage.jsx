@@ -46,7 +46,6 @@ export const DemandPage = () => {
     let validated = true
     for (const key in inputDefaults) {
       try {
-        var required = inputDefaults[key].validators[0].required
         var pattern = inputDefaults[key].validators[0].pattern
       } catch {}
 
