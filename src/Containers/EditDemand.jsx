@@ -21,6 +21,7 @@ export const EditDemand = () => {
   const [defaultSkillName, setDefaultSkillName] = useState(null)
   const [pickerClients, setPickerClients] = useState(null)
   const [formData, setFormData] = useState(null)
+  const [formValidated, setFormValidated] = useState(true)
 
   useEffect(() => {
     const requestClients = getClients(authToken)
@@ -64,23 +65,19 @@ export const EditDemand = () => {
   }
   const checkIfFormIsValidated = () => {
     let validated = true
-    const requiredInputs = []
     for (const key in inputDefaults) {
       try {
-        const required = inputDefaults[key].validators[0].required
-        const pattern = inputDefaults[key].validators[0].pattern
-        required && requiredInputs.push([key, pattern])
+        var pattern = inputDefaults[key].validators[0].pattern
       } catch {}
-    }
-    requiredInputs.forEach((input) => {
-      const inputData = formData[input[0]]
-      const regexPattern = new RegExp(input[1])
-      if (!inputData) {
-        validated = false
-      } else if (!regexPattern.test(inputData)) {
-        validated = false
+
+      if (pattern !== undefined) {
+        const regexPattern = new RegExp(pattern)
+        if (regexPattern.test(formData[key]) === false) {
+          validated = false
+          setFormValidated(false)
+        }
       }
-    })
+    }
     return validated
   }
 
@@ -112,10 +109,10 @@ export const EditDemand = () => {
                   </CG.Container>
                 )
               }
-              let displayErrorBox = false
+              let hasRegex = false
               let regexPattern
-              if (inputDefaults[formItem].validators[0]) {
-                displayErrorBox = true
+              if (inputDefaults[formItem].validators[0].pattern) {
+                hasRegex = true
                 regexPattern = new RegExp(inputDefaults[formItem].validators[0].pattern)
               }
               return (
@@ -125,10 +122,13 @@ export const EditDemand = () => {
                     label={inputDefaults[formItem].label}
                     onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
                     margin={0.5}
+                    placeholder={inputDefaults[formItem].placeholder}
+                    hasError={
+                      ((formData[formItem] && hasRegex && !regexPattern.test(formData[formItem])) ||
+                        (!formValidated && hasRegex && !regexPattern.test(formData[formItem]))) &&
+                      true
+                    }
                   />
-                  {formData[formItem] && displayErrorBox && !regexPattern.test(formData[formItem]) ? (
-                    <span>{inputDefaults[formItem].validators[0].errorDisplayed}</span>
-                  ) : null}
                 </CG.Container>
               )
             })}
