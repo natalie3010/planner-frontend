@@ -116,6 +116,19 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
   return inputDefaults
 }
 
+export const supplyFormFormatter = () => {
+  const inputDefaults = {
+    supplyFName: { responseKey: 'ApplicantFirstName' },
+    supplyLName: { responseKey: 'ApplicantLastName' },
+    supplyStatus: { responseKey: 'ApplicantStatus' },
+    supplySkillId: { responseKey: 'SkillsID' },
+    supplyNotes: { responseKey: 'Notes' },
+    supplyType: { responseKey: 'ApplicantType' },
+    supplyLocation: { responseKey: 'Location' },
+  }
+  return inputDefaults
+}
+
 export const lowerCaseKeys = (obj) => {
   let lowerCased = {}
 
