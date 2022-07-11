@@ -26,9 +26,9 @@ export const Dashboard = () => {
 
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Box width='60rem'>
-        <Col md={10} style={{ marginBottom: 8 }} align='center' justify='center'>
-          <CG.Heading size='S' weight='bold'>
+      <CG.Box width={400} mt='-30px' mb='20px'>
+        <Col md={11} align='center' justify='center'>
+          <CG.Heading size='S' marginTop='40px'>
             Skills Based On Supply and Demand
           </CG.Heading>
           {!dashboardData ? (
@@ -36,7 +36,16 @@ export const Dashboard = () => {
           ) : (
             <BarChart chartData={dashboardData} navigateToListPage={onChartClickNavigate} />
           )}
-          <CG.Box ml='15px' display='flex' flexDirection='row' justifyContent='space-between'>
+          <CG.Box
+            ml='98px'
+            mr='85px'
+            mt='-20px'
+            mb={8}
+            boxSizing='border-box'
+            display='flex'
+            flexDirection='row'
+            justifyContent='space-between'
+          >
             <>
               <CG.Button primary text='Add a supply' onClick={() => navigate('/supply')}></CG.Button>
               <CG.Button primary text='Add a demand' onClick={() => navigate('/demand')}></CG.Button>

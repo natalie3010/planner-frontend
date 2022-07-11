@@ -52,15 +52,15 @@ export const Login = () => {
     <Col md={4} style={{ width: 300 }} offset={{ md: 4 }} align='center' justify='center'>
       <CG.Box
         width='300px'
-        mt='15px'
-        mb={15}
+        mt='39px'
+        mb={39}
         borderBottomWidth={1}
         borderLeftWidth={1}
         borderRightWidth={1}
         borderStyle='solid'
         borderTopWidth={1}
         borderWidth={1}
-        p='25px'
+        p='15px'
         m='40px'
       >
         <CG.Heading weight='bold' size='S'>

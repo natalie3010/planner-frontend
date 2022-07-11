@@ -24,10 +24,12 @@ export const BarChart = ({ chartData, navigateToListPage }) => {
   }
 
   return (
-    <CG.BarChart
-      data={formatChartData(chartData)}
-      options={grouped_options}
-      clickedElementPassUp={clickedElementPassUp}
-    />
+    <CG.Box width='50rem' boxSizing='border-box' mt='-40px' mb='15px'>
+      <CG.BarChart
+        data={formatChartData(chartData)}
+        options={grouped_options}
+        clickedElementPassUp={clickedElementPassUp}
+      />
+    </CG.Box>
   )
 }
