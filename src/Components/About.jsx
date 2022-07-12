@@ -9,7 +9,6 @@ export const About = () => {
       <div style={{ position: 'relative', textAlign: 'center' }}>
         <img src='images/Invent-Header-Banner-Image.webp' width='100%' height='300px' />
         <div
-          md={10}
           style={{
             marginBottom: 20,
             align: 'center',
@@ -21,13 +20,13 @@ export const About = () => {
             transform: 'translate(-50%, -50%)',
           }}
         >
-          <CG.Heading size='M' weight='bold'>
+          <CG.Heading size='M' fontWeight='bold'>
             About us
           </CG.Heading>
         </div>
       </div>
 
-      <div style={{ padding: '20px', width: '50%', display: 'block', float: 'left' }}>
+      <div style={{ width: '50%', display: 'block', float: 'left' }}>
         <div style={{ margin: '20px', padding: '20px', border: '1px solid #d4d4d4' }}>
           <CG.Body size='L' fontWeight='bold'>
             How to use the website
@@ -151,7 +150,7 @@ export const About = () => {
           </CG.Body>
           <CG.Body size='M'>info@capgemini.com</CG.Body>
 
-          <img src='/images/capgemini-FI-1.jpg' width='300px' height='200px' alt='pic' style={{ marginTop: '20px' }} />
+          <img src='/images/capgemini-FI-1.jpg' width='300px' height='200px' alt='pic' style={{ marginTop: '16px' }} />
         </div>
       </div>
     </div>
