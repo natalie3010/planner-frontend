@@ -89,7 +89,12 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
       responseKey: 'SelectedApplicant',
       validators: inputValidator.demandSelectedApplicant.validators,
     },
-    notes: { label: 'Notes', placeholder: '', responseKey: 'Notes', validators: inputValidator.demandNotes.validators },
+    notes: {
+      label: 'Notes',
+      placeholder: '',
+      responseKey: 'Notes',
+      validators: inputValidator.demandNotes.validators,
+    },
     proposedApplicant: {
       label: 'Proposed Applicant',
       placeholder: '',
@@ -108,23 +113,89 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
       responseKey: 'Location',
       validators: inputValidator.demandLocation.validators,
     },
-    clientID: { options: pickerClients, label: 'Client', placeholder: 'Select a client', responseKey: 'ClientID' },
-    skillsID: { options: pickerSkills, label: 'Skill', placeholder: 'Select a skill', responseKey: 'SkillsID' },
-    grade: { options: demand_grade, label: 'Grade', placeholder: 'Select a grade', responseKey: 'Grade' },
-    status: { options: demand_status, label: 'Status', placeholder: 'Select a status', responseKey: 'Status' },
+    clientID: {
+      options: pickerClients,
+      label: 'Client',
+      placeholder: 'Select a client',
+      responseKey: 'ClientID',
+    },
+    skillsID: {
+      options: pickerSkills,
+      label: 'Skill',
+      placeholder: 'Select a skill',
+      responseKey: 'SkillsID',
+    },
+    grade: {
+      options: demand_grade,
+      label: 'Grade',
+      placeholder: 'Select a grade',
+      responseKey: 'Grade',
+    },
+    status: {
+      options: demand_status,
+      label: 'Status',
+      placeholder: 'Select a status',
+      responseKey: 'Status',
+    },
   }
   return inputDefaults
 }
 
-export const supplyFormFormatter = () => {
+export const supplyFormFormatter = (pickerStatus, pickerSkills, pickerType) => {
+  const inputValidator = formValidators.supplyForm.inputs
   const inputDefaults = {
-    supplyFName: { responseKey: 'ApplicantFirstName' },
-    supplyLName: { responseKey: 'ApplicantLastName' },
-    supplyStatus: { responseKey: 'ApplicantStatus' },
-    supplySkillId: { responseKey: 'SkillsID' },
-    supplyNotes: { responseKey: 'Notes' },
-    supplyType: { responseKey: 'ApplicantType' },
-    supplyLocation: { responseKey: 'Location' },
+    supplyFName: {
+      label: 'First name',
+      placeholder: '',
+      inputType: 'text',
+      validators: inputValidator.supplyFName.validators,
+      responseKey: 'ApplicantFirstName',
+    },
+    supplyLName: {
+      label: 'Last name',
+      placeholder: '',
+      inputType: 'text',
+      validators: inputValidator.supplyLName.validators,
+      responseKey: 'ApplicantLastName',
+    },
+    supplyStatus: {
+      label: 'Status',
+      placeholder: 'Select a status',
+      options: pickerStatus,
+      inputType: 'dropdown',
+      validators: inputValidator.supplyStatus.validators,
+      responseKey: 'ApplicantStatus',
+    },
+    supplySkillId: {
+      label: 'Skill',
+      placeholder: 'Select a skill',
+      options: pickerSkills,
+      inputType: 'dropdown',
+      validators: inputValidator.supplySkillId.validators,
+      responseKey: 'SkillsID',
+    },
+    supplyNotes: {
+      label: 'Notes',
+      placeholder: '',
+      inputType: 'text',
+      validators: inputValidator.supplyNotes.validators,
+      responseKey: 'Notes',
+    },
+    supplyType: {
+      label: 'Applicant type',
+      placeholder: 'Select type',
+      options: pickerType,
+      inputType: 'dropdown',
+      validators: inputValidator.supplyType.validators,
+      responseKey: 'ApplicantType',
+    },
+    supplyLocation: {
+      label: 'Location',
+      placeholder: '',
+      inputType: 'text',
+      validators: inputValidator.supplyLocation.validators,
+      responseKey: 'Location',
+    },
   }
   return inputDefaults
 }
