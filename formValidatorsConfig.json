@@ -59,7 +59,7 @@
         "validators": [
           {
             "errorDisplayed": "Please put a valid date following the pattern dd/MM/yyyy",
-            "pattern": "(([12][0-9]{1})|(0[1-9]{1})|(3[01]{1}))/((0[1-9])|(1[012]))/(2([0-9]{3}))"
+            "pattern": "(([12][0-9]{1})|(0[1-9]{1})|(3[01]{1}))\\/((0[1-9])|(1[012]))\\/(2([0-9]{3}))"
           }
         ]
       },
@@ -83,7 +83,7 @@
           {
             "errorDisplayed": "Please put a valid date following the pattern dd/MM/yyyy",
             "required": true,
-            "pattern": "(([12][0-9]{1})|(0[1-9]{1})|(3[01]{1}))/((0[1-9])|(1[012]))/(2([0-9]{3}))"
+            "pattern": "(([12][0-9]{1})|(0[1-9]{1})|(3[01]{1}))\\/((0[1-9])|(1[012]))\\/(2([0-9]{3}))"
           }
         ]
       },

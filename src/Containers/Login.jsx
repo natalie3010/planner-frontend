@@ -1,12 +1,11 @@
 import React from 'react'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
-import { Row, Col } from 'react-grid-system'
+import { Col } from 'react-grid-system'
 import { useState, useEffect } from 'react/cjs/react.development'
 import { submitUserLogin } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
 import { login } from '../Slices/LoginSlice'
-
 export const Login = () => {
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn)
   const pathname = useSelector((state) => state.user.pathname) ?? '/protectedRoute/dashboard'
@@ -50,11 +49,20 @@ export const Login = () => {
   }
 
   return (
-    <Row justify='between'>
-      <Col md={4} style={{ width: 300 }} offset={{ md: 4 }} align='center' justify='center'>
-        <CG.Heading weight='bold' size='S'>
-          Workforce Planner
-        </CG.Heading>
+    <Col md={4} style={{ width: 300 }} offset={{ md: 4 }} align='center' justify='center'>
+      <CG.Box
+        width='300px'
+        mt='15px'
+        mb={15}
+        borderBottomWidth={1}
+        borderLeftWidth={1}
+        borderRightWidth={1}
+        borderStyle='solid'
+        borderTopWidth={1}
+        borderWidth={1}
+        p='25px'
+        m='40px'
+      >
         <CG.Heading weight='bold' size='S'>
           Login
         </CG.Heading>
@@ -75,9 +83,11 @@ export const Login = () => {
           inputType='password'
           required
         />
-        <CG.Body size='S'>{errorMessage}</CG.Body>
-        <CG.Button text='Login' onClick={logIn} />
-      </Col>
-    </Row>
+        <CG.Box mb='20px' m='10px' p='10px'>
+          <CG.Body size='S'>{errorMessage}</CG.Body>
+          <CG.Button text='Login' onClick={logIn} />
+        </CG.Box>
+      </CG.Box>
+    </Col>
   )
 }

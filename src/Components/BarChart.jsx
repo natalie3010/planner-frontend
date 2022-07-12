@@ -2,8 +2,15 @@ import React from 'react'
 import { CG } from 'cap-shared-components'
 import { formatted_data_template, grouped_options } from '../Data/Format'
 
-export const BarChart = (chartData) => {
+export const BarChart = ({ chartData, navigateToListPage }) => {
   const formatted_data = structuredClone(formatted_data_template)
+
+  const clickedElementPassUp = (element) => {
+    const type = formatted_data.datasets[element[0].datasetIndex].label
+    const skillName = chartData[element[0].index].skill_name
+
+    navigateToListPage(type, skillName)
+  }
   const formatChartData = (data) => {
     if (data) {
       data.forEach((item) => {
@@ -16,5 +23,11 @@ export const BarChart = (chartData) => {
     return formatted_data
   }
 
-  return <CG.BarChart data={formatChartData(chartData.data)} options={grouped_options} />
+  return (
+    <CG.BarChart
+      data={formatChartData(chartData)}
+      options={grouped_options}
+      clickedElementPassUp={clickedElementPassUp}
+    />
+  )
 }
