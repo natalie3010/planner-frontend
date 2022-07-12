@@ -102,7 +102,9 @@ export const WorkforcePlanner = {
     disabledDark: '#FFF', // 30% opacity
     textDisabledDark: '#EFEFEF',
   },
-
+  box: {
+    borderRadius: '10px',
+  },
   boxShadow: '0px 0px 0px 1px #ffffff, 0px 0px 0px 3px #1473E6',
   fontFamily: {
     default:
