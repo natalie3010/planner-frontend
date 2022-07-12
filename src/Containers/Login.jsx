@@ -6,8 +6,6 @@ import { useState, useEffect } from 'react/cjs/react.development'
 import { submitUserLogin } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
 import { login } from '../Slices/LoginSlice'
-import { Navbar } from '../Components/Navbar'
-import { Footer } from '../Components/Footer'
 export const Login = () => {
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn)
   const pathname = useSelector((state) => state.user.pathname) ?? '/protectedRoute/dashboard'
@@ -51,38 +49,45 @@ export const Login = () => {
   }
 
   return (
-    <div>
-      <Navbar />
-      <Row justify='between'>
-        <Col md={4} style={{ width: 300 }} offset={{ md: 4 }} align='center' justify='center'>
-          <CG.Heading weight='bold' size='S'>
-            Workforce Planner
-          </CG.Heading>
-          <CG.Heading weight='bold' size='S'>
-            Login
-          </CG.Heading>
-          <CG.Input
-            style={{ marginBottom: 20 }}
-            onInput={(e) => setUserName(e.target.value)}
-            name='textInput'
-            placeholder='Username'
-            label='Username'
-            required
-          />
-          <CG.Input
-            style={{ marginBottom: 20 }}
-            onInput={(e) => setPassword(e.target.value)}
-            name='textInput'
-            placeholder='Password'
-            label='Password'
-            inputType='password'
-            required
-          />
+    <Col md={4} style={{ width: 300 }} offset={{ md: 4 }} align='center' justify='center'>
+      <CG.Box
+        width='300px'
+        mt='15px'
+        mb={15}
+        borderBottomWidth={1}
+        borderLeftWidth={1}
+        borderRightWidth={1}
+        borderStyle='solid'
+        borderTopWidth={1}
+        borderWidth={1}
+        p='25px'
+        m='40px'
+      >
+        <CG.Heading weight='bold' size='S'>
+          Login
+        </CG.Heading>
+        <CG.Input
+          style={{ marginBottom: 20 }}
+          onInput={(e) => setUserName(e.target.value)}
+          name='textInput'
+          placeholder='Username'
+          label='Username'
+          required
+        />
+        <CG.Input
+          style={{ marginBottom: 20 }}
+          onInput={(e) => setPassword(e.target.value)}
+          name='textInput'
+          placeholder='Password'
+          label='Password'
+          inputType='password'
+          required
+        />
+        <CG.Box mb='20px' m='10px' p='10px'>
           <CG.Body size='S'>{errorMessage}</CG.Body>
           <CG.Button text='Login' onClick={logIn} />
-        </Col>
-      </Row>
-      <Footer />
-    </div>
+        </CG.Box>
+      </CG.Box>
+    </Col>
   )
 }

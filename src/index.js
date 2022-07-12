@@ -22,84 +22,86 @@ import { WorkforcePlanner } from 'cap-shared-components'
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/*' element={<Login />} />
+    <Routes>
+      <Route path='/*' element={<Login />} />
 
-        <Route path='/login' element={<Login />} />
-        <Route
-          path='/demand'
-          element={
-            <ProtectedRoute>
-              <DemandPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/edit-demand'
-          element={
-            <ProtectedRoute>
-              <EditDemand />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/supply'
-          element={
-            <ProtectedRoute>
-              <SupplyPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/protectedRoute/dashboard'
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/edit-supply'
-          element={
-            <ProtectedRoute>
-              <EditSupply />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/about'
-          element={
-            <ProtectedRoute>
-              <About />
-            </ProtectedRoute>
-          }
-        />
+      <Route path='/login' element={<Login />} />
+      <Route
+        path='/demand'
+        element={
+          <ProtectedRoute>
+            <DemandPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/edit-demand'
+        element={
+          <ProtectedRoute>
+            <EditDemand />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/supply'
+        element={
+          <ProtectedRoute>
+            <SupplyPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/protectedRoute/dashboard'
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/edit-supply'
+        element={
+          <ProtectedRoute>
+            <EditSupply />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/about'
+        element={
+          <ProtectedRoute>
+            <About />
+          </ProtectedRoute>
+        }
+      />
 
-        <Route
-          path='/list-supply/:skillname'
-          element={
-            <ProtectedRoute>
-              <SupplyInformation />
-            </ProtectedRoute>
-          }
-        />
+      <Route
+        path='/list-supply/:skillname'
+        element={
+          <ProtectedRoute>
+            <SupplyInformation />
+          </ProtectedRoute>
+        }
+      />
 
-        <Route
-          path='/list-demand/:skillname'
-          element={
-            <ProtectedRoute>
-              <DemandInformation />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+      <Route
+        path='/list-demand/:skillname'
+        element={
+          <ProtectedRoute>
+            <DemandInformation />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
   )
 }
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <Navigation />
+      <App />
+      <Footer />
+    </BrowserRouter>
   </Provider>
 )

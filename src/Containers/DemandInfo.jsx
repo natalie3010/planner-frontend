@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Navigation } from '../Components/Navigation'
-import { Footer } from '../Components/Footer'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { Row, Col } from 'react-grid-system'
@@ -43,7 +41,6 @@ export const DemandInformation = () => {
   }
   return (
     <div>
-      <Navigation />
       <div style={{ marginLeft: '20px' }}>
         <CG.Heading size='M' weight='bold'>
           Demand information for {skillname}
@@ -103,8 +100,6 @@ export const DemandInformation = () => {
       <div style={{ marginTop: '50px', marginLeft: '20px', marginBottom: '100px' }}>
         <CG.Button text='Return to dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
       </div>
-
-      <Footer />
     </div>
   )
 }

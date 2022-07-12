@@ -1,14 +1,11 @@
 import React from 'react'
 import { Row, Col } from 'react-grid-system'
-import { Navigation } from '../Components/Navigation'
-import { Footer } from '../Components/Footer'
 
 import { CG } from 'cap-shared-components'
 
 export const About = () => {
   return (
     <div>
-      <Navigation />
       <Row justify='between'>
         <Col md={12} align='center' justify='center'>
           <Col md={10} style={{ marginBottom: 20 }} align='center' justify='center'>
@@ -144,7 +141,6 @@ export const About = () => {
           </Col>
         </Row>
       </div>
-      <Footer />
     </div>
   )
 }

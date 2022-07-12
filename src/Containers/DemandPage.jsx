@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-grid-system'
-import { Navigation } from '../Components/Navigation'
-import { Footer } from '../Components/Footer'
 import { CG } from 'cap-shared-components'
 
 import { useNavigate } from 'react-router-dom'
@@ -66,73 +64,60 @@ export const DemandPage = () => {
     return <CG.Body>loading...</CG.Body>
   }
   return (
-    <div>
-      <Navigation />
-      <Row justify='between'>
-        <Col md={12} align='center' justify='center'>
-          <div style={{ width: 600 }}>
-            <CG.Heading>Add a new demand</CG.Heading>
-            <CG.Container>
-              {Object.keys(form).map((formItem, index) => {
-                if (
-                  formItem === 'clientID' ||
-                  formItem === 'skillsID' ||
-                  formItem === 'grade' ||
-                  formItem === 'status'
-                ) {
-                  return (
-                    <CG.Container margin='10px' key={index}>
-                      <CG.Picker
-                        id='Picker'
-                        name='Picker'
-                        pattern='*'
-                        topLabel
-                        onChange={(val) => setFormData({ ...formData, [formItem]: val })}
-                        options={inputDefaults[formItem].options}
-                        labelKey='name'
-                        placeholder={inputDefaults[formItem].placeholder}
-                        label={inputDefaults[formItem].label}
-                      />
-                    </CG.Container>
-                  )
-                }
-                let displayErrorBox = false
-                let regexPattern
-                if (inputDefaults[formItem].validators[0]) {
-                  displayErrorBox = true
-                  regexPattern = new RegExp(inputDefaults[formItem].validators[0].pattern)
-                }
-
-                return (
-                  <CG.Container margin='10px' key={index}>
-                    <CG.Input
-                      label={inputDefaults[formItem].label}
-                      onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
-                      margin={0.5}
-                      placeholder={inputDefaults[formItem].placeholder}
-                    />
-                    {formData[formItem] && displayErrorBox && !regexPattern.test(formData[formItem]) ? (
-                      <span>{inputDefaults[formItem].validators[0].errorDisplayed}</span>
-                    ) : null}
-                  </CG.Container>
-                )
-              })}
-              <CG.Container margin='10px'>
-                <Row justify='around'>
-                  <CG.Button text='submit' onClick={handleSubmit} />
-                  <CG.Button
-                    text='cancel'
-                    onClick={() => {
-                      navigate('/protectedRoute/dashboard')
-                    }}
-                  />
-                </Row>
+    <Col md={12} align='center' justify='center'>
+      <CG.Box width='400px' mt={10}>
+        <CG.Heading>Add a new demand</CG.Heading>
+        {Object.keys(form).map((formItem, index) => {
+          if (formItem === 'clientID' || formItem === 'skillsID' || formItem === 'grade' || formItem === 'status') {
+            return (
+              <CG.Container margin='10px' key={index}>
+                <CG.Picker
+                  id='Picker'
+                  name='Picker'
+                  pattern='*'
+                  topLabel
+                  onChange={(val) => setFormData({ ...formData, [formItem]: val })}
+                  options={inputDefaults[formItem].options}
+                  labelKey='name'
+                  placeholder={inputDefaults[formItem].placeholder}
+                  label={inputDefaults[formItem].label}
+                />
               </CG.Container>
+            )
+          }
+          let displayErrorBox = false
+          let regexPattern
+          if (inputDefaults[formItem].validators[0]) {
+            displayErrorBox = true
+            regexPattern = new RegExp(inputDefaults[formItem].validators[0].pattern)
+          }
+
+          return (
+            <CG.Container margin='10px' key={index}>
+              <CG.Input
+                label={inputDefaults[formItem].label}
+                onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
+                margin={0.5}
+                placeholder={inputDefaults[formItem].placeholder}
+              />
+              {formData[formItem] && displayErrorBox && !regexPattern.test(formData[formItem]) ? (
+                <span>{inputDefaults[formItem].validators[0].errorDisplayed}</span>
+              ) : null}
             </CG.Container>
-          </div>
-        </Col>
-      </Row>
-      <Footer />
-    </div>
+          )
+        })}
+
+        <CG.Box mr='10px' ml='30px' mb={10} display='flex' flexDirection='row' justifyContent='space-between'>
+          <CG.Button primary text='submit' onClick={handleSubmit} />
+          <CG.Button
+            primary
+            text='cancel'
+            onClick={() => {
+              navigate('/protectedRoute/dashboard')
+            }}
+          />
+        </CG.Box>
+      </CG.Box>
+    </Col>
   )
 }
