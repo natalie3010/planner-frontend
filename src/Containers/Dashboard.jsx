@@ -26,11 +26,9 @@ export const Dashboard = () => {
 
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Box width={400} mt='-30px' mb='20px'>
+      <CG.Box width={400} boxSizing='border-box' mt='-30px' mb='30px'>
         <Col md={11} align='center' justify='center'>
-          <CG.Heading size='S' marginTop='40px'>
-            Skills Based On Supply and Demand
-          </CG.Heading>
+          <CG.Heading size='S'>Skills Based On Supply and Demand</CG.Heading>
           {!dashboardData ? (
             <CG.Body>'loading...'</CG.Body>
           ) : (
