@@ -1,9 +1,11 @@
 import React from 'react'
 import { CG } from 'cap-shared-components'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { logout } from '../Slices/LoginSlice'
 
 export const Navigation = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   return (
@@ -18,10 +20,16 @@ export const Navigation = () => {
           }}
         />
         <div style={{ alignSelf: 'center' }}>
-          <CG.Button text='Contact Us' />
+          <CG.Button text='Home' onClick={() => navigate('/protectedRoute/dashboard')} />
+
           <span> </span>
+
+          <CG.Button text='About' onClick={() => navigate('/about')} />
+
+          <span> </span>
+
           <CG.Button
-            text='Logout'
+            text='Log out'
             onClick={() => {
               dispatch(logout())
             }}

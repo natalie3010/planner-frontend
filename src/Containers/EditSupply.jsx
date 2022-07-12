@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react/cjs/react.development'
-import { Navigation } from '../Components/Navigation'
-import { Footer } from '../Components/Footer'
-import { Col, Row } from 'react-grid-system'
-
+import { Col } from 'react-grid-system'
 import { CG } from 'cap-shared-components'
 
 import { useNavigate } from 'react-router-dom'
@@ -101,96 +98,13 @@ export const EditSupply = () => {
     return <CG.Body>Loading...</CG.Body>
   }
   return (
-    <Row justify='between'>
+    /*<Row justify='between'>
       <Col md={12} align='center' justify='center'>
         <Navigation />
         <div style={{ width: 600 }}>
           <CG.Heading>Edit a supply</CG.Heading>
           <CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input
-                label={'First name'}
-                initValue={dataSupply.ApplicantFirstName ?? ''} // Nullish coalescing operator
-                onInput={(e) => {
-                  setFormData({ ...formData, supplyFName: e.target.value })
-                }}
-                margin={0.5}
-                required
-                hasError={!formValidated && !dataSupply.ApplicantFirstName && !formData.supplyFName && true}
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input
-                label={'Last name'}
-                initValue={dataSupply.ApplicantLastName ?? ''}
-                onInput={(e) => setFormData({ ...formData, supplyLName: e.target.value })}
-                margin={0.5}
-                required
-                hasError={!formValidated && !dataSupply.ApplicantLastName && !formData.supplyLName && true}
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Picker
-                id='Picker'
-                name='Picker'
-                pattern='*'
-                topLabel
-                onChange={(val) => setFormData({ ...formData, supplyStatus: val })}
-                options={applicant_status}
-                labelKey='name'
-                placeholder={dataSupply.ApplicantStatus}
-                label='Status'
-                required
-                hasError={!formValidated && !dataSupply.ApplicantStatus && !formData.supplyStatus && true}
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Picker
-                id='Picker'
-                name='Picker'
-                pattern='*'
-                topLabel
-                onChange={(val) => setFormData({ ...formData, supplySkillId: val })}
-                options={dataAllSkills}
-                labelKey='name'
-                placeholder={dataSkillName}
-                label='Skill'
-                required
-                hasError={!formValidated && !dataSkillName && !formData.supplySkillId && true}
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input
-                label={'Notes'}
-                initValue={dataSupply.Notes ?? ''}
-                onInput={(e) => setFormData({ ...formData, supplyNotes: e.target.value })}
-                margin={0.5}
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Input
-                label={'Location'}
-                initValue={dataSupply.Location ?? ''}
-                onInput={(e) => setFormData({ ...formData, supplyLocation: e.target.value })}
-                margin={0.5}
-              />
-            </CG.Container>
-            <CG.Container margin='10px'>
-              <CG.Picker
-                id='Picker'
-                name='Picker'
-                pattern='*'
-                topLabel
-                onChange={(val) => setFormData({ ...formData, supplyType: val })}
-                options={applicant_type}
-                labelKey='name'
-                placeholder={dataSupply.ApplicantType ?? ''}
-                label='Applicant type'
-                margin={0.5}
-                required
-                hasError={!formValidated && !dataSupply.ApplicantType && !formData.supplyType && true}
-              />
-            </CG.Container>
+            
             <CG.Container margin='10px'>
               <Row justify='around'>
                 <CG.Button text='submit' onClick={handleSubmit} />
@@ -207,5 +121,105 @@ export const EditSupply = () => {
         <Footer />
       </Col>
     </Row>
+    */
+    <Col md={12} align='center' justify='center'>
+      <CG.Box width='400px' mt={10}>
+        <CG.Heading>Edit a supply</CG.Heading>
+        <CG.Container margin='10px'>
+          <CG.Input
+            label={'First name'}
+            initValue={dataSupply.ApplicantFirstName ?? ''} // Nullish coalescing operator
+            onInput={(e) => {
+              setFormData({ ...formData, supplyFName: e.target.value })
+            }}
+            margin={0.5}
+            required
+            hasError={!formValidated && !dataSupply.ApplicantFirstName && !formData.supplyFName && true}
+          />
+        </CG.Container>
+        <CG.Container margin='10px'>
+          <CG.Input
+            label={'Last name'}
+            initValue={dataSupply.ApplicantLastName ?? ''}
+            onInput={(e) => setFormData({ ...formData, supplyLName: e.target.value })}
+            margin={0.5}
+            required
+            hasError={!formValidated && !dataSupply.ApplicantLastName && !formData.supplyLName && true}
+          />
+        </CG.Container>
+        <CG.Container margin='10px'>
+          <CG.Picker
+            id='Picker'
+            name='Picker'
+            pattern='*'
+            topLabel
+            onChange={(val) => setFormData({ ...formData, supplyStatus: val })}
+            options={applicant_status}
+            labelKey='name'
+            placeholder={dataSupply.ApplicantStatus}
+            label='Status'
+            required
+            hasError={!formValidated && !dataSupply.ApplicantStatus && !formData.supplyStatus && true}
+          />
+        </CG.Container>
+        <CG.Container margin='10px'>
+          <CG.Picker
+            id='Picker'
+            name='Picker'
+            pattern='*'
+            topLabel
+            onChange={(val) => setFormData({ ...formData, supplySkillId: val })}
+            options={dataAllSkills}
+            labelKey='name'
+            placeholder={dataSkillName}
+            label='Skill'
+            required
+            hasError={!formValidated && !dataSkillName && !formData.supplySkillId && true}
+          />
+        </CG.Container>
+        <CG.Container margin='10px'>
+          <CG.Input
+            label={'Notes'}
+            initValue={dataSupply.Notes ?? ''}
+            onInput={(e) => setFormData({ ...formData, supplyNotes: e.target.value })}
+            margin={0.5}
+          />
+        </CG.Container>
+        <CG.Container margin='10px'>
+          <CG.Input
+            label={'Location'}
+            initValue={dataSupply.Location ?? ''}
+            onInput={(e) => setFormData({ ...formData, supplyLocation: e.target.value })}
+            margin={0.5}
+          />
+        </CG.Container>
+        <CG.Container margin='10px'>
+          <CG.Picker
+            id='Picker'
+            name='Picker'
+            pattern='*'
+            topLabel
+            onChange={(val) => setFormData({ ...formData, supplyType: val })}
+            options={applicant_type}
+            labelKey='name'
+            placeholder={dataSupply.ApplicantType ?? ''}
+            label='Applicant type'
+            margin={0.5}
+            required
+            hasError={!formValidated && !dataSupply.ApplicantType && !formData.supplyType && true}
+          />
+        </CG.Container>
+        <CG.Box ml='20px' mr='20px' mb={10} mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
+          <CG.Button primary text='submit' onClick={handleSubmit} />
+          <CG.Button
+            primary
+            text='cancel'
+            onClick={() => {
+              navigate('/protectedRoute/dashboard')
+            }}
+          />
+        </CG.Box>
+      </CG.Box>
+    </Col>
   )
 }
