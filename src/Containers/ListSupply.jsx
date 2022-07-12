@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { selectApplicantID, removeSupplyFromDashboard } from '../Slices/DashboardSlice'
 import { Row, Col } from 'react-grid-system'
 
-export const SupplyInformation = () => {
+export const ListSupply = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   let { skillname } = useParams()
