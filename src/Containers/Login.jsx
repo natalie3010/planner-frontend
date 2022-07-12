@@ -1,7 +1,7 @@
 import React from 'react'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
-import { Row, Col } from 'react-grid-system'
+import { Col } from 'react-grid-system'
 import { useState, useEffect } from 'react/cjs/react.development'
 import { submitUserLogin } from '../API'
 import { useSelector, useDispatch } from 'react-redux'

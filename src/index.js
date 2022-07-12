@@ -1,24 +1,21 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Navigation } from './Components/Navigation'
 import { Footer } from './Components/Footer'
 import { Dashboard } from './Containers/Dashboard'
 import { Login } from './Containers/Login'
 import { ProtectedRoute } from './ProtectedRoute'
 import { SupplyPage } from './Containers/SupplyPage'
-import { About } from './Containers/About'
-import { SupplyInformation } from './Containers/SupplyInfo'
-import { DemandInformation } from './Containers/DemandInfo'
-
-import allReducers from './Reducers/allReducers'
+import { About } from './Components/About'
+import { ListSupply } from './Containers/ListSupply'
+import { ListDemand } from './Containers/ListDemand'
 
 import { DemandPage } from './Containers/DemandPage'
 import { EditSupply } from './Containers/EditSupply'
 import { EditDemand } from './Containers/EditDemand'
 import { store } from '../src/store'
 import { Provider } from 'react-redux'
-import { WorkforcePlanner } from 'cap-shared-components'
 
 const App = () => {
   return (
@@ -79,7 +76,7 @@ const App = () => {
         path='/list-supply/:skillname'
         element={
           <ProtectedRoute>
-            <SupplyInformation />
+            <ListSupply />
           </ProtectedRoute>
         }
       />
@@ -88,7 +85,7 @@ const App = () => {
         path='/list-demand/:skillname'
         element={
           <ProtectedRoute>
-            <DemandInformation />
+            <ListDemand />
           </ProtectedRoute>
         }
       />

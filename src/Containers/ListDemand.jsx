@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom'
 import { selectDemandID, removeDemandFromDashboard } from '../Slices/DashboardSlice'
 import { useSelector, useDispatch } from 'react-redux'
 
-export const DemandInformation = () => {
+export const ListDemand = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   let { skillname } = useParams()
