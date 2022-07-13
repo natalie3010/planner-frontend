@@ -67,8 +67,8 @@ export const DemandPage = () => {
     <Col md={12} align='center' justify='center'>
       <CG.Box width='400px' mt={10}>
         <CG.Heading>Add a new demand</CG.Heading>
-        {Object.keys(form).map((formItem, index) => {
-          if (formItem === 'clientID' || formItem === 'skillsID' || formItem === 'grade' || formItem === 'status') {
+        {Object.keys(inputDefaults).map((formItem, index) => {
+          if (inputDefaults[formItem].inputType === 'dropdown') {
             return (
               <CG.Container margin='10px' key={index}>
                 <CG.Picker
