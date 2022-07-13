@@ -9,7 +9,7 @@ export const BarChart = ({ chartData, navigateToListPage }) => {
     const type = formatted_data.datasets[element[0].datasetIndex].label
     const skillName = chartData[element[0].index].skill_name
 
-    navigateToListPage(type, skillName)
+    navigateToListPage(type, skillName.replace(/\//g, ' '))
   }
   const formatChartData = (data) => {
     if (data) {

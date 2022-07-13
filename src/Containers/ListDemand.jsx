@@ -23,16 +23,26 @@ export const ListDemand = () => {
   }, [skillname, data])
 
   const fetchData = () => {
-    let url = 'https://localhost:4001/api/demand?selectedSkills=' + skillname
+    if (skillname == 'UI UX Designer') {
+      let url = 'https://localhost:4001/api/demand?selectedSkills=UI/UX Designer'
 
-    fetch(url, requestObject)
-      .then((res) => res.json())
+      fetch(url, requestObject)
+        .then((res) => res.json())
 
-      .then((response) => {
-        getData(response)
-      })
+        .then((response) => {
+          getData(response)
+        })
+    } else {
+      let url = 'https://localhost:4001/api/demand?selectedSkills=' + skillname
+
+      fetch(url, requestObject)
+        .then((res) => res.json())
+
+        .then((response) => {
+          getData(response)
+        })
+    }
   }
-
   const deleterow = (DemandID) => {
     let url = `https://localhost:4001/api/demand/${DemandID}`
     fetch(url, requestObject2).then(() => {
@@ -52,52 +62,54 @@ export const ListDemand = () => {
         style={{ margin: '0px', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}
       >
         <Col>
-          <CG.Table
-            customKeyNames={{
-              firstname: 'ApplicantFirstName',
-              lastname: 'ApplicantLastName',
-              DemandID: 'Demand ID',
-              CodeRequisition: 'Code Requisition',
-              ClientID: 'Client ID',
-              SkillsID: 'Skills ID',
-              StartDate: 'Start Date',
-            }}
-            data={data}
-            divider
-            selectedKeys={[
-              'DemandID',
-              'CodeRequisition',
-              'ClientID',
-              'SkillsID',
-              'Probability',
-              'StartDate',
-              'Grade',
-              'Status',
-            ]}
-            icons={[
-              {
-                tableHeader: 'Edit',
-                height: '20px',
-                width: '20px',
-                type: 'Edit2',
-                handler: (value) => {
-                  dispatch(selectDemandID(value.DemandID))
-                  navigate('/edit-demand')
+          <div style={{ minHeight: '300px' }}>
+            <CG.Table
+              customKeyNames={{
+                firstname: 'ApplicantFirstName',
+                lastname: 'ApplicantLastName',
+                DemandID: 'Demand ID',
+                CodeRequisition: 'Code Requisition',
+                ClientID: 'Client ID',
+                SkillsID: 'Skills ID',
+                StartDate: 'Start Date',
+              }}
+              data={data}
+              divider
+              selectedKeys={[
+                'DemandID',
+                'CodeRequisition',
+                'ClientID',
+                'SkillsID',
+                'Probability',
+                'StartDate',
+                'Grade',
+                'Status',
+              ]}
+              icons={[
+                {
+                  tableHeader: 'Edit',
+                  height: '20px',
+                  width: '20px',
+                  type: 'Edit2',
+                  handler: (value) => {
+                    dispatch(selectDemandID(value.DemandID))
+                    navigate('/edit-demand')
+                  },
                 },
-              },
-              {
-                tableHeader: 'Delete',
-                height: '20px',
-                width: '20px',
-                type: 'X',
-                handler: (value) => deleterow(value.DemandID),
-              },
-            ]}
-          />
+                {
+                  tableHeader: 'Delete',
+                  height: '20px',
+                  width: '20px',
+                  type: 'X',
+                  handler: (value) => deleterow(value.DemandID),
+                },
+              ]}
+            />
+          </div>
         </Col>
       </Row>
 
-      <div style={{ marginTop: '50px', marginLeft: '20px', marginBottom: '100px' }}>
+      <div style={{ marginTop: '100px', marginLeft: '20px', marginBottom: '50px' }}>
         <CG.Button text='Return to dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
       </div>
     </div>
