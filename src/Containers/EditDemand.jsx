@@ -14,11 +14,12 @@ export const EditDemand = () => {
   const dispatch = useDispatch()
   const authToken = useSelector((state) => state.user.authToken)
   const demandID = useSelector((state) => state.dashboard.selectedDemand)
+  const [dataDemand, setDataDemand] = useState(false)
   const [pickerSkills, setPickerSkills] = useState(null)
   const [defaultSkillName, setDefaultSkillName] = useState(null)
   const [pickerClients, setPickerClients] = useState(null)
-  const [formData, setFormData] = useState(null)
-  const [formValidated, setFormValidated] = useState(true)
+  const [formData, setFormData] = useState(form)
+  const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
     const requestClients = getClients(authToken)
@@ -29,7 +30,7 @@ export const EditDemand = () => {
 
     const requestDemand = getSingleDemand(demandID, authToken)
     requestDemand.then((demandResult) => {
-      setFormData(lowerCaseKeys(demandResult))
+      setDataDemand(demandResult)
       const requestSkills = getSkills(authToken)
       requestSkills.then((skillsResult) => {
         const myArray = formatSkills(skillsResult, demandResult.SkillsID)
@@ -42,51 +43,84 @@ export const EditDemand = () => {
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
 
   const handleSubmit = () => {
-    const newskillname = pickerSkills[formData.skillsID - 1].name
+    setFormSubmitted(true)
+
+    const data = {
+      codeRequisition: formData.codeRequisition ?? dataDemand.CodeRequisition,
+      startDate: formData.startDate ?? dataDemand.StartDate,
+      clientID: formData.clientID ?? dataDemand.ClientID,
+      originatorName: formData.originatorName ?? dataDemand.OriginatorName,
+      skillsID: formData.skillsID ?? dataDemand.SkillsID,
+      probability: formData.probability ?? dataDemand.Probability,
+      grade: formData.grade ?? dataDemand.Grade,
+      selectedApplicant: formData.selectedApplicant ?? dataDemand.SelectedApplicant,
+      status: formData.status ?? dataDemand.Status,
+      notes: formData.notes ?? dataDemand.Notes,
+      proposedApplicant: formData.proposedApplicant ?? dataDemand.ProposedApplicant,
+      creationDate: formData.creationDate ?? dataDemand.CreationDate,
+      location: formData.location ?? dataDemand.Location,
+    }
 
     if (checkIfFormIsValidated()) {
-      const request = updateDemand(authToken, demandID, formData)
+      const skillSelected = formData.skillsID && true
+      const newskillname = skillSelected && pickerSkills[formData.skillsID - 1].name
+      const request = updateDemand(authToken, demandID, data)
       request.then((result) => {
         if (defaultSkillName === newskillname) {
           navigate('/protectedRoute/dashboard')
-        } else if (newskillname && defaultSkillName) {
+        } else if (skillSelected && defaultSkillName) {
           dispatch(removeDemandFromDashboard(defaultSkillName))
           dispatch(addDemandToDashboard(newskillname))
           navigate('/protectedRoute/dashboard')
-        } else if (newskillname) {
+        } else if (skillSelected) {
           dispatch(addDemandToDashboard(newskillname))
+          navigate('/protectedRoute/dashboard')
+        } else {
           navigate('/protectedRoute/dashboard')
         }
       })
     }
   }
+
+  const testRegex = (formItem, testValue) => {
+    const regexPattern = new RegExp(inputDefaults[formItem].validators[0].pattern)
+    return regexPattern.test(testValue)
+  }
+
   const checkIfFormIsValidated = () => {
     let validated = true
-    for (const key in inputDefaults) {
-      try {
-        var pattern = inputDefaults[key].validators[0].pattern
-      } catch {}
 
-      if (pattern !== undefined) {
-        const regexPattern = new RegExp(pattern)
-        if (regexPattern.test(formData[key]) === false) {
-          validated = false
-          setFormValidated(false)
-        }
+    Object.keys(inputDefaults).map((formItem) => {
+      const required = inputDefaults[formItem].validators[0].required
+      const initValue = dataDemand[inputDefaults[formItem].responseKey]
+      const inputValue = formData[formItem]
+      const hasRegex = inputDefaults[formItem].validators[0].pattern && true
+
+      if (required && hasRegex && !inputValue && !testRegex(formItem, initValue)) {
+        validated = false
+      } else if (required && hasRegex && inputValue && !testRegex(formItem, inputValue)) {
+        validated = false
+      } else if (inputDefaults[formItem].inputType === 'text' && required === true && inputValue === '') {
+        validated = false
+      } else if (required === true && !inputValue && !initValue) {
+        validated = false
       }
-    }
+    })
     return validated
   }
 
-  if (!pickerClients || !pickerSkills || !formData || !defaultSkillName) {
+  if (!pickerClients || !pickerSkills || !dataDemand || !defaultSkillName) {
     return <CG.Body>loading...</CG.Body>
   }
   return (
     <Col md={12} align='center' justify='center'>
       <CG.Box width='400px' mt={10}>
         <CG.Heading>Edit a demand</CG.Heading>
-        {Object.keys(form).map((formItem, index) => {
-          if (formItem === 'clientID' || formItem === 'skillsID' || formItem === 'grade' || formItem === 'status') {
+        {Object.keys(inputDefaults).map((formItem, index) => {
+          const required = inputDefaults[formItem].validators[0].required
+          const responseKey = inputDefaults[formItem].responseKey
+          if (inputDefaults[formItem].inputType === 'dropdown') {
+            const pickerVal = dataDemand[responseKey]
             return (
               <CG.Container margin='10px' key={index}>
                 <CG.Picker
@@ -97,30 +131,37 @@ export const EditDemand = () => {
                   onChange={(val) => setFormData({ ...formData, [formItem]: val })}
                   options={inputDefaults[formItem].options}
                   labelKey='name'
-                  placeholder={formItem === 'skillsID' ? defaultSkillName : formData[formItem]}
                   label={inputDefaults[formItem].label}
+                  placeholder={typeof pickerVal === 'number' ? defaultSkillName : pickerVal}
+                  required={required}
+                  hasError={required && !formData[formItem] && formSubmitted}
                 />
               </CG.Container>
             )
           }
-          let hasRegex = false
-          let regexPattern
-          if (inputDefaults[formItem].validators[0].pattern) {
-            hasRegex = true
-            regexPattern = new RegExp(inputDefaults[formItem].validators[0].pattern)
-          }
+
+          const hasRegex = inputDefaults[formItem].validators[0].pattern && true
+
           return (
             <CG.Container margin='10px' key={index}>
               <CG.Input
-                initValue={formData[formItem] ?? ''}
                 label={inputDefaults[formItem].label}
+                initValue={dataDemand[responseKey] ?? ''}
                 onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
                 margin={0.5}
                 placeholder={inputDefaults[formItem].placeholder}
+                required={required}
                 hasError={
-                  ((formData[formItem] && hasRegex && !regexPattern.test(formData[formItem])) ||
-                    (!formValidated && hasRegex && !regexPattern.test(formData[formItem]))) &&
-                  true
+                  (required &&
+                    formSubmitted &&
+                    hasRegex &&
+                    !formData[formItem] &&
+                    !testRegex(formItem, dataDemand[responseKey])) ||
+                  (required &&
+                    formSubmitted &&
+                    hasRegex &&
+                    formData[formItem] &&
+                    !testRegex(formItem, formData[formItem]))
                 }
               />
             </CG.Container>
