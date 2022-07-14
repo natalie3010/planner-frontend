@@ -17,15 +17,15 @@ export const ListDemand = () => {
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
   const requestObject2 = { method: 'DELETE', headers: { 'x-access-token': token } }
   const [data, getData] = useState([])
+  const [tableChanged, setTableChanged] = useState(null)
 
   useEffect(() => {
     fetchData()
   }, [skillname, data])
 
   const fetchData = () => {
-    console.log('test list: ', skillname)
-    const test = skillname.replace(/\-/g, '/')
-    let url = `https://localhost:4001/api/demand?selectedSkills=${test}`
+    const name = skillname.replace(/\-/g, '/')
+    let url = `https://localhost:4001/api/demand?selectedSkills=${name}`
 
     fetch(url, requestObject)
       .then((res) => res.json())

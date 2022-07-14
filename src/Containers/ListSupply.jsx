@@ -22,25 +22,15 @@ export const ListSupply = () => {
   }, [skillname, data])
 
   const fetchData = () => {
-    if (skillname == 'UI UX Designer') {
-      let url = 'https://localhost:4001/api/supply?selectedSkills=UI/UX Designer'
+    const name = skillname.replace(/\-/g, '/')
+    let url = `https://localhost:4001/api/supply?selectedSkills=${name}`
 
-      fetch(url, requestObject)
-        .then((res) => res.json())
+    fetch(url, requestObject)
+      .then((res) => res.json())
 
-        .then((response) => {
-          getData(response)
-        })
-    } else {
-      let url = 'https://localhost:4001/api/supply?selectedSkills=' + skillname
-
-      fetch(url, requestObject)
-        .then((res) => res.json())
-
-        .then((response) => {
-          getData(response)
-        })
-    }
+      .then((response) => {
+        getData(response)
+      })
   }
   const deleterow = (ApplicantID) => {
     let url = `https://localhost:4001/api/supply/${ApplicantID}`
