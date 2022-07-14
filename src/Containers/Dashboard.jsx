@@ -38,8 +38,8 @@ export const Dashboard = () => {
           )}
           <CG.Box ml='15px' display='flex' flexDirection='row' justifyContent='space-between'>
             <>
-              <CG.Button primary text='Add a supply' onClick={() => navigate('/supply')}></CG.Button>
-              <CG.Button primary text='Add a demand' onClick={() => navigate('/demand')}></CG.Button>
+              <CG.Button text='Add a supply' onClick={() => navigate('/supply')}></CG.Button>
+              <CG.Button text='Add a demand' onClick={() => navigate('/demand')}></CG.Button>
             </>
           </CG.Box>
         </Col>
