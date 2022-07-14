@@ -21,7 +21,10 @@ export const Dashboard = () => {
   }, [])
 
   const onChartClickNavigate = (page, skillName) => {
-    navigate(`/list-${page}/${skillName}`)
+    const test = skillName.replace(/\//g, '-')
+    console.log('test dash: ', test)
+    console.log(`/list-${page}/${test}`)
+    navigate(`/list-${page}/${test}`)
   }
 
   return (

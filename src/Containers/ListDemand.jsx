@@ -23,25 +23,16 @@ export const ListDemand = () => {
   }, [skillname, data])
 
   const fetchData = () => {
-    if (skillname == 'UI UX Designer') {
-      let url = 'https://localhost:4001/api/demand?selectedSkills=UI/UX Designer'
+    console.log('test list: ', skillname)
+    const test = skillname.replace(/\-/g, '/')
+    let url = `https://localhost:4001/api/demand?selectedSkills=${test}`
 
-      fetch(url, requestObject)
-        .then((res) => res.json())
+    fetch(url, requestObject)
+      .then((res) => res.json())
 
-        .then((response) => {
-          getData(response)
-        })
-    } else {
-      let url = 'https://localhost:4001/api/demand?selectedSkills=' + skillname
-
-      fetch(url, requestObject)
-        .then((res) => res.json())
-
-        .then((response) => {
-          getData(response)
-        })
-    }
+      .then((response) => {
+        getData(response)
+      })
   }
   const deleterow = (DemandID) => {
     let url = `https://localhost:4001/api/demand/${DemandID}`
