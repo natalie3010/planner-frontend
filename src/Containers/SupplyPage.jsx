@@ -76,8 +76,8 @@ export const SupplyPage = () => {
   }
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Heading>Add a new supply</CG.Heading>
-      <CG.Box width='400px' mt={10}>
+      <CG.Heading size='S'>Add a new supply</CG.Heading>
+      <CG.Box width='400px' mb={80}>
         <CG.Input label={'First name'} onInput={(e) => setSupplyFName(e.target.value)} margin={0.5} required />
         {supplyFName ? null : formValidated ? null : (
           <span>{supplyFormValidators.supplyFirstName.validators[0].errorDisplayed}</span>
@@ -137,7 +137,7 @@ export const SupplyPage = () => {
           <span>{supplyFormValidators.supplyApplicantType.validators[0].errorDisplayed}</span>
         )}
 
-        <CG.Box ml='20px' mr='20px' mb={10} mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
+        <CG.Box ml='20px' mr='20px' mt='8px' display='flex' flexDirection='row' justifyContent='space-between'>
           <CG.Button primary text='submit' onClick={handleSubmit} />
           <CG.Button
             primary

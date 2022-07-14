@@ -86,8 +86,8 @@ export const EditDemand = () => {
   }
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Box width='400px' mt={10}>
-        <CG.Heading>Edit a demand</CG.Heading>
+      <CG.Box width='400px' mb={80}>
+        <CG.Heading size='S'>Edit a demand</CG.Heading>
         {Object.keys(form).map((formItem, index) => {
           if (formItem === 'clientID' || formItem === 'skillsID' || formItem === 'grade' || formItem === 'status') {
             return (
@@ -126,7 +126,8 @@ export const EditDemand = () => {
             </CG.Container>
           )
         })}
-        <CG.Box ml='38px' mr='20px' mb={10} mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
+
+        <CG.Box ml='20px' mb={10} display='flex' flexDirection='row' justifyContent='space-between'>
           <CG.Button primary text='submit' onClick={handleSubmit} />
           <CG.Button
             primary

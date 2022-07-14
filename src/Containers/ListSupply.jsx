@@ -40,68 +40,70 @@ export const ListSupply = () => {
   }
 
   return (
-    <div>
-      <div style={{ marginLeft: '20px' }}>
-        <CG.Heading size='M' weight='bold'>
-          Supply information for {skillname}{' '}
-        </CG.Heading>
-      </div>
-
-      <Row
-        justify='center'
-        nogutter={false}
-        style={{ margin: '0px', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}
+    <Col md={12} align='center' justify='center'>
+      <CG.Box m='0.08rem' display='flex' boxSizing='border-box' flexDirection='row' justifyContent='center'>
+        <CG.Heading size='S'>Supply information for {skillname}</CG.Heading>
+      </CG.Box>
+      <CG.Box
+        width='70rem'
+        p='0.85rem'
+        display='flex'
+        alignContent='center'
+        flexDirection='column'
+        boxSizing='border-box'
+        fontSize='0.90rem'
       >
-        <Col>
-          <CG.Table
-            customKeyNames={{
-              firstname: 'ApplicantFirstName',
-              lastname: 'ApplicantLastName',
-              ApplicantID: 'Applicant ID',
-              ApplicantFirstName: 'Applicant First Name',
-              ApplicantLastName: 'Applicant Last Name',
-              ApplicantStatus: 'Applicant Status',
-              SkillsID: 'Skills ID',
-              ApplicantType: 'Applicant Type',
-            }}
-            data={data}
-            divider
-            selectedKeys={[
-              'ApplicantID',
-              'ApplicantFirstName',
-              'ApplicantLastName',
-              'ApplicantStatus',
-              'SkillsID',
-              'Notes',
-              'ApplicantType',
-              'Location',
-            ]}
-            icons={[
-              {
-                tableHeader: 'Edit',
-                height: '20px',
-                width: '20px',
-                type: 'Edit2',
-                handler: (value) => {
-                  dispatch(selectApplicantID(value.ApplicantID))
-                  navigate('/edit-supply')
-                },
+        <CG.Table
+          customKeyNames={{
+            firstname: 'ApplicantFirstName',
+            lastname: 'ApplicantLastName',
+            ApplicantID: 'Applicant ID',
+            ApplicantFirstName: 'Applicant First Name',
+            ApplicantLastName: 'Applicant Last Name',
+            ApplicantStatus: 'Applicant Status',
+            SkillsID: 'Skills ID',
+            ApplicantType: 'Applicant Type',
+          }}
+          data={data}
+          divider
+          selectedKeys={[
+            'ApplicantID',
+            'ApplicantFirstName',
+            'ApplicantLastName',
+            'ApplicantStatus',
+            'SkillsID',
+            'Notes',
+            'ApplicantType',
+            'Location',
+          ]}
+          icons={[
+            {
+              tableHeader: 'Edit',
+              height: '0.90rem',
+              width: '0.90rem',
+              type: 'Edit2',
+              handler: (value) => {
+                dispatch(selectApplicantID(value.ApplicantID))
+                navigate('/edit-supply')
               },
-              {
-                tableHeader: 'Delete',
-                height: '20px',
-                width: '20px',
-                type: 'X',
-                handler: (value) => deleterow(value.ApplicantID),
-              },
-            ]}
-          />
-        </Col>
-      </Row>
-
-      <div style={{ marginTop: '50px', marginLeft: '20px', marginBottom: '100px' }}>
-        <CG.Button text='Return to dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
-      </div>
-    </div>
+            },
+            {
+              tableHeader: 'Delete',
+              height: '0.90rem',
+              width: '0.90rem',
+              type: 'X',
+              handler: (value) => deleterow(value.ApplicantID),
+            },
+          ]}
+        />
+        <CG.Box m='18rem' alignSelf='center' display='flex' position='fixed' flexDirection='row'>
+          <CG.Button
+            primary
+            text='Return to dashboard'
+            onClick={() => navigate('/protectedRoute/dashboard')}
+          ></CG.Button>
+        </CG.Box>
+      </CG.Box>
+    </Col>
   )
 }

@@ -65,8 +65,8 @@ export const DemandPage = () => {
   }
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Box width='400px' mt={10}>
-        <CG.Heading>Add a new demand</CG.Heading>
+      <CG.Heading size='S'>Add a new demand</CG.Heading>
+      <CG.Box width='400px' mb={80}>
         {Object.keys(form).map((formItem, index) => {
           if (formItem === 'clientID' || formItem === 'skillsID' || formItem === 'grade' || formItem === 'status') {
             return (

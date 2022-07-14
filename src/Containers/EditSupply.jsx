@@ -72,8 +72,8 @@ export const EditSupply = () => {
   }
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Box width='400px' mt={10}>
-        <CG.Heading>Edit a supply</CG.Heading>
+      <CG.Box width='400px' mb={80}>
+        <CG.Heading size='S'>Edit a supply</CG.Heading>
 
         <CG.Input
           label={'First name'}

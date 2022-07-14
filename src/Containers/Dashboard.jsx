@@ -26,18 +26,17 @@ export const Dashboard = () => {
 
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Box width={400} boxSizing='border-box' mt='-30px' mb='30px'>
+      <CG.Box width={400} boxSizing='border-box' justifyContent='center' mt='-30px' mb='20px'>
         <Col md={11} align='center' justify='center'>
-          <CG.Heading size='S'>Skills Based On Supply and Demand</CG.Heading>
+          <CG.Heading size='XS'>Skills Based On Supply and Demand</CG.Heading>
           {!dashboardData ? (
             <CG.Body>'loading...'</CG.Body>
           ) : (
             <BarChart chartData={dashboardData} navigateToListPage={onChartClickNavigate} />
           )}
+
           <CG.Box
-            ml='98px'
-            mr='85px'
-            mt='-20px'
+            mt='-30px'
             mb={8}
             boxSizing='border-box'
             display='flex'
