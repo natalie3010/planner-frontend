@@ -20,9 +20,20 @@ export const About = () => {
             transform: 'translate(-50%, -50%)',
           }}
         >
-          <CG.Heading size='M' fontWeight='bold'>
+          {' '}
+          <h1
+            style={{
+              fontFamily:
+                '-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif',
+              width: '100%',
+              color: '#fff',
+              fontSize: '22pt',
+              fontWeight: 'bold',
+              lineHeight: 'normal',
+            }}
+          >
             About us
-          </CG.Heading>
+          </h1>
         </div>
       </div>
 
