@@ -1,6 +1,6 @@
 import React from 'react'
 import { CG } from 'cap-shared-components'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../Slices/LoginSlice'
 
@@ -8,7 +8,7 @@ export const Navigation = () => {
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
+  const location = useLocation()
   return (
     <CG.NavbarContainer>
       <CG.NavbarContent>
@@ -22,12 +22,12 @@ export const Navigation = () => {
         />
         {userLoggedIn && (
           <div style={{ alignSelf: 'center' }}>
-            <CG.Button text='Home' onClick={() => navigate('/protectedRoute/dashboard')} />
+            {location.pathname !== '/protectedRoute/dashboard' && (
+              <CG.Button text='Home' onClick={() => navigate('/protectedRoute/dashboard')} />
+            )}{' '}
             <span> </span>
-
             <CG.Button text='About' onClick={() => navigate('/about')} />
             <span> </span>
-
             <CG.Button
               text='Log out'
               onClick={() => {
