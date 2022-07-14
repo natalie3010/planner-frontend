@@ -6,29 +6,19 @@ import { CG } from 'cap-shared-components'
 
 import { useNavigate } from 'react-router-dom'
 import { addSupply, getSkills } from '../API'
-import { formatSkills } from '../Data/Format'
-import { applicant_status, applicant_type } from '../Data/Data'
+import { formatSkills, supplyFormFormatter } from '../Data/Format'
+import { applicant_status, applicant_type, supplyForm as form } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addSupplyToDashboard } from '../Slices/DashboardSlice'
-import formValidators from '../../formValidatorsConfig.json'
 
 export const SupplyPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const supplyFormValidators = formValidators.supplyForm.inputs
   const authToken = useSelector((state) => state.user.authToken)
   // dataAllSkills are all the skill, formatted for the picker component
-  const [dataAllSkills, setDataAllSkills] = useState()
-  // form data
-  const [supplyFName, setSupplyFName] = useState(null)
-  const [supplyLName, setSupplyLName] = useState(null)
-  const [supplyStatus, setSupplyStatus] = useState(null)
-  const [supplySkillId, setSupplySkillId] = useState(null)
-  const [supplyNotes, setSupplyNotes] = useState(null)
-  const [supplyType, setSupplyType] = useState(null)
-  const [supplyLocation, setSupplyLocation] = useState(null)
-  // validators
-  const [formValidated, setFormValidated] = useState(true)
+  const [dataAllSkills, setDataAllSkills] = useState(null)
+  const [formData, setFormData] = useState(form)
+  const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
     const requestSkills = getSkills(authToken)
@@ -38,28 +28,33 @@ export const SupplyPage = () => {
     })
   }, [])
 
+  const inputDefaults = supplyFormFormatter(applicant_status, dataAllSkills, applicant_type)
+
   const handleSubmit = (e) => {
+    setFormSubmitted(true)
     const data = {
-      applicantFirstName: supplyFName,
-      applicantLastName: supplyLName,
-      applicantStatus: supplyStatus,
-      skillsID: supplySkillId,
-      notes: supplyNotes,
-      applicantType: supplyType,
-      location: supplyLocation,
+      applicantFirstName: formData.supplyFName,
+      applicantLastName: formData.supplyLName,
+      applicantStatus: formData.supplyStatus,
+      skillsID: formData.supplySkillId,
+      notes: formData.supplyNotes,
+      applicantType: formData.supplyType,
+      location: formData.supplyLocation,
     }
     if (checkIfFormIsValidated()) {
       sendata(data)
-    } else {
-      setFormValidated(false)
     }
   }
 
   const checkIfFormIsValidated = () => {
-    let validated = false
-    if (supplyFName && supplyLName && supplyStatus && supplySkillId && supplyType) {
-      validated = true
-    }
+    let validated = true
+    Object.keys(inputDefaults).map((formItem) => {
+      const required = inputDefaults[formItem].validators[0].required
+      const inputValue = formData[formItem]
+      if (required === true && !inputValue) {
+        validated = false
+      }
+    })
     return validated
   }
 
@@ -76,68 +71,43 @@ export const SupplyPage = () => {
   }
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Heading size='S'>Add a new supply</CG.Heading>
       <CG.Box width='400px' mb={80}>
-        <CG.Input label={'First name'} onInput={(e) => setSupplyFName(e.target.value)} margin={0.5} required />
-        {supplyFName ? null : formValidated ? null : (
-          <span>{supplyFormValidators.supplyFirstName.validators[0].errorDisplayed}</span>
-        )}
+        <CG.Heading>Add a new supply</CG.Heading>
 
-        <CG.Input label={'Last name'} onInput={(e) => setSupplyLName(e.target.value)} margin={0.5} required />
-        {supplyLName ? null : formValidated ? null : (
-          <span>{supplyFormValidators.supplyLastName.validators[0].errorDisplayed}</span>
-        )}
-
-        <CG.Picker
-          id='Picker'
-          name='Picker'
-          pattern='*'
-          topLabel
-          onChange={(val) => setSupplyStatus(val)}
-          options={applicant_status}
-          labelKey='name'
-          placeholder='Select status'
-          label='Status'
-        />
-        {supplyStatus ? null : formValidated ? null : (
-          <span>{supplyFormValidators.supplyStatus.validators[0].errorDisplayed}</span>
-        )}
-
-        <CG.Picker
-          id='Picker'
-          name='Picker'
-          pattern='*'
-          topLabel
-          onChange={(val) => setSupplySkillId(val)}
-          options={dataAllSkills}
-          labelKey='name'
-          placeholder='Select a skill'
-          label='Skill'
-        />
-        {supplySkillId ? null : formValidated ? null : (
-          <span>{supplyFormValidators.supplySkills.validators[0].errorDisplayed}</span>
-        )}
-
-        <CG.Input label={'Notes'} onInput={(e) => setSupplyNotes(e.target.value)} margin={0.5} required />
-
-        <CG.Input label={'Location'} onInput={(e) => setSupplyLocation(e.target.value)} margin={0.5} required />
-
-        <CG.Picker
-          id='Picker'
-          name='Picker'
-          pattern='*'
-          topLabel
-          onChange={(val) => setSupplyType(val)}
-          options={applicant_type}
-          labelKey='name'
-          placeholder='Select type'
-          label='Applicant type'
-        />
-        {supplyType ? null : formValidated ? null : (
-          <span>{supplyFormValidators.supplyApplicantType.validators[0].errorDisplayed}</span>
-        )}
-
-        <CG.Box ml='20px' mr='20px' mt='8px' display='flex' flexDirection='row' justifyContent='space-between'>
+        {Object.keys(inputDefaults).map((formItem, index) => {
+          if (inputDefaults[formItem].inputType === 'dropdown') {
+            return (
+              <CG.Container margin='10px' key={index}>
+                <CG.Picker
+                  id='Picker'
+                  name='Picker'
+                  pattern='*'
+                  topLabel
+                  onChange={(val) => setFormData({ ...formData, [formItem]: val })}
+                  options={inputDefaults[formItem].options}
+                  labelKey='name'
+                  placeholder={inputDefaults[formItem].placeholder}
+                  label={inputDefaults[formItem].label}
+                  required={inputDefaults[formItem].validators[0].required}
+                  hasError={inputDefaults[formItem].validators[0].required && !formData[formItem] && formSubmitted}
+                />
+              </CG.Container>
+            )
+          }
+          return (
+            <CG.Container margin='10px' key={index}>
+              <CG.Input
+                label={inputDefaults[formItem].label}
+                onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
+                margin={0.5}
+                placeholder={inputDefaults[formItem].placeholder}
+                required={inputDefaults[formItem].validators[0].required}
+                hasError={inputDefaults[formItem].validators[0].required && !formData[formItem] && formSubmitted}
+              />
+            </CG.Container>
+          )
+        })}
+        <CG.Box ml='20px' mr='20px' mb={10} mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
           <CG.Button primary text='submit' onClick={handleSubmit} />
           <CG.Button
             primary

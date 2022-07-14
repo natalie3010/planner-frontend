@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Row } from 'react-grid-system'
+import { Col } from 'react-grid-system'
 import { CG } from 'cap-shared-components'
 
 import { useNavigate } from 'react-router-dom'
@@ -16,7 +16,7 @@ export const DemandPage = () => {
   const [pickerSkills, setPickerSkills] = useState(null)
   const [pickerClients, setPickerClients] = useState(null)
   const [formData, setFormData] = useState(form)
-  const [formValidated, setFormValidated] = useState()
+  const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
     const requestClients = getClients(authToken)
@@ -29,32 +29,32 @@ export const DemandPage = () => {
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
 
   const handleSubmit = () => {
-    const skillName = pickerSkills[formData.skillsID - 1].name
+    setFormSubmitted(true)
     if (checkIfFormIsValidated()) {
+      const skillSelected = formData.skillsID && true
+      const skillName = skillSelected && pickerSkills[formData.skillsID - 1].name
       const request = addDemand(authToken, formData)
       request.then((result) => {
-        dispatch(addDemandToDashboard(skillName))
+        skillSelected && dispatch(addDemandToDashboard(skillName))
         navigate('/protectedRoute/dashboard')
       })
     }
   }
 
+  const testRegex = (formItem, inputValue) => {
+    const regexPattern = new RegExp(inputDefaults[formItem].validators[0].pattern)
+    return regexPattern.test(inputValue)
+  }
+
   const checkIfFormIsValidated = () => {
     let validated = true
-    const requiredInputs = []
-    for (const key in inputDefaults) {
-      try {
-        const required = inputDefaults[key].validators[0].required
-        const pattern = inputDefaults[key].validators[0].pattern
-        required && requiredInputs.push([key, pattern])
-      } catch {}
-    }
-    requiredInputs.forEach((input) => {
-      const inputData = formData[input[0]]
-      const regexPattern = new RegExp(input[1])
-      if (!inputData) {
+    Object.keys(inputDefaults).map((formItem) => {
+      const required = inputDefaults[formItem].validators[0].required
+      const inputValue = formData[formItem]
+      const hasRegex = inputDefaults[formItem].validators[0].pattern && true
+      if (required && hasRegex && !testRegex(formItem, inputValue)) {
         validated = false
-      } else if (!regexPattern.test(inputData)) {
+      } else if (required && !inputValue) {
         validated = false
       }
     })
@@ -65,10 +65,11 @@ export const DemandPage = () => {
   }
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Heading size='S'>Add a new demand</CG.Heading>
       <CG.Box width='400px' mb={80}>
-        {Object.keys(form).map((formItem, index) => {
-          if (formItem === 'clientID' || formItem === 'skillsID' || formItem === 'grade' || formItem === 'status') {
+        <CG.Heading>Add a new demand</CG.Heading>
+
+        {Object.keys(inputDefaults).map((formItem, index) => {
+          if (inputDefaults[formItem].inputType === 'dropdown') {
             return (
               <CG.Container margin='10px' key={index}>
                 <CG.Picker
@@ -79,18 +80,15 @@ export const DemandPage = () => {
                   onChange={(val) => setFormData({ ...formData, [formItem]: val })}
                   options={inputDefaults[formItem].options}
                   labelKey='name'
-                  placeholder={inputDefaults[formItem].placeholder}
                   label={inputDefaults[formItem].label}
+                  placeholder={inputDefaults[formItem].placeholder}
+                  required={inputDefaults[formItem].validators[0].required}
+                  hasError={inputDefaults[formItem].validators[0].required && !formData[formItem] && formSubmitted}
                 />
               </CG.Container>
             )
           }
-          let displayErrorBox = false
-          let regexPattern
-          if (inputDefaults[formItem].validators[0]) {
-            displayErrorBox = true
-            regexPattern = new RegExp(inputDefaults[formItem].validators[0].pattern)
-          }
+          const hasRegex = inputDefaults[formItem].validators[0].pattern && true
 
           return (
             <CG.Container margin='10px' key={index}>
@@ -99,14 +97,15 @@ export const DemandPage = () => {
                 onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
                 margin={0.5}
                 placeholder={inputDefaults[formItem].placeholder}
+                required={inputDefaults[formItem].validators[0].required}
+                hasError={
+                  (hasRegex && formData[formItem] && !testRegex(formItem, formData[formItem])) ||
+                  (inputDefaults[formItem].validators[0].required && !formData[formItem] && formSubmitted)
+                }
               />
-              {formData[formItem] && displayErrorBox && !regexPattern.test(formData[formItem]) ? (
-                <span>{inputDefaults[formItem].validators[0].errorDisplayed}</span>
-              ) : null}
             </CG.Container>
           )
         })}
-
         <CG.Box mr='10px' ml='30px' mb={10} display='flex' flexDirection='row' justifyContent='space-between'>
           <CG.Button primary text='submit' onClick={handleSubmit} />
           <CG.Button

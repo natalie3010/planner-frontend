@@ -51,3 +51,13 @@ export let demandForm = {
   creationDate: null,
   location: null,
 }
+
+export let supplyForm = {
+  supplyFName: null,
+  supplyLName: null,
+  supplyStatus: null,
+  supplySkillId: null,
+  supplyNotes: null,
+  supplyType: null,
+  supplyLocation: null,
+}
