@@ -60,20 +60,20 @@ export const WorkforcePlanner = {
 
     // Background //
     bgWhite: '#FFFFFF',
-    bgLight: '#DC3522',
+    bgLight: '#d4d4d4', //'#DC3522',
     bgDark: '#707070',
     bgBlack: '#000000',
 
     // Text //
     textBlack: '#000000',
-    textPrimary: '#FFFFFF',
+    textPrimary: '#3d3b3b', //'#FFFFFF' white text not visisble
     textSecondary: '#323232',
     textTertiary: '#000000',
     textMuted: '#747474',
     textBody: '#505050',
-    textLink: '#DC3522 !important',
+    textLink: '#72cae8', //'#DC3522 !important',
     textLinkHover: '#DC3522',
-    textLinkDown: '#DC3522 ', // visited
+    textLinkDown: '#72cae8', //'#DC3522 ', // visited
     textFocus: '#DC3522',
 
     // Focus //
@@ -81,7 +81,7 @@ export const WorkforcePlanner = {
     focusDark: '#2680EB',
 
     // CTA //
-    cta: '#DC3522',
+    cta: '#d4d4d4', //'#DC3522',
     ctaLight: '#DC3522',
     ctaHover: '#DC3522',
     ctaDown: '#9D2719',
