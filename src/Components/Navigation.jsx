@@ -21,20 +21,24 @@ export const Navigation = () => {
           }}
         />
         {userLoggedIn && (
-          <div style={{ alignSelf: 'center' }}>
+          <CG.Box flexDirection='row' justifyContent='space-between' display='flex' alignSelf='center'>
             {location.pathname !== '/protectedRoute/dashboard' && (
-              <CG.Button text='Home' onClick={() => navigate('/protectedRoute/dashboard')} />
+              <CG.Box mr='5px'>
+                <CG.Button text='Home' onClick={() => navigate('/protectedRoute/dashboard')} />
+              </CG.Box>
             )}{' '}
-            <span> </span>
-            <CG.Button text='About' onClick={() => navigate('/about')} />
-            <span> </span>
-            <CG.Button
-              text='Log out'
-              onClick={() => {
-                dispatch(logout())
-              }}
-            />
-          </div>
+            <CG.Box mr='5px'>
+              <CG.Button text='About' onClick={() => navigate('/about')} />
+            </CG.Box>
+            <CG.Box mr='5px'>
+              <CG.Button
+                text='Log out'
+                onClick={() => {
+                  dispatch(logout())
+                }}
+              />
+            </CG.Box>
+          </CG.Box>
         )}
       </CG.NavbarContent>
     </CG.NavbarContainer>
