@@ -6,7 +6,7 @@ import { CG } from 'cap-shared-components'
 export const About = () => {
   return (
     <div>
-      <div style={{ position: 'relative', textAlign: 'center' }}>
+      <CG.Box position='relative' textAlign='center'>
         <img src='images/Invent-Header-Banner-Image.webp' width='100%' height='300px' />
         <div
           style={{
@@ -35,7 +35,7 @@ export const About = () => {
             About us
           </h1>
         </div>
-      </div>
+      </CG.Box>
 
       <div style={{ width: '50%', display: 'block', float: 'left' }}>
         <div style={{ margin: '20px', padding: '20px', border: '1px solid #d4d4d4' }}>
