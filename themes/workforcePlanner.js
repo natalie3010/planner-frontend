@@ -60,20 +60,20 @@ export const WorkforcePlanner = {
 
     // Background //
     bgWhite: '#FFFFFF',
-    bgLight: '#d4d4d4', //'#DC3522',
+    bgLight: '#B4C5E4',
     bgDark: '#707070',
     bgBlack: '#000000',
 
     // Text //
     textBlack: '#000000',
-    textPrimary: '#3d3b3b', //'#FFFFFF' white text not visisble
+    textPrimary: '#3d3b3b',
     textSecondary: '#323232',
     textTertiary: '#000000',
     textMuted: '#747474',
     textBody: '#505050',
-    textLink: '#72cae8', //'#DC3522 !important',
+    textLink: '#72cae8',
     textLinkHover: '#DC3522',
-    textLinkDown: '#72cae8', //'#DC3522 ', // visited
+    textLinkDown: '#72cae8',
     textFocus: '#DC3522',
 
     // Focus //
@@ -81,10 +81,10 @@ export const WorkforcePlanner = {
     focusDark: '#2680EB',
 
     // CTA //
-    cta: '#d4d4d4', //'#DC3522',
+    cta: '#B4C5E4',
     ctaLight: '#DC3522',
-    ctaHover: '#DC3522',
-    ctaDown: '#9D2719',
+    ctaHover: '#FBFFF1',
+    ctaDown: '090c9b',
     ctaBg: '#378EF0',
     textCta: '#FFFFFF',
 
@@ -148,6 +148,10 @@ export const WorkforcePlanner = {
     },
     list: {
       borderRadius: '4px',
+      // here
+    },
+    listItem: {
+      borderRadius: '20px',
     },
   },
   typography: {
