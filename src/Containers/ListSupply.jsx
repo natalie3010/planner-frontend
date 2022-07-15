@@ -22,7 +22,8 @@ export const ListSupply = () => {
   }, [skillname, data])
 
   const fetchData = () => {
-    let url = 'https://localhost:4001/api/supply?selectedSkills=' + skillname
+    const name = skillname.replace(/\-/g, '/')
+    let url = `https://localhost:4001/api/supply?selectedSkills=${name}`
 
     fetch(url, requestObject)
       .then((res) => res.json())
@@ -31,7 +32,6 @@ export const ListSupply = () => {
         getData(response)
       })
   }
-
   const deleterow = (ApplicantID) => {
     let url = `https://localhost:4001/api/supply/${ApplicantID}`
     fetch(url, requestObject2).then(() => {
@@ -53,53 +53,55 @@ export const ListSupply = () => {
         style={{ margin: '0px', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}
       >
         <Col>
-          <CG.Table
-            customKeyNames={{
-              firstname: 'ApplicantFirstName',
-              lastname: 'ApplicantLastName',
-              ApplicantID: 'Applicant ID',
-              ApplicantFirstName: 'Applicant First Name',
-              ApplicantLastName: 'Applicant Last Name',
-              ApplicantStatus: 'Applicant Status',
-              SkillsID: 'Skills ID',
-              ApplicantType: 'Applicant Type',
-            }}
-            data={data}
-            divider
-            selectedKeys={[
-              'ApplicantID',
-              'ApplicantFirstName',
-              'ApplicantLastName',
-              'ApplicantStatus',
-              'SkillsID',
-              'Notes',
-              'ApplicantType',
-              'Location',
-            ]}
-            icons={[
-              {
-                tableHeader: 'Edit',
-                height: '20px',
-                width: '20px',
-                type: 'Edit2',
-                handler: (value) => {
-                  dispatch(selectApplicantID(value.ApplicantID))
-                  navigate('/edit-supply')
+          <div style={{ minHeight: '300px' }}>
+            <CG.Table
+              customKeyNames={{
+                firstname: 'ApplicantFirstName',
+                lastname: 'ApplicantLastName',
+                ApplicantID: 'Applicant ID',
+                ApplicantFirstName: 'Applicant First Name',
+                ApplicantLastName: 'Applicant Last Name',
+                ApplicantStatus: 'Applicant Status',
+                SkillsID: 'Skills ID',
+                ApplicantType: 'Applicant Type',
+              }}
+              data={data}
+              divider
+              selectedKeys={[
+                'ApplicantID',
+                'ApplicantFirstName',
+                'ApplicantLastName',
+                'ApplicantStatus',
+                'SkillsID',
+                'Notes',
+                'ApplicantType',
+                'Location',
+              ]}
+              icons={[
+                {
+                  tableHeader: 'Edit',
+                  height: '20px',
+                  width: '20px',
+                  type: 'Edit2',
+                  handler: (value) => {
+                    dispatch(selectApplicantID(value.ApplicantID))
+                    navigate('/edit-supply')
+                  },
                 },
-              },
-              {
-                tableHeader: 'Delete',
-                height: '20px',
-                width: '20px',
-                type: 'X',
-                handler: (value) => deleterow(value.ApplicantID),
-              },
-            ]}
-          />
+                {
+                  tableHeader: 'Delete',
+                  height: '20px',
+                  width: '20px',
+                  type: 'X',
+                  handler: (value) => deleterow(value.ApplicantID),
+                },
+              ]}
+            />
+          </div>
         </Col>
       </Row>
 
-      <div style={{ marginTop: '50px', marginLeft: '20px', marginBottom: '100px' }}>
+      <div style={{ marginTop: '100px', marginLeft: '20px', marginBottom: '50px' }}>
         <CG.Button text='Return to dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
       </div>
     </div>

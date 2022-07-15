@@ -3,7 +3,7 @@ import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { Col } from 'react-grid-system'
 import { useState, useEffect } from 'react/cjs/react.development'
-import { submitUserLogin } from '../API'
+import { submitUserLogin, getDashboard } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
 import { login } from '../Slices/LoginSlice'
 export const Login = () => {
@@ -17,8 +17,17 @@ export const Login = () => {
   const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
+    const authToken = localStorage.getItem('authToken')
     if (userLoggedIn) {
       navigate(pathname)
+    } else if (authToken) {
+      const testToken = getDashboard(authToken)
+      testToken.then((result) => {
+        if (typeof result === 'object') {
+          dispatch(login(authToken))
+          navigate(pathname)
+        }
+      })
     }
   }, [])
 
@@ -27,6 +36,7 @@ export const Login = () => {
     request.then((result) => {
       if (result.token) {
         const authToken = result.token
+        localStorage.setItem('authToken', authToken)
         dispatch(login(authToken))
         navigate(pathname)
       } else {
