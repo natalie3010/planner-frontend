@@ -148,7 +148,7 @@ export const EditSupply = () => {
             primary
             text='cancel'
             onClick={() => {
-              navigate('/protectedRoute/dashboard')
+              navigate(-1)
             }}
           />
         </CG.Box>

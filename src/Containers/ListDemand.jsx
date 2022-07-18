@@ -17,13 +17,15 @@ export const ListDemand = () => {
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
   const requestObject2 = { method: 'DELETE', headers: { 'x-access-token': token } }
   const [data, getData] = useState([])
+  const [tableChanged, setTableChanged] = useState(null)
 
   useEffect(() => {
     fetchData()
   }, [skillname, data])
 
   const fetchData = () => {
-    let url = 'https://localhost:4001/api/demand?selectedSkills=' + skillname
+    const name = skillname.replace(/\-/g, '/')
+    let url = `https://localhost:4001/api/demand?selectedSkills=${name}`
 
     fetch(url, requestObject)
       .then((res) => res.json())
@@ -32,7 +34,6 @@ export const ListDemand = () => {
         getData(response)
       })
   }
-
   const deleterow = (DemandID) => {
     let url = `https://localhost:4001/api/demand/${DemandID}`
     fetch(url, requestObject2).then(() => {

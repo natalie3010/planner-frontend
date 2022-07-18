@@ -174,7 +174,7 @@ export const EditDemand = () => {
             primary
             text='cancel'
             onClick={() => {
-              navigate('/protectedRoute/dashboard')
+              navigate(-1)
             }}
           />
         </CG.Box>

@@ -22,7 +22,8 @@ export const ListSupply = () => {
   }, [skillname, data])
 
   const fetchData = () => {
-    let url = 'https://localhost:4001/api/supply?selectedSkills=' + skillname
+    const name = skillname.replace(/\-/g, '/')
+    let url = `https://localhost:4001/api/supply?selectedSkills=${name}`
 
     fetch(url, requestObject)
       .then((res) => res.json())
@@ -31,7 +32,6 @@ export const ListSupply = () => {
         getData(response)
       })
   }
-
   const deleterow = (ApplicantID) => {
     let url = `https://localhost:4001/api/supply/${ApplicantID}`
     fetch(url, requestObject2).then(() => {

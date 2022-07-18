@@ -21,7 +21,9 @@ export const Dashboard = () => {
   }, [])
 
   const onChartClickNavigate = (page, skillName) => {
-    navigate(`/list-${page}/${skillName}`)
+    const name = skillName.replace(/\//g, '-')
+
+    navigate(`/list-${page}/${name}`)
   }
 
   return (
@@ -44,8 +46,8 @@ export const Dashboard = () => {
             justifyContent='space-between'
           >
             <>
-              <CG.Button primary text='Add a supply' onClick={() => navigate('/supply')}></CG.Button>
-              <CG.Button primary text='Add a demand' onClick={() => navigate('/demand')}></CG.Button>
+              <CG.Button text='Add a supply' onClick={() => navigate('/supply')}></CG.Button>
+              <CG.Button text='Add a demand' onClick={() => navigate('/demand')}></CG.Button>
             </>
           </CG.Box>
         </Col>

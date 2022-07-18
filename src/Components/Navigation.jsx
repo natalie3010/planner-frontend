@@ -1,13 +1,14 @@
 import React from 'react'
 import { CG } from 'cap-shared-components'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../Slices/LoginSlice'
 
 export const Navigation = () => {
+  const userLoggedIn = useSelector((state) => state.user.userLoggedIn)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
+  const location = useLocation()
   return (
     <CG.NavbarContainer>
       <CG.NavbarContent style={{ padding: '10px' }}>
@@ -19,22 +20,27 @@ export const Navigation = () => {
             width: '200px',
           }}
         />
-        <div style={{ alignSelf: 'center' }}>
-          <CG.Button text='Home' onClick={() => navigate('/protectedRoute/dashboard')} />
-
-          <span> </span>
-
-          <CG.Button text='About' onClick={() => navigate('/about')} />
-
-          <span> </span>
-
-          <CG.Button
-            text='Log out'
-            onClick={() => {
-              dispatch(logout())
-            }}
-          />
-        </div>
+        {userLoggedIn && (
+          <CG.Box flexDirection='row' justifyContent='space-between' display='flex' alignSelf='center'>
+            {location.pathname !== '/protectedRoute/dashboard' && (
+              <CG.Box mr='5px'>
+                <CG.Button text='Home' onClick={() => navigate('/protectedRoute/dashboard')} />
+              </CG.Box>
+            )}{' '}
+            <CG.Box mr='5px'>
+              <CG.Button text='About' onClick={() => navigate('/about')} />
+            </CG.Box>
+            <CG.Box mr='5px'>
+              <CG.Button
+                text='Log out'
+                onClick={() => {
+                  dispatch(logout())
+                  localStorage.removeItem('authToken')
+                }}
+              />
+            </CG.Box>
+          </CG.Box>
+        )}
       </CG.NavbarContent>
     </CG.NavbarContainer>
   )
