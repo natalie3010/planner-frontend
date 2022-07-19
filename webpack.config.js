@@ -1,5 +1,7 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
+const { DefinePlugin } = require('webpack')
 
 module.exports = {
   mode: 'development',
@@ -40,6 +42,8 @@ module.exports = {
     new HTMLWebpackPlugin({
       template: 'index.html',
     }),
+    new Dotenv(),
+    new DefinePlugin({ 'process.env.BUILD_MODE': JSON.stringify(process.env.BUILD_MODE) }),
   ],
   resolve: {
     alias: {
