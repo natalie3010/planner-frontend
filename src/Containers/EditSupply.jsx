@@ -91,7 +91,7 @@ export const EditSupply = () => {
   }
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Box width='400px' mb={80}>
+      <CG.Box width='400px' mb={10}>
         <CG.Heading>Edit a supply</CG.Heading>
 
         {Object.keys(inputDefaults).map((formItem, index) => {
@@ -142,7 +142,7 @@ export const EditSupply = () => {
             </CG.Container>
           )
         })}
-        <CG.Box ml='20px' mr='20px' mb={10} mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
+        <CG.Box width='300px' display='flex' flexDirection='row' justifyContent='space-between'>
           <CG.Button primary text='submit' onClick={handleSubmit} />
           <CG.Button
             primary

@@ -11,7 +11,7 @@ export const Navigation = () => {
   const location = useLocation()
   return (
     <CG.NavbarContainer>
-      <CG.NavbarContent style={{ padding: '10px' }}>
+      <CG.NavbarContent>
         <CG.HomeLink
           homeLink={{ url: '?path=/story/template-cashorted--cashorted' }}
           homeIcon={{

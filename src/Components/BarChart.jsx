@@ -24,7 +24,7 @@ export const BarChart = ({ chartData, navigateToListPage }) => {
   }
 
   return (
-    <CG.Box width='50rem' boxSizing='border-box' mt='-40px' mb='15px'>
+    <CG.Box width='48rem' boxSizing='border-box'>
       <CG.BarChart
         data={formatChartData(chartData)}
         options={grouped_options}

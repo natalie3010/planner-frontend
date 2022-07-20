@@ -42,13 +42,15 @@ export const ListDemand = () => {
   }
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Box m='0.08rem' display='flex' boxSizing='border-box' flexDirection='row' justifyContent='center'>
-        <CG.Heading size='S'>Demand information for {skillname}</CG.Heading>
+      <CG.Box mt='20px' mr='20px' display='flex'>
+        <CG.Heading size='XS'>Demand information for {skillname}</CG.Heading>
+        <CG.Button primary text='Dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
       </CG.Box>
+
       <CG.Box
-        width='70rem'
-        p='15px'
-        m='5px'
+        width='80em'
+        p='0.85rem'
+        m='0.85rem'
         display='flex'
         alignContent='center'
         flexDirection='column'
@@ -97,14 +99,6 @@ export const ListDemand = () => {
             },
           ]}
         />
-
-        <CG.Box m='18rem' alignSelf='center' position='fixed' flexDirection='row'>
-          <CG.Button
-            primary
-            text='Return to dashboard'
-            onClick={() => navigate('/protectedRoute/dashboard')}
-          ></CG.Button>
-        </CG.Box>
       </CG.Box>
     </Col>
   )

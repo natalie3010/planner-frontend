@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectApplicantID, removeSupplyFromDashboard } from '../Slices/DashboardSlice'
-import { Row, Col } from 'react-grid-system'
+import { Col } from 'react-grid-system'
 
 export const ListSupply = () => {
   const dispatch = useDispatch()
@@ -41,12 +41,14 @@ export const ListSupply = () => {
 
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Box m='0.08rem' display='flex' boxSizing='border-box' flexDirection='row' justifyContent='center'>
-        <CG.Heading size='S'>Supply information for {skillname}</CG.Heading>
+      <CG.Box ml='15px' mr='15px' mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
+        <CG.Heading size='XS'>Supply information for {skillname}</CG.Heading>
+        <CG.Button primary text='Dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
       </CG.Box>
       <CG.Box
         width='70rem'
-        p='0.85rem'
+        p='0.95rem'
+        m='10px'
         display='flex'
         alignContent='center'
         flexDirection='column'
@@ -96,13 +98,6 @@ export const ListSupply = () => {
             },
           ]}
         />
-        <CG.Box m='18rem' alignSelf='center' display='flex' position='fixed' flexDirection='row'>
-          <CG.Button
-            primary
-            text='Return to dashboard'
-            onClick={() => navigate('/protectedRoute/dashboard')}
-          ></CG.Button>
-        </CG.Box>
       </CG.Box>
     </Col>
   )
