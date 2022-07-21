@@ -41,68 +41,65 @@ export const ListDemand = () => {
     })
   }
   return (
-    <div>
-      <div style={{ marginLeft: '20px' }}>
-        <CG.Heading size='M' weight='bold'>
-          Demand information for {skillname}
-        </CG.Heading>
-      </div>
-      <Row
-        justify='center'
-        nogutter={false}
-        style={{ margin: '0px', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}
-      >
-        <Col>
-          <div style={{ minHeight: '300px' }}>
-            <CG.Table
-              customKeyNames={{
-                firstname: 'ApplicantFirstName',
-                lastname: 'ApplicantLastName',
-                DemandID: 'Demand ID',
-                CodeRequisition: 'Code Requisition',
-                ClientID: 'Client ID',
-                SkillsID: 'Skills ID',
-                StartDate: 'Start Date',
-              }}
-              data={data}
-              divider
-              selectedKeys={[
-                'DemandID',
-                'CodeRequisition',
-                'ClientID',
-                'SkillsID',
-                'Probability',
-                'StartDate',
-                'Grade',
-                'Status',
-              ]}
-              icons={[
-                {
-                  tableHeader: 'Edit',
-                  height: '20px',
-                  width: '20px',
-                  type: 'Edit2',
-                  handler: (value) => {
-                    dispatch(selectDemandID(value.DemandID))
-                    navigate('/edit-demand')
-                  },
-                },
-                {
-                  tableHeader: 'Delete',
-                  height: '20px',
-                  width: '20px',
-                  type: 'X',
-                  handler: (value) => deleterow(value.DemandID),
-                },
-              ]}
-            />
-          </div>
-        </Col>
-      </Row>
+    <Col md={12} align='center' justify='center'>
+      <CG.Box mt='20px' mr='20px' display='flex'>
+        <CG.Heading size='XS'>Demand information for {skillname}</CG.Heading>
+        <CG.Button primary text='Dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
+      </CG.Box>
 
-      <div style={{ marginTop: '100px', marginLeft: '20px', marginBottom: '50px' }}>
-        <CG.Button text='Return to dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
-      </div>
-    </div>
+      <CG.Box
+        width='80em'
+        p='0.85rem'
+        m='0.85rem'
+        display='flex'
+        alignContent='center'
+        flexDirection='column'
+        boxSizing='border-box'
+        fontSize='0.85rem'
+      >
+        <CG.Table
+          customKeyNames={{
+            firstname: 'ApplicantFirstName',
+            lastname: 'ApplicantLastName',
+            DemandID: 'Demand ID',
+            CodeRequisition: 'Code Requisition',
+            ClientID: 'Client ID',
+            SkillsID: 'Skills ID',
+            StartDate: 'Start Date',
+          }}
+          data={data}
+          divider
+          selectedKeys={[
+            'DemandID',
+            'CodeRequisition',
+            'ClientID',
+            'SkillsID',
+            'Probability',
+            'StartDate',
+            'Grade',
+            'Status',
+          ]}
+          icons={[
+            {
+              tableHeader: 'Edit',
+              height: '0.90rem',
+              width: '0.90rem',
+              type: 'Edit2',
+              handler: (value) => {
+                dispatch(selectDemandID(value.DemandID))
+                navigate('/edit-demand')
+              },
+            },
+            {
+              tableHeader: 'Delete',
+              height: '0.90rem',
+              width: '0.90rem',
+              type: 'X',
+              handler: (value) => deleterow(value.DemandID),
+            },
+          ]}
+        />
+      </CG.Box>
+    </Col>
   )
 }

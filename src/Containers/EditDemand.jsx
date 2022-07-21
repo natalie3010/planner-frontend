@@ -114,7 +114,7 @@ export const EditDemand = () => {
   }
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Box width='400px' mt={10}>
+      <CG.Box width='400px' mb={10}>
         <CG.Heading>Edit a demand</CG.Heading>
         {Object.keys(inputDefaults).map((formItem, index) => {
           const required = inputDefaults[formItem].validators[0].required
@@ -167,7 +167,8 @@ export const EditDemand = () => {
             </CG.Container>
           )
         })}
-        <CG.Box ml='38px' mr='20px' mb={10} mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
+
+        <CG.Box width='300px' display='flex' flexDirection='row' justifyContent='space-between'>
           <CG.Button primary text='submit' onClick={handleSubmit} />
           <CG.Button
             primary

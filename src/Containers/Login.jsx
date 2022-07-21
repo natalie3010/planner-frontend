@@ -59,19 +59,17 @@ export const Login = () => {
   }
 
   return (
-    <Col md={4} style={{ width: 300 }} offset={{ md: 4 }} align='center' justify='center'>
+    <Col md={12} align='center' justify='center'>
       <CG.Box
         width='300px'
-        mt='15px'
-        mb={15}
+        p='15px'
         borderBottomWidth={1}
         borderLeftWidth={1}
         borderRightWidth={1}
         borderStyle='solid'
         borderTopWidth={1}
         borderWidth={1}
-        p='25px'
-        m='40px'
+        m='57px'
       >
         <CG.Heading weight='bold' size='S'>
           Login
