@@ -48,6 +48,7 @@ module.exports = {
   resolve: {
     alias: {
       react: path.resolve('./node_modules/react'),
+      'cap-shared-components': path.resolve('./cap-shared-components'),
     },
     extensions: ['.jsx', '.js'],
   },

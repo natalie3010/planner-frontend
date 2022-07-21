@@ -1,5 +1,5 @@
-const URL = process.env.NODE_ENV === 'development' ? process.env.DEVELOPMENT_URL : process.env.PRODUCTION_URL
-
+const URL = process.env.BUILD_MODE === 'development' ? process.env.DEVELOPMENT_URL : process.env.PRODUCTION_URL
+console.log(process.env.BUILD_MODE)
 export function submitUserLogin(username, password) {
   const data = { username: username, password: btoa(password) }
   const requestObject = {
