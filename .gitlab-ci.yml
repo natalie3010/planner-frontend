@@ -24,7 +24,6 @@ build:
   script:
     - npm i
     - npm install cap-shared-components/
-    - cp -Rf cap-shared-components node_modules/
     - npm run build
   artifacts:
     paths:
