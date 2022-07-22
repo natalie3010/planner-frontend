@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "webpack serve --open --config webpack.dev.js",
+    "start": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "start": "serve -s dist -l 4200"
+    "run": "serve -s dist -l 4200"
   },
   "author": "",
   "license": "ISC",
