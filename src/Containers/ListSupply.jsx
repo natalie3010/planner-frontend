@@ -46,6 +46,7 @@ export const ListSupply = () => {
         <CG.Heading size='XS'>Supply information for {skillname}</CG.Heading>
         <CG.Button primary text='Dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
       </CG.Box>
+
       <CG.Box
         width='70rem'
         p='0.95rem'
