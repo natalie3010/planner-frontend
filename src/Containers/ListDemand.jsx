@@ -22,6 +22,7 @@ export const ListDemand = () => {
   useEffect(() => {
     fetchData()
   }, [skillname, data])
+  console.log(data)
 
   const fetchData = () => {
     const name = skillname.replace(/\-/g, '/')
