@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react/cjs/react.development'
+import React, { useState, useEffect } from 'react'
 import { Col } from 'react-grid-system'
 import { CG } from 'cap-shared-components'
-
 import { useNavigate } from 'react-router-dom'
 import { getSingleSupply, updateSupply, getSkills } from '../API'
 import { formatSkills, supplyFormFormatter } from '../Data/Format'
