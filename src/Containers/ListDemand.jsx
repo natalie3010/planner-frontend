@@ -31,7 +31,8 @@ export const ListDemand = () => {
       .then((res) => res.json())
 
       .then((response) => {
-        getData(response)
+       console.log(response);
+     getData(response)
       })
   }
   const deleterow = (DemandID) => {
@@ -40,6 +41,7 @@ export const ListDemand = () => {
       dispatch(removeDemandFromDashboard(skillname))
     })
   }
+  
   return (
     <div>
       <div style={{ marginLeft: '20px' }}>
@@ -54,6 +56,8 @@ export const ListDemand = () => {
       >
         <Col>
           <div style={{ minHeight: '300px' }}>
+       
+          { data.length > 0 ?
             <CG.Table
               customKeyNames={{
                 firstname: 'ApplicantFirstName',
@@ -76,6 +80,7 @@ export const ListDemand = () => {
                 'Grade',
                 'Status',
               ]}
+
               icons={[
                 {
                   tableHeader: 'Edit',
@@ -96,6 +101,9 @@ export const ListDemand = () => {
                 },
               ]}
             />
+          
+             :  "No Demand left" }
+             
           </div>
         </Col>
       </Row>
@@ -104,5 +112,7 @@ export const ListDemand = () => {
         <CG.Button text='Return to dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
       </div>
     </div>
+    
   )
+  
 }

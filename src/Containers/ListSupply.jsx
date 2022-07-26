@@ -54,6 +54,8 @@ export const ListSupply = () => {
       >
         <Col>
           <div style={{ minHeight: '300px' }}>
+
+          { data.length > 0 ?
             <CG.Table
               customKeyNames={{
                 firstname: 'ApplicantFirstName',
@@ -97,6 +99,8 @@ export const ListSupply = () => {
                 },
               ]}
             />
+            :  "No Supply left" }
+
           </div>
         </Col>
       </Row>
