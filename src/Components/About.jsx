@@ -70,7 +70,7 @@ export const About = () => {
           </CG.Body>
           <CG.Body size='M'>
             To view the demand information click on an orange bar on the bar chart on the homepage for a certain skill
-            and it will take you to the supply information page for that particular skill and show all of the supply
+            and it will take you to the demand information page for that particular skill and show all of the demand
             information in a table.
           </CG.Body>
           <CG.Body size='L' fontWeight='bold'>
