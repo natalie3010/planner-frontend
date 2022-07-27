@@ -18,6 +18,7 @@ import { store } from '../src/store'
 import { Provider } from 'react-redux'
 import { CG } from 'cap-shared-components'
 import { WorkforcePlanner } from '../themes/workforcePlanner'
+import { ListClients } from './Containers/ListClients'
 
 const App = () => {
   return (
@@ -46,6 +47,14 @@ const App = () => {
         element={
           <ProtectedRoute>
             <SupplyPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/listClients'
+        element={
+          <ProtectedRoute>
+            <ListClients />
           </ProtectedRoute>
         }
       />

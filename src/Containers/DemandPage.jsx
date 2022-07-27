@@ -65,8 +65,9 @@ export const DemandPage = () => {
   }
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Box width='400px' mt={10}>
+      <CG.Box width='400px' mb={10}>
         <CG.Heading>Add a new demand</CG.Heading>
+
         {Object.keys(inputDefaults).map((formItem, index) => {
           if (inputDefaults[formItem].inputType === 'dropdown') {
             return (
@@ -105,7 +106,7 @@ export const DemandPage = () => {
             </CG.Container>
           )
         })}
-        <CG.Box mr='10px' ml='30px' mb={10} display='flex' flexDirection='row' justifyContent='space-between'>
+        <CG.Box width='300px' display='flex' flexDirection='row' justifyContent='space-between'>
           <CG.Button primary text='submit' onClick={handleSubmit} />
           <CG.Button
             primary

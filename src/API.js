@@ -1,5 +1,5 @@
-const URL = 'https://localhost:4001'
-// deployed backend const URL = 'https://wpp-be.capdigiops.com:4001'
+const URL = process.env.NODE_ENV === 'development' ? process.env.DEVELOPMENT_URL : process.env.PRODUCTION_URL
+
 export function submitUserLogin(username, password) {
   const data = { username: username, password: btoa(password) }
   const requestObject = {

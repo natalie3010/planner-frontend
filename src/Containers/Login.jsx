@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { Col } from 'react-grid-system'
-import { useState, useEffect } from 'react/cjs/react.development'
 import { submitUserLogin, getDashboard } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
 import { login } from '../Slices/LoginSlice'
@@ -59,19 +58,17 @@ export const Login = () => {
   }
 
   return (
-    <Col md={4} style={{ width: 300 }} offset={{ md: 4 }} align='center' justify='center'>
+    <Col md={12} align='center' justify='center'>
       <CG.Box
         width='300px'
-        mt='15px'
-        mb={15}
+        p='15px'
         borderBottomWidth={1}
         borderLeftWidth={1}
         borderRightWidth={1}
         borderStyle='solid'
         borderTopWidth={1}
         borderWidth={1}
-        p='25px'
-        m='40px'
+        m='57px'
       >
         <CG.Heading weight='bold' size='S'>
           Login

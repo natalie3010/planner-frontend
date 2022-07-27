@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react/cjs/react.development'
+import React, { useState, useEffect } from 'react'
 import { Col } from 'react-grid-system'
 import { CG } from 'cap-shared-components'
-
 import { useNavigate } from 'react-router-dom'
 import { getSingleSupply, updateSupply, getSkills } from '../API'
 import { formatSkills, supplyFormFormatter } from '../Data/Format'
@@ -82,7 +80,7 @@ export const EditSupply = () => {
       } else if (formData.supplySkillId) {
         dispatch(addSupplyToDashboard(newSkillName))
       }
-      navigate('/protectedRoute/dashboard')
+      navigate(-1)
     })
   }
 
@@ -91,8 +89,9 @@ export const EditSupply = () => {
   }
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Heading>Edit a supply</CG.Heading>
-      <CG.Box width='400px' mt={10}>
+      <CG.Box width='400px' mb={10}>
+        <CG.Heading>Edit a supply</CG.Heading>
+
         {Object.keys(inputDefaults).map((formItem, index) => {
           const responseKey = inputDefaults[formItem].responseKey
           if (inputDefaults[formItem].inputType === 'dropdown') {
@@ -141,7 +140,7 @@ export const EditSupply = () => {
             </CG.Container>
           )
         })}
-        <CG.Box ml='20px' mr='20px' mb={10} mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
+        <CG.Box width='300px' display='flex' flexDirection='row' justifyContent='space-between'>
           <CG.Button primary text='submit' onClick={handleSubmit} />
           <CG.Button
             primary

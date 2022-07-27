@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectApplicantID, removeSupplyFromDashboard } from '../Slices/DashboardSlice'
-import { Row, Col } from 'react-grid-system'
+import { Col } from 'react-grid-system'
 
 export const ListSupply = () => {
   const dispatch = useDispatch()
@@ -40,74 +40,68 @@ export const ListSupply = () => {
   }
 
   return (
-    <div>
-      <div style={{ marginLeft: '20px' }}>
-        <CG.Heading size='M' weight='bold'>
-          Supply information for {skillname}{' '}
-        </CG.Heading>
-      </div>
-
-      <Row
-        justify='center'
-        nogutter={false}
-        style={{ margin: '0px', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}
+    <Col md={12} align='center' justify='center'>
+      <CG.Box ml='15px' mr='15px' mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
+        <CG.Button primary text='Add Supply' onClick={() => navigate('/supply')}></CG.Button>
+        <CG.Heading size='XS'>Supply information for {skillname}</CG.Heading>
+        <CG.Button primary text='Dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
+      </CG.Box>
+      <CG.Box
+        width='70rem'
+        p='0.95rem'
+        m='10px'
+        display='flex'
+        alignContent='center'
+        flexDirection='column'
+        boxSizing='border-box'
+        fontSize='0.90rem'
       >
-        <Col>
-          <div style={{ minHeight: '300px' }}>
-
-          { data.length > 0 ?
-            <CG.Table
-              customKeyNames={{
-                firstname: 'ApplicantFirstName',
-                lastname: 'ApplicantLastName',
-                ApplicantID: 'Applicant ID',
-                ApplicantFirstName: 'Applicant First Name',
-                ApplicantLastName: 'Applicant Last Name',
-                ApplicantStatus: 'Applicant Status',
-                SkillsID: 'Skills ID',
-                ApplicantType: 'Applicant Type',
-              }}
-              data={data}
-              divider
-              selectedKeys={[
-                'ApplicantID',
-                'ApplicantFirstName',
-                'ApplicantLastName',
-                'ApplicantStatus',
-                'SkillsID',
-                'Notes',
-                'ApplicantType',
-                'Location',
-              ]}
-              icons={[
-                {
-                  tableHeader: 'Edit',
-                  height: '20px',
-                  width: '20px',
-                  type: 'Edit2',
-                  handler: (value) => {
-                    dispatch(selectApplicantID(value.ApplicantID))
-                    navigate('/edit-supply')
-                  },
-                },
-                {
-                  tableHeader: 'Delete',
-                  height: '20px',
-                  width: '20px',
-                  type: 'X',
-                  handler: (value) => deleterow(value.ApplicantID),
-                },
-              ]}
-            />
-            :  "No Supply left" }
-
-          </div>
-        </Col>
-      </Row>
-
-      <div style={{ marginTop: '100px', marginLeft: '20px', marginBottom: '50px' }}>
-        <CG.Button text='Return to dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
-      </div>
-    </div>
+         { data.length > 0 ? 
+        <CG.Table
+          customKeyNames={{
+            firstname: 'ApplicantFirstName',
+            lastname: 'ApplicantLastName',
+            ApplicantID: 'Applicant ID',
+            ApplicantFirstName: 'Applicant First Name',
+            ApplicantLastName: 'Applicant Last Name',
+            ApplicantStatus: 'Applicant Status',
+            SkillsID: 'Skills ID',
+            ApplicantType: 'Applicant Type',
+          }}
+          data={data}
+          divider
+          selectedKeys={[
+            'ApplicantID',
+            'ApplicantFirstName',
+            'ApplicantLastName',
+            'ApplicantStatus',
+            'SkillsID',
+            'Notes',
+            'ApplicantType',
+            'Location',
+          ]}
+          icons={[
+            {
+              tableHeader: 'Edit',
+              height: '0.90rem',
+              width: '0.90rem',
+              type: 'Edit2',
+              handler: (value) => {
+                dispatch(selectApplicantID(value.ApplicantID))
+                navigate('/edit-supply')
+              },
+            },
+            {
+              tableHeader: 'Delete',
+              height: '0.90rem',
+              width: '0.90rem',
+              type: 'X',
+              handler: (value) => deleterow(value.ApplicantID),
+            },
+          ]}
+        />
+         :  "No Supply left" }
+      </CG.Box>
+    </Col>
   )
 }

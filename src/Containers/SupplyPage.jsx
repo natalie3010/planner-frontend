@@ -1,9 +1,6 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react/cjs/react.development'
+import React, { useEffect, useState } from 'react'
 import { Col } from 'react-grid-system'
-
 import { CG } from 'cap-shared-components'
-
 import { useNavigate } from 'react-router-dom'
 import { addSupply, getSkills } from '../API'
 import { formatSkills, supplyFormFormatter } from '../Data/Format'
@@ -71,8 +68,9 @@ export const SupplyPage = () => {
   }
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Heading>Add a new supply</CG.Heading>
-      <CG.Box width='400px' mt={10}>
+      <CG.Box width='400px' mb={10}>
+        <CG.Heading>Add a new supply</CG.Heading>
+
         {Object.keys(inputDefaults).map((formItem, index) => {
           if (inputDefaults[formItem].inputType === 'dropdown') {
             return (
@@ -106,7 +104,7 @@ export const SupplyPage = () => {
             </CG.Container>
           )
         })}
-        <CG.Box ml='20px' mr='20px' mb={10} mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
+        <CG.Box width='300px' display='flex' flexDirection='row' justifyContent='space-between'>
           <CG.Button primary text='submit' onClick={handleSubmit} />
           <CG.Button
             primary
