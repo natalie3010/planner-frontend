@@ -61,3 +61,8 @@ export let supplyForm = {
   supplyType: null,
   supplyLocation: null,
 }
+
+export let clientForm = {
+  clientID:null,
+  clientName:null
+}

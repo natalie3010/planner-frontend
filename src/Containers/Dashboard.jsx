@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { getDashboard } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
 import { setupDashboard } from '../Slices/DashboardSlice'
+
 export const Dashboard = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -40,6 +41,7 @@ export const Dashboard = () => {
           <CG.Box boxSizing='border-box' display='flex' flexDirection='row' justifyContent='space-between'>
             <>
               <CG.Button text='Add a supply' onClick={() => navigate('/supply')}></CG.Button>
+              <CG.Button text='List Clients' onClick={() => navigate('/listClients')}></CG.Button>
               <CG.Button text='Add a demand' onClick={() => navigate('/demand')}></CG.Button>
             </>
           </CG.Box>
