@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { formatClients } from '../Data/Format'
 import { clientForm as form } from '../Data/Data'
 
-export function ListClients() {
+export const ListClients =() =>{
   const navigate = useNavigate()
 
   const authToken = useSelector((state) => state.user.authToken)
