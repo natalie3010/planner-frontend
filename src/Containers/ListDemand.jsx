@@ -6,7 +6,7 @@ import { Row, Col } from 'react-grid-system'
 import { useParams } from 'react-router-dom'
 import { selectDemandID, removeDemandFromDashboard } from '../Slices/DashboardSlice'
 import { useSelector, useDispatch } from 'react-redux'
-//test
+
 export const ListDemand = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -41,7 +41,8 @@ export const ListDemand = () => {
       dispatch(removeDemandFromDashboard(skillname))
     })
   }
-  
+
+
   return (
     <div>
       <div style={{ marginLeft: '20px' }}>
@@ -102,7 +103,7 @@ export const ListDemand = () => {
               ]}
             />
           
-             :  "No Demand left" }
+             :   "No Supply left" }
              
           </div>
         </Col>
