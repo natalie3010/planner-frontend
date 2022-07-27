@@ -67,16 +67,16 @@ export const EditDemand = () => {
       const request = updateDemand(authToken, demandID, data)
       request.then((result) => {
         if (defaultSkillName === newskillname) {
-          navigate('/protectedRoute/dashboard')
+          navigate(-1)
         } else if (skillSelected && defaultSkillName) {
           dispatch(removeDemandFromDashboard(defaultSkillName))
           dispatch(addDemandToDashboard(newskillname))
-          navigate('/protectedRoute/dashboard')
+          navigate(-1)
         } else if (skillSelected) {
           dispatch(addDemandToDashboard(newskillname))
-          navigate('/protectedRoute/dashboard')
+          navigate(-1)
         } else {
-          navigate('/protectedRoute/dashboard')
+          navigate(-1)
         }
       })
     }

@@ -80,7 +80,7 @@ export const EditSupply = () => {
       } else if (formData.supplySkillId) {
         dispatch(addSupplyToDashboard(newSkillName))
       }
-      navigate('/protectedRoute/dashboard')
+      navigate(-1)
     })
   }
 
