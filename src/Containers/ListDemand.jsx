@@ -18,10 +18,11 @@ export const ListDemand = () => {
   const requestObject2 = { method: 'DELETE', headers: { 'x-access-token': token } }
   const [data, getData] = useState([])
   const [tableChanged, setTableChanged] = useState(null)
-
+ 
   useEffect(() => {
     fetchData()
   }, [skillname, data])
+  
 
   const fetchData = () => {
     const name = skillname.replace(/\-/g, '/')
