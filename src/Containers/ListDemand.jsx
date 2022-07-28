@@ -32,7 +32,8 @@ export const ListDemand = () => {
       .then((res) => res.json())
 
       .then((response) => {
-        getData(response)
+       console.log(response);
+     getData(response)
       })
   }
   const deleterow = (DemandID) => {
@@ -41,6 +42,8 @@ export const ListDemand = () => {
       dispatch(removeDemandFromDashboard(skillname))
     })
   }
+
+
   return (
     <Col md={12} align='center' justify='center'>
       <CG.Box ml='15px' mr='15px' mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
@@ -49,7 +52,8 @@ export const ListDemand = () => {
         <CG.Heading size='XS'>Demand information for {skillname}</CG.Heading>
         <CG.Button primary text='Dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
       </CG.Box>
-
+      
+    
       <CG.Box
         width='80em'
         p='0.85rem'
@@ -60,6 +64,7 @@ export const ListDemand = () => {
         boxSizing='border-box'
         fontSize='0.85rem'
       >
+         { data.length > 0 ? 
         <CG.Table
           customKeyNames={{
             firstname: 'ApplicantFirstName',
@@ -102,7 +107,10 @@ export const ListDemand = () => {
             },
           ]}
         />
+        :  "No Demand left" }
       </CG.Box>
+      
     </Col>
   )
+  
 }
