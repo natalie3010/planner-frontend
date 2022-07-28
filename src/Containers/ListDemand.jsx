@@ -18,10 +18,11 @@ export const ListDemand = () => {
   const requestObject2 = { method: 'DELETE', headers: { 'x-access-token': token } }
   const [data, getData] = useState([])
   const [tableChanged, setTableChanged] = useState(null)
-
+ 
   useEffect(() => {
     fetchData()
   }, [skillname, data])
+  
 
   const fetchData = () => {
     const name = skillname.replace(/\-/g, '/')
@@ -42,7 +43,9 @@ export const ListDemand = () => {
   }
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Box mt='20px' mr='20px' display='flex'>
+      <CG.Box ml='15px' mr='15px' mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
+        <CG.Button primary text='Add Demand' onClick={() => navigate('/demand')}></CG.Button>
+
         <CG.Heading size='XS'>Demand information for {skillname}</CG.Heading>
         <CG.Button primary text='Dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
       </CG.Box>
