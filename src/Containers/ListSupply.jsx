@@ -57,6 +57,7 @@ export const ListSupply = () => {
         boxSizing='border-box'
         fontSize='0.90rem'
       >
+         { data.length > 0 ? 
         <CG.Table
           customKeyNames={{
             firstname: 'ApplicantFirstName',
@@ -100,6 +101,7 @@ export const ListSupply = () => {
             },
           ]}
         />
+         :  "No Supply left" }
       </CG.Box>
     </Col>
   )
