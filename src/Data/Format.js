@@ -55,6 +55,27 @@ export const formatClients = (data) => {
   })
   return formatted_Clients
 }
+export const clientFormFormatter = ( ) => {
+  const inputValidator = formValidators.clientForm.inputs
+  const inputDefaults = {
+  clientID: {
+  label: 'Client ID',
+  placeholder: '',
+  inputType: 'text',
+  validators: inputValidator.clientLName.validators,
+  responseKey: 'ClientID',
+  },
+  
+  clientName: {
+  label: 'Client Name',
+  placeholder: '',
+  inputType: 'text',
+  validators: inputValidator.clientLName.validators,
+  responseKey: 'ClientName',
+  },
+  }
+  return inputDefaults
+  }
 
 export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, demand_status) => {
   const inputValidator = formValidators.demandForm.inputs
