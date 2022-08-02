@@ -23,7 +23,7 @@ export const ListSupply = () => {
 
   const fetchData = () => {
     const name = skillname.replace(/\-/g, '/')
-    let url = `https://localhost:4001/api/supply?selectedSkills=${name}`
+    let url = `https://wpp-be.capdigiops.com:4001/api/supply?selectedSkills=${name}`
 
     fetch(url, requestObject)
       .then((res) => res.json())
@@ -33,7 +33,7 @@ export const ListSupply = () => {
       })
   }
   const deleterow = (ApplicantID) => {
-    let url = `https://localhost:4001/api/supply/${ApplicantID}`
+    let url = `https://wpp-be.capdigiops.com:4001/api/supply/${ApplicantID}`
     fetch(url, requestObject2).then(() => {
       dispatch(removeSupplyFromDashboard(skillname))
     })
