@@ -27,7 +27,6 @@ build:
     - npm config set //capdigiops-133000045839.d.codeartifact.eu-west-2.amazonaws.com/npm/cg-react-shared-components/:always-auth true
     - npm config set //capdigiops-133000045839.d.codeartifact.eu-west-2.amazonaws.com/npm/cg-react-shared-components/:_authToken $CODEARTIFACT_AUTH_TOKEN
     - npm i
-    - npm install cap-shared-components/
     - npm run build
   artifacts:
     paths:
