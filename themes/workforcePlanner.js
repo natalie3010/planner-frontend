@@ -11,12 +11,12 @@ export const WorkforcePlanner = {
     primaryText: '#DC3522',
 
     // Secondary1 //
-    secondary1: '#D9CB9E',
-    secondary1Light: '#D9CB9E',
-    secondary1Hover: '#D9CB9E',
-    secondary1Down: '#D9CB9E',
-    secondary1Bg: '#D9CB9E',
-    secondary1Text: '#D9CB9E',
+    secondary1: '#abe4f7',
+    secondary1Light: '#27b3e6',
+    secondary1Hover: '#27b3e6',
+    secondary1Down: '#abe4f7',
+    secondary1Bg: '#27b3e6',
+    secondary1Text: '#374140',
 
     // Secondary2 //
     secondary2: '#FF8071',
@@ -60,7 +60,7 @@ export const WorkforcePlanner = {
 
     // Background //
     bgWhite: '#FFFFFF',
-    bgLight: '#B4C5E4',
+    bgLight: '#bcecf7',
     bgDark: '#707070',
     bgBlack: '#000000',
 
@@ -81,10 +81,10 @@ export const WorkforcePlanner = {
     focusDark: '#2680EB',
 
     // CTA //
-    cta: '#B4C5E4',
+    cta: '#c5ced1',
     ctaLight: '#DC3522',
-    ctaHover: '#FBFFF1',
-    ctaDown: '090c9b',
+    ctaHover: '#FFFFFF',
+    ctaDown: '#abe4f7',
     ctaBg: '#378EF0',
     textCta: '#FFFFFF',
 
@@ -97,7 +97,7 @@ export const WorkforcePlanner = {
     textBob: '#000000',
 
     // Disabled //
-    disabled: '#EFEFEF',
+    disabled: '#bcecf7',
     textDisabled: '#C6C6C6',
     disabledDark: '#FFF', // 30% opacity
     textDisabledDark: '#EFEFEF',
@@ -105,7 +105,8 @@ export const WorkforcePlanner = {
   box: {
     borderRadius: '10px',
   },
-  boxShadow: '0px 0px 0px 1px #ffffff, 0px 0px 0px 3px #1473E6',
+
+  boxShadow: '0px 0px 0px 1px #abe4f7, 0px 0px 0px 3px #abe4f7',
   fontFamily: {
     default:
       "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
