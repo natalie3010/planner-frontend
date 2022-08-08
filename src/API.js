@@ -255,3 +255,20 @@ export function getSupplySkill(token, skillName) {
       return error.status
     })
 }
+
+export function deleteSupply(token, supplyId) {
+  const requestObject = { method: 'DELETE', headers: { 'x-access-token': token } }
+  return fetch(`${URL}/api/supply/${supplyId}`, requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error.status
+    })
+}
