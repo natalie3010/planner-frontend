@@ -204,3 +204,54 @@ export function getClients(token) {
       return error.status
     })
 }
+
+export function getDemandSkill(token, skillName) {
+  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+  return fetch(`${URL}/api/demand?selectedSkills=${skillName}`, requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error.status
+    })
+}
+
+export function deleteDemand(token, demandId) {
+  const requestObject = { method: 'DELETE', headers: { 'x-access-token': token } }
+  return fetch(`${URL}/api/demand/${demandId}`, requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error.status
+    })
+}
+
+export function getSupplySkill(token, skillName) {
+  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+  return fetch(`${URL}/api/supply?selectedSkills=${skillName}`, requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error.status
+    })
+}
