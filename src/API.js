@@ -88,6 +88,22 @@ export function addDemand(token, data) {
       return error
     })
 }
+export function getSingleClient(applicantID, token) {
+  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+  return fetch(`${URL}/api/clients/${applicantID}`, requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error.status
+    })
+}
 
 export function getSingleSupply(applicantID, token) {
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
@@ -120,6 +136,29 @@ export function getSingleDemand(applicantID, token) {
     })
     .catch((error) => {
       return error.status
+    })
+}
+export function updateClient(token, applicantID, data) {
+  const requestObject = {
+    method: 'PUT',
+    headers: {
+      'x-access-token': token,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  }
+  return fetch(`${URL}/api/clients/${applicantID}`, requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error
     })
 }
 
