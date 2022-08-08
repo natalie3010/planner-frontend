@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
-import { Row, Col } from 'react-grid-system'
+import { Col } from 'react-grid-system'
 
 import { useParams } from 'react-router-dom'
 import { selectDemandID, removeDemandFromDashboard } from '../Slices/DashboardSlice'
