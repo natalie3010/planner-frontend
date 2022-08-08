@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectApplicantID, removeSupplyFromDashboard } from '../Slices/DashboardSlice'
 import { Col } from 'react-grid-system'
+import { deleteSupply, getSupplySkill } from '../API'
 
 export const ListSupply = () => {
   const dispatch = useDispatch()
@@ -13,28 +14,21 @@ export const ListSupply = () => {
 
   const token = useSelector((state) => state.user.authToken)
 
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  const requestObject2 = { method: 'DELETE', headers: { 'x-access-token': token } }
-  const [data, getData] = useState([])
+  const [data, setData] = useState([])
+  const [tableChanged, setTableChanged] = useState(false)
 
   useEffect(() => {
-    fetchData()
-  }, [skillname, data])
+    const skillName = skillname.replace(/\-/g, '/')
+    const skillData = getSupplySkill(token, skillName)
+    skillData.then((allSupply) => {
+      setData(allSupply)
+    })
+  }, [skillname, tableChanged])
 
-  const fetchData = () => {
-    const name = skillname.replace(/\-/g, '/')
-    let url = `https://wpp-be.capdigiops.com:4001/api/supply?selectedSkills=${name}`
-
-    fetch(url, requestObject)
-      .then((res) => res.json())
-
-      .then((response) => {
-        getData(response)
-      })
-  }
   const deleterow = (ApplicantID) => {
-    let url = `https://wpp-be.capdigiops.com:4001/api/supply/${ApplicantID}`
-    fetch(url, requestObject2).then(() => {
+    const deleted = deleteSupply(token, ApplicantID)
+    deleted.then(() => {
+      setTableChanged(!tableChanged)
       dispatch(removeSupplyFromDashboard(skillname))
     })
   }
@@ -57,51 +51,53 @@ export const ListSupply = () => {
         boxSizing='border-box'
         fontSize='0.90rem'
       >
-         { data.length > 0 ? 
-        <CG.Table
-          customKeyNames={{
-            firstname: 'ApplicantFirstName',
-            lastname: 'ApplicantLastName',
-            ApplicantID: 'Applicant ID',
-            ApplicantFirstName: 'Applicant First Name',
-            ApplicantLastName: 'Applicant Last Name',
-            ApplicantStatus: 'Applicant Status',
-            SkillsID: 'Skills ID',
-            ApplicantType: 'Applicant Type',
-          }}
-          data={data}
-          divider
-          selectedKeys={[
-            'ApplicantID',
-            'ApplicantFirstName',
-            'ApplicantLastName',
-            'ApplicantStatus',
-            'SkillsID',
-            'Notes',
-            'ApplicantType',
-            'Location',
-          ]}
-          icons={[
-            {
-              tableHeader: 'Edit',
-              height: '0.90rem',
-              width: '0.90rem',
-              type: 'Edit2',
-              handler: (value) => {
-                dispatch(selectApplicantID(value.ApplicantID))
-                navigate('/edit-supply')
+        {data.length > 0 ? (
+          <CG.Table
+            customKeyNames={{
+              firstname: 'ApplicantFirstName',
+              lastname: 'ApplicantLastName',
+              ApplicantID: 'Applicant ID',
+              ApplicantFirstName: 'Applicant First Name',
+              ApplicantLastName: 'Applicant Last Name',
+              ApplicantStatus: 'Applicant Status',
+              SkillsID: 'Skills ID',
+              ApplicantType: 'Applicant Type',
+            }}
+            data={data}
+            divider
+            selectedKeys={[
+              'ApplicantID',
+              'ApplicantFirstName',
+              'ApplicantLastName',
+              'ApplicantStatus',
+              'SkillsID',
+              'Notes',
+              'ApplicantType',
+              'Location',
+            ]}
+            icons={[
+              {
+                tableHeader: 'Edit',
+                height: '0.90rem',
+                width: '0.90rem',
+                type: 'Edit2',
+                handler: (value) => {
+                  dispatch(selectApplicantID(value.ApplicantID))
+                  navigate('/edit-supply')
+                },
               },
-            },
-            {
-              tableHeader: 'Delete',
-              height: '0.90rem',
-              width: '0.90rem',
-              type: 'X',
-              handler: (value) => deleterow(value.ApplicantID),
-            },
-          ]}
-        />
-         :  "No Supply left" }
+              {
+                tableHeader: 'Delete',
+                height: '0.90rem',
+                width: '0.90rem',
+                type: 'X',
+                handler: (value) => deleterow(value.ApplicantID),
+              },
+            ]}
+          />
+        ) : (
+          'No Supply left'
+        )}
       </CG.Box>
     </Col>
   )
