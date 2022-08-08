@@ -6,12 +6,19 @@
   "scripts": {
     "dev": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "start": "serve -s dist -l 4200"
+    "start": "serve -s dist -l 4200",
+    "setup-npmrc": "aws-codeartifact login && aws-codeartifact registry-copy-token",
+    "co:login": "AWS_PROFILE=default aws codeartifact login --tool npm --repository ${npm_package_config_awsCodeArtifact_repository} --domain ${npm_package_config_awsCodeArtifact_domain}",
+    "co:login-npx": "AWS_PROFILE=default npx aws-codeartifact login",
+    "codeartifact:registry-copy-token": "aws-codeartifact registry-copy-token",
+    "codeartifact:registry-aws-token": "aws-codeartifact registry-aws-token"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.2",
+    "aws-codeartifact": "^1.3.1",
+    "cap-shared-components": "^2.0.1",
     "dotenv-webpack": "^8.0.0",
     "html-webpack-plugin": "^5.5.0",
     "react": "^18.0.0",
@@ -32,5 +39,13 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.8.1",
     "webpack-merge": "^5.8.0"
+  },
+  "config": {
+    "awsCodeArtifact": {
+      "domain": "capdigiops",
+      "repository": "cg-react-shared-components",
+      "region": "eu-west-2",
+      "accountId": "133000045839"
+    }
   }
 }
