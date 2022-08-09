@@ -311,3 +311,27 @@ export function deleteSupply(token, supplyId) {
       return error.status
     })
 }
+
+export function postClient(token, data) {
+  const requestObject = {
+    method: 'POST',
+    headers: {
+      'x-access-token': token,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  }
+  return fetch(`${URL}/api/clients`, requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error
+    })
+}
