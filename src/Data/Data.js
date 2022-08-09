@@ -15,7 +15,6 @@ export const applicant_type = [
 ]
 
 export const demand_status = [
-  { name: 'Proposed', value: 'Proposed' },
   { name: 'Profiles Required', value: 'Profiles Required' },
   { name: 'Resource Identified', value: 'Resource Identified' },
   { name: 'Demand Validation', value: 'Demand Validation' },
