@@ -74,7 +74,6 @@ export const ListSupply = () => {
             'ApplicantFirstName',
             'ApplicantLastName',
             'ApplicantStatus',
-            'SkillsID',
             'ApplicantType',
 
           ]}
