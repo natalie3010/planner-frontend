@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { Col } from 'react-grid-system'
-import { submitUserLogin, getDashboard } from '../API'
+import { submitUserLogin, getDashboard, getNewToken } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
 import { login } from '../Slices/LoginSlice'
+
 export const Login = () => {
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn)
   const pathname = useSelector((state) => state.user.pathname) ?? '/protectedRoute/dashboard'
@@ -22,7 +23,16 @@ export const Login = () => {
     } else if (authToken) {
       const testToken = getDashboard(authToken)
       testToken.then((result) => {
-        if (typeof result === 'object') {
+        if ((result = 401)) {
+          const loginTime = Date.now().toString()
+          const refreshToken = localStorage.getItem('refreshToken')
+          getNewToken(refreshToken).then((result) => {
+            localStorage.setItem('authToken', result.token)
+            localStorage.setItem('loginTime', loginTime)
+            dispatch(login(result.token))
+            navigate(pathname)
+          })
+        } else if (typeof result === 'object') {
           dispatch(login(authToken))
           navigate(pathname)
         }
@@ -32,10 +42,13 @@ export const Login = () => {
 
   const logIn = () => {
     const request = submitUserLogin(userName, password)
+    const loginTime = Date.now().toString()
     request.then((result) => {
       if (result.token) {
         const authToken = result.token
         localStorage.setItem('authToken', authToken)
+        localStorage.setItem('refreshToken', result.refreshToken)
+        localStorage.setItem('loginTime', loginTime)
         dispatch(login(authToken))
         navigate(pathname)
       } else {

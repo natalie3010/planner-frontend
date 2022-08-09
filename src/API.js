@@ -311,3 +311,26 @@ export function deleteSupply(token, supplyId) {
       return error.status
     })
 }
+
+export function getNewToken(refreshToken) {
+  const requestObject = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ refreshToken }),
+  }
+  return fetch(`${URL}/auth/refresh-Token`, requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+
+    .then((data) => {
+      return data
+    })
+
+    .catch((error) => {
+      return error.status
+    })
+}

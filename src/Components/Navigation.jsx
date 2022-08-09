@@ -36,6 +36,7 @@ export const Navigation = () => {
                 onClick={() => {
                   dispatch(logout())
                   localStorage.removeItem('authToken')
+                  localStorage.removeItem('refreshToken')
                 }}
               />
             </CG.Box>
