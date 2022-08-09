@@ -23,7 +23,7 @@ export const Login = () => {
     } else if (authToken) {
       const testToken = getDashboard(authToken)
       testToken.then((result) => {
-        if ((result = 401)) {
+        if (result == 401) {
           const loginTime = Date.now().toString()
           const refreshToken = localStorage.getItem('refreshToken')
           getNewToken(refreshToken).then((result) => {
