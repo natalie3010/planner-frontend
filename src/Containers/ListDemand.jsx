@@ -69,7 +69,6 @@ export const ListDemand = () => {
               'DemandID',
               'CodeRequisition',
               'ClientID',
-              'SkillsID',
               'Probability',
               'StartDate',
               'Grade',

@@ -70,10 +70,7 @@ export const ListSupply = () => {
               'ApplicantFirstName',
               'ApplicantLastName',
               'ApplicantStatus',
-              'SkillsID',
-              'Notes',
               'ApplicantType',
-              'Location',
             ]}
             icons={[
               {
