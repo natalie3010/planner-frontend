@@ -9,9 +9,6 @@ const useRefreshToken = () => {
   const currentTime = Date.now()
 
   useEffect(() => {
-    console.log('login time   ', loginTime)
-    console.log('current time ', currentTime)
-    console.log('expire time  ', tokenExpireTime)
     if (currentTime > tokenExpireTime) {
       getNewToken(refreshToken).then((result) => {
         setAuthToken(result.token)
@@ -19,8 +16,7 @@ const useRefreshToken = () => {
         localStorage.setItem('loginTime', currentTime)
       })
     }
-  }, [])
-
+  })
   return authToken
 }
 
