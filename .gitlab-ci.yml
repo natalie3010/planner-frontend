@@ -22,8 +22,11 @@ build:
   image: node:16.9
   stage: build
   script:
+    - echo $CODEARTIFACT_AUTH_TOKEN
+    - npm config set registry https://capdigiops-133000045839.d.codeartifact.eu-west-2.amazonaws.com/npm/cg-react-shared-components/
+    - npm config set //capdigiops-133000045839.d.codeartifact.eu-west-2.amazonaws.com/npm/cg-react-shared-components/:always-auth true
+    - npm config set //capdigiops-133000045839.d.codeartifact.eu-west-2.amazonaws.com/npm/cg-react-shared-components/:_authToken $CODEARTIFACT_AUTH_TOKEN
     - npm i
-    - npm install cap-shared-components/
     - npm run build
   artifacts:
     paths:
@@ -32,6 +35,16 @@ build:
     refs:
       - develop
       - main
+
+intialise-aws-token:
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  stage: .pre
+  script:
+    - CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain capdigiops --domain-owner 133000045839 --query authorizationToken --region eu-west-2 --output text)
+    - echo "CODEARTIFACT_AUTH_TOKEN=$CODEARTIFACT_AUTH_TOKEN" >> build.env
+  artifacts:
+    reports:
+      dotenv: build.env
 
 .deploy:
   image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
