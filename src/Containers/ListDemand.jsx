@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
-import { Row, Col } from 'react-grid-system'
+import { Col } from 'react-grid-system'
 
 import { useParams } from 'react-router-dom'
 import { selectDemandID, removeDemandFromDashboard } from '../Slices/DashboardSlice'
 import { useSelector, useDispatch } from 'react-redux'
+import { deleteDemand, getDemandSkill } from '../API'
 
 export const ListDemand = () => {
   const dispatch = useDispatch()
@@ -14,38 +15,29 @@ export const ListDemand = () => {
 
   const token = useSelector((state) => state.user.authToken)
 
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  const requestObject2 = { method: 'DELETE', headers: { 'x-access-token': token } }
-  const [data, getData] = useState([])
-  const [tableChanged, setTableChanged] = useState(null)
- 
+  const [data, setData] = useState([])
+  const [tableChanged, setTableChanged] = useState(false)
+
   useEffect(() => {
-    fetchData()
-  }, [skillname, data])
-  
+    const skillName = skillname.replace(/\-/g, '/')
+    const skillData = getDemandSkill(token, skillName)
+    skillData.then((allDemand) => {
+      setData(allDemand)
+    })
+  }, [skillname, tableChanged])
 
-  const fetchData = () => {
-    const name = skillname.replace(/\-/g, '/')
-    let url = `https://localhost:4001/api/demand?selectedSkills=${name}`
-
-    fetch(url, requestObject)
-      .then((res) => res.json())
-
-      .then((response) => {
-        getData(response)
-      })
-  }
   const deleterow = (DemandID) => {
-    let url = `https://localhost:4001/api/demand/${DemandID}`
-    fetch(url, requestObject2).then(() => {
+    const deleted = deleteDemand(token, DemandID)
+    deleted.then((response) => {
+      setTableChanged(!tableChanged)
       dispatch(removeDemandFromDashboard(skillname))
     })
   }
+
   return (
     <Col md={12} align='center' justify='center'>
       <CG.Box ml='15px' mr='15px' mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
         <CG.Button primary text='Add Demand' onClick={() => navigate('/demand')}></CG.Button>
-
         <CG.Heading size='XS'>Demand information for {skillname}</CG.Heading>
         <CG.Button primary text='Dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
       </CG.Box>
@@ -60,47 +52,51 @@ export const ListDemand = () => {
         boxSizing='border-box'
         fontSize='0.85rem'
       >
-        <CG.Table
-          customKeyNames={{
-            firstname: 'ApplicantFirstName',
-            lastname: 'ApplicantLastName',
-            DemandID: 'Demand ID',
-            CodeRequisition: 'Code Requisition',
-            ClientID: 'Client ID',
-            SkillsID: 'Skills ID',
-            StartDate: 'Start Date',
-          }}
-          data={data}
-          divider
-          selectedKeys={[
-            'DemandID',
-            'CodeRequisition',
-            'ClientID',
-            'Probability',
-            'StartDate',
-            'Grade',
-            'Status',
-          ]}
-          icons={[
-            {
-              tableHeader: 'Edit',
-              height: '0.90rem',
-              width: '0.90rem',
-              type: 'Edit2',
-              handler: (value) => {
-                dispatch(selectDemandID(value.DemandID))
-                navigate('/edit-demand')
+        {data.length > 0 ? (
+          <CG.Table
+            customKeyNames={{
+              firstname: 'ApplicantFirstName',
+              lastname: 'ApplicantLastName',
+              DemandID: 'Demand ID',
+              CodeRequisition: 'Code Requisition',
+              ClientID: 'Client ID',
+              SkillsID: 'Skills ID',
+              StartDate: 'Start Date',
+            }}
+            data={data}
+            divider
+            selectedKeys={[
+              'DemandID',
+              'CodeRequisition',
+              'ClientID',
+              'Probability',
+              'StartDate',
+              'Grade',
+              'Status',
+            ]}
+            icons={[
+              {
+                tableHeader: 'Edit',
+                height: '0.90rem',
+                width: '0.90rem',
+                type: 'Edit2',
+                handler: (value) => {
+                  dispatch(selectDemandID(value.DemandID))
+                  navigate('/edit-demand')
+                },
               },
-            },
-            {
-              tableHeader: 'Delete',
-              height: '0.90rem',
-              width: '0.90rem',
-              type: 'X',
-              handler: (value) => deleterow(value.DemandID),
-            },
-          ]}
-        />
+              {
+                tableHeader: 'Delete',
+                height: '0.90rem',
+                width: '0.90rem',
+                type: 'X',
+                handler: (value) => deleterow(value.DemandID),
+              },
+            ]}
+          />
+        ) : (
+          'No Demand left'
+        )}
       </CG.Box>
     </Col>
   )
