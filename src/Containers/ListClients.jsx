@@ -17,7 +17,6 @@ export const ListClients =() =>{
   const clientData = useSelector((state) => state.dashboard.clientData)
 
   const [data, setData] = useState([form])
-  let { clientname } = useParams()
 
   const [ClientID, setClientID] = useState()
   const [ClientName, setClientName] = useState()
@@ -29,9 +28,6 @@ export const ListClients =() =>{
     const data = {
       ClientID: formData.supplyFName,
       tLastName: formData.supplyLName,
-    }
-    if (checkIfFormIsValidated()) {
-      sendata(data)
     }
   }
 
@@ -63,7 +59,6 @@ export const ListClients =() =>{
     })
   }
  
- // <CG.Heading size='XS'>Add Clients</CG.Heading>
 
   return (
     <Col md={12} align='center' justify='center'>
