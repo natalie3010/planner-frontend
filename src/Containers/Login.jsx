@@ -27,10 +27,12 @@ export const Login = () => {
           const loginTime = Date.now().toString()
           const refreshToken = localStorage.getItem('refreshToken')
           getNewToken(refreshToken).then((result) => {
-            localStorage.setItem('authToken', result.token)
-            localStorage.setItem('loginTime', loginTime)
-            dispatch(login(result.token))
-            navigate(pathname)
+            if (result !== 403) {
+              localStorage.setItem('authToken', result.token)
+              localStorage.setItem('loginTime', loginTime)
+              dispatch(login(result.token))
+              navigate(pathname)
+            }
           })
         } else if (typeof result === 'object') {
           dispatch(login(authToken))
