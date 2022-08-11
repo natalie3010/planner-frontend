@@ -342,4 +342,13 @@ export function getNewToken(refreshToken) {
       }
       return res.json()
     })
+
+    .then((data) => {
+      return data
+    })
+
+    .catch((error) => {
+      return error.status
+    })
+
 }
