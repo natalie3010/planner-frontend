@@ -336,11 +336,10 @@ export function getNewToken(refreshToken) {
     body: JSON.stringify({ refreshToken }),
   }
   return fetch(`${URL}/auth/refresh-Token`, requestObject)
-    .then((data) => {
-      return data
-    })
-
-    .catch((error) => {
-      return error.status
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
     })
 }
