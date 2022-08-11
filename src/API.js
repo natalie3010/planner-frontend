@@ -321,14 +321,7 @@ export function postClient(token, data) {
     },
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/api/clients`, requestObject)
-    .then((res) => {
-      if (!res.ok) {
-        throw res
-      }
-      return res.json()
-    })
-    .then((data) => {
+  return fetch(`${URL}/api/clients`, requestObject).then((data) => {
       return data
     })
     .catch((error) => {
@@ -336,3 +329,18 @@ export function postClient(token, data) {
     })
 }
 
+export function getNewToken(refreshToken) {
+  const requestObject = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ refreshToken }),
+  }
+  return fetch(`${URL}/auth/refresh-Token`, requestObject)
+    .then((data) => {
+      return data
+    })
+
+    .catch((error) => {
+      return error.status
+    })
+}
