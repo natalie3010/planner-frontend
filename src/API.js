@@ -312,6 +312,23 @@ export function deleteSupply(token, supplyId) {
     })
 }
 
+export function postClient(token, data) {
+  const requestObject = {
+    method: 'POST',
+    headers: {
+      'x-access-token': token,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  }
+  return fetch(`${URL}/api/clients`, requestObject).then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error
+    })
+}
+
 export function getNewToken(refreshToken) {
   const requestObject = {
     method: 'POST',
@@ -333,4 +350,5 @@ export function getNewToken(refreshToken) {
     .catch((error) => {
       return error.status
     })
+
 }

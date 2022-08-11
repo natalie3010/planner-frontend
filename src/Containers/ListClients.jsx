@@ -3,7 +3,7 @@ import { CG } from 'cap-shared-components'
 import { Col } from 'react-grid-system'
 
 import { useNavigate, useParams } from 'react-router-dom'
-import { getClients } from '../API'
+import { getClients, postClient } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
 import { formatClients } from '../Data/Format'
 import { clientForm as form } from '../Data/Data'
@@ -17,7 +17,9 @@ export const ListClients =() =>{
   const clientData = useSelector((state) => state.dashboard.clientData)
 
   const [data, setData] = useState([form])
-  let { clientname } = useParams()
+
+  const [ClientID, setClientID] = useState()
+  const [ClientName, setClientName] = useState()
 
   const requestObject2 = { method: 'DELETE', headers: { 'x-access-token': authToken } }
 
@@ -26,9 +28,6 @@ export const ListClients =() =>{
     const data = {
       ClientID: formData.supplyFName,
       tLastName: formData.supplyLName,
-    }
-    if (checkIfFormIsValidated()) {
-      sendata(data)
     }
   }
 
@@ -43,8 +42,15 @@ export const ListClients =() =>{
   
   }, [])
 
+  const addClient = () => {
+    const data={ClientID: ClientID, ClientName: ClientName}
+    postClient(authToken, data)
+  }
 
-
+  //This is for  Add button to refresh
+  const refreshPage= () => {
+    window.location.reload(false);
+  }
 
   const deleterow = (ClientID) => {
     let url = `https://localhost:4001/api/clients/${ClientID}`
@@ -53,7 +59,6 @@ export const ListClients =() =>{
     })
   }
  
- // <CG.Heading size='XS'>Add Clients</CG.Heading>
 
   return (
     <Col md={12} align='center' justify='center'>
@@ -71,6 +76,31 @@ export const ListClients =() =>{
         boxSizing='border-box'
         fontSize='0.90rem'
       >
+        
+        <CG.Box width="50%" justifyContent="space-between" ml='600px' mr='15px' mt='10px'  display='flex' flexDirection='row' height='30px'  >
+        <CG.Input 
+  id="textInput"
+  label="Add Clients"
+  name="textInput"
+  placeholder="Add Client Id"
+  topLabel={false}
+  onInput = {(e) => {setClientID(e.target.value)}} />
+        <CG.Input 
+  id="textInput"
+  name="textInput"
+  placeholder="Add Client Name"
+  topLabel={false}
+  onInput = {(e) => {setClientName(e.target.value)}} />
+        <CG.Button
+  primary
+  text="Add"
+  onClick={() => {
+    addClient()
+    refreshPage()
+  }}
+/>
+        
+      </CG.Box>
         <CG.Table
           customKeyNames={{
             ClientID: 'Client ID',
@@ -100,6 +130,7 @@ export const ListClients =() =>{
             },
           ]}
         />
+        
       </CG.Box>
     </Col>
     
