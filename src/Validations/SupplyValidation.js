@@ -3,7 +3,7 @@ import formValidators from '../../formValidatorsConfig.json'
 
 const supplyInputs = formValidators.supplyForm.inputs
 
-export const demandSchema = yup.object().shape({
+export const supplySchema = yup.object().shape({
   supplyFName: supplyInputs.supplyFName.validators[0].required && yup.string().required(),
   supplyLName: supplyInputs.supplyLName.validators[0].required && yup.string().required(),
   supplyStatus: supplyInputs.supplyStatus.validators[0].required && yup.string().required(),
