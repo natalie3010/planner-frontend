@@ -121,13 +121,13 @@ export const ListClients =() =>{
                 navigate('/edit-client')
               },
             },
-            {
+            /* {
               tableHeader: 'Delete',
               height: '0.90rem',
               width: '0.90rem',
               type: 'X',
               handler: (value) => deleterow(value.ClientID),
-            },
+            }, */
           ]}
         />
         
