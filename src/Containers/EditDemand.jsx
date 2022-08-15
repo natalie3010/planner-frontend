@@ -9,6 +9,7 @@ import { demand_status, demand_grade, demandForm as form } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addDemandToDashboard, removeDemandFromDashboard } from '../Slices/DashboardSlice'
 import { testRegex } from '../Utils/regex'
+import { demandSchema } from '../Validations/DemandValidation'
 
 export const EditDemand = () => {
   const navigate = useNavigate()
@@ -43,7 +44,7 @@ export const EditDemand = () => {
 
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setFormSubmitted(true)
 
     const data = {
@@ -61,8 +62,8 @@ export const EditDemand = () => {
       creationDate: formData.creationDate ?? dataDemand.CreationDate,
       location: formData.location ?? dataDemand.Location,
     }
-
-    if (checkIfFormIsValidated()) {
+    const isValid = await checkIfFormIsValid(data)
+    if (isValid) {
       const skillSelected = formData.skillsID && true
       const newskillname = skillSelected && pickerSkills[formData.skillsID - 1].name
       const request = updateDemand(authToken, demandID, data)
@@ -83,31 +84,9 @@ export const EditDemand = () => {
     }
   }
 
-  const checkIfFormIsValidated = () => {
-    let validated = true
-
-    Object.keys(inputDefaults).map((formItem) => {
-      const required = inputDefaults[formItem].validators[0].required
-      const initValue = dataDemand[inputDefaults[formItem].responseKey]
-      const inputValue = formData[formItem]
-      const hasRegex = inputDefaults[formItem].validators[0].pattern && true
-
-      if (required && hasRegex && !inputValue && !testRegex(inputDefaults[formItem].validators[0].pattern, initValue)) {
-        validated = false
-      } else if (
-        required &&
-        hasRegex &&
-        inputValue &&
-        !testRegex(inputDefaults[formItem].validators[0].pattern, inputValue)
-      ) {
-        validated = false
-      } else if (inputDefaults[formItem].inputType === 'text' && required === true && inputValue === '') {
-        validated = false
-      } else if (required === true && !inputValue && !initValue) {
-        validated = false
-      }
-    })
-    return validated
+  const checkIfFormIsValid = async (data) => {
+    const isValid = await demandSchema.isValid(data)
+    return isValid
   }
 
   if (!pickerClients || !pickerSkills || !dataDemand || !defaultSkillName) {
