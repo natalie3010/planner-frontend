@@ -98,6 +98,15 @@
       },
       "demandLocation": {
         "validators": [{ "required": false }]
+      },
+      "demandSkill": {
+        "validators": [{ "required": false }]
+      },
+      "demandGrade": {
+        "validators": [{ "required": false }]
+      },
+      "demandStatus": {
+        "validators": [{ "required": false }]
       }
     }
   },
