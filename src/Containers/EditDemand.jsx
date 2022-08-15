@@ -8,6 +8,7 @@ import { formatSkills, formatClients, demandFormFormatter, lowerCaseKeys } from 
 import { demand_status, demand_grade, demandForm as form } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addDemandToDashboard, removeDemandFromDashboard } from '../Slices/DashboardSlice'
+import { testRegex } from '../Utils/regex'
 
 export const EditDemand = () => {
   const navigate = useNavigate()
@@ -82,11 +83,6 @@ export const EditDemand = () => {
     }
   }
 
-  const testRegex = (formItem, testValue) => {
-    const regexPattern = new RegExp(inputDefaults[formItem].validators[0].pattern)
-    return regexPattern.test(testValue)
-  }
-
   const checkIfFormIsValidated = () => {
     let validated = true
 
@@ -96,9 +92,14 @@ export const EditDemand = () => {
       const inputValue = formData[formItem]
       const hasRegex = inputDefaults[formItem].validators[0].pattern && true
 
-      if (required && hasRegex && !inputValue && !testRegex(formItem, initValue)) {
+      if (required && hasRegex && !inputValue && !testRegex(inputDefaults[formItem].validators[0].pattern, initValue)) {
         validated = false
-      } else if (required && hasRegex && inputValue && !testRegex(formItem, inputValue)) {
+      } else if (
+        required &&
+        hasRegex &&
+        inputValue &&
+        !testRegex(inputDefaults[formItem].validators[0].pattern, inputValue)
+      ) {
         validated = false
       } else if (inputDefaults[formItem].inputType === 'text' && required === true && inputValue === '') {
         validated = false
@@ -156,12 +157,12 @@ export const EditDemand = () => {
                     formSubmitted &&
                     hasRegex &&
                     !formData[formItem] &&
-                    !testRegex(formItem, dataDemand[responseKey])) ||
+                    !testRegex(inputDefaults[formItem].validators[0].pattern, dataDemand[responseKey])) ||
                   (required &&
                     formSubmitted &&
                     hasRegex &&
                     formData[formItem] &&
-                    !testRegex(formItem, formData[formItem]))
+                    !testRegex(inputDefaults[formItem].validators[0].pattern, formData[formItem]))
                 }
               />
             </CG.Container>
