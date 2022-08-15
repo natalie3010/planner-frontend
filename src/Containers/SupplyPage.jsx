@@ -7,6 +7,7 @@ import { formatSkills, supplyFormFormatter } from '../Data/Format'
 import { applicant_status, applicant_type, supplyForm as form } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addSupplyToDashboard } from '../Slices/DashboardSlice'
+import { supplySchema } from '../Validations/SupplyValidation'
 
 export const SupplyPage = () => {
   const navigate = useNavigate()
@@ -27,8 +28,9 @@ export const SupplyPage = () => {
 
   const inputDefaults = supplyFormFormatter(applicant_status, dataAllSkills, applicant_type)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async () => {
     setFormSubmitted(true)
+    const formIsValid = await checkIfFormIsValid()
     const data = {
       applicantFirstName: formData.supplyFName,
       applicantLastName: formData.supplyLName,
@@ -38,31 +40,21 @@ export const SupplyPage = () => {
       applicantType: formData.supplyType,
       location: formData.supplyLocation,
     }
-    if (checkIfFormIsValidated()) {
-      sendata(data)
+    if (formIsValid) {
+      const skillName = dataAllSkills[data.skillsID - 1].name
+      const request = await addSupply(authToken, data)
+      if (request.changes) {
+        dispatch(addSupplyToDashboard(skillName))
+        navigate('/protectedRoute/dashboard')
+      }
     }
   }
 
-  const checkIfFormIsValidated = () => {
-    let validated = true
-    Object.keys(inputDefaults).map((formItem) => {
-      const required = inputDefaults[formItem].validators[0].required
-      const inputValue = formData[formItem]
-      if (required === true && !inputValue) {
-        validated = false
-      }
-    })
-    return validated
+  const checkIfFormIsValid = () => {
+    const formIsValid = supplySchema.isValid(formData)
+    return formIsValid
   }
 
-  const sendata = (data) => {
-    const skillName = dataAllSkills[data.skillsID - 1].name
-    const request = addSupply(authToken, data)
-    request.then((result) => {
-      dispatch(addSupplyToDashboard(skillName))
-      navigate('/protectedRoute/dashboard')
-    })
-  }
   if (!dataAllSkills) {
     return <CG.Body>loading...</CG.Body>
   }
