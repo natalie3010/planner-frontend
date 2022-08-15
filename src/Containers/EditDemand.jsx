@@ -84,8 +84,8 @@ export const EditDemand = () => {
     }
   }
 
-  const checkIfFormIsValid = async (data) => {
-    const isValid = await demandSchema.isValid(data)
+  const checkIfFormIsValid = (data) => {
+    const isValid = demandSchema.isValid(data)
     return isValid
   }
 
