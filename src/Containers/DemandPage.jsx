@@ -9,6 +9,7 @@ import { demand_status, demand_grade, demandForm as form } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addDemandToDashboard } from '../Slices/DashboardSlice'
 import { testRegex } from '../Utils/regex'
+import { demandSchema } from '../Validations/DemandValidation'
 
 export const DemandPage = () => {
   const navigate = useNavigate()
@@ -42,20 +43,11 @@ export const DemandPage = () => {
     }
   }
 
-  const checkIfFormIsValidated = () => {
-    let validated = true
-    Object.keys(inputDefaults).map((formItem) => {
-      const required = inputDefaults[formItem].validators[0].required
-      const inputValue = formData[formItem]
-      const hasRegex = inputDefaults[formItem].validators[0].pattern && true
-      if (required && hasRegex && !testRegex(inputDefaults[formItem].validators[0].pattern, inputValue)) {
-        validated = false
-      } else if (required && !inputValue) {
-        validated = false
-      }
-    })
-    return validated
+  const checkIfFormIsValidated = async () => {
+    const isValid = await demandSchema.isValid(formData)
+    return isValid
   }
+
   if (!pickerClients || !pickerSkills) {
     return <CG.Body>loading...</CG.Body>
   }
