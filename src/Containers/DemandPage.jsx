@@ -30,9 +30,11 @@ export const DemandPage = () => {
 
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setFormSubmitted(true)
-    if (checkIfFormIsValidated()) {
+    const formIsValid = await checkIfFormIsValid()
+
+    if (formIsValid) {
       const skillSelected = formData.skillsID && true
       const skillName = skillSelected && pickerSkills[formData.skillsID - 1].name
       const request = addDemand(authToken, formData)
@@ -43,8 +45,8 @@ export const DemandPage = () => {
     }
   }
 
-  const checkIfFormIsValidated = async () => {
-    const isValid = await demandSchema.isValid(formData)
+  const checkIfFormIsValid = () => {
+    const isValid = demandSchema.isValid(formData)
     return isValid
   }
 
