@@ -14,7 +14,6 @@ export const dashboardSlice = createSlice({
       state.dashboardData = action.payload
     },
     setupClients: (state, action) => {
-      console.log(action.payload);
       state.clientData = action.payload
     },
     addSupplyToDashboard: (state, action) => {

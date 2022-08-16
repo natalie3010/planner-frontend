@@ -182,56 +182,56 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
 export const supplyFormFormatter = (pickerStatus, pickerSkills, pickerType) => {
   const inputValidator = formValidators.supplyForm.inputs
   const inputDefaults = {
-    supplyFName: {
+    applicantFirstName: {
       label: 'First name',
       placeholder: '',
       inputType: 'text',
-      validators: inputValidator.supplyFName.validators,
+      validators: inputValidator.applicantFirstName.validators,
       responseKey: 'ApplicantFirstName',
     },
-    supplyLName: {
+    applicantLastName: {
       label: 'Last name',
       placeholder: '',
       inputType: 'text',
-      validators: inputValidator.supplyLName.validators,
+      validators: inputValidator.applicantLastName.validators,
       responseKey: 'ApplicantLastName',
     },
-    supplyStatus: {
+    applicantStatus: {
       label: 'Status',
       placeholder: 'Select a status',
       options: pickerStatus,
       inputType: 'dropdown',
-      validators: inputValidator.supplyStatus.validators,
+      validators: inputValidator.applicantStatus.validators,
       responseKey: 'ApplicantStatus',
     },
-    supplySkillId: {
+    applicantSkills: {
       label: 'Skill',
       placeholder: 'Select a skill',
       options: pickerSkills,
       inputType: 'dropdown',
-      validators: inputValidator.supplySkillId.validators,
+      validators: inputValidator.applicantSkills.validators,
       responseKey: 'SkillsID',
     },
-    supplyNotes: {
+    applicantNotes: {
       label: 'Notes',
       placeholder: '',
       inputType: 'text',
-      validators: inputValidator.supplyNotes.validators,
+      validators: inputValidator.applicantNotes.validators,
       responseKey: 'Notes',
     },
-    supplyType: {
+    applicantType: {
       label: 'Applicant type',
       placeholder: 'Select type',
       options: pickerType,
       inputType: 'dropdown',
-      validators: inputValidator.supplyType.validators,
+      validators: inputValidator.applicantType.validators,
       responseKey: 'ApplicantType',
     },
-    supplyLocation: {
+    applicantLocation: {
       label: 'Location',
       placeholder: '',
       inputType: 'text',
-      validators: inputValidator.supplyLocation.validators,
+      validators: inputValidator.applicantLocation.validators,
       responseKey: 'Location',
     },
   }

@@ -52,16 +52,16 @@ export let demandForm = {
 }
 
 export let supplyForm = {
-  supplyFName: null,
-  supplyLName: null,
-  supplyStatus: null,
-  supplySkillId: null,
-  supplyNotes: null,
-  supplyType: null,
-  supplyLocation: null,
+  applicantFirstName: null,
+  applicantLastName: null,
+  applicantStatus: null,
+  applicantSkills: null,
+  applicantNotes: null,
+  applicantType: null,
+  applicantLocation: null,
 }
 
 export let clientForm = {
-  clientID:null,
-  clientName:null
+  clientID: null,
+  clientName: null,
 }

@@ -32,16 +32,16 @@ export const SupplyPage = () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
     const data = {
-      applicantFirstName: formData.supplyFName,
-      applicantLastName: formData.supplyLName,
-      applicantStatus: formData.supplyStatus,
-      skillsID: formData.supplySkillId,
-      notes: formData.supplyNotes,
-      applicantType: formData.supplyType,
-      location: formData.supplyLocation,
+      applicantFirstName: formData.applicantFirstName,
+      applicantLastName: formData.applicantLastName,
+      applicantStatus: formData.applicantStatus,
+      skillsID: formData.applicantSkills,
+      notes: formData.applicantNotes,
+      applicantType: formData.applicantType,
+      location: formData.applicantLocation,
     }
     if (formIsValid) {
-      const skillName = dataAllSkills[data.skillsID - 1].name
+      const skillName = dataAllSkills[formData.applicantSkills - 1].name
       const request = await addSupply(authToken, data)
       if (request.changes) {
         dispatch(addSupplyToDashboard(skillName))

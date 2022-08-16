@@ -15,22 +15,24 @@ export const EditSupply = () => {
   const authToken = useSelector((state) => state.user.authToken)
   const applicantID = useSelector((state) => state.dashboard.selectedApplicant)
   // dataSupply - selected supply from Get request
-  const [dataSupply, setDataSupply] = useState(null)
+  const [initialSkill, setInitialSkill] = useState(null)
+  const [initialSkillName, setInitialSkillName] = useState(null)
   const [dataAllSkills, setDataAllSkills] = useState(null)
-  const [dataSkillName, setDataSkillName] = useState(null)
+
   // form data
-  const [formData, setFormData] = useState(form)
+  const [formData, setFormData] = useState(null)
   const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
     const request = getSingleSupply(applicantID, authToken)
     request.then((supplyResult) => {
-      setDataSupply(supplyResult)
+      setFormData(supplyResult)
+      setInitialSkill(supplyResult.applicantSkills)
       const requestSkills = getSkills(authToken)
       requestSkills.then((skillResult) => {
-        const myArray = formatSkills(skillResult, supplyResult.SkillsID)
-        setDataAllSkills(myArray[0])
-        setDataSkillName(myArray[1])
+        const [skillsArray, skillName] = formatSkills(skillResult, supplyResult.applicantSkills)
+        setDataAllSkills(skillsArray)
+        setInitialSkillName(skillName)
       })
     })
   }, [])
@@ -39,45 +41,32 @@ export const EditSupply = () => {
 
   const handleSubmit = async () => {
     setFormSubmitted(true)
-    const data = {
-      //applicantID: applicantID ?? dataSupply.ApplicantID,
-      applicantFirstName: formData.supplyFName ?? dataSupply.ApplicantFirstName,
-      applicantLastName: formData.supplyLName ?? dataSupply.ApplicantLastName,
-      applicantStatus: formData.supplyStatus ?? dataSupply.ApplicantStatus,
-      skillsID: formData.supplySkillId ?? dataSupply.SkillsID,
-      notes: formData.supplyNotes ?? dataSupply.Notes,
-      applicantType: formData.supplyType ?? dataSupply.ApplicantType,
-      location: formData.supplyLocation ?? dataSupply.Location,
-    }
-    /**
-     * Doesn't work as the as some of the inputs are different as
-     * we are using data to place it
-     */
-    const formIsValid = await checkIfFormIsValid(data)
+    const formIsValid = await checkIfFormIsValid()
+
     console.log('valid form is', formIsValid)
-    if (formIsValid) {
-      const request = await updateSupply(authToken, applicantID, data)
+    /* if (formIsValid) {
+      const request = await updateSupply(authToken, applicantID, formData)
       console.log('request change ', request)
       if (request.changes) {
-        const newSkillName = dataAllSkills[data.skillsID - 1].name
-        const oldSkillName = dataAllSkills[dataSupply.SkillsID - 1].name
-        if (formData.supplySkillId && dataSupply.SkillsID) {
+        const newSkillName = dataAllSkills[formData.applicantSkills - 1].name
+        const oldSkillName = dataAllSkills[initialSkillName - 1].name
+        if (oldSkillName && newSkillName && newSkillName !== oldSkillName) {
           dispatch(removeSupplyFromDashboard(oldSkillName))
           dispatch(addSupplyToDashboard(newSkillName))
-        } else if (formData.supplySkillId) {
+        } else if (newSkillName) {
           dispatch(addSupplyToDashboard(newSkillName))
         }
         navigate(-1)
       }
-    }
+    } */
   }
 
-  const checkIfFormIsValid = (data) => {
-    const formIsValid = supplySchema.isValid(data)
+  const checkIfFormIsValid = () => {
+    const formIsValid = supplySchema.isValid(formData)
     return formIsValid
   }
 
-  if (!dataSupply || !dataAllSkills) {
+  if (!formData || !dataAllSkills) {
     return <CG.Body>Loading...</CG.Body>
   }
   return (
@@ -88,7 +77,7 @@ export const EditSupply = () => {
         {Object.keys(inputDefaults).map((formItem, index) => {
           const responseKey = inputDefaults[formItem].responseKey
           if (inputDefaults[formItem].inputType === 'dropdown') {
-            const pickerVal = dataSupply[responseKey]
+            const pickerVal = formData[responseKey]
             return (
               <CG.Container margin='10px' key={index}>
                 <CG.Picker
@@ -99,17 +88,10 @@ export const EditSupply = () => {
                   onChange={(val) => setFormData({ ...formData, [formItem]: val })}
                   options={inputDefaults[formItem].options}
                   labelKey='name'
-                  placeholder={typeof pickerVal === 'number' ? dataSkillName : pickerVal}
+                  placeholder={typeof pickerVal === 'number' ? initialSkillName : pickerVal}
                   label={inputDefaults[formItem].label}
-                  required={
-                    inputDefaults[formItem].validators[0].required && !formData[formItem] && !dataSupply[responseKey]
-                  }
-                  hasError={
-                    inputDefaults[formItem].validators[0].required &&
-                    !formData[formItem] &&
-                    !dataSupply[responseKey] &&
-                    formSubmitted
-                  }
+                  required={inputDefaults[formItem].validators[0].required && !formData[formItem]}
+                  hasError={inputDefaults[formItem].validators[0].required && !formData[formItem] && formSubmitted}
                 />
               </CG.Container>
             )
@@ -118,17 +100,12 @@ export const EditSupply = () => {
             <CG.Container margin='10px' key={index}>
               <CG.Input
                 label={inputDefaults[formItem].label}
-                initValue={dataSupply[responseKey] ?? ''} // Nullish coalescing operator
+                initValue={formData[responseKey] ?? ''} // Nullish coalescing operator
                 onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
                 margin={0.5}
                 placeholder={inputDefaults[formItem].placeholder}
                 required={inputDefaults[formItem].validators[0].required}
-                hasError={
-                  inputDefaults[formItem].validators[0].required &&
-                  !formData[formItem] &&
-                  !dataSupply[responseKey] &&
-                  formSubmitted
-                }
+                hasError={inputDefaults[formItem].validators[0].required && !formData[formItem] && formSubmitted}
               />
             </CG.Container>
           )

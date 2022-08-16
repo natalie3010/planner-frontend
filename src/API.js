@@ -107,7 +107,7 @@ export function getSingleClient(applicantID, token) {
 
 export function getSingleSupply(applicantID, token) {
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch(`${URL}/api/supply/${applicantID}`, requestObject)
+  return fetch(`${URL}/api/v2/supply/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -321,7 +321,8 @@ export function postClient(token, data) {
     },
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/api/clients`, requestObject).then((data) => {
+  return fetch(`${URL}/api/clients`, requestObject)
+    .then((data) => {
       return data
     })
     .catch((error) => {
@@ -350,5 +351,4 @@ export function getNewToken(refreshToken) {
     .catch((error) => {
       return error.status
     })
-
 }
