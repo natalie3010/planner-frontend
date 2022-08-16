@@ -50,7 +50,7 @@ export function addSupply(token, data) {
     },
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/api/supply`, requestObject)
+  return fetch(`${URL}/api/v2/supply`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
