@@ -3,7 +3,7 @@ import { CG } from 'cap-shared-components'
 import { Col } from 'react-grid-system'
 
 import { useNavigate, useParams } from 'react-router-dom'
-import { getClients, postClient } from '../API'
+import { getClients, postClient, putClient } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
 import { formatClients } from '../Data/Format'
 import { clientForm as form } from '../Data/Data'
@@ -59,6 +59,13 @@ export const ListClients =() =>{
     })
   }
  
+  const editClient = async () => {
+    const data = {ClientName: ClientName};
+    const response  = await putClient(authToken, ClientID, data);
+    console.log('res', response)
+  }
+
+ 
 
   return (
     <Col md={12} align='center' justify='center'>
@@ -80,7 +87,7 @@ export const ListClients =() =>{
         <CG.Box width="50%" justifyContent="space-between" ml='600px' mr='15px' mt='10px'  display='flex' flexDirection='row' height='30px'  >
         <CG.Input 
   id="textInput"
-  label="Add Clients"
+  label="Add"
   name="textInput"
   placeholder="Add Client Id"
   topLabel={false}
@@ -101,6 +108,26 @@ export const ListClients =() =>{
 />
         
       </CG.Box>
+  
+      <CG.Box width="50%" justifyContent="space-between" ml='600px' mr='15px' mt='10px'  display='flex' flexDirection='row' height='30px'  >
+
+      {ClientName && <>
+      
+      <CG.Input 
+  label="Edit"
+  topLabel={false}
+  initValue={ClientName}
+  onInput = {(e) => {setClientName(e.target.value)}} />
+  <CG.Button 
+  primary
+  text="Edit"
+  onClick={() => {
+    editClient()
+   refreshPage()
+  }}
+/></>}
+      </CG.Box>
+
         <CG.Table
           customKeyNames={{
             ClientID: 'Client ID',
@@ -116,10 +143,8 @@ export const ListClients =() =>{
               height: '0.90rem',
               width: '0.90rem',
               type: 'Edit2',
-              handler: (value) => {
-                dispatch(selectApplicantID(value.ApplicantID))
-                navigate('/edit-client')
-              },
+              handler: (value) => {setClientName(value.ClientName); setClientID(value.ClientID)}
+
             },
             /* {
               tableHeader: 'Delete',
