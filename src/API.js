@@ -171,7 +171,7 @@ export function updateSupply(token, applicantID, data) {
     },
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/api/supply/${applicantID}`, requestObject)
+  return fetch(`${URL}/api/v2/supply/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
