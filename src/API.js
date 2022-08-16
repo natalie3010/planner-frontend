@@ -74,7 +74,7 @@ export function addDemand(token, data) {
     },
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/api/demand`, requestObject)
+  return fetch(`${URL}/api/v2/demand`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
