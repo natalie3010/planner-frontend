@@ -7,6 +7,7 @@ import { formatSkills, supplyFormFormatter } from '../Data/Format'
 import { applicant_status, applicant_type, supplyForm as form } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addSupplyToDashboard, removeSupplyFromDashboard } from '../Slices/DashboardSlice'
+import { supplySchema } from '../Validations/SupplyValidation'
 
 export const EditSupply = () => {
   const navigate = useNavigate()
@@ -36,30 +37,10 @@ export const EditSupply = () => {
 
   const inputDefaults = supplyFormFormatter(applicant_status, dataAllSkills, applicant_type)
 
-  const checkIfValid = () => {
-    let validated = true
-    Object.keys(inputDefaults).map((formItem) => {
-      const required = inputDefaults[formItem].validators[0].required
-      const initValue = dataSupply[inputDefaults[formItem].responseKey]
-      const inputValue = formData[formItem]
-      if (inputDefaults[formItem].inputType === 'text' && required === true && inputValue === '') {
-        validated = false
-      } else if (required === true && !inputValue && !initValue) {
-        validated = false
-      }
-    })
-    return validated
-  }
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setFormSubmitted(true)
-    if (checkIfValid()) {
-      sendData()
-    }
-  }
-
-  const sendData = () => {
     const data = {
-      applicantID: applicantID ?? dataSupply.ApplicantID,
+      //applicantID: applicantID ?? dataSupply.ApplicantID,
       applicantFirstName: formData.supplyFName ?? dataSupply.ApplicantFirstName,
       applicantLastName: formData.supplyLName ?? dataSupply.ApplicantLastName,
       applicantStatus: formData.supplyStatus ?? dataSupply.ApplicantStatus,
@@ -68,20 +49,32 @@ export const EditSupply = () => {
       applicantType: formData.supplyType ?? dataSupply.ApplicantType,
       location: formData.supplyLocation ?? dataSupply.Location,
     }
-
-    const request = updateSupply(authToken, applicantID, data)
-    request.then((result) => {
-      const newSkillName = dataAllSkills[data.skillsID - 1].name
-      const oldSkillName = dataAllSkills[dataSupply.SkillsID - 1].name
-      // updating the supply state if the supply has changed
-      if (formData.supplySkillId && dataSupply.SkillsID) {
-        dispatch(removeSupplyFromDashboard(oldSkillName))
-        dispatch(addSupplyToDashboard(newSkillName))
-      } else if (formData.supplySkillId) {
-        dispatch(addSupplyToDashboard(newSkillName))
+    /**
+     * Doesn't work as the as some of the inputs are different as
+     * we are using data to place it
+     */
+    const formIsValid = await checkIfFormIsValid(data)
+    console.log('valid form is', formIsValid)
+    if (formIsValid) {
+      const request = await updateSupply(authToken, applicantID, data)
+      console.log('request change ', request)
+      if (request.changes) {
+        const newSkillName = dataAllSkills[data.skillsID - 1].name
+        const oldSkillName = dataAllSkills[dataSupply.SkillsID - 1].name
+        if (formData.supplySkillId && dataSupply.SkillsID) {
+          dispatch(removeSupplyFromDashboard(oldSkillName))
+          dispatch(addSupplyToDashboard(newSkillName))
+        } else if (formData.supplySkillId) {
+          dispatch(addSupplyToDashboard(newSkillName))
+        }
+        navigate(-1)
       }
-      navigate(-1)
-    })
+    }
+  }
+
+  const checkIfFormIsValid = (data) => {
+    const formIsValid = supplySchema.isValid(data)
+    return formIsValid
   }
 
   if (!dataSupply || !dataAllSkills) {
