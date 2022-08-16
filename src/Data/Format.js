@@ -80,51 +80,51 @@ export const clientFormFormatter = () => {
 export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, demand_status) => {
   const inputValidator = formValidators.demandForm.inputs
   const inputDefaults = {
-    codeRequisition: {
+    demandCodeRequisition: {
       label: 'Code Requisition',
       inputType: 'text',
       placeholder: '',
       responseKey: 'CodeRequisition',
       validators: inputValidator.demandCodeRequisition.validators,
     },
-    startDate: {
+    demandStartDate: {
       label: 'Start date',
       inputType: 'text',
       placeholder: 'DD/MM/YYYY',
       responseKey: 'StartDate',
       validators: inputValidator.demandStartDate.validators,
     },
-    clientID: {
+    demandClient: {
       options: pickerClients,
       label: 'Client',
       inputType: 'dropdown',
       placeholder: 'Select a client',
       responseKey: 'ClientID',
-      validators: [{ required: false }],
+      validators: inputValidator.demandClient.validators,
     },
-    originatorName: {
+    demandOriginator: {
       label: 'Originator',
       inputType: 'text',
       placeholder: '',
       responseKey: 'OriginatorName',
       validators: inputValidator.demandOriginator.validators,
     },
-    skillsID: {
+    demandSkills: {
       options: pickerSkills,
       label: 'Skill',
       inputType: 'dropdown',
       placeholder: 'Select a skill',
       responseKey: 'SkillsID',
-      validators: inputValidator.demandSkill.validators,
+      validators: inputValidator.demandSkills.validators,
     },
-    probability: {
+    demandProbability: {
       label: 'Probability',
       inputType: 'text',
       placeholder: '',
       responseKey: 'Probability',
       validators: inputValidator.demandProbability.validators,
     },
-    grade: {
+    demandGrade: {
       options: demand_grade,
       label: 'Grade',
       inputType: 'dropdown',
@@ -132,14 +132,14 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
       responseKey: 'Grade',
       validators: inputValidator.demandGrade.validators,
     },
-    selectedApplicant: {
+    demandSelectedApplicant: {
       label: 'Selected Applicant',
       inputType: 'text',
       placeholder: '',
       responseKey: 'SelectedApplicant',
       validators: inputValidator.demandSelectedApplicant.validators,
     },
-    status: {
+    demandStatus: {
       options: demand_status,
       label: 'Status',
       inputType: 'dropdown',
@@ -147,28 +147,28 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
       responseKey: 'Status',
       validators: inputValidator.demandStatus.validators,
     },
-    notes: {
+    demandNotes: {
       label: 'Notes',
       inputType: 'text',
       placeholder: '',
       responseKey: 'Notes',
       validators: inputValidator.demandNotes.validators,
     },
-    proposedApplicant: {
+    demandProposedApplicant: {
       label: 'Proposed Applicant',
       inputType: 'text',
       placeholder: '',
       responseKey: 'ProposedApplicant',
       validators: inputValidator.demandProposedApplicant.validators,
     },
-    creationDate: {
+    demandCreationDate: {
       label: 'Creation date',
       inputType: 'text',
       placeholder: 'DD/MM/YYYY',
       responseKey: 'CreationDate',
       validators: inputValidator.demandCreationDate.validators,
     },
-    location: {
+    demandLocation: {
       label: 'Location',
       inputType: 'text',
       placeholder: '',
