@@ -112,6 +112,7 @@ export const ListClients =() =>{
       <CG.Box width="50%" justifyContent="space-between" ml='600px' mr='15px' mt='10px'  display='flex' flexDirection='row' height='30px'  >
 
       {ClientName && <>
+      
       <CG.Input 
   label="Edit"
   topLabel={false}
@@ -122,7 +123,7 @@ export const ListClients =() =>{
   text="Edit"
   onClick={() => {
     editClient()
-   // refreshPage()
+   refreshPage()
   }}
 /></>}
       </CG.Box>
