@@ -10,22 +10,19 @@ module.exports = {
   // It indicates the directory in which Jest ought to output its coverage documents and test files
   coverageDirectory: 'coverage',
   // This property shows that an array of regexp sample strings used to skip the test coverage collection
-  coveragePathIgnorePatterns: [
-    '/node_modules/',
-    'dist',
-    '<rootDir>/src/__tests__'
-  ],
+  coveragePathIgnorePatterns: ['/node_modules/', 'dist', '<rootDir>/src/__tests__'],
+  // Jest
   // This property shows that an item that configures minimal threshold enforcement for coverage reports
   coverageThreshold: {
     global: {
       branches: 85,
       functions: 85,
       lines: 85,
-      statements: 85
-    }
+      statements: 85,
+    },
   },
   moduleNameMapper: {
     '\\.svg$': '<rootDir>/src/__mocks__/svgrMock.js',
-    '\\.(jpg|jpeg|png)$': '<rootDir>/src/__mocks__/fileMock.js'
-  }
+    '\\.(jpg|jpeg|png)$': '<rootDir>/src/__mocks__/fileMock.js',
+  },
 }
