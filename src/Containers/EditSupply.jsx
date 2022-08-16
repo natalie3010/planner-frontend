@@ -42,23 +42,21 @@ export const EditSupply = () => {
   const handleSubmit = async () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
-
+    console.log(formData)
     console.log('valid form is', formIsValid)
-    /* if (formIsValid) {
+    if (formIsValid) {
       const request = await updateSupply(authToken, applicantID, formData)
-      console.log('request change ', request)
       if (request.changes) {
-        const newSkillName = dataAllSkills[formData.applicantSkills - 1].name
-        const oldSkillName = dataAllSkills[initialSkillName - 1].name
-        if (oldSkillName && newSkillName && newSkillName !== oldSkillName) {
-          dispatch(removeSupplyFromDashboard(oldSkillName))
+        const newSkillName = formData.applicantSkills && dataAllSkills[formData.applicantSkills - 1].name
+        if (initialSkillName && newSkillName && newSkillName !== initialSkillName) {
+          dispatch(removeSupplyFromDashboard(initialSkillName))
           dispatch(addSupplyToDashboard(newSkillName))
-        } else if (newSkillName) {
+        } else if (newSkillName && !initialSkill) {
           dispatch(addSupplyToDashboard(newSkillName))
         }
         navigate(-1)
       }
-    } */
+    }
   }
 
   const checkIfFormIsValid = () => {
@@ -77,7 +75,7 @@ export const EditSupply = () => {
         {Object.keys(inputDefaults).map((formItem, index) => {
           const responseKey = inputDefaults[formItem].responseKey
           if (inputDefaults[formItem].inputType === 'dropdown') {
-            const pickerVal = formData[responseKey]
+            const pickerVal = formData[formItem]
             return (
               <CG.Container margin='10px' key={index}>
                 <CG.Picker
@@ -100,7 +98,7 @@ export const EditSupply = () => {
             <CG.Container margin='10px' key={index}>
               <CG.Input
                 label={inputDefaults[formItem].label}
-                initValue={formData[responseKey] ?? ''} // Nullish coalescing operator
+                initValue={formData[formItem] ?? ''} // Nullish coalescing operator
                 onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
                 margin={0.5}
                 placeholder={inputDefaults[formItem].placeholder}
