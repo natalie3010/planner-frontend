@@ -100,13 +100,13 @@
         "validators": [{ "required": false }]
       },
       "demandSkills": {
-        "validators": [{ "required": false }]
+        "validators": [{ "required": true }]
       },
       "demandGrade": {
-        "validators": [{ "required": false }]
+        "validators": [{ "required": true }]
       },
       "demandStatus": {
-        "validators": [{ "required": false }]
+        "validators": [{ "required": true }]
       },
       "demandClient": {
         "validators": [
