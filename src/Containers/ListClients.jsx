@@ -59,8 +59,9 @@ export const ListClients =() =>{
     })
   }
  
-  const editClient = async (client) => {
-    const response  = await putClient(authToken, client.ClientName, client)
+  const editClient = async () => {
+    const data = {ClientName: ClientName};
+    const response  = await putClient(authToken, ClientID, data);
     console.log('res', response)
   }
 
@@ -141,7 +142,7 @@ export const ListClients =() =>{
               height: '0.90rem',
               width: '0.90rem',
               type: 'Edit2',
-              handler: (value) => setClientName(value.ClientName)
+              handler: (value) => {setClientName(value.ClientName); setClientID(value.ClientID)}
 
             },
             /* {
