@@ -36,19 +36,19 @@ export const demand_grade = [
 ]
 
 export let demandForm = {
-  codeRequisition: null,
-  startDate: null,
-  clientID: null,
-  originatorName: null,
-  skillsID: null,
-  probability: null,
-  grade: null,
-  selectedApplicant: null,
-  status: null,
-  notes: null,
-  proposedApplicant: null,
-  creationDate: null,
-  location: null,
+  demandCodeRequisition: null,
+  demandStartDate: null,
+  demandClient: null,
+  demandOriginator: null,
+  demandSkills: null,
+  demandProbability: null,
+  demandGrade: null,
+  demandSelectedApplicant: null,
+  demandStatus: null,
+  demandNotes: null,
+  demandProposedApplicant: null,
+  demandCreationDate: null,
+  demandLocation: null,
 }
 
 export let supplyForm = {
