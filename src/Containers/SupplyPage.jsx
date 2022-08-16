@@ -31,19 +31,10 @@ export const SupplyPage = () => {
   const handleSubmit = async () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
-    const data = {
-      applicantFirstName: formData.applicantFirstName,
-      applicantLastName: formData.applicantLastName,
-      applicantStatus: formData.applicantStatus,
-      skillsID: formData.applicantSkills,
-      notes: formData.applicantNotes,
-      applicantType: formData.applicantType,
-      location: formData.applicantLocation,
-    }
     if (formIsValid) {
       const skillName = dataAllSkills[formData.applicantSkills - 1].name
-      const request = await addSupply(authToken, data)
-      if (request.changes) {
+      const request = await addSupply(authToken, formData)
+      if (request) {
         dispatch(addSupplyToDashboard(skillName))
         navigate('/protectedRoute/dashboard')
       }
