@@ -4,7 +4,7 @@ import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { getSingleSupply, updateSupply, getSkills } from '../API'
 import { formatSkills, supplyFormFormatter } from '../Data/Format'
-import { applicant_status, applicant_type, supplyForm as form } from '../Data/Data'
+import { applicant_status, applicant_type } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addSupplyToDashboard, removeSupplyFromDashboard } from '../Slices/DashboardSlice'
 import { supplySchema } from '../Validations/SupplyValidation'
@@ -18,7 +18,6 @@ export const EditSupply = () => {
   const [initialSkill, setInitialSkill] = useState(null)
   const [initialSkillName, setInitialSkillName] = useState(null)
   const [dataAllSkills, setDataAllSkills] = useState(null)
-
   // form data
   const [formData, setFormData] = useState(null)
   const [formSubmitted, setFormSubmitted] = useState(false)
