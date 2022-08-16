@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Col } from 'react-grid-system'
 import { CG } from 'cap-shared-components'
-
 import { useNavigate } from 'react-router-dom'
 import { getClients, getSkills, addDemand } from '../API'
 import { formatSkills, formatClients, demandFormFormatter } from '../Data/Format'
@@ -33,15 +32,14 @@ export const DemandPage = () => {
   const handleSubmit = async () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
-
     if (formIsValid) {
-      const skillSelected = formData.skillsID && true
-      const skillName = skillSelected && pickerSkills[formData.skillsID - 1].name
-      const request = addDemand(authToken, formData)
-      request.then((result) => {
+      const skillSelected = formData.demandSkills && true
+      const skillName = skillSelected && pickerSkills[formData.demandSkills - 1].name
+      const request = await addDemand(authToken, formData)
+      if (request) {
         skillSelected && dispatch(addDemandToDashboard(skillName))
         navigate('/protectedRoute/dashboard')
-      })
+      }
     }
   }
 
