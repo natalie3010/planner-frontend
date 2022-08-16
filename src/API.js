@@ -124,7 +124,7 @@ export function getSingleSupply(applicantID, token) {
 
 export function getSingleDemand(applicantID, token) {
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch(`${URL}/api/demand/${applicantID}`, requestObject)
+  return fetch(`${URL}/api/v2/demand/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -195,7 +195,7 @@ export function updateDemand(token, applicantID, data) {
     },
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/api/demand/${applicantID}`, requestObject)
+  return fetch(`${URL}/api/v2/demand/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
