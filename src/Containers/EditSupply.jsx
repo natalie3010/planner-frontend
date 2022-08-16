@@ -41,11 +41,10 @@ export const EditSupply = () => {
   const handleSubmit = async () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
-    console.log(formData)
-    console.log('valid form is', formIsValid)
     if (formIsValid) {
       const request = await updateSupply(authToken, applicantID, formData)
-      if (request.changes) {
+      if (request) {
+        // response is a bool true
         const newSkillName = formData.applicantSkills && dataAllSkills[formData.applicantSkills - 1].name
         if (initialSkillName && newSkillName && newSkillName !== initialSkillName) {
           dispatch(removeSupplyFromDashboard(initialSkillName))
@@ -72,7 +71,6 @@ export const EditSupply = () => {
         <CG.Heading>Edit a supply</CG.Heading>
 
         {Object.keys(inputDefaults).map((formItem, index) => {
-          const responseKey = inputDefaults[formItem].responseKey
           if (inputDefaults[formItem].inputType === 'dropdown') {
             const pickerVal = formData[formItem]
             return (
