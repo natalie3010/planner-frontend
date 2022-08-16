@@ -329,6 +329,27 @@ export function postClient(token, data) {
     })
 }
 
+export function putClient(token, clientID, data) {
+  const requestObject = {
+    method: 'PUT',
+    headers: {
+      'x-access-token': token,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  }
+  return fetch(`${URL}/api/clients/${clientID}`, requestObject)
+  .then((res) => {
+    if(!res.ok){
+      throw res
+    }
+      return res.json()
+    })
+    .catch((error) => {
+      return error
+    })
+}
+
 export function getNewToken(refreshToken) {
   const requestObject = {
     method: 'POST',
