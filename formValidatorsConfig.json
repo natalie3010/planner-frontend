@@ -99,7 +99,7 @@
       "demandLocation": {
         "validators": [{ "required": false }]
       },
-      "demandSkill": {
+      "demandSkills": {
         "validators": [{ "required": false }]
       },
       "demandGrade": {
@@ -107,6 +107,14 @@
       },
       "demandStatus": {
         "validators": [{ "required": false }]
+      },
+      "demandClient": {
+        "validators": [
+          {
+            "errorMessage": "Please select a client",
+            "required": true
+          }
+        ]
       }
     }
   },
