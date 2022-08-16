@@ -16,28 +16,25 @@ export const EditDemand = () => {
   const dispatch = useDispatch()
   const authToken = useSelector((state) => state.user.authToken)
   const demandID = useSelector((state) => state.dashboard.selectedDemand)
-  const [dataDemand, setDataDemand] = useState(false)
+  //const [dataDemand, setDataDemand] = useState(false)
   const [pickerSkills, setPickerSkills] = useState(null)
-  const [defaultSkillName, setDefaultSkillName] = useState(null)
   const [pickerClients, setPickerClients] = useState(null)
-  const [formData, setFormData] = useState(form)
+  const [initialSkillName, setInitialSkillName] = useState(null)
+  const [formData, setFormData] = useState(null)
   const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
     const requestClients = getClients(authToken)
     requestClients.then((clientsResult) => setPickerClients(formatClients(clientsResult)))
 
-    const requestSkills = getSkills(authToken)
-    requestSkills.then((skillsResult) => setPickerSkills(formatSkills(skillsResult)[0]))
-
     const requestDemand = getSingleDemand(demandID, authToken)
     requestDemand.then((demandResult) => {
-      setDataDemand(demandResult)
+      setFormData(demandResult)
       const requestSkills = getSkills(authToken)
       requestSkills.then((skillsResult) => {
-        const myArray = formatSkills(skillsResult, demandResult.SkillsID)
-        setPickerSkills(myArray[0])
-        setDefaultSkillName(myArray[1])
+        const [skillsArray, skillName] = formatSkills(skillsResult, demandResult.demandSkills)
+        setPickerSkills(skillsArray)
+        setInitialSkillName(skillName)
       })
     })
   }, [])
@@ -46,32 +43,22 @@ export const EditDemand = () => {
 
   const handleSubmit = async () => {
     setFormSubmitted(true)
+    console.log(formData)
+    /**
+     * Client Id, demandId, Originator are different for api v2 so validation fails
+     */
+    const formIsValid = await checkIfFormIsValid()
 
-    const data = {
-      codeRequisition: formData.codeRequisition ?? dataDemand.CodeRequisition,
-      startDate: formData.startDate ?? dataDemand.StartDate,
-      clientID: formData.clientID ?? dataDemand.ClientID,
-      originatorName: formData.originatorName ?? dataDemand.OriginatorName,
-      skillsID: formData.skillsID ?? dataDemand.SkillsID,
-      probability: formData.probability ?? dataDemand.Probability,
-      grade: formData.grade ?? dataDemand.Grade,
-      selectedApplicant: formData.selectedApplicant ?? dataDemand.SelectedApplicant,
-      status: formData.status ?? dataDemand.Status,
-      notes: formData.notes ?? dataDemand.Notes,
-      proposedApplicant: formData.proposedApplicant ?? dataDemand.ProposedApplicant,
-      creationDate: formData.creationDate ?? dataDemand.CreationDate,
-      location: formData.location ?? dataDemand.Location,
-    }
-    const isValid = await checkIfFormIsValid(data)
-    if (isValid) {
+    console.log('form is valid ', formIsValid)
+    /* if (isValid) {
       const skillSelected = formData.skillsID && true
       const newskillname = skillSelected && pickerSkills[formData.skillsID - 1].name
       const request = updateDemand(authToken, demandID, data)
       request.then((result) => {
-        if (defaultSkillName === newskillname) {
+        if (initialSkillName === newskillname) {
           navigate(-1)
-        } else if (skillSelected && defaultSkillName) {
-          dispatch(removeDemandFromDashboard(defaultSkillName))
+        } else if (skillSelected && initialSkillName) {
+          dispatch(removeDemandFromDashboard(initialSkillName))
           dispatch(addDemandToDashboard(newskillname))
           navigate(-1)
         } else if (skillSelected) {
@@ -81,15 +68,15 @@ export const EditDemand = () => {
           navigate(-1)
         }
       })
-    }
+    } */
   }
 
-  const checkIfFormIsValid = (data) => {
-    const isValid = demandSchema.isValid(data)
+  const checkIfFormIsValid = () => {
+    const isValid = demandSchema.isValid()
     return isValid
   }
 
-  if (!pickerClients || !pickerSkills || !dataDemand || !defaultSkillName) {
+  if (!pickerClients || !pickerSkills || !formData) {
     return <CG.Body>loading...</CG.Body>
   }
   return (
@@ -98,9 +85,8 @@ export const EditDemand = () => {
         <CG.Heading>Edit a demand</CG.Heading>
         {Object.keys(inputDefaults).map((formItem, index) => {
           const required = inputDefaults[formItem].validators[0].required
-          const responseKey = inputDefaults[formItem].responseKey
           if (inputDefaults[formItem].inputType === 'dropdown') {
-            const pickerVal = dataDemand[responseKey]
+            const pickerVal = formData[formItem]
             return (
               <CG.Container margin='10px' key={index}>
                 <CG.Picker
@@ -112,7 +98,7 @@ export const EditDemand = () => {
                   options={inputDefaults[formItem].options}
                   labelKey='name'
                   label={inputDefaults[formItem].label}
-                  placeholder={typeof pickerVal === 'number' ? defaultSkillName : pickerVal}
+                  placeholder={typeof pickerVal === 'number' ? initialSkillName : pickerVal}
                   required={required}
                   hasError={required && !formData[formItem] && formSubmitted}
                 />
@@ -126,21 +112,16 @@ export const EditDemand = () => {
             <CG.Container margin='10px' key={index}>
               <CG.Input
                 label={inputDefaults[formItem].label}
-                initValue={dataDemand[responseKey] ?? ''}
+                initValue={formData[formItem] ?? ''}
                 onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
                 margin={0.5}
                 placeholder={inputDefaults[formItem].placeholder}
                 required={required}
                 hasError={
+                  (required && formSubmitted && hasRegex && !formData[formItem]) ||
                   (required &&
                     formSubmitted &&
                     hasRegex &&
-                    !formData[formItem] &&
-                    !testRegex(inputDefaults[formItem].validators[0].pattern, dataDemand[responseKey])) ||
-                  (required &&
-                    formSubmitted &&
-                    hasRegex &&
-                    formData[formItem] &&
                     !testRegex(inputDefaults[formItem].validators[0].pattern, formData[formItem]))
                 }
               />
