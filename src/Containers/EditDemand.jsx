@@ -4,8 +4,8 @@ import { Col } from 'react-grid-system'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { getClients, getSkills, getSingleDemand, updateDemand } from '../API'
-import { formatSkills, formatClients, demandFormFormatter, lowerCaseKeys } from '../Data/Format'
-import { demand_status, demand_grade, demandForm as form } from '../Data/Data'
+import { formatSkills, formatClients, demandFormFormatter } from '../Data/Format'
+import { demand_status, demand_grade } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addDemandToDashboard, removeDemandFromDashboard } from '../Slices/DashboardSlice'
 import { testRegex } from '../Utils/regex'
@@ -16,7 +16,6 @@ export const EditDemand = () => {
   const dispatch = useDispatch()
   const authToken = useSelector((state) => state.user.authToken)
   const demandID = useSelector((state) => state.dashboard.selectedDemand)
-  //const [dataDemand, setDataDemand] = useState(false)
   const [pickerSkills, setPickerSkills] = useState(null)
   const [pickerClients, setPickerClients] = useState(null)
   const [initialSkillName, setInitialSkillName] = useState(null)
@@ -43,19 +42,13 @@ export const EditDemand = () => {
 
   const handleSubmit = async () => {
     setFormSubmitted(true)
-    console.log(formData)
-    /**
-     * demandClientId, demandOriginatorName are different
-     */
     const formIsValid = await checkIfFormIsValid()
 
-    console.log('form is valid ', formIsValid)
-    /* if (formIsValid) {
+    if (formIsValid) {
       const skillSelected = formData.demandSkills && true
       const newskillname = skillSelected && pickerSkills[formData.demandSkills - 1].name
       const request = updateDemand(authToken, demandID, formData)
       request.then((result) => {
-        console.log('edit repsonse from backend ', result)
         if (initialSkillName === newskillname) {
           navigate(-1)
         } else if (skillSelected && initialSkillName) {
@@ -69,7 +62,7 @@ export const EditDemand = () => {
           navigate(-1)
         }
       })
-    } */
+    }
   }
 
   const checkIfFormIsValid = () => {
