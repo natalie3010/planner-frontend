@@ -45,16 +45,17 @@ export const EditDemand = () => {
     setFormSubmitted(true)
     console.log(formData)
     /**
-     * Client Id, demandId, Originator are different for api v2 so validation fails
+     * demandClientId, demandOriginatorName are different
      */
     const formIsValid = await checkIfFormIsValid()
 
     console.log('form is valid ', formIsValid)
-    /* if (isValid) {
-      const skillSelected = formData.skillsID && true
-      const newskillname = skillSelected && pickerSkills[formData.skillsID - 1].name
-      const request = updateDemand(authToken, demandID, data)
+    /* if (formIsValid) {
+      const skillSelected = formData.demandSkills && true
+      const newskillname = skillSelected && pickerSkills[formData.demandSkills - 1].name
+      const request = updateDemand(authToken, demandID, formData)
       request.then((result) => {
+        console.log('edit repsonse from backend ', result)
         if (initialSkillName === newskillname) {
           navigate(-1)
         } else if (skillSelected && initialSkillName) {
@@ -72,7 +73,7 @@ export const EditDemand = () => {
   }
 
   const checkIfFormIsValid = () => {
-    const isValid = demandSchema.isValid()
+    const isValid = demandSchema.isValid(formData)
     return isValid
   }
 
