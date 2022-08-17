@@ -38,8 +38,8 @@ export const demand_grade = [
 export let demandForm = {
   demandCodeRequisition: null,
   demandStartDate: null,
-  demandClient: null,
-  demandOriginator: null,
+  demandClientID: null,
+  demandOriginatorName: null,
   demandSkills: null,
   demandProbability: null,
   demandGrade: null,
