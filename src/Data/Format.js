@@ -49,8 +49,8 @@ export const formatClients = (data) => {
   const formatted_Clients = []
   data.forEach((client) => {
     formatted_Clients.push({
-      name: client.ClientID,
-      value: client.ClientName,
+      name: client.ClientName,
+      value: client.ClientID,
     })
   })
   return formatted_Clients
