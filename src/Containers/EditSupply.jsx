@@ -14,7 +14,6 @@ export const EditSupply = () => {
   const dispatch = useDispatch()
   const { applicantId } = useParams()
   const authToken = useSelector((state) => state.user.authToken)
-  //const applicantId = useSelector((state) => state.dashboard.selectedApplicant)
   // dataSupply - selected supply from Get request
   const [initialSkill, setInitialSkill] = useState(null)
   const [initialSkillName, setInitialSkillName] = useState(null)
