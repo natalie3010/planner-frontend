@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Col } from 'react-grid-system'
 
 import { useParams } from 'react-router-dom'
-import { selectDemandID, removeDemandFromDashboard } from '../Slices/DashboardSlice'
+import { removeDemandFromDashboard } from '../Slices/DashboardSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteDemand, getDemandSkill } from '../API'
 
@@ -73,7 +73,6 @@ export const ListDemand = () => {
                 width: '0.90rem',
                 type: 'Edit2',
                 handler: (value) => {
-                  dispatch(selectDemandID(value.DemandID))
                   navigate(`/edit-demand/${value.DemandID}`)
                 },
               },
