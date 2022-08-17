@@ -23,18 +23,15 @@ export const Login = () => {
     } else if (authToken) {
       const testToken = getDashboard(authToken)
       testToken.then((result) => {
-        console.log('response dashboard ', result)
         if (result == 401) {
           const loginTime = Date.now().toString()
           const refreshToken = localStorage.getItem('refreshToken')
           getNewToken(refreshToken).then((result) => {
-            console.log('response token ', result)
             if (result === 403 || result === 401) {
               localStorage.removeItem('refreshToken')
               localStorage.removeItem('authToken')
               localStorage.removeItem('loginTime')
             } else {
-              console.log('proceeded here')
               localStorage.setItem('authToken', result.token)
               localStorage.setItem('loginTime', loginTime)
               dispatch(login(result.token))
