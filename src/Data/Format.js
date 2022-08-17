@@ -63,7 +63,6 @@ export const clientFormFormatter = () => {
       placeholder: '',
       inputType: 'text',
       validators: inputValidator.clientLName.validators,
-      responseKey: 'ClientID',
     },
 
     clientName: {
@@ -71,7 +70,6 @@ export const clientFormFormatter = () => {
       placeholder: '',
       inputType: 'text',
       validators: inputValidator.clientLName.validators,
-      responseKey: 'ClientName',
     },
   }
   return inputDefaults
@@ -84,14 +82,12 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
       label: 'Code Requisition',
       inputType: 'text',
       placeholder: '',
-      responseKey: 'CodeRequisition',
       validators: inputValidator.demandCodeRequisition.validators,
     },
     demandStartDate: {
       label: 'Start date',
       inputType: 'text',
       placeholder: 'DD/MM/YYYY',
-      responseKey: 'StartDate',
       validators: inputValidator.demandStartDate.validators,
     },
     demandClientID: {
@@ -99,14 +95,12 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
       label: 'Client',
       inputType: 'dropdown',
       placeholder: 'Select a client',
-      responseKey: 'ClientID',
       validators: inputValidator.demandClientID.validators,
     },
     demandOriginatorName: {
       label: 'Originator',
       inputType: 'text',
       placeholder: '',
-      responseKey: 'OriginatorName',
       validators: inputValidator.demandOriginatorName.validators,
     },
     demandSkills: {
@@ -114,14 +108,12 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
       label: 'Skill',
       inputType: 'dropdown',
       placeholder: 'Select a skill',
-      responseKey: 'SkillsID',
       validators: inputValidator.demandSkills.validators,
     },
     demandProbability: {
       label: 'Probability',
       inputType: 'text',
       placeholder: '',
-      responseKey: 'Probability',
       validators: inputValidator.demandProbability.validators,
     },
     demandGrade: {
@@ -129,14 +121,12 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
       label: 'Grade',
       inputType: 'dropdown',
       placeholder: 'Select a grade',
-      responseKey: 'Grade',
       validators: inputValidator.demandGrade.validators,
     },
     demandSelectedApplicant: {
       label: 'Selected Applicant',
       inputType: 'text',
       placeholder: '',
-      responseKey: 'SelectedApplicant',
       validators: inputValidator.demandSelectedApplicant.validators,
     },
     demandStatus: {
@@ -144,35 +134,30 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
       label: 'Status',
       inputType: 'dropdown',
       placeholder: 'Select a status',
-      responseKey: 'Status',
       validators: inputValidator.demandStatus.validators,
     },
     demandNotes: {
       label: 'Notes',
       inputType: 'text',
       placeholder: '',
-      responseKey: 'Notes',
       validators: inputValidator.demandNotes.validators,
     },
     demandProposedApplicant: {
       label: 'Proposed Applicant',
       inputType: 'text',
       placeholder: '',
-      responseKey: 'ProposedApplicant',
       validators: inputValidator.demandProposedApplicant.validators,
     },
     demandCreationDate: {
       label: 'Creation date',
       inputType: 'text',
       placeholder: 'DD/MM/YYYY',
-      responseKey: 'CreationDate',
       validators: inputValidator.demandCreationDate.validators,
     },
     demandLocation: {
       label: 'Location',
       inputType: 'text',
       placeholder: '',
-      responseKey: 'Location',
       validators: inputValidator.demandLocation.validators,
     },
   }
@@ -187,14 +172,12 @@ export const supplyFormFormatter = (pickerStatus, pickerSkills, pickerType) => {
       placeholder: '',
       inputType: 'text',
       validators: inputValidator.applicantFirstName.validators,
-      responseKey: 'ApplicantFirstName',
     },
     applicantLastName: {
       label: 'Last name',
       placeholder: '',
       inputType: 'text',
       validators: inputValidator.applicantLastName.validators,
-      responseKey: 'ApplicantLastName',
     },
     applicantStatus: {
       label: 'Status',
@@ -202,7 +185,6 @@ export const supplyFormFormatter = (pickerStatus, pickerSkills, pickerType) => {
       options: pickerStatus,
       inputType: 'dropdown',
       validators: inputValidator.applicantStatus.validators,
-      responseKey: 'ApplicantStatus',
     },
     applicantSkills: {
       label: 'Skill',
@@ -210,14 +192,12 @@ export const supplyFormFormatter = (pickerStatus, pickerSkills, pickerType) => {
       options: pickerSkills,
       inputType: 'dropdown',
       validators: inputValidator.applicantSkills.validators,
-      responseKey: 'SkillsID',
     },
     applicantNotes: {
       label: 'Notes',
       placeholder: '',
       inputType: 'text',
       validators: inputValidator.applicantNotes.validators,
-      responseKey: 'Notes',
     },
     applicantType: {
       label: 'Applicant type',
@@ -225,14 +205,12 @@ export const supplyFormFormatter = (pickerStatus, pickerSkills, pickerType) => {
       options: pickerType,
       inputType: 'dropdown',
       validators: inputValidator.applicantType.validators,
-      responseKey: 'ApplicantType',
     },
     applicantLocation: {
       label: 'Location',
       placeholder: '',
       inputType: 'text',
       validators: inputValidator.applicantLocation.validators,
-      responseKey: 'Location',
     },
   }
   return inputDefaults
