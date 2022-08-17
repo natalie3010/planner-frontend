@@ -9,7 +9,7 @@ import { formatClients } from '../Data/Format'
 import { clientForm as form } from '../Data/Data'
 import { removeClient, setupClients } from '../Slices/DashboardSlice'
 
-export const ListClients =() =>{
+export const ListClients = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -33,23 +33,22 @@ export const ListClients =() =>{
 
   useEffect(() => {
     const requestClients = getClients(authToken)
-    
-    requestClients.then((clientResult) => { 
-      console.log(clientResult);
-      dispatch(setupClients(clientResult));
+
+    requestClients.then((clientResult) => {
+      console.log(clientResult)
+      dispatch(setupClients(clientResult))
       setData(clientResult)
-  })
-  
+    })
   }, [])
 
   const addClient = () => {
-    const data={ClientID: ClientID, ClientName: ClientName}
+    const data = { ClientID: ClientID, ClientName: ClientName }
     postClient(authToken, data)
   }
 
   //This is for  Add button to refresh
-  const refreshPage= () => {
-    window.location.reload(false);
+  const refreshPage = () => {
+    window.location.reload(false)
   }
 
   const deleterow = (ClientID) => {
@@ -58,7 +57,6 @@ export const ListClients =() =>{
       dispatch(removeClient(ClientID))
     })
   }
- 
 
   return (
     <Col md={12} align='center' justify='center'>
@@ -76,31 +74,44 @@ export const ListClients =() =>{
         boxSizing='border-box'
         fontSize='0.90rem'
       >
-        
-        <CG.Box width="50%" justifyContent="space-between" ml='600px' mr='15px' mt='10px'  display='flex' flexDirection='row' height='30px'  >
-        <CG.Input 
-  id="textInput"
-  label="Add Clients"
-  name="textInput"
-  placeholder="Add Client Id"
-  topLabel={false}
-  onInput = {(e) => {setClientID(e.target.value)}} />
-        <CG.Input 
-  id="textInput"
-  name="textInput"
-  placeholder="Add Client Name"
-  topLabel={false}
-  onInput = {(e) => {setClientName(e.target.value)}} />
-        <CG.Button
-  primary
-  text="Add"
-  onClick={() => {
-    addClient()
-    refreshPage()
-  }}
-/>
-        
-      </CG.Box>
+        <CG.Box
+          width='50%'
+          justifyContent='space-between'
+          ml='600px'
+          mr='15px'
+          mt='10px'
+          display='flex'
+          flexDirection='row'
+          height='30px'
+        >
+          <CG.Input
+            id='textInput'
+            label='Add Clients'
+            name='textInput'
+            placeholder='Add Client Id'
+            topLabel={false}
+            onInput={(e) => {
+              setClientID(e.target.value)
+            }}
+          />
+          <CG.Input
+            id='textInput'
+            name='textInput'
+            placeholder='Add Client Name'
+            topLabel={false}
+            onInput={(e) => {
+              setClientName(e.target.value)
+            }}
+          />
+          <CG.Button
+            primary
+            text='Add'
+            onClick={() => {
+              addClient()
+              refreshPage()
+            }}
+          />
+        </CG.Box>
         <CG.Table
           customKeyNames={{
             ClientID: 'Client ID',
@@ -109,7 +120,6 @@ export const ListClients =() =>{
           data={clientData}
           divider
           selectedKeys={['ClientID', 'ClientName']}
-
           icons={[
             {
               tableHeader: 'Edit',
@@ -117,7 +127,6 @@ export const ListClients =() =>{
               width: '0.90rem',
               type: 'Edit2',
               handler: (value) => {
-                dispatch(selectApplicantID(value.ApplicantID))
                 navigate('/edit-client')
               },
             },
@@ -130,11 +139,7 @@ export const ListClients =() =>{
             },
           ]}
         />
-        
       </CG.Box>
     </Col>
-    
   )
-
-
 }
