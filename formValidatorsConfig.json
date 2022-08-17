@@ -72,7 +72,7 @@
           }
         ]
       },
-      "demandOriginator": {
+      "demandOriginatorName": {
         "validators": [{ "required": false }]
       },
       "demandProbability": {
@@ -108,7 +108,7 @@
       "demandStatus": {
         "validators": [{ "required": true }]
       },
-      "demandClient": {
+      "demandClientID": {
         "validators": [
           {
             "errorMessage": "Please select a client",

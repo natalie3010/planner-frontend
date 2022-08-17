@@ -8,8 +8,8 @@ export const demandSchema = yup.object().shape({
   demandStartDate:
     demandInputs.demandStartDate.validators[0].required &&
     yup.string().required().matches(new RegExp(demandInputs.demandStartDate.validators[0].pattern)),
-  demandClient: demandInputs.demandClient.validators[0].required && yup.string().required(),
-  demandOriginator: demandInputs.demandOriginator.validators[0].required && yup.string().required(),
+  demandClientID: demandInputs.demandClientID.validators[0].required && yup.string().required(),
+  demandOriginatorName: demandInputs.demandOriginatorName.validators[0].required && yup.string().required(),
   demandSkills: demandInputs.demandSkills.validators[0].required && yup.string().required(),
   demandProbability: demandInputs.demandProbability.validators[0].required && yup.string().required(),
   demandGrade: demandInputs.demandGrade.validators[0].required && yup.string().required(),

@@ -94,20 +94,20 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
       responseKey: 'StartDate',
       validators: inputValidator.demandStartDate.validators,
     },
-    demandClient: {
+    demandClientID: {
       options: pickerClients,
       label: 'Client',
       inputType: 'dropdown',
       placeholder: 'Select a client',
       responseKey: 'ClientID',
-      validators: inputValidator.demandClient.validators,
+      validators: inputValidator.demandClientID.validators,
     },
-    demandOriginator: {
+    demandOriginatorName: {
       label: 'Originator',
       inputType: 'text',
       placeholder: '',
       responseKey: 'OriginatorName',
-      validators: inputValidator.demandOriginator.validators,
+      validators: inputValidator.demandOriginatorName.validators,
     },
     demandSkills: {
       options: pickerSkills,
