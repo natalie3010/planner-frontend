@@ -80,7 +80,7 @@ export const ListSupply = () => {
                 type: 'Edit2',
                 handler: (value) => {
                   dispatch(selectApplicantID(value.ApplicantID))
-                  navigate('/edit-supply')
+                  navigate(`/edit-supply/${value.ApplicantID}`)
                 },
               },
               {

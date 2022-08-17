@@ -65,15 +65,7 @@ export const ListDemand = () => {
             }}
             data={data}
             divider
-            selectedKeys={[
-              'DemandID',
-              'CodeRequisition',
-              'ClientID',
-              'Probability',
-              'StartDate',
-              'Grade',
-              'Status',
-            ]}
+            selectedKeys={['DemandID', 'CodeRequisition', 'ClientID', 'Probability', 'StartDate', 'Grade', 'Status']}
             icons={[
               {
                 tableHeader: 'Edit',
@@ -82,7 +74,7 @@ export const ListDemand = () => {
                 type: 'Edit2',
                 handler: (value) => {
                   dispatch(selectDemandID(value.DemandID))
-                  navigate('/edit-demand')
+                  navigate(`/edit-demand/${value.DemandID}`)
                 },
               },
               {
