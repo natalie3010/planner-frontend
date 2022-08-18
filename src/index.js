@@ -35,7 +35,7 @@ const App = () => {
         }
       />
       <Route
-        path='/edit-demand'
+        path='/edit-demand/:demandId'
         element={
           <ProtectedRoute>
             <EditDemand />
@@ -67,7 +67,7 @@ const App = () => {
         }
       />
       <Route
-        path='/edit-supply'
+        path='/edit-supply/:applicantId'
         element={
           <ProtectedRoute>
             <EditSupply />

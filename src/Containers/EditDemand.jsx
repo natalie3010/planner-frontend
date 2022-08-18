@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Col } from 'react-grid-system'
 
 import { CG } from 'cap-shared-components'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { getClients, getSkills, getSingleDemand, updateDemand } from '../API'
 import { formatSkills, formatClients, demandFormFormatter } from '../Data/Format'
 import { demand_status, demand_grade } from '../Data/Data'
@@ -14,8 +14,8 @@ import { demandSchema } from '../Validations/DemandValidation'
 export const EditDemand = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const { demandId } = useParams()
   const authToken = useSelector((state) => state.user.authToken)
-  const demandID = useSelector((state) => state.dashboard.selectedDemand)
   const [pickerSkills, setPickerSkills] = useState(null)
   const [pickerClients, setPickerClients] = useState(null)
   const [initialSkillName, setInitialSkillName] = useState(null)
@@ -26,7 +26,7 @@ export const EditDemand = () => {
     const requestClients = getClients(authToken)
     requestClients.then((clientsResult) => setPickerClients(formatClients(clientsResult)))
 
-    const requestDemand = getSingleDemand(demandID, authToken)
+    const requestDemand = getSingleDemand(demandId, authToken)
     requestDemand.then((demandResult) => {
       setFormData(demandResult)
       const requestSkills = getSkills(authToken)
@@ -47,7 +47,7 @@ export const EditDemand = () => {
     if (formIsValid) {
       const skillSelected = formData.demandSkills && true
       const newskillname = skillSelected && pickerSkills[formData.demandSkills - 1].name
-      const request = updateDemand(authToken, demandID, formData)
+      const request = updateDemand(authToken, demandId, formData)
       request.then((result) => {
         if (initialSkillName && newskillname && newskillname !== initialSkillName) {
           dispatch(removeDemandFromDashboard(initialSkillName))

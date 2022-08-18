@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Col } from 'react-grid-system'
 import { CG } from 'cap-shared-components'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { getSingleSupply, updateSupply, getSkills } from '../API'
 import { formatSkills, supplyFormFormatter } from '../Data/Format'
 import { applicant_status, applicant_type } from '../Data/Data'
@@ -12,8 +12,8 @@ import { supplySchema } from '../Validations/SupplyValidation'
 export const EditSupply = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const { applicantId } = useParams()
   const authToken = useSelector((state) => state.user.authToken)
-  const applicantID = useSelector((state) => state.dashboard.selectedApplicant)
   // dataSupply - selected supply from Get request
   const [initialSkill, setInitialSkill] = useState(null)
   const [initialSkillName, setInitialSkillName] = useState(null)
@@ -23,7 +23,7 @@ export const EditSupply = () => {
   const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
-    const request = getSingleSupply(applicantID, authToken)
+    const request = getSingleSupply(applicantId, authToken)
     request.then((supplyResult) => {
       setFormData(supplyResult)
       setInitialSkill(supplyResult.applicantSkills)
@@ -42,7 +42,7 @@ export const EditSupply = () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
     if (formIsValid) {
-      const request = await updateSupply(authToken, applicantID, formData)
+      const request = await updateSupply(authToken, applicantId, formData)
       if (request) {
         // response is a bool true
         const newSkillName = formData.applicantSkills && dataAllSkills[formData.applicantSkills - 1].name
