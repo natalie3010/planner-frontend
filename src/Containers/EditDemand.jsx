@@ -55,7 +55,8 @@ export const EditDemand = () => {
         } else if (newskillname && !initialSkillName) {
           dispatch(addDemandToDashboard(newskillname))
         }
-        navigate(`/list-Demand/${newskillname}`)
+        const routeName = newskillname.replace(/\//g, '-')
+        navigate(`/list-Demand/${routeName}`)
       })
     }
   }
@@ -124,7 +125,8 @@ export const EditDemand = () => {
             primary
             text='cancel'
             onClick={() => {
-              navigate(`/list-Demand/${initialSkillName}`)
+              const routeName = initialSkillName.replace(/\//g, '-')
+              navigate(`/list-Demand/${routeName}`)
             }}
           />
         </CG.Box>
