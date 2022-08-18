@@ -33,11 +33,12 @@ export const DemandPage = () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
     if (formIsValid) {
-      const skillSelected = formData.demandSkills && true
-      const skillName = skillSelected && pickerSkills[formData.demandSkills - 1].name
+      const skillName = pickerSkills[formData.demandSkills - 1].name
       const request = await addDemand(authToken, formData)
       if (request) {
-        skillSelected && dispatch(addDemandToDashboard(skillName))
+        try {
+          dispatch(addDemandToDashboard(skillName))
+        } catch {}
         navigate('/protectedRoute/dashboard')
       }
     }
