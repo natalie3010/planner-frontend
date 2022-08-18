@@ -50,10 +50,14 @@ export const EditDemand = () => {
       const request = updateDemand(authToken, demandId, formData)
       request.then((result) => {
         if (initialSkillName && newskillname && newskillname !== initialSkillName) {
-          dispatch(removeDemandFromDashboard(initialSkillName))
-          dispatch(addDemandToDashboard(newskillname))
+          try {
+            dispatch(removeDemandFromDashboard(initialSkillName))
+            dispatch(addDemandToDashboard(newskillname))
+          } catch {}
         } else if (newskillname && !initialSkillName) {
-          dispatch(addDemandToDashboard(newskillname))
+          try {
+            dispatch(addDemandToDashboard(newskillname))
+          } catch {}
         }
         const routeName = newskillname.replace(/\//g, '-')
         navigate(`/list-Demand/${routeName}`)
