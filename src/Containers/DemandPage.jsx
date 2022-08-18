@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Col } from 'react-grid-system'
 import { CG } from 'cap-shared-components'
-
 import { useNavigate } from 'react-router-dom'
 import { getClients, getSkills, addDemand } from '../API'
 import { formatSkills, formatClients, demandFormFormatter } from '../Data/Format'
 import { demand_status, demand_grade, demandForm as form } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addDemandToDashboard } from '../Slices/DashboardSlice'
+import { testRegex } from '../Utils/regex'
+import { demandSchema } from '../Validations/DemandValidation'
 
 export const DemandPage = () => {
   const navigate = useNavigate()
@@ -28,38 +29,25 @@ export const DemandPage = () => {
 
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setFormSubmitted(true)
-    if (checkIfFormIsValidated()) {
-      const skillSelected = formData.skillsID && true
-      const skillName = skillSelected && pickerSkills[formData.skillsID - 1].name
-      const request = addDemand(authToken, formData)
-      request.then((result) => {
+    const formIsValid = await checkIfFormIsValid()
+    if (formIsValid) {
+      const skillSelected = formData.demandSkills && true
+      const skillName = skillSelected && pickerSkills[formData.demandSkills - 1].name
+      const request = await addDemand(authToken, formData)
+      if (request) {
         skillSelected && dispatch(addDemandToDashboard(skillName))
         navigate('/protectedRoute/dashboard')
-      })
+      }
     }
   }
 
-  const testRegex = (formItem, inputValue) => {
-    const regexPattern = new RegExp(inputDefaults[formItem].validators[0].pattern)
-    return regexPattern.test(inputValue)
+  const checkIfFormIsValid = () => {
+    const isValid = demandSchema.isValid(formData)
+    return isValid
   }
 
-  const checkIfFormIsValidated = () => {
-    let validated = true
-    Object.keys(inputDefaults).map((formItem) => {
-      const required = inputDefaults[formItem].validators[0].required
-      const inputValue = formData[formItem]
-      const hasRegex = inputDefaults[formItem].validators[0].pattern && true
-      if (required && hasRegex && !testRegex(formItem, inputValue)) {
-        validated = false
-      } else if (required && !inputValue) {
-        validated = false
-      }
-    })
-    return validated
-  }
   if (!pickerClients || !pickerSkills) {
     return <CG.Body>loading...</CG.Body>
   }
@@ -99,7 +87,9 @@ export const DemandPage = () => {
                 placeholder={inputDefaults[formItem].placeholder}
                 required={inputDefaults[formItem].validators[0].required}
                 hasError={
-                  (hasRegex && formData[formItem] && !testRegex(formItem, formData[formItem])) ||
+                  (hasRegex &&
+                    formData[formItem] &&
+                    !testRegex(inputDefaults[formItem].validators[0].pattern, formData[formItem])) ||
                   (inputDefaults[formItem].validators[0].required && !formData[formItem] && formSubmitted)
                 }
               />

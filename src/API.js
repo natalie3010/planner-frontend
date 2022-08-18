@@ -50,7 +50,7 @@ export function addSupply(token, data) {
     },
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/api/supply`, requestObject)
+  return fetch(`${URL}/api/v2/supply`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -74,7 +74,7 @@ export function addDemand(token, data) {
     },
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/api/demand`, requestObject)
+  return fetch(`${URL}/api/v2/demand`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -107,7 +107,7 @@ export function getSingleClient(applicantID, token) {
 
 export function getSingleSupply(applicantID, token) {
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch(`${URL}/api/supply/${applicantID}`, requestObject)
+  return fetch(`${URL}/api/v2/supply/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -124,7 +124,7 @@ export function getSingleSupply(applicantID, token) {
 
 export function getSingleDemand(applicantID, token) {
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch(`${URL}/api/demand/${applicantID}`, requestObject)
+  return fetch(`${URL}/api/v2/demand/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -171,7 +171,7 @@ export function updateSupply(token, applicantID, data) {
     },
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/api/supply/${applicantID}`, requestObject)
+  return fetch(`${URL}/api/v2/supply/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -195,7 +195,7 @@ export function updateDemand(token, applicantID, data) {
     },
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/api/demand/${applicantID}`, requestObject)
+  return fetch(`${URL}/api/v2/demand/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -321,7 +321,8 @@ export function postClient(token, data) {
     },
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/api/clients`, requestObject).then((data) => {
+  return fetch(`${URL}/api/clients`, requestObject)
+    .then((data) => {
       return data
     })
     .catch((error) => {
@@ -371,5 +372,4 @@ export function getNewToken(refreshToken) {
     .catch((error) => {
       return error.status
     })
-
 }

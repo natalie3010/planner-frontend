@@ -7,6 +7,7 @@ import { formatSkills, supplyFormFormatter } from '../Data/Format'
 import { applicant_status, applicant_type, supplyForm as form } from '../Data/Data'
 import { useSelector, useDispatch } from 'react-redux'
 import { addSupplyToDashboard } from '../Slices/DashboardSlice'
+import { supplySchema } from '../Validations/SupplyValidation'
 
 export const SupplyPage = () => {
   const navigate = useNavigate()
@@ -27,42 +28,24 @@ export const SupplyPage = () => {
 
   const inputDefaults = supplyFormFormatter(applicant_status, dataAllSkills, applicant_type)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async () => {
     setFormSubmitted(true)
-    const data = {
-      applicantFirstName: formData.supplyFName,
-      applicantLastName: formData.supplyLName,
-      applicantStatus: formData.supplyStatus,
-      skillsID: formData.supplySkillId,
-      notes: formData.supplyNotes,
-      applicantType: formData.supplyType,
-      location: formData.supplyLocation,
-    }
-    if (checkIfFormIsValidated()) {
-      sendata(data)
-    }
-  }
-
-  const checkIfFormIsValidated = () => {
-    let validated = true
-    Object.keys(inputDefaults).map((formItem) => {
-      const required = inputDefaults[formItem].validators[0].required
-      const inputValue = formData[formItem]
-      if (required === true && !inputValue) {
-        validated = false
+    const formIsValid = await checkIfFormIsValid()
+    if (formIsValid) {
+      const skillName = dataAllSkills[formData.applicantSkills - 1].name
+      const request = await addSupply(authToken, formData)
+      if (request) {
+        dispatch(addSupplyToDashboard(skillName))
+        navigate('/protectedRoute/dashboard')
       }
-    })
-    return validated
+    }
   }
 
-  const sendata = (data) => {
-    const skillName = dataAllSkills[data.skillsID - 1].name
-    const request = addSupply(authToken, data)
-    request.then((result) => {
-      dispatch(addSupplyToDashboard(skillName))
-      navigate('/protectedRoute/dashboard')
-    })
+  const checkIfFormIsValid = () => {
+    const formIsValid = supplySchema.isValid(formData)
+    return formIsValid
   }
+
   if (!dataAllSkills) {
     return <CG.Body>loading...</CG.Body>
   }
