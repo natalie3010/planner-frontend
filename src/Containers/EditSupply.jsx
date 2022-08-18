@@ -52,7 +52,7 @@ export const EditSupply = () => {
         } else if (newSkillName && !initialSkill) {
           dispatch(addSupplyToDashboard(newSkillName))
         }
-        navigate(-1)
+        navigate(`/list-supply/${newSkillName}`)
       }
     }
   }
@@ -111,7 +111,7 @@ export const EditSupply = () => {
             primary
             text='cancel'
             onClick={() => {
-              navigate(-1)
+              navigate(`/list-supply/${initialSkillName}`)
             }}
           />
         </CG.Box>
