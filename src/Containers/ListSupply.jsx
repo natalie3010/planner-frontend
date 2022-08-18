@@ -3,7 +3,7 @@ import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectApplicantID, removeSupplyFromDashboard } from '../Slices/DashboardSlice'
+import { removeSupplyFromDashboard } from '../Slices/DashboardSlice'
 import { Col } from 'react-grid-system'
 import { deleteSupply, getSupplySkill } from '../API'
 
@@ -79,8 +79,7 @@ export const ListSupply = () => {
                 width: '0.90rem',
                 type: 'Edit2',
                 handler: (value) => {
-                  dispatch(selectApplicantID(value.ApplicantID))
-                  navigate('/edit-supply')
+                  navigate(`/edit-supply/${value.ApplicantID}`)
                 },
               },
               {
