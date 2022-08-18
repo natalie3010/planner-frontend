@@ -27,11 +27,7 @@ export const Login = () => {
           const loginTime = Date.now().toString()
           const refreshToken = localStorage.getItem('refreshToken')
           getNewToken(refreshToken).then((result) => {
-            if (result === 403 || result === 401) {
-              localStorage.removeItem('refreshToken')
-              localStorage.removeItem('authToken')
-              localStorage.removeItem('loginTime')
-            } else {
+            if (result.token) {
               localStorage.setItem('authToken', result.token)
               localStorage.setItem('loginTime', loginTime)
               dispatch(login(result.token))
