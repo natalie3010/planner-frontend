@@ -49,18 +49,14 @@ export const EditDemand = () => {
       const newskillname = skillSelected && pickerSkills[formData.demandSkills - 1].name
       const request = updateDemand(authToken, demandId, formData)
       request.then((result) => {
-        if (initialSkillName === newskillname) {
-          navigate(-1)
-        } else if (skillSelected && initialSkillName) {
+        if (initialSkillName && newskillname && newskillname !== initialSkillName) {
           dispatch(removeDemandFromDashboard(initialSkillName))
           dispatch(addDemandToDashboard(newskillname))
-          navigate(-1)
-        } else if (skillSelected) {
+        } else if (newskillname && !initialSkillName) {
           dispatch(addDemandToDashboard(newskillname))
-          navigate(-1)
-        } else {
-          navigate(-1)
         }
+        const routeName = newskillname.replace(/\//g, '-')
+        navigate(`/list-Demand/${routeName}`)
       })
     }
   }
@@ -129,7 +125,8 @@ export const EditDemand = () => {
             primary
             text='cancel'
             onClick={() => {
-              navigate(-1)
+              const routeName = initialSkillName.replace(/\//g, '-')
+              navigate(`/list-Demand/${routeName}`)
             }}
           />
         </CG.Box>
