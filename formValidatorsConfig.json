@@ -1,7 +1,7 @@
 {
   "supplyForm": {
     "inputs": {
-      "supplyFName": {
+      "applicantFirstName": {
         "validators": [
           {
             "errorDisplayed": "Please put a first name",
@@ -9,7 +9,7 @@
           }
         ]
       },
-      "supplyLName": {
+      "applicantLastName": {
         "validators": [
           {
             "errorDisplayed": "Please put a last name",
@@ -17,7 +17,7 @@
           }
         ]
       },
-      "supplyStatus": {
+      "applicantStatus": {
         "validators": [
           {
             "errorDisplayed": "Please select a status",
@@ -25,7 +25,7 @@
           }
         ]
       },
-      "supplySkillId": {
+      "applicantSkills": {
         "validators": [
           {
             "errorDisplayed": "Please select a skill",
@@ -33,14 +33,14 @@
           }
         ]
       },
-      "supplyNotes": {
+      "applicantNotes": {
         "validators": [
           {
             "required": false
           }
         ]
       },
-      "supplyType": {
+      "applicantType": {
         "validators": [
           {
             "errorDisplayed": "Please select a type",
@@ -48,7 +48,7 @@
           }
         ]
       },
-      "supplyLocation": {
+      "applicantLocation": {
         "validators": [
           {
             "required": false
@@ -72,7 +72,7 @@
           }
         ]
       },
-      "demandOriginator": {
+      "demandOriginatorName": {
         "validators": [{ "required": false }]
       },
       "demandProbability": {
@@ -98,6 +98,23 @@
       },
       "demandLocation": {
         "validators": [{ "required": false }]
+      },
+      "demandSkills": {
+        "validators": [{ "required": true }]
+      },
+      "demandGrade": {
+        "validators": [{ "required": true }]
+      },
+      "demandStatus": {
+        "validators": [{ "required": true }]
+      },
+      "demandClientID": {
+        "validators": [
+          {
+            "errorMessage": "Please select a client",
+            "required": true
+          }
+        ]
       }
     }
   },

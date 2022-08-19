@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
+    "test": "jest",
     "start": "serve -s dist -l 4200",
     "setup-npmrc": "aws-codeartifact login && aws-codeartifact registry-copy-token",
     "co:login": "AWS_PROFILE=default aws codeartifact login --tool npm --repository ${npm_package_config_awsCodeArtifact_repository} --domain ${npm_package_config_awsCodeArtifact_domain}",
@@ -27,7 +28,8 @@
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0",
     "serve": "^14.0.1",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",

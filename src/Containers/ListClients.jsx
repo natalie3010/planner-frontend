@@ -3,13 +3,13 @@ import { CG } from 'cap-shared-components'
 import { Col } from 'react-grid-system'
 
 import { useNavigate, useParams } from 'react-router-dom'
-import { getClients } from '../API'
+import { getClients, postClient, putClient } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
 import { formatClients } from '../Data/Format'
 import { clientForm as form } from '../Data/Data'
 import { removeClient, setupClients } from '../Slices/DashboardSlice'
 
-export const ListClients =() =>{
+export const ListClients = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -17,7 +17,9 @@ export const ListClients =() =>{
   const clientData = useSelector((state) => state.dashboard.clientData)
 
   const [data, setData] = useState([form])
-  let { clientname } = useParams()
+
+  const [ClientID, setClientID] = useState()
+  const [ClientName, setClientName] = useState()
 
   const requestObject2 = { method: 'DELETE', headers: { 'x-access-token': authToken } }
 
@@ -27,24 +29,27 @@ export const ListClients =() =>{
       ClientID: formData.supplyFName,
       tLastName: formData.supplyLName,
     }
-    if (checkIfFormIsValidated()) {
-      sendata(data)
-    }
   }
 
   useEffect(() => {
     const requestClients = getClients(authToken)
-    
-    requestClients.then((clientResult) => { 
-      console.log(clientResult);
-      dispatch(setupClients(clientResult));
+
+    requestClients.then((clientResult) => {
+      console.log(clientResult)
+      dispatch(setupClients(clientResult))
       setData(clientResult)
-  })
-  
+    })
   }, [])
 
+  const addClient = () => {
+    const data = { ClientID: ClientID, ClientName: ClientName }
+    postClient(authToken, data)
+  }
 
-
+  //This is for  Add button to refresh
+  const refreshPage = () => {
+    window.location.reload(false)
+  }
 
   const deleterow = (ClientID) => {
     let url = `https://localhost:4001/api/clients/${ClientID}`
@@ -52,8 +57,12 @@ export const ListClients =() =>{
       dispatch(removeClient(ClientID))
     })
   }
- 
- // <CG.Heading size='XS'>Add Clients</CG.Heading>
+
+  const editClient = async () => {
+    const data = { ClientName: ClientName }
+    const response = await putClient(authToken, ClientID, data)
+    console.log('res', response)
+  }
 
   return (
     <Col md={12} align='center' justify='center'>
@@ -71,6 +80,77 @@ export const ListClients =() =>{
         boxSizing='border-box'
         fontSize='0.90rem'
       >
+        <CG.Box
+          width='50%'
+          justifyContent='space-between'
+          ml='600px'
+          mr='15px'
+          mt='10px'
+          display='flex'
+          flexDirection='row'
+          height='30px'
+        >
+          <CG.Input
+            id='textInput'
+            label='Add'
+            name='textInput'
+            placeholder='Add Client Id'
+            topLabel={false}
+            onInput={(e) => {
+              setClientID(e.target.value)
+            }}
+          />
+          <CG.Input
+            id='textInput'
+            name='textInput'
+            placeholder='Add Client Name'
+            topLabel={false}
+            onInput={(e) => {
+              setClientName(e.target.value)
+            }}
+          />
+          <CG.Button
+            primary
+            text='Add'
+            onClick={() => {
+              addClient()
+              refreshPage()
+            }}
+          />
+        </CG.Box>
+
+        <CG.Box
+          width='50%'
+          justifyContent='space-between'
+          ml='600px'
+          mr='15px'
+          mt='10px'
+          display='flex'
+          flexDirection='row'
+          height='30px'
+        >
+          {ClientName && (
+            <>
+              <CG.Input
+                label='Edit'
+                topLabel={false}
+                initValue={ClientName}
+                onInput={(e) => {
+                  setClientName(e.target.value)
+                }}
+              />
+              <CG.Button
+                primary
+                text='Edit'
+                onClick={() => {
+                  editClient()
+                  refreshPage()
+                }}
+              />
+            </>
+          )}
+        </CG.Box>
+
         <CG.Table
           customKeyNames={{
             ClientID: 'Client ID',
@@ -79,7 +159,6 @@ export const ListClients =() =>{
           data={clientData}
           divider
           selectedKeys={['ClientID', 'ClientName']}
-
           icons={[
             {
               tableHeader: 'Edit',
@@ -87,23 +166,20 @@ export const ListClients =() =>{
               width: '0.90rem',
               type: 'Edit2',
               handler: (value) => {
-                dispatch(selectApplicantID(value.ApplicantID))
-                navigate('/edit-client')
+                setClientName(value.ClientName)
+                setClientID(value.ClientID)
               },
             },
-            {
+            /* {
               tableHeader: 'Delete',
               height: '0.90rem',
               width: '0.90rem',
               type: 'X',
               handler: (value) => deleterow(value.ClientID),
-            },
+            }, */
           ]}
         />
       </CG.Box>
     </Col>
-    
   )
-
-
 }
