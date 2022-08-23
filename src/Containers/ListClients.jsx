@@ -26,14 +26,17 @@ export const ListClients = () => {
 
   const addClient = async () => {
     const response = await postClient(authToken, { ClientID, ClientName })
-    console.log('Adding client response ', response)
-    setClientsUpdated(!clientsUpdated)
+    if (response.status === 200) {
+      setClientsUpdated(!clientsUpdated)
+    }
   }
 
-  const editClient = async () => {
-    const response = await putClient(authToken, ClientID, { ClientName: editClientName })
-    console.log('edit client response ', response)
-    setClientsUpdated(!clientsUpdated)
+  const editClient = async (clientId) => {
+    const response = await putClient(authToken, clientId, { ClientName: editClientName })
+    if (response.changes === 1) {
+      setClientsUpdated(!clientsUpdated)
+      setEditClientIndex(null)
+    }
   }
 
   const setClientIndex = (clientId) => {
@@ -41,12 +44,11 @@ export const ListClients = () => {
       return object.ClientID === clientId
     })
     /**
-     * Changed index to string as index 0 doesn't work if it is
-     * an interger
+     * Changed index to string as index 0 doesn't work
+     * index is an interger
      */
     setEditClientIndex(clientIndex.toString())
   }
-  console.log('index ', editClientIndex)
   if (!clientData) {
     return <>Loading...</>
   }
@@ -118,7 +120,9 @@ export const ListClients = () => {
               width: '0.90rem',
               type: 'Edit2',
               handler: (value) => {
-                console.log('selected value ', value)
+                if (editClientIndex && value.ClientID === clientData[editClientIndex].ClientID) {
+                  editClient(value.ClientID)
+                }
                 setClientIndex(value.ClientID)
               },
             },
