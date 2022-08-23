@@ -19,7 +19,6 @@ export const demand_status = [
   { name: 'Resource Identified', value: 'Resource Identified' },
   { name: 'Demand Validation', value: 'Demand Validation' },
   { name: 'Profile Proposed', value: 'Profile Proposed' },
-  { name: 'Profile Required', value: 'Profile Required' },
 ]
 
 export const demand_grade = [
