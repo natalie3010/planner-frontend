@@ -340,10 +340,10 @@ export function putClient(token, clientID, data) {
     body: JSON.stringify(data),
   }
   return fetch(`${URL}/api/clients/${clientID}`, requestObject)
-  .then((res) => {
-    if(!res.ok){
-      throw res
-    }
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
       return res.json()
     })
     .catch((error) => {
@@ -369,6 +369,38 @@ export function getNewToken(refreshToken) {
       return data
     })
 
+    .catch((error) => {
+      return error.status
+    })
+}
+export function getAllDemand(token) {
+  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+  return fetch(`${URL}/api/demand`, requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+    .then((data) => {
+      return data
+    })
+    .catch((error) => {
+      return error.status
+    })
+}
+export function getAllSupply(token) {
+  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+  return fetch(`${URL}/api/supply`, requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+    .then((data) => {
+      return data
+    })
     .catch((error) => {
       return error.status
     })
