@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CG } from 'cap-shared-components'
 import { formatted_data_template, grouped_options } from '../Data/Format'
-import { demandDataset, supplyDataset } from '../Data/Data'
+import { demandDataset, groupedOptions, supplyDataset } from '../Data/Data'
 
 export const BarChart = ({ chartData, navigateToListPage, allDemand, allSupply, allSkills }) => {
+  const [formattedStackedData, setFormattedStackedData] = useState(null)
   const formatted_data = structuredClone(formatted_data_template)
 
   const clickedElementPassUp = (element) => {
@@ -81,16 +82,15 @@ export const BarChart = ({ chartData, navigateToListPage, allDemand, allSupply, 
     const filteredDemand = getRequiredDemandStatus(allDemand)
     const filteredSupply = getRequiredSupplyStatus(allSupply)
     const formattedDataset = formatSkillForBarchart(allSkills, filteredSupply, filteredDemand)
-    console.log(formattedDataset)
+    setFormattedStackedData(formattedDataset)
   }, [allDemand, allSupply, allSkills])
 
+  if (!formattedStackedData) {
+    return <>...loading</>
+  }
   return (
     <CG.Box width='48rem' boxSizing='border-box'>
-      <CG.BarChart
-        data={formatChartData(chartData)}
-        options={grouped_options}
-        clickedElementPassUp={clickedElementPassUp}
-      />
+      <CG.BarChart data={formattedStackedData} options={groupedOptions} clickedElementPassUp={clickedElementPassUp} />
     </CG.Box>
   )
 }
