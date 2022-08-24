@@ -64,3 +64,48 @@ export let clientForm = {
   clientID: null,
   clientName: null,
 }
+
+export const dashboardDatasets = [
+  {
+    label: 'Screening',
+    data: [],
+    backgroudColor: '',
+    stack: 'Stack 0',
+  },
+  {
+    label: 'L1 select',
+    data: [],
+    backgroudColor: '',
+    stack: 'Stack 0',
+  },
+  {
+    label: 'L2 select',
+    data: [],
+    backgroudColor: '',
+    stack: 'Stack 0',
+  },
+  {
+    label: 'Client select',
+    data: [],
+    backgroudColor: '',
+    stack: 'Stack 0',
+  },
+  {
+    label: 'Profiles Required',
+    data: [],
+    backgroudColor: '',
+    stack: 'Stack 1',
+  },
+  {
+    label: 'Demand Validation',
+    data: [],
+    backgroudColor: '',
+    stack: 'Stack 1',
+  },
+  {
+    label: 'Profile Proposed',
+    data: [],
+    backgroudColor: '',
+    stack: 'Stack 1',
+  },
+]
