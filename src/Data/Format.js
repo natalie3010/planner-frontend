@@ -1,35 +1,5 @@
 import formValidators from '../../formValidatorsConfig.json'
 
-export const formatted_data_template = {
-  labels: [],
-  datasets: [
-    {
-      label: 'Supply',
-      data: [],
-      backgroundColor: '#268D6C',
-      stack: 'Stack 0',
-    },
-    {
-      label: 'Demand',
-      data: [],
-      backgroundColor: '#DA7B11',
-      stack: 'Stack 1',
-    },
-  ],
-}
-
-export const grouped_options = {
-  scales: {
-    yAxes: [
-      {
-        ticks: {
-          beginAtZero: true,
-        },
-      },
-    ],
-  },
-}
-
 export const formatSkills = (data, skillId) => {
   const formatted_skills = []
   var default_skill
