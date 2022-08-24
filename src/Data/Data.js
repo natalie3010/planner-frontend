@@ -111,3 +111,14 @@ export const demandDataset = [
     stack: 'Stack 1',
   },
 ]
+export const groupedOptions = {
+  scales: {
+    yAxes: [
+      {
+        ticks: {
+          beginAtZero: true,
+        },
+      },
+    ],
+  },
+}
