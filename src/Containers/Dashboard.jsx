@@ -3,26 +3,17 @@ import { Col } from 'react-grid-system'
 import { BarChart } from '../Components/BarChart'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
-import { getAllDemand, getAllSupply, getDashboard, getSkills } from '../API'
+import { getAllDemand, getAllSupply, getSkills } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
-import { setupDashboard } from '../Slices/DashboardSlice'
 
 export const Dashboard = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const dashboardData = useSelector((state) => state.dashboard.dashboardData)
   const authToken = useSelector((state) => state.user.authToken)
   const [allDemand, setAllDemand] = useState(null)
   const [allSupply, setAllSupply] = useState(null)
   const [allSkills, setAllSkills] = useState(null)
 
   useEffect(() => {
-    if (!dashboardData) {
-      const request = getDashboard(authToken)
-      request.then((result) => {
-        dispatch(setupDashboard(result))
-      })
-    }
     const requestDemand = getAllDemand(authToken)
     requestDemand.then((data) => {
       setAllDemand(data)
@@ -48,11 +39,10 @@ export const Dashboard = () => {
       <CG.Box width={400} boxSizing='border-box' justifyContent='center'>
         <Col md={11} align='center' justify='center'>
           <CG.Heading size='XS'>Skills Based On Supply and Demand</CG.Heading>
-          {!dashboardData || !allDemand || !allSupply || !allSkills ? (
+          {!allDemand || !allSupply || !allSkills ? (
             <CG.Body>'loading...'</CG.Body>
           ) : (
             <BarChart
-              chartData={dashboardData}
               navigateToListPage={onChartClickNavigate}
               allDemand={allDemand}
               allSupply={allSupply}

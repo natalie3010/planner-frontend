@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { CG } from 'cap-shared-components'
 import { demandDataset, groupedOptions, supplyDataset } from '../Data/Data'
 
-export const BarChart = ({ chartData, navigateToListPage, allDemand, allSupply, allSkills }) => {
+export const BarChart = ({ navigateToListPage, allDemand, allSupply, allSkills }) => {
   const [formattedStackedData, setFormattedStackedData] = useState(null)
 
   const clickedElementPassUp = (element) => {
-    console.log('clicked ', element)
-    /* const type = formatted_data.datasets[element[0].datasetIndex].label
-    const skillName = chartData[element[0].index].skill_name
+    // datasetIndex is the label, it includes both supply and demand
+    const type = element[0].datasetIndex <= 3 ? 'supply' : 'demand'
+    const skillName = allSkills[element[0].index].SkillName
 
-    navigateToListPage(type, skillName) */
+    navigateToListPage(type, skillName)
   }
 
   const getRequiredDemandStatus = (allDemand) => {
