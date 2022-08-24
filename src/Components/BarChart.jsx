@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { CG } from 'cap-shared-components'
 import { formatted_data_template, grouped_options } from '../Data/Format'
+import { demandDataset, supplyDataset } from '../Data/Data'
 
 export const BarChart = ({ chartData, navigateToListPage, allDemand, allSupply, allSkills }) => {
   const formatted_data = structuredClone(formatted_data_template)
@@ -49,24 +50,39 @@ export const BarChart = ({ chartData, navigateToListPage, allDemand, allSupply, 
   }
 
   const formatSkillForBarchart = (allSkills, filteredSupply, filteredDemand) => {
-    allSkills.forEach((skill, index) => {
+    const dashboardDataset = {
+      labels: [],
+      datasets: [],
+    }
+
+    allSkills.forEach((skill, skillIndex) => {
       const skillName = skill.SkillName
-      console.log(skillName, ' index ', index)
+      dashboardDataset.labels.push(skillName)
+
       const supplies = filteredSupply.filter((supply) => supply.SkillName === skillName)
       const demands = filteredDemand.filter((demand) => demand.SkillName === skillName)
-      console.log('Supplies for skill ', supplies)
-      console.log('Demands for skill ', demands)
+
+      supplyDataset.forEach((obj) => {
+        const label = obj.label
+        const labelSupplyCount = supplies.filter((supply) => supply.ApplicantStatus === label).length
+        obj.data[skillIndex] = labelSupplyCount
+      })
+      demandDataset.forEach((obj) => {
+        const label = obj.label
+        const labelDemandCount = demands.filter((demand) => demand.Status === label).length
+        obj.data[skillIndex] = labelDemandCount
+      })
     })
+    dashboardDataset.datasets = [...supplyDataset, ...demandDataset]
+    return dashboardDataset
   }
 
   useEffect(() => {
     const filteredDemand = getRequiredDemandStatus(allDemand)
     const filteredSupply = getRequiredSupplyStatus(allSupply)
-    console.log('Demand ', filteredDemand)
-    console.log('Supply ', filteredSupply)
-    console.log(allSkills)
-    formatSkillForBarchart(allSkills, filteredSupply, filteredDemand)
-  }, [allDemand, allSupply])
+    const formattedDataset = formatSkillForBarchart(allSkills, filteredSupply, filteredDemand)
+    console.log(formattedDataset)
+  }, [allDemand, allSupply, allSkills])
 
   return (
     <CG.Box width='48rem' boxSizing='border-box'>
