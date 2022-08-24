@@ -65,7 +65,7 @@ export let clientForm = {
   clientName: null,
 }
 
-export const dashboardDatasets = [
+export const supplyDataset = [
   {
     label: 'Screening',
     data: [],
@@ -90,6 +90,8 @@ export const dashboardDatasets = [
     backgroudColor: '',
     stack: 'Stack 0',
   },
+]
+export const demandDataset = [
   {
     label: 'Profiles Required',
     data: [],
