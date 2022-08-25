@@ -186,12 +186,30 @@ export const supplyFormFormatter = (pickerStatus, pickerSkills, pickerType) => {
   return inputDefaults
 }
 
-export const lowerCaseKeys = (obj) => {
-  let lowerCased = {}
-
-  for (const key in obj) {
-    const newKey = key[0].toLowerCase() + key.slice(1)
-    lowerCased[newKey] = obj[key]
+export const formatDataForBarchart = (allSkills, filteredSupply, filteredDemand, supplyDataset, demandDataset) => {
+  const dashboardDataset = {
+    labels: [],
+    datasets: [],
   }
-  return lowerCased
+
+  allSkills.forEach((skill, skillIndex) => {
+    const skillName = skill.SkillName
+    dashboardDataset.labels.push(skillName)
+
+    const supplies = filteredSupply.filter((supply) => supply.SkillName === skillName)
+    const demands = filteredDemand.filter((demand) => demand.SkillName === skillName)
+
+    supplyDataset.forEach((obj) => {
+      const label = obj.label
+      const labelSupplyCount = supplies.filter((supply) => supply.ApplicantStatus === label).length
+      obj.data[skillIndex] = labelSupplyCount
+    })
+    demandDataset.forEach((obj) => {
+      const label = obj.label
+      const labelDemandCount = demands.filter((demand) => demand.Status === label).length
+      obj.data[skillIndex] = labelDemandCount
+    })
+  })
+  dashboardDataset.datasets = [...supplyDataset, ...demandDataset]
+  return dashboardDataset
 }
