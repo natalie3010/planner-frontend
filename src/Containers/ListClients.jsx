@@ -5,9 +5,10 @@ import { Col } from 'react-grid-system'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getClients, postClient, putClient } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
-import { formatClients } from '../Data/Format'
+import { formatClients, clientFormFormatter } from '../Data/Format'
 import { clientForm as form } from '../Data/Data'
 import { removeClient, setupClients } from '../Slices/DashboardSlice'
+import { clientSchema } from '../Validations/ListClientsValidation'
 
 export const ListClients = () => {
   const navigate = useNavigate()
@@ -16,20 +17,15 @@ export const ListClients = () => {
   const authToken = useSelector((state) => state.user.authToken)
   const clientData = useSelector((state) => state.dashboard.clientData)
 
+  const inputDefaults = clientFormFormatter()
+
   const [data, setData] = useState([form])
+  const [formSubmitted, setFormSubmitted] = useState(false)
 
   const [ClientID, setClientID] = useState()
   const [ClientName, setClientName] = useState()
 
   const requestObject2 = { method: 'DELETE', headers: { 'x-access-token': authToken } }
-
-  const handleSubmit = (e) => {
-    setFormSubmitted(true)
-    const data = {
-      ClientID: formData.supplyFName,
-      tLastName: formData.supplyLName,
-    }
-  }
 
   useEffect(() => {
     const requestClients = getClients(authToken)
@@ -41,9 +37,15 @@ export const ListClients = () => {
     })
   }, [])
 
-  const addClient = () => {
+  const addClient = async () => {
+    setFormSubmitted(true)
     const data = { ClientID: ClientID, ClientName: ClientName }
-    postClient(authToken, data)
+    const isFormValid = await checkIfFormIsValid()
+    console.log(isFormValid)
+    if (isFormValid) {
+      postClient(authToken, data)
+      refreshPage()
+    }
   }
 
   //This is for  Add button to refresh
@@ -62,6 +64,10 @@ export const ListClients = () => {
     const data = { ClientName: ClientName }
     const response = await putClient(authToken, ClientID, data)
     console.log('res', response)
+  }
+
+  const checkIfFormIsValid = async () => {
+    return clientSchema.isValid({ clientID: ClientID, clientName: ClientName })
   }
 
   return (
@@ -91,30 +97,33 @@ export const ListClients = () => {
           height='30px'
         >
           <CG.Input
-            id='textInput'
+            id='clientID'
             label='Add'
-            name='textInput'
+            name='clientID'
             placeholder='Add Client Id'
             topLabel={false}
             onInput={(e) => {
               setClientID(e.target.value)
             }}
+            required={inputDefaults['clientID'].validators[0].required}
+            hasError={inputDefaults['clientID'].validators[0].required && !clientData['clientID'] && formSubmitted}
           />
           <CG.Input
-            id='textInput'
-            name='textInput'
+            id='clientName'
+            name='clientName'
             placeholder='Add Client Name'
             topLabel={false}
             onInput={(e) => {
               setClientName(e.target.value)
             }}
+            required={inputDefaults['clientName'].validators[0].required}
+            hasError={inputDefaults['clientName'].validators[0].required && !clientData['clientName'] && formSubmitted}
           />
           <CG.Button
             primary
             text='Add'
             onClick={() => {
               addClient()
-              refreshPage()
             }}
           />
         </CG.Box>
