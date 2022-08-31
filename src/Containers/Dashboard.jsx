@@ -14,16 +14,13 @@ export const Dashboard = () => {
   const [allSkills, setAllSkills] = useState(null)
 
   useEffect(() => {
-    const requestDemand = getAllDemand(authToken)
-    requestDemand.then((data) => {
+    getAllDemand(authToken).then((data) => {
       setAllDemand(data)
     })
-    const requestSupply = getAllSupply(authToken)
-    requestSupply.then((data) => {
+    getAllSupply(authToken).then((data) => {
       setAllSupply(data)
     })
-    const requestSkills = getSkills(authToken)
-    requestSkills.then((data) => {
+    getSkills(authToken).then((data) => {
       setAllSkills(data)
     })
   }, [])
