@@ -1,35 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { CG } from 'cap-shared-components'
-import { formatted_data_template, grouped_options } from '../Data/Format'
+import { demandDataset, groupedOptions, supplyDataset } from '../Data/Data'
+import { getRequiredBarchartDemandStatus, getRequiredBarchartSupplyStatus } from '../Utils/util'
+import { formatDataForBarchart } from '../Data/Format'
 
-export const BarChart = ({ chartData, navigateToListPage }) => {
-  const formatted_data = structuredClone(formatted_data_template)
+export const BarChart = ({ navigateToListPage, allDemand, allSupply, allSkills }) => {
+  const [formattedStackedData, setFormattedStackedData] = useState(null)
 
   const clickedElementPassUp = (element) => {
-    const type = formatted_data.datasets[element[0].datasetIndex].label
-    const skillName = chartData[element[0].index].skill_name
+    // datasetIndex is the label, it includes both supply and demand
+    const type = element[0].datasetIndex <= 3 ? 'supply' : 'demand'
+    const skillName = allSkills[element[0].index].SkillName
 
     navigateToListPage(type, skillName)
   }
-  const formatChartData = (data) => {
-    if (data) {
-      data.forEach((item) => {
-        formatted_data.labels.push(item['skill_name'])
-        formatted_data.datasets[1].data.push(item['demand_count'])
-        formatted_data.datasets[0].data.push(item['supply_count'])
-      })
-    }
 
-    return formatted_data
+  useEffect(() => {
+    const filteredDemand = getRequiredBarchartDemandStatus(allDemand)
+    const filteredSupply = getRequiredBarchartSupplyStatus(allSupply)
+    const formattedDataset = formatDataForBarchart(
+      allSkills,
+      filteredSupply,
+      filteredDemand,
+      supplyDataset,
+      demandDataset
+    )
+    setFormattedStackedData(formattedDataset)
+  }, [allDemand, allSupply, allSkills])
+
+  if (!formattedStackedData) {
+    return <>...loading</>
   }
-
   return (
     <CG.Box width='48rem' boxSizing='border-box'>
-      <CG.BarChart
-        data={formatChartData(chartData)}
-        options={grouped_options}
-        clickedElementPassUp={clickedElementPassUp}
-      />
+      <CG.BarChart data={formattedStackedData} options={groupedOptions} clickedElementPassUp={clickedElementPassUp} />
     </CG.Box>
   )
 }
