@@ -1,5 +1,5 @@
 export const lowerCaseKeys = (obj) => {
-  let lowerCased = {}
+  const lowerCased = {}
 
   for (const key in obj) {
     const newKey = key[0].toLowerCase() + key.slice(1)
@@ -9,18 +9,17 @@ export const lowerCaseKeys = (obj) => {
 }
 
 export const getRequiredBarchartDemandStatus = (allDemand) => {
-  const filteredDemands = allDemand.filter((demand) => {
+  return allDemand.filter((demand) => {
     return (
       demand.Status === 'Profiles Required' ||
       demand.Status === 'Demand Validation' ||
       demand.Status === 'Profile Proposed'
     )
   })
-  return filteredDemands
 }
 
 export const getRequiredBarchartSupplyStatus = (allSupply) => {
-  const filteredSupplys = allSupply.filter((supply) => {
+  return allSupply.filter((supply) => {
     return (
       supply.ApplicantStatus === 'Screening' ||
       supply.ApplicantStatus === 'L1 select' ||
@@ -28,5 +27,4 @@ export const getRequiredBarchartSupplyStatus = (allSupply) => {
       supply.ApplicantStatus === 'Client select'
     )
   })
-  return filteredSupplys
 }
