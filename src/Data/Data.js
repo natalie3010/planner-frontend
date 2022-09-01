@@ -19,7 +19,6 @@ export const demand_status = [
   { name: 'Resource Identified', value: 'Resource Identified' },
   { name: 'Demand Validation', value: 'Demand Validation' },
   { name: 'Profile Proposed', value: 'Profile Proposed' },
-  { name: 'Profile Required', value: 'Profile Required' },
 ]
 
 export const demand_grade = [
@@ -64,4 +63,62 @@ export let supplyForm = {
 export let clientForm = {
   clientID: null,
   clientName: null,
+}
+
+export const supplyDataset = [
+  {
+    label: 'Screening',
+    data: [],
+    backgroundColor: '#FFF4CF',
+    stack: 'Stack 0',
+  },
+  {
+    label: 'L1 select',
+    data: [],
+    backgroundColor: '#FFCB42',
+    stack: 'Stack 0',
+  },
+  {
+    label: 'L2 select',
+    data: [],
+    backgroundColor: '#FFB200',
+    stack: 'Stack 0',
+  },
+  {
+    label: 'Client select',
+    data: [],
+    backgroundColor: '#FFA200',
+    stack: 'Stack 0',
+  },
+]
+export const demandDataset = [
+  {
+    label: 'Demand Validation',
+    data: [],
+    backgroundColor: '#D2D79F',
+    stack: 'Stack 1',
+  },
+  {
+    label: 'Profiles Required',
+    data: [],
+    backgroundColor: '#90B77D',
+    stack: 'Stack 1',
+  },
+  {
+    label: 'Profile Proposed',
+    data: [],
+    backgroundColor: '#42855B',
+    stack: 'Stack 1',
+  },
+]
+export const groupedOptions = {
+  scales: {
+    yAxes: [
+      {
+        ticks: {
+          beginAtZero: true,
+        },
+      },
+    ],
+  },
 }

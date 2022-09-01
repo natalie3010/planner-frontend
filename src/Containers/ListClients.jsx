@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import { getClients, postClient, putClient } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
 import { setupClients } from '../Slices/DashboardSlice'
+import { formatClients, clientFormFormatter } from '../Data/Format'
+import { clientSchema } from '../Validations/ListClientsValidation'
 
 export const ListClients = () => {
   const navigate = useNavigate()
@@ -16,18 +18,24 @@ export const ListClients = () => {
   const [clientsUpdated, setClientsUpdated] = useState(false)
   const [editClientIndex, setEditClientIndex] = useState(null)
   const [editClientName, setEditClientName] = useState(null)
+  const [formSubmitted, setFormSubmitted] = useState(false)
+  const inputDefaults = clientFormFormatter()
 
   useEffect(() => {
     const requestClients = getClients(authToken)
     requestClients.then((clientResult) => {
       dispatch(setupClients(clientResult))
     })
-  }, [clientsUpdated])
+  }, [clientsUpdated, formSubmitted])
 
   const addClient = async () => {
-    const response = await postClient(authToken, { ClientID, ClientName })
-    if (response.status === 200) {
-      setClientsUpdated(!clientsUpdated)
+    setFormSubmitted(!clientsUpdated)
+    const isFormValid = await checkIfFormIsValid()
+    if (isFormValid) {
+      const response = await postClient(authToken, { ClientID, ClientName })
+      if (response.status === 200) {
+        setClientsUpdated(!clientsUpdated)
+      }
     }
   }
 
@@ -37,6 +45,10 @@ export const ListClients = () => {
       setClientsUpdated(!clientsUpdated)
       setEditClientIndex(null)
     }
+  }
+
+  const checkIfFormIsValid = async () => {
+    return clientSchema.isValid({ clientID: ClientID, clientName: ClientName })
   }
 
   const setClientIndex = (clientId) => {
@@ -79,23 +91,27 @@ export const ListClients = () => {
           height='30px'
         >
           <CG.Input
-            id='textInput'
+            id='clientID'
             label='Add'
-            name='textInput'
+            name='clientID'
             placeholder='Add Client Id'
             topLabel={false}
             onInput={(e) => {
               setClientID(e.target.value)
             }}
+            required={inputDefaults['clientID'].validators[0].required}
+            hasError={inputDefaults['clientID'].validators[0].required && !clientData['clientID'] && formSubmitted}
           />
           <CG.Input
-            id='textInput'
-            name='textInput'
+            id='clientName'
+            name='clientName'
             placeholder='Add Client Name'
             topLabel={false}
             onInput={(e) => {
               setClientName(e.target.value)
             }}
+            required={inputDefaults['clientName'].validators[0].required}
+            hasError={inputDefaults['clientName'].validators[0].required && !clientData['clientName'] && formSubmitted}
           />
           <CG.Button
             primary
