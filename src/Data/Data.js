@@ -67,25 +67,26 @@ export let clientForm = {
 
 export const supplyDataset = [
   {
-    label: 'Screening',
+    label: 'Client select',
     data: [],
     backgroundColor: '#FFF4CF',
     stack: 'Stack 0',
   },
   {
-    label: 'L1 select',
+    label: 'L2 select',
     data: [],
     backgroundColor: '#FFCB42',
     stack: 'Stack 0',
   },
   {
-    label: 'L2 select',
+    label: 'L1 select',
     data: [],
     backgroundColor: '#FFB200',
     stack: 'Stack 0',
   },
+
   {
-    label: 'Client select',
+    label: 'Screening',
     data: [],
     backgroundColor: '#FFA200',
     stack: 'Stack 0',
@@ -93,7 +94,7 @@ export const supplyDataset = [
 ]
 export const demandDataset = [
   {
-    label: 'Demand Validation',
+    label: 'Profile Proposed',
     data: [],
     backgroundColor: '#D2D79F',
     stack: 'Stack 1',
@@ -105,7 +106,7 @@ export const demandDataset = [
     stack: 'Stack 1',
   },
   {
-    label: 'Profile Proposed',
+    label: 'Demand Validation',
     data: [],
     backgroundColor: '#42855B',
     stack: 'Stack 1',
