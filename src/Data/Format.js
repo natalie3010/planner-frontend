@@ -62,7 +62,7 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
     },
     demandClientID: {
       options: pickerClients,
-      label: 'Client',
+      label: 'Client Name',
       inputType: 'dropdown',
       placeholder: 'Select a client',
       validators: inputValidator.demandClientID.validators,
