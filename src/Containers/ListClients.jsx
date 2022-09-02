@@ -136,8 +136,16 @@ export const ListClients = () => {
               width: '0.90rem',
               type: 'Edit2',
               handler: (value) => {
-                if (editClientIndex && value.ClientID === clientData[editClientIndex].ClientID) {
+                if (editClientIndex && value.ClientID === clientData[editClientIndex].ClientID && editClientName) {
                   editClient(value.ClientID)
+                } else if (
+                  editClientIndex &&
+                  value.ClientID === clientData[editClientIndex].ClientID &&
+                  !editClientName
+                ) {
+                  setClientsUpdated(!clientsUpdated)
+                  setEditClientIndex(null)
+                  return
                 }
                 setClientIndex(value.ClientID)
               },
