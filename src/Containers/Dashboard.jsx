@@ -50,7 +50,9 @@ export const Dashboard = () => {
           <CG.Box boxSizing='border-box' display='flex' flexDirection='row' justifyContent='space-between'>
             <>
               <CG.Button text='Add a supply' onClick={() => navigate('/supply')}></CG.Button>
+              <CG.Button text='List All Supply' onClick={() => navigate('/listAllSupply')}></CG.Button>
               <CG.Button text='List Clients' onClick={() => navigate('/listClients')}></CG.Button>
+              <CG.Button text='List All Demand' onClick={() => navigate('/listAllDemand')}></CG.Button>
               <CG.Button text='Add a demand' onClick={() => navigate('/demand')}></CG.Button>
             </>
           </CG.Box>

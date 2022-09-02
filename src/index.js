@@ -19,6 +19,8 @@ import { Provider } from 'react-redux'
 import { CG } from 'cap-shared-components'
 import { WorkforcePlanner } from '../themes/workforcePlanner'
 import { ListClients } from './Containers/ListClients'
+import { ListAllSupply } from './Containers/ListAllSupply'
+import { ListAllDemand } from './Containers/ListAllDemand'
 
 const App = () => {
   return (
@@ -55,6 +57,22 @@ const App = () => {
         element={
           <ProtectedRoute>
             <ListClients />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/listAllSupply'
+        element={
+          <ProtectedRoute>
+            <ListAllSupply />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/listAllDemand'
+        element={
+          <ProtectedRoute>
+            <ListAllDemand />
           </ProtectedRoute>
         }
       />
