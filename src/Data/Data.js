@@ -69,26 +69,26 @@ export const supplyDataset = [
   {
     label: 'Client select',
     data: [],
-    backgroundColor: '#FFF4CF',
+    backgroundColor: '#FFA200',
     stack: 'Stack 0',
   },
   {
     label: 'L2 select',
     data: [],
-    backgroundColor: '#FFCB42',
+    backgroundColor: '#FFB200',
     stack: 'Stack 0',
   },
   {
     label: 'L1 select',
     data: [],
-    backgroundColor: '#FFB200',
+    backgroundColor: '#FFCB42',
     stack: 'Stack 0',
   },
 
   {
     label: 'Screening',
     data: [],
-    backgroundColor: '#FFA200',
+    backgroundColor: '#FFF4CF',
     stack: 'Stack 0',
   },
 ]
@@ -96,7 +96,7 @@ export const demandDataset = [
   {
     label: 'Profile Proposed',
     data: [],
-    backgroundColor: '#D2D79F',
+    backgroundColor: '#42855B',
     stack: 'Stack 1',
   },
   {
@@ -108,7 +108,7 @@ export const demandDataset = [
   {
     label: 'Demand Validation',
     data: [],
-    backgroundColor: '#42855B',
+    backgroundColor: '#D2D79F',
     stack: 'Stack 1',
   },
 ]
