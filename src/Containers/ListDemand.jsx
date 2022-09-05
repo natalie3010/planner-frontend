@@ -59,13 +59,13 @@ export const ListDemand = () => {
               lastname: 'ApplicantLastName',
               DemandID: 'Demand ID',
               CodeRequisition: 'Code Requisition',
-              ClientID: 'Client ID',
+              ClientName: 'Client Name',
               SkillsID: 'Skills ID',
               StartDate: 'Start Date',
             }}
             data={data}
             divider
-            selectedKeys={['DemandID', 'CodeRequisition', 'ClientID', 'Probability', 'StartDate', 'Grade', 'Status']}
+            selectedKeys={['DemandID', 'CodeRequisition', 'ClientName', 'Probability', 'StartDate', 'Grade', 'Status']}
             icons={[
               {
                 tableHeader: 'Edit',

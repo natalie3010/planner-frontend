@@ -135,5 +135,26 @@
         ]
       }
     }
+  },
+
+  "addClientForm": {
+    "inputs": {
+      "clientID": {
+        "validators": [
+          {
+            "errorDisplayed": "Please put in a Client ID",
+            "required": true
+          }
+        ]
+      },
+      "clientName": {
+        "validators": [
+          {
+            "errorDisplayed": "Please put in a Client Name",
+            "required": true
+          }
+        ]
+      }
+    }
   }
 }
