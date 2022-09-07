@@ -138,7 +138,7 @@ export const About = () => {
             Scheduled Maintainance of Workforce Planner
           </CG.Body>
           <CG.Body size='M'>
-          Please be advised that there will be scheduled downtime across our network from every Thursday-16.30PM GMT  to Thursday-17.00PM GMT  . 
+          Please be advised that there will be scheduled downtime across our network from every fortnight Wednesday-16.30PM GMT  to 17.00PM GMT  . 
           This is because we are performing work on (functions/parts of the network).
           <CG.Body size='M'>End users are requested not to use the workforce planner during this time.
           </CG.Body>
