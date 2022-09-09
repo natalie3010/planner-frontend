@@ -4,3 +4,5 @@ api
 ignore
 .npmrc
 package-lock.json
+/coverage.data
+/coverage/
