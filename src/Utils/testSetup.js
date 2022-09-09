@@ -12,6 +12,5 @@ export const renderWithProviders = (
   } = {}
 ) => {
   const Wrapper = ({ children }) => <Provider store={store}>{children}</Provider>
-
   return { store, ...render(container, { wrapper: Wrapper, ...renderOptions }) }
 }
