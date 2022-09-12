@@ -146,7 +146,7 @@ export const About = () => {
           As a result, you may experience problems accessing the Services.
           </CG.Body>
           <CG.Body size='M'>
-          For more information, or if you have any questions, please Contact Customer Support.
+          For more information, or if you have any questions, please Contact @More,Sagar on Teams.
             </CG.Body>
         </div>
         <div
