@@ -133,6 +133,22 @@ export const About = () => {
             +44 7444999999
           </CG.Body>
         </div>
+        <div style={{ margin: '20px', padding: '20px', border: '1px solid #d4d4d4' }}>
+        <CG.Body size='XL' fontWeight='bold' style={{ marginBottom: '10px' }}>
+            Scheduled Maintainance of Workforce Planner
+          </CG.Body>
+          <CG.Body size='M'>
+          Please be advised that there will be scheduled downtime across our network from every fortnight Wednesday-16.30PM GMT  to 17.00PM GMT  . 
+          This is because we are performing work on (functions/parts of the network).
+          <CG.Body size='M'>End users are requested not to use the workforce planner during this time.
+          </CG.Body>
+          
+          As a result, you may experience problems accessing the Services.
+          </CG.Body>
+          <CG.Body size='M'>
+          For more information, or if you have any questions, please Contact @More,Sagar on Teams.
+            </CG.Body>
+        </div>
         <div
           style={{
             margin: '20px',
