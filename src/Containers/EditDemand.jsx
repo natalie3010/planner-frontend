@@ -29,6 +29,7 @@ export const EditDemand = () => {
     const requestDemand = getSingleDemand(demandId, authToken)
     requestDemand.then((demandResult) => {
       setFormData(demandResult)
+
       const requestSkills = getSkills(authToken)
       requestSkills.then((skillsResult) => {
         const [skillsArray, skillName] = formatSkills(skillsResult, demandResult.demandSkills)
@@ -73,6 +74,7 @@ export const EditDemand = () => {
   if (!pickerClients || !pickerSkills || !formData) {
     return <CG.Body>loading...</CG.Body>
   }
+
   return (
     <Col md={12} align='center' justify='center'>
       <CG.Box width='400px' mb={10}>
@@ -80,7 +82,7 @@ export const EditDemand = () => {
         {Object.keys(inputDefaults).map((formItem, index) => {
           const required = inputDefaults[formItem].validators[0].required
           if (inputDefaults[formItem].inputType === 'dropdown') {
-            const pickerVal = formData[formItem]
+            const pickerVal = formItem === 'demandClientID' ? formData.demandClientName : formData[formItem]
             return (
               <CG.Container margin='10px' key={index}>
                 <CG.Picker
