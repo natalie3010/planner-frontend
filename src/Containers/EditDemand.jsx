@@ -48,7 +48,6 @@ export const EditDemand = () => {
     if (formIsValid) {
       const skillSelected = formData.demandSkills && true
       const newskillname = skillSelected && pickerSkills[formData.demandSkills - 1].name
-      console.log(formData)
       const request = updateDemand(authToken, demandId, formData)
       request.then((result) => {
         if (initialSkillName && newskillname && newskillname !== initialSkillName) {
