@@ -6,7 +6,7 @@ module.exports = {
   // This configuration indicates the Jest which take a look at  test environment it need to use for the testing run
   testEnvironment: 'jsdom',
   // It indicates that an array of glob patterns indicating a hard and fast of files for which insurance statistics ought to be collected
-  collectCoverageFrom: ['src/**/*.js', '!src/**/*.test.js'],
+  collectCoverageFrom: ['src/**/*.{js,jsx}', '!**/__MOCKS__/**'],
   // It indicates the directory in which Jest ought to output its coverage documents and test files
   coverageDirectory: 'coverage',
   // This property shows that an array of regexp sample strings used to skip the test coverage collection

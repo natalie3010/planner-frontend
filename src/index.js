@@ -14,7 +14,7 @@ import { ListDemand } from './Containers/ListDemand'
 import { DemandPage } from './Containers/DemandPage'
 import { EditSupply } from './Containers/EditSupply'
 import { EditDemand } from './Containers/EditDemand'
-import { store } from '../src/store'
+import { setupStore } from '../src/store'
 import { Provider } from 'react-redux'
 import { CG } from 'cap-shared-components'
 import { WorkforcePlanner } from '../themes/workforcePlanner'
@@ -123,7 +123,7 @@ const App = () => {
 }
 
 createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
+  <Provider store={setupStore()}>
     <BrowserRouter>
       <CG.ThemeProvider theme={WorkforcePlanner}>
         <Navigation />
