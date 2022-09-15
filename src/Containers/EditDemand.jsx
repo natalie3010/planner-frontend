@@ -32,7 +32,7 @@ export const EditDemand = () => {
 
       const requestSkills = getSkills(authToken)
       requestSkills.then((skillsResult) => {
-        const [skillsArray, skillName] = formatSkills(skillsResult, demandResult.demandSkills)
+        const [skillsArray, skillName] = formatSkills(skillsResult, demandResult?.demandSkills)
         setPickerSkills(skillsArray)
         setInitialSkillName(skillName)
       })
@@ -44,7 +44,7 @@ export const EditDemand = () => {
   const handleSubmit = async () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
-
+    navigate(`/list-Demand`)
     if (formIsValid) {
       const skillSelected = formData.demandSkills && true
       const newskillname = skillSelected && pickerSkills[formData.demandSkills - 1].name
