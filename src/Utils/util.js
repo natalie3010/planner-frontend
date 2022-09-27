@@ -28,3 +28,7 @@ export const getRequiredBarchartSupplyStatus = (allSupply) => {
     )
   })
 }
+
+export const checkIfFormIsValid = (demandSchema, formData) => {
+  return demandSchema.isValid(formData)
+}
