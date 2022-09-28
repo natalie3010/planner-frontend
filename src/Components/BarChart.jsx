@@ -31,7 +31,6 @@ export const BarChart = ({ navigateToListPage, allDemand, allSupply, allSkills }
   if (!formattedStackedData) {
     return <>...loading</>
   }
-  console.log(barchartData)
   return (
     <CG.Box width='48rem' boxSizing='border-box'>
       <CG.BarChart
