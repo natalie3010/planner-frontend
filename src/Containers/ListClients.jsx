@@ -92,8 +92,8 @@ export const ListClients = () => {
         >
           <CG.Input
             id='clientID'
-            label='Add'
             name='clientID'
+            data-testid='clientID'
             placeholder='Add Client Id'
             topLabel={false}
             onInput={(e) => {
@@ -105,6 +105,7 @@ export const ListClients = () => {
           <CG.Input
             id='clientName'
             name='clientName'
+            data-testid='clientName'
             placeholder='Add Client Name'
             topLabel={false}
             onInput={(e) => {
@@ -115,7 +116,7 @@ export const ListClients = () => {
           />
           <CG.Button
             primary
-            text='Add'
+            text='AddClient'
             onClick={() => {
               addClient()
             }}
