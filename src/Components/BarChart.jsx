@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { CG } from 'cap-shared-components'
-import { demandDataset, groupedOptions, supplyDataset } from '../Data/Data'
+import barchartData from '../../barChartConfig.json'
 import { getRequiredBarchartDemandStatus, getRequiredBarchartSupplyStatus } from '../Utils/util'
 import { formatDataForBarchart } from '../Data/Format'
 
@@ -22,8 +22,8 @@ export const BarChart = ({ navigateToListPage, allDemand, allSupply, allSkills }
       allSkills,
       filteredSupply,
       filteredDemand,
-      supplyDataset,
-      demandDataset
+      barchartData.supplyDataset,
+      barchartData.demandDataset
     )
     setFormattedStackedData(formattedDataset)
   }, [allDemand, allSupply, allSkills])
@@ -33,7 +33,11 @@ export const BarChart = ({ navigateToListPage, allDemand, allSupply, allSkills }
   }
   return (
     <CG.Box width='48rem' boxSizing='border-box'>
-      <CG.BarChart data={formattedStackedData} options={groupedOptions} clickedElementPassUp={clickedElementPassUp} />
+      <CG.BarChart
+        data={formattedStackedData}
+        options={barchartData.groupedOptions}
+        clickedElementPassUp={clickedElementPassUp}
+      />
     </CG.Box>
   )
 }
