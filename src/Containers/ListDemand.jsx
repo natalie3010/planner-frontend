@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { CG } from 'cap-shared-components'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Col } from 'react-grid-system'
-
-import { useParams } from 'react-router-dom'
 import { removeDemandFromDashboard } from '../Slices/DashboardSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteDemand, getDemandSkill } from '../API'
@@ -12,15 +10,15 @@ export const ListDemand = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   let { skillname } = useParams()
-
   const token = useSelector((state) => state.user.authToken)
 
   const [data, setData] = useState([])
   const [tableChanged, setTableChanged] = useState(false)
 
   useEffect(() => {
-    const skillName = skillname.replace(/\-/g, '/')
+    const skillName = skillname?.replace(/\-/g, '/')
     const skillData = getDemandSkill(token, skillName)
+
     skillData.then((allDemand) => {
       setData(allDemand)
     })
@@ -77,6 +75,7 @@ export const ListDemand = () => {
                 },
               },
               {
+                // id: `${value.DemandID}-deleteButton`,
                 tableHeader: 'Delete',
                 height: '0.90rem',
                 width: '0.90rem',
@@ -86,7 +85,7 @@ export const ListDemand = () => {
             ]}
           />
         ) : (
-          'No Demand left'
+          'No Demand Left'
         )}
       </CG.Box>
     </Col>
