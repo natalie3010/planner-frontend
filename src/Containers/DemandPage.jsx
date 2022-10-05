@@ -9,7 +9,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addDemandToDashboard } from '../Slices/DashboardSlice'
 import { testRegex } from '../Utils/regex'
 import { demandSchema } from '../Validations/DemandValidation'
-import { checkIfFormIsValid } from '../Utils/util'
 
 export const DemandPage = () => {
   const navigate = useNavigate()
@@ -32,20 +31,22 @@ export const DemandPage = () => {
 
   const handleSubmit = async () => {
     setFormSubmitted(true)
-    const formIsValid = await checkIfFormIsValid(demandSchema, formData)
+    const formIsValid = await checkIfFormIsValid()
     if (formIsValid) {
-      return postData()
+      const request = await addDemand(authToken, formData)
+      if (request) {
+        try {
+          const skillName = pickerSkills[formData.demandSkills - 1].name
+          dispatch(addDemandToDashboard(skillName))
+        } catch {}
+        navigate('/protectedRoute/dashboard')
+      }
     }
   }
-  const postData = async () => {
-    const request = await addDemand(authToken, formData)
-    if (request) {
-      try {
-        const skillName = pickerSkills[formData.demandSkills - 1].name
-        dispatch(addDemandToDashboard(skillName))
-      } catch {}
-      navigate('/protectedRoute/dashboard')
-    }
+
+  const checkIfFormIsValid = () => {
+    const isValid = demandSchema.isValid(formData)
+    return isValid
   }
 
   if (!pickerClients || !pickerSkills) {
