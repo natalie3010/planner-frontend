@@ -66,6 +66,26 @@ describe('Testing <DemandPage/> component', () => {
     expect(addDemand).not.toHaveBeenCalled()
   })
 
+  it('should not call api if form is invalid', async () => {
+    demandSchema.isValid.mockReturnValueOnce(false)
+
+    await act(async () => {
+      renderWithProviders(<DemandPage />)
+    })
+
+    fireEvent(
+      screen.getByText(/submit/i),
+
+      new MouseEvent('click', {
+        bubbles: true,
+
+        cancelable: true,
+      })
+    )
+
+    expect(addDemand).not.toHaveBeenCalled()
+  })
+
   it('should call addDemand if form data is submitted accordingly', async () => {
     addDemand.mockImplementation(() => Promise.resolve(true))
 
@@ -132,7 +152,10 @@ describe('Testing <DemandPage/> component', () => {
       })
     )
 
-    expect(await waitFor(() => store.dispatch)).toHaveBeenCalledWith( {"payload": "React", "type": "dashboard/addDemandToDashboard"})
+    expect(await waitFor(() => store.dispatch)).toHaveBeenCalledWith({
+      payload: 'React',
+      type: 'dashboard/addDemandToDashboard',
+    })
   })
 
   it('click cancel button to navigate to dashboard', async () => {
