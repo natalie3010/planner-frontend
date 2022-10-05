@@ -28,3 +28,4 @@ export const getRequiredBarchartSupplyStatus = (allSupply) => {
     )
   })
 }
+
