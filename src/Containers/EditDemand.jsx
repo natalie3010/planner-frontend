@@ -38,6 +38,7 @@ export const EditDemand = () => {
       })
     })
   }, [])
+  console.log(pickerClients, pickerSkills, formData)
 
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
 
@@ -126,10 +127,11 @@ export const EditDemand = () => {
         })}
 
         <CG.Box width='300px' display='flex' flexDirection='row' justifyContent='space-between'>
-          <CG.Button primary text='submit' onClick={handleSubmit} />
+          <CG.Button primary text='submit' data-testid='submitButton' onClick={handleSubmit} />
           <CG.Button
             primary
             text='cancel'
+            data-testId='cancelButton'
             onClick={() => {
               const routeName = initialSkillName.replace(/\//g, '-')
               navigate(`/list-Demand/${routeName}`)
