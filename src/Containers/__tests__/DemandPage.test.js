@@ -79,6 +79,7 @@ describe('Testing <DemandPage/> component', () => {
     fireEvent.input(screen.getByText('Start date').nextSibling, {
       target: { value: '10/1/2020' },
     })
+  })
 
     
 
