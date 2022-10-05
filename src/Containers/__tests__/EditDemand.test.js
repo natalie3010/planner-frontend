@@ -21,7 +21,7 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../../API', () => ({
   getClients: jest.fn(() => Promise.resolve([{ ClientID: 'test-clients', ClientName: 'test-client-name' }])),
-  getSingleDemand: jest.fn(() => Promise.resolve({ DemandStatus: 'test-single-demand' })),
+  getSingleDemand: jest.fn(() => Promise.resolve({ DemandStatus: 'test-single-demand', demandSkills: '1' })),
   getSkills: jest.fn(() => Promise.resolve([{ SkillName: 'test-skill', SkillsID: '1' }])),
   updateDemand: jest.fn(() => Promise.resolve(true)),
 }))
@@ -81,7 +81,6 @@ describe('Actions on EditDemand page', () => {
     const submitButton = screen.getByRole('button', {
       name: /submit/i,
     })
-    console.log({ submitButton })
     await waitFor(() => {
       fireEvent(
         submitButton,
@@ -94,17 +93,17 @@ describe('Actions on EditDemand page', () => {
     })
   })
 
-  xdescribe('User action on components', () => {
+  describe('User action on components', () => {
     it.only('click cancel with navigate to DemandPage', async () => {
       await act(async () => {
         renderWithProviders(<EditDemand />)
       })
 
-      screen.debug()
+      // screen.debug()
       const cancelButton = screen.getByRole('button', {
         name: /cancel/i,
       })
-      console.log({ cancelButton })
+  
       await waitFor(() => {
         fireEvent(
           cancelButton,
@@ -115,7 +114,7 @@ describe('Actions on EditDemand page', () => {
         )
       })
 
-      expect(mockNavigate).toHaveBeenCalledWith('/protectedRoute/list-Demand')
+      expect(mockNavigate).toHaveBeenCalledWith('/list-Demand/test-skill')
     })
   })
 
