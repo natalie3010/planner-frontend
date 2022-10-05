@@ -57,10 +57,7 @@ describe('Testing <DemandPage/> component', () => {
     ).toBeInTheDocument
   })
 
-  it('should display error message if form data is not successfully submitted', async () => {
-    //addDemand.mockImplementation(() => Promise.reject(false))
-   // testRegex.mockImplementation(() => false)
-
+  it('should throw error if form data is not submitted', async () => {
     await act(async () => {
       renderWithProviders(<DemandPage />)
     })
@@ -75,23 +72,30 @@ describe('Testing <DemandPage/> component', () => {
    expect(addDemand).not.toHaveBeenCalled()
   })
 
+  it('should throw error if form data is not submitted accordingly', async () => {
+    await act(async () => {
+      renderWithProviders(<DemandPage />)
+    })
+    fireEvent.input(screen.getByText('Start date').nextSibling, {
+      target: { value: '10/1/2020' },
+    })
+
+    
+
+
 
   it('should call addDemandToDashboard if form data  is successfully submitted', async () => {
     addDemand.mockImplementation(() => Promise.resolve({SkillName: 'React', SkillsID: '1'}))
 
     const store = setupStore()
     store.dispatch(setupDashboard([{ skill_name: 'React', demand_count: 1 }]))
-    
-    const mockDispatch = jest.fn();
-
-    store.dispatch = mockDispatch
-   
-    // // const originalDispatch = store.dispatch
-    // // store.dispatch = jest.fn(originalDispatch)
+     
+    const originalDispatch = store.dispatch
+    store.dispatch = jest.fn(originalDispatch)
 
 
     await act(async () => {
-      renderWithProviders(<DemandPage />)
+      renderWithProviders(<DemandPage />,{store})
     })
 
     fireEvent.input(screen.getByText('Code Requisition').nextSibling, {
@@ -125,8 +129,8 @@ describe('Testing <DemandPage/> component', () => {
     )
   
     expect( 
-      await waitFor(() => mockDispatch)
-    ).toHaveBeenCalledWith('')
+      await waitFor(() => store.dispatch)
+    ).toHaveBeenCalledWith( {"payload": "React", "type": "dashboard/addDemandToDashboard"})
      
     
   })
