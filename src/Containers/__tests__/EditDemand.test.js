@@ -3,6 +3,8 @@ import { act } from 'react-dom/test-utils'
 import { screen, waitFor, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '../../Utils/testSetup'
 import { EditDemand } from '../EditDemand'
+import { setupStore } from '../../store'
+import { setupDashboard } from '../../Slices/DashboardSlice'
 import format from '../../Data/Format'
 import { updateDemand, getClients, getSkills, getSingleDemand } from '../../API'
 
@@ -57,7 +59,23 @@ describe('Different stages of EditDemand component', () => {
   })
 })
 
+it('should throw error if form data is not submitted', async () => {
+  await act(async () => {
+    renderWithProviders(<EditDemand />)
+  })
+
+  fireEvent(
+    screen.getByText(/submit/i),
+    new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+    })
+  )
+  expect(updateDemand).not.toHaveBeenCalled()
+})
+
 describe('Actions on EditDemand page', () => {
+  //Not sure this is needed, need further advice
   it('test all inputdefaults on EditDemand', async () => {
     await act(async () => {
       renderWithProviders(<EditDemand />)
@@ -93,8 +111,81 @@ describe('Actions on EditDemand page', () => {
     })
   })
 
+  it('should call updateDemand if form data is submitted accordingly', async () => {
+    updateDemand.mockImplementation(() => Promise.resolve(true))
+
+    await act(async () => {
+      renderWithProviders(<EditDemand />)
+    })
+    fireEvent.input(screen.getByText('Start date').nextSibling, {
+      target: { value: '10/1/2020' },
+    })
+
+    expect(screen.getByText('Start date').nextSibling.value).toBe('10/1/2020')
+    await waitFor(() => {
+      fireEvent(
+        screen.getByText(/submit/i),
+        new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+        })
+      )
+    })
+    expect(await waitFor(() => updateDemand)).toHaveBeenCalledTimes(0)
+  })
+
+  it.only('should call addDemandToDashboard if form data  is successfully submitted', async () => {
+    const store = setupStore()
+    store.dispatch(setupDashboard([{ skill_name: 'test-skill', demand_count: 1 }]))
+
+    const originalDispatch = store.dispatch
+    store.dispatch = jest.fn(originalDispatch)
+
+    await act(async () => {
+      renderWithProviders(<EditDemand />, { store })
+    })
+
+    fireEvent.input(screen.getByText('Code Requisition').nextSibling, {
+      target: { value: 'test-code-requisition' },
+    })
+    screen.debug()
+    const skillSelector = screen.findByRole('button', { name: /select a skill/i })
+    await waitFor(() => {
+      fireEvent(
+        skillSelector,
+        new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+        })
+      )
+    })
+
+    const reactOption = screen.getByRole('button', { name: /test-skill/i })
+
+    fireEvent(
+      reactOption,
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+      })
+    )
+
+    fireEvent(
+      screen.getByText(/submit/i),
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+      })
+    )
+
+    expect(await waitFor(() => store.dispatch)).toHaveBeenCalledWith({
+      payload: 'test-skill',
+      type: 'dashboard/addDemandToDashboard',
+    })
+  })
+
   describe('User action on components', () => {
-    it.only('click cancel with navigate to DemandPage', async () => {
+    it('click cancel with navigate to DemandPage', async () => {
       await act(async () => {
         renderWithProviders(<EditDemand />)
       })
@@ -103,7 +194,7 @@ describe('Actions on EditDemand page', () => {
       const cancelButton = screen.getByRole('button', {
         name: /cancel/i,
       })
-  
+
       await waitFor(() => {
         fireEvent(
           cancelButton,
@@ -117,84 +208,4 @@ describe('Actions on EditDemand page', () => {
       expect(mockNavigate).toHaveBeenCalledWith('/list-Demand/test-skill')
     })
   })
-
-  // it.only('after editing some of the inputs the EditDemand should be different', async () => {
-  //   await act(async () => {
-  //     renderWithProviders(<EditDemand />)
-  //   })
-  //   const codeRequisitionLabel = screen.findByText('Code Requisition')
-  //   const inputComponent = codeRequisitionLabel.nextSibling
-
-  //   expect(codeRequisitionLabel).toBeDefined
-  //   expect(inputComponent.value).toEqual('')
 })
-//   it('should return error if clicked on submit without formdata', async () => {
-//     await act(async () => {
-//       renderWithProviders(<EditDemand />)
-//     })
-
-//     console.log(await screen.findByText(/submit/i), 'Submit Button')
-
-//     // await act(async () => {
-//     //   renderWithProviders(<EditDemand />)
-//     // })
-//   })
-
-// it('should call EditDemand if formdata submitted is true', async () => {
-//   checkIfFormIsValid.mockImplementation(() => Promise.resolve(true))
-//   await act(async () => {
-//     renderWithProviders(<EditDemand />)
-//   })
-//   const input = (await screen.findByText()).nextSibling
-//   console.log(input)
-// })
-//     new MouseEvent('click', {
-//       bubbles: true,
-//       cancelable: true,
-//     })
-//   )
-//   await act(async () => {
-//     renderWithProviders(<EditDemand />)
-//   })
-//   expect(updateDemand).toHaveBeenCalledTimes(1)
-// })
-/*
-it('should call EditDemand if formdata submitted is true', async () => {
-  checkIfFormIsValid.mockImplementation(() => Promise.resolve(false))
-  await act(async () => {
-    renderWithProviders(<EditDemand />)
-  })
-  fireEvent(
-    screen.findByText(/submit/i),
-    new MouseEvent('click', {
-      bubbles: true,
-      cancelable: true,
-    })
-  )
-  await act(async () => {
-    renderWithProviders(<EditDemand />)
-  })
-  expect(updateDemand).toHaveBeenCalledTimes(1)
-})
-
-it('after editing some of the inputs the EditDemand should be different', async () => {
-  checkIfFormIsValid.mockImplementation(() => Promise.resolve(false))
-  await act(async () => {
-    renderWithProviders(<EditDemand />)
-  })
-  fireEvent.input(screen.findByText('Code Requisition').nextSibling, {
-    target: { value: 'test-code-requisition' },
-  })
-  fireEvent(
-    screen.findByText(/submit/i),
-    new MouseEvent('click', {
-      bubbles: true,
-      cancelable: true,
-    })
-  )
-  await act(async () => {
-    renderWithProviders(<EditDemand />)
-  })
-  expect(updateDemand).toHaveBeenCalledTimes(1)
-})
- */
