@@ -1,6 +1,6 @@
 import React from 'react'
 import { act } from 'react-dom/test-utils'
-import { screen, waitFor, fireEvent } from '@testing-library/react'
+import { screen, waitFor, fireEvent, within } from '@testing-library/react'
 import { renderWithProviders } from '../../Utils/testSetup'
 import { EditDemand } from '../EditDemand'
 import { setupStore } from '../../store'
@@ -134,7 +134,7 @@ describe('Actions on EditDemand page', () => {
     expect(await waitFor(() => updateDemand)).toHaveBeenCalledTimes(0)
   })
 
-  it('should call addDemandToDashboard if form data  is successfully submitted', async () => {
+  it.only('should call addDemandToDashboard if form data  is successfully submitted', async () => {
     const store = setupStore()
     store.dispatch(setupDashboard([{ skill_name: 'test-skill', demand_count: 1 }]))
 
@@ -149,10 +149,14 @@ describe('Actions on EditDemand page', () => {
       target: { value: 'test-code-requisition' },
     })
     screen.debug()
-    const skillSelector = screen.findByRole('button', { name: /select a skill/i })
+    const skillSelector = await screen.findByTestId('Skill')
+    const skillButton = within(skillSelector).getByRole('button')
+
+    // await selectEvent.select(skillButton, ['test-skill'])
+
     await waitFor(() => {
       fireEvent(
-        skillSelector,
+        skillButton,
         new MouseEvent('click', {
           bubbles: true,
           cancelable: true,
@@ -160,7 +164,7 @@ describe('Actions on EditDemand page', () => {
       )
     })
 
-    const reactOption = screen.getByRole('button', { name: /test-skill/i })
+    const reactOption = await screen.findByRole('button', { name: /test-skill/i })
 
     fireEvent(
       reactOption,
