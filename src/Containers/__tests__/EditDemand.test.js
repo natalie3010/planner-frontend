@@ -134,7 +134,7 @@ describe('Actions on EditDemand page', () => {
     expect(await waitFor(() => updateDemand)).toHaveBeenCalledTimes(0)
   })
 
-  it.only('should call addDemandToDashboard if form data  is successfully submitted', async () => {
+  it('should call addDemandToDashboard if form data  is successfully submitted', async () => {
     const store = setupStore()
     store.dispatch(setupDashboard([{ skill_name: 'test-skill', demand_count: 1 }]))
 
