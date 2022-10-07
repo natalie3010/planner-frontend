@@ -58,9 +58,8 @@ xdescribe('Testing <Dashboard/> component', () => {
   })
   describe('Actions on Dashboard page', () => {
     it('should test Add a supply action', async () => {
-      await act(async () => {
-        renderWithProviders(<Dashboard />)
-      })
+      renderWithProviders(<Dashboard />)
+      await waitFor(async () => {})
       fireEvent(
         screen.getByText(/add a supply/i),
         new MouseEvent('click', {
