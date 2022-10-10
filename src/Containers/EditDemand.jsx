@@ -38,7 +38,7 @@ export const EditDemand = () => {
       })
     })
   }, [])
-  console.log(pickerClients, pickerSkills, formData)
+  // console.log(pickerClients, pickerSkills, formData)
 
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
 
@@ -46,10 +46,17 @@ export const EditDemand = () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
     navigate(`/list-Demand`)
+
+    console.log('formData', formData)
+    console.log('formIsValid', formIsValid)
+
     if (formIsValid) {
       const skillSelected = formData.demandSkills && true
       const newskillname = skillSelected && pickerSkills[formData.demandSkills - 1].name
+
       const request = updateDemand(authToken, demandId, formData)
+      // console.log('request', request)
+
       request.then((result) => {
         if (initialSkillName && newskillname && newskillname !== initialSkillName) {
           try {
@@ -86,19 +93,21 @@ export const EditDemand = () => {
             const pickerVal = formItem === 'demandClientID' ? formData.demandClientName : formData[formItem]
             return (
               <CG.Container margin='10px' key={index}>
-                <CG.Picker
-                  id='Picker'
-                  name='Picker'
-                  pattern='*'
-                  topLabel
-                  onChange={(val) => setFormData({ ...formData, [formItem]: val })}
-                  options={inputDefaults[formItem].options}
-                  labelKey='name'
-                  label={inputDefaults[formItem].label}
-                  placeholder={typeof pickerVal === 'number' ? initialSkillName : pickerVal}
-                  required={required}
-                  hasError={required && !formData[formItem] && formSubmitted}
-                />
+                <div data-testid={inputDefaults[formItem].label}>
+                  <CG.Picker
+                    id='Picker'
+                    name='Picker'
+                    pattern='*'
+                    topLabel
+                    onChange={(val) => setFormData({ ...formData, [formItem]: val })}
+                    options={inputDefaults[formItem].options}
+                    labelKey='name'
+                    label={inputDefaults[formItem].label}
+                    placeholder={typeof pickerVal === 'number' ? initialSkillName : pickerVal}
+                    required={required}
+                    hasError={required && !formData[formItem] && formSubmitted}
+                  />
+                </div>
               </CG.Container>
             )
           }
