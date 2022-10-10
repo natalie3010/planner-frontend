@@ -5,6 +5,7 @@ import { renderWithProviders } from '../../Utils/testSetup'
 import { EditDemand } from '../EditDemand'
 import { setupStore } from '../../store'
 import { setupDashboard } from '../../Slices/DashboardSlice'
+import { demandSchema } from '../../Validations/DemandValidation'
 import format from '../../Data/Format'
 import { updateDemand, getClients, getSkills, getSingleDemand } from '../../API'
 
@@ -13,7 +14,11 @@ const mockUseParams = jest.fn()
 jest.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
   useParams: () => mockUseParams,
-  formIsValid: true,
+  formIsValid: true, // formIsValid is not coming from route params but it is being set by checkIfFormIsValid method. Remove this line of code 
+}))
+
+jest.mock('../../Validations/DemandValidation', () => ({
+  demandSchema: { isValid: jest.fn(() => Promise.resolve(true)) },
 }))
 
 // jest.mock('../../Data/Format', () => ({
@@ -25,7 +30,7 @@ jest.mock('react-router-dom', () => ({
 jest.mock('../../API', () => ({
   getClients: jest.fn(() => Promise.resolve([{ ClientID: 'test-clients', ClientName: 'test-client-name' }])),
   getSingleDemand: jest.fn(() => Promise.resolve({ DemandStatus: 'test-single-demand', demandSkills: '1' })),
-  getSkills: jest.fn(() => Promise.resolve([{ SkillName: 'test-skill', SkillsID: '1' }])),
+  getSkills: jest.fn(() => Promise.resolve([{ SkillName: 'test-skill', SkillsID: '1' }, { SkillName: 'react', SkillsID: '2' }])),
   updateDemand: jest.fn(() => Promise.resolve(true)),
 }))
 
@@ -136,10 +141,10 @@ describe('Actions on EditDemand page', () => {
   })
 
   it.only('should call addDemandToDashboard if form data  is successfully submitted', async () => {
-    updateDemand.mockImplementation(() => Promise.resolve({ SkillName: 'test-skill', SkillsID: '1' }))
+    updateDemand.mockImplementation(() => Promise.resolve({ SkillName: 'test-skill2', SkillsID: '1' }))
 
     const store = setupStore()
-    store.dispatch(setupDashboard([{ skill_name: 'test-skill', demand_count: 1 }]))
+    store.dispatch(setupDashboard([{ skill_name: 'test-skill', demand_count: 1 },{ skill_name: 'react', demand_count: 1 }]))
     //const state = { formIsValid: true, initialSkillName: 'skill-test', newskillname: 'one-test' }
     // store = setupStore(state)
 
@@ -147,7 +152,7 @@ describe('Actions on EditDemand page', () => {
     store.dispatch = jest.fn(originalDispatch)
 
     await act(async () => {
-      renderWithProviders(<EditDemand />, { store, preloadedState: { formIsValid: true } })
+      renderWithProviders(<EditDemand />, { store, preloadedState: { formIsValid: true } }) // formIsValid is not part of state object but it is being set by checkIfFormIsValid method. Remove this line of code 
     })
 
     fireEvent.input(screen.getByText('Code Requisition').nextSibling, {
@@ -169,7 +174,7 @@ describe('Actions on EditDemand page', () => {
       )
     })
 
-    const skillOption = await screen.findByRole('button', { name: /test-skill/i })
+    const skillOption = await screen.findByRole('button', { name: /react/i })
 
     fireEvent(
       skillOption,
@@ -187,8 +192,12 @@ describe('Actions on EditDemand page', () => {
       })
     )
 
-    expect(await waitFor(() => store.dispatch)).toHaveBeenCalledWith({
+    expect(await waitFor(() => store.dispatch)).toHaveBeenNthCalledWith(1, {
       payload: 'test-skill',
+      type: 'dashboard/removeDemandFromDashboard',
+    })
+    expect(await waitFor(() => store.dispatch)).toHaveBeenNthCalledWith(2, {
+      payload: 'react',
       type: 'dashboard/addDemandToDashboard',
     })
   })
