@@ -13,6 +13,7 @@ const mockUseParams = jest.fn()
 jest.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
   useParams: () => mockUseParams,
+  formIsValid: true,
 }))
 
 // jest.mock('../../Data/Format', () => ({
@@ -135,14 +136,18 @@ describe('Actions on EditDemand page', () => {
   })
 
   it.only('should call addDemandToDashboard if form data  is successfully submitted', async () => {
+    updateDemand.mockImplementation(() => Promise.resolve({ SkillName: 'test-skill', SkillsID: '1' }))
+
     const store = setupStore()
     store.dispatch(setupDashboard([{ skill_name: 'test-skill', demand_count: 1 }]))
+    //const state = { formIsValid: true, initialSkillName: 'skill-test', newskillname: 'one-test' }
+    // store = setupStore(state)
 
     const originalDispatch = store.dispatch
     store.dispatch = jest.fn(originalDispatch)
 
     await act(async () => {
-      renderWithProviders(<EditDemand />, { store })
+      renderWithProviders(<EditDemand />, { store, preloadedState: { formIsValid: true } })
     })
 
     fireEvent.input(screen.getByText('Code Requisition').nextSibling, {
@@ -164,10 +169,10 @@ describe('Actions on EditDemand page', () => {
       )
     })
 
-    const reactOption = await screen.findByRole('button', { name: /test-skill/i })
+    const skillOption = await screen.findByRole('button', { name: /test-skill/i })
 
     fireEvent(
-      reactOption,
+      skillOption,
       new MouseEvent('click', {
         bubbles: true,
         cancelable: true,
