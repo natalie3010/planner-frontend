@@ -48,7 +48,7 @@ export const EditDemand = () => {
     navigate(`/list-Demand`)
 
     console.log('formData', formData)
-    console.log('formIsValid', formIsValid)
+    // console.log('formIsValid', formIsValid)
 
     if (formIsValid) {
       const skillSelected = formData.demandSkills && true
@@ -63,11 +63,12 @@ export const EditDemand = () => {
             dispatch(removeDemandFromDashboard(initialSkillName))
             dispatch(addDemandToDashboard(newskillname))
           } catch {}
-        } else if (newskillname && !initialSkillName) {
-          try {
-            dispatch(addDemandToDashboard(newskillname))
-          } catch {}
         }
+        // else if (newskillname && !initialSkillName) {
+        //   try {
+        //     dispatch(addDemandToDashboard(newskillname))
+        //   } catch {}
+        // }
         const routeName = newskillname.replace(/\//g, '-')
         navigate(`/list-Demand/${routeName}`)
       })
@@ -82,7 +83,7 @@ export const EditDemand = () => {
   if (!pickerClients || !pickerSkills || !formData) {
     return <CG.Body>loading...</CG.Body>
   }
-
+  console.log(typeof pickerVal)
   return (
     <Col md={12} align='center' justify='center'>
       <CG.Box width='400px' mb={10}>
