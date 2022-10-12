@@ -65,16 +65,15 @@ export function addSupply(token, data) {
     })
 }
 
-export function addDemand(token, data) {
+export function addDemand(data) {
   const requestObject = {
     method: 'POST',
     headers: {
-      'x-access-token': token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/api/v2/demand`, requestObject)
+  return fetch(`${URL}/api/demand`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -210,8 +209,8 @@ export function updateDemand(token, applicantID, data) {
     })
 }
 
-export function getSkills(token) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+export function getSkills() {
+  const requestObject = { method: 'GET' }
   return fetch(`${URL}/api/skills`, requestObject)
     .then((res) => {
       if (!res.ok) {
@@ -227,8 +226,8 @@ export function getSkills(token) {
     })
 }
 
-export function getClients(token) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+export function getClients() {
+  const requestObject = { method: 'GET' }
   return fetch(`${URL}/api/clients`, requestObject)
     .then((res) => {
       if (!res.ok) {
@@ -244,9 +243,9 @@ export function getClients(token) {
     })
 }
 
-export function getDemandSkill(token, skillName) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch(`${URL}/api/demand?selectedSkills=${skillName}`, requestObject)
+export function getDemandSkill(skillName) {
+  const requestObject = { method: 'GET' }
+  return fetch(`${URL}/api/demand`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res

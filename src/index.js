@@ -31,9 +31,9 @@ const App = () => {
       <Route
         path='/demand'
         element={
-          <ProtectedRoute>
+          // <ProtectedRoute>
             <DemandPage />
-          </ProtectedRoute>
+          // </ProtectedRoute>
         }
       />
       <Route
@@ -95,9 +95,9 @@ const App = () => {
       <Route
         path='/about'
         element={
-          <ProtectedRoute>
+          // <ProtectedRoute>
             <About />
-          </ProtectedRoute>
+          // </ProtectedRoute>
         }
       />
 

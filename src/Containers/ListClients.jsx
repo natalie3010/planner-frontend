@@ -40,9 +40,12 @@ export const ListClients = () => {
   }
 
   const editClient = async (clientId) => {
-    const response = await putClient(authToken, clientId, { ClientName: editClientName })
-    if (response.changes === 1) {
+    if(clientId && editClientName)
+    {
+      const response = await putClient(authToken, clientId, { ClientName: editClientName })
+      if (response) {
       setClientsUpdated(!clientsUpdated)
+    }
       setEditClientIndex(null)
     }
   }
@@ -136,21 +139,18 @@ export const ListClients = () => {
               width: '0.90rem',
               type: 'Edit2',
               handler: (value) => {
-                if (editClientIndex && value.ClientID === clientData[editClientIndex].ClientID && editClientName) {
-                  editClient(value.ClientID)
-                } else if (
-                  editClientIndex &&
-                  value.ClientID === clientData[editClientIndex].ClientID &&
-                  !editClientName
-                ) {
-                  setClientsUpdated(!clientsUpdated)
+                  clientData.find((data) => data.clientID)
+                  setEditClientIndex(clientData.findIndex((data) => data.clientID === value.clientID))
+                  if (editClientIndex > -1) {
+                    setEditClientName(value.ClientName)
+                    editClient(value.ClientID)
+                  }
                   setEditClientIndex(null)
-                  return
-                }
-                setClientIndex(value.ClientID)
+                  setEditClientName(null)
+                  setClientIndex(value.ClientID)
+                },
               },
-            },
-          ]}
+            ]}
           editable
           editableColumn='0'
           editableRow={editClientIndex}

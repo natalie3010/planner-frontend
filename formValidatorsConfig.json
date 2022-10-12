@@ -63,7 +63,7 @@
       "demandCodeRequisition": {
         "validators": [{ "required": false }]
       },
-      "demandStartDate": {
+      "startDate": {
         "validators": [
           {
             "required": true,
@@ -72,22 +72,22 @@
           }
         ]
       },
-      "demandOriginatorName": {
+      "originatorName": {
         "validators": [{ "required": false }]
       },
-      "demandProbability": {
+      "probability": {
         "validators": [{ "required": false }]
       },
-      "demandSelectedApplicant": {
+      "selectedApplicant": {
         "validators": [{ "required": false }]
       },
-      "demandNotes": {
+      "notes": {
         "validators": [{ "required": false }]
       },
-      "demandProposedApplicant": {
+      "proposedApplicant": {
         "validators": [{ "required": false }]
       },
-      "demandCreationDate": {
+      "creationDate": {
         "validators": [
           {
             "errorDisplayed": "Please put a valid date following the pattern dd/MM/yyyy",
@@ -96,19 +96,19 @@
           }
         ]
       },
-      "demandLocation": {
+      "location": {
         "validators": [{ "required": false }]
       },
-      "demandSkills": {
+      "skills": {
         "validators": [{ "required": true }]
       },
-      "demandGrade": {
+      "grade": {
         "validators": [{ "required": true }]
       },
-      "demandStatus": {
+      "status": {
         "validators": [{ "required": true }]
       },
-      "demandClientID": {
+      "clientID": {
         "validators": [
           {
             "errorMessage": "Please select a client",

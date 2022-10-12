@@ -13,11 +13,11 @@ export const ListAllDemand =() =>{
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const authToken = useSelector((state) => state.user.authToken)
+  // const authToken = useSelector((state) => state.user.authToken)
   const [data, setData] = useState([form])
 
   useEffect(() => {
-    const demand = getDemandSkill(authToken, "")
+    const demand = getDemandSkill()
     
     demand.then((res) => { 
       setData(res)

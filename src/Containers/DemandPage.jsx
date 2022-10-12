@@ -13,18 +13,19 @@ import { demandSchema } from '../Validations/DemandValidation'
 export const DemandPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const authToken = useSelector((state) => state.user.authToken)
   const [pickerSkills, setPickerSkills] = useState(null)
   const [pickerClients, setPickerClients] = useState(null)
   const [formData, setFormData] = useState(form)
   const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
-    const requestClients = getClients(authToken)
+    const requestClients = getClients()
     requestClients.then((clientsResult) => setPickerClients(formatClients(clientsResult)))
-
-    const requestSkills = getSkills(authToken)
-    requestSkills.then((skillsResult) => setPickerSkills(formatSkills(skillsResult)[0]))
+    console.log(pickerClients, 'pickerClients');
+    const requestSkills = getSkills()
+    requestSkills.then((skillsResult) =>
+      setPickerSkills(formatSkills(skillsResult)[0])
+    )
   }, [])
 
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
@@ -33,10 +34,10 @@ export const DemandPage = () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
     if (formIsValid) {
-      const request = await addDemand(authToken, formData)
+      const request = await addDemand(formData)
       if (request) {
         try {
-          const skillName = pickerSkills[formData.demandSkills - 1].name
+          const skillName = pickerSkills[formData.skills - 1].name
           dispatch(addDemandToDashboard(skillName))
         } catch {}
         navigate('/protectedRoute/dashboard')

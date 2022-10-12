@@ -10,7 +10,8 @@
     "test:coverage": "npm run test -- --coverage",
     "test:watchAll": "npm run test -- --watchAll",
     "start": "serve -s dist -l 4200",
-    "setup-npmrc": "aws-codeartifact login && aws-codeartifact registry-copy-token",
+    "aws-artifact-login": "aws codeartifact login --tool npm --repository cg-react-shared-components --domain capdigiops --domain-owner 133000045839 --region eu-west-2",
+    "setup-npmrc": "aws-codeartifact login && aws codeartifact registry-copy-token",
     "co:login": "AWS_PROFILE=default aws codeartifact login --tool npm --repository ${npm_package_config_awsCodeArtifact_repository} --domain ${npm_package_config_awsCodeArtifact_domain}",
     "co:login-npx": "AWS_PROFILE=default npx aws-codeartifact login",
     "codeartifact:registry-copy-token": "aws-codeartifact registry-copy-token",
@@ -21,7 +22,6 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.2",
     "aws-codeartifact": "^1.3.1",
-    "cap-shared-components": "^2.0.1",
     "dotenv-webpack": "^8.0.0",
     "html-webpack-plugin": "^5.5.0",
     "react": "^18.0.0",
