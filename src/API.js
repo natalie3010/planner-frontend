@@ -41,16 +41,15 @@ export function getDashboard(token) {
     })
 }
 
-export function addSupply(token, data) {
+export function addSupply(data) {
   const requestObject = {
     method: 'POST',
     headers: {
-      'x-access-token': token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/api/v2/supply`, requestObject)
+  return fetch(`${URL}/api/supply`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -372,8 +371,8 @@ export function getNewToken(refreshToken) {
       return error.status
     })
 }
-export function getAllDemand(token) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+export function getAllDemand() {
+  const requestObject = { method: 'GET' }
   return fetch(`${URL}/api/demand`, requestObject)
     .then((res) => {
       if (!res.ok) {
@@ -388,8 +387,8 @@ export function getAllDemand(token) {
       return error.status
     })
 }
-export function getAllSupply(token) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+export function getAllSupply() {
+  const requestObject = { method: 'GET' }
   return fetch(`${URL}/api/supply`, requestObject)
     .then((res) => {
       if (!res.ok) {

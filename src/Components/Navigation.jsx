@@ -22,9 +22,9 @@ export const Navigation = () => {
         />
         {userLoggedIn && (
           <CG.Box flexDirection='row' justifyContent='space-between' display='flex' alignSelf='center'>
-            {location.pathname !== '/protectedRoute/dashboard' && (
+            {location.pathname !== '/dashboard' && (
               <CG.Box mr='5px'>
-                <CG.Button text='Home' onClick={() => navigate('/protectedRoute/dashboard')} />
+                <CG.Button text='Home' onClick={() => navigate('/dashboard')} />
               </CG.Box>
             )}{' '}
             <CG.Box mr='5px'>

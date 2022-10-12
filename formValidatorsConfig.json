@@ -60,7 +60,7 @@
 
   "demandForm": {
     "inputs": {
-      "demandCodeRequisition": {
+      "codeRequisition": {
         "validators": [{ "required": false }]
       },
       "startDate": {
@@ -108,7 +108,7 @@
       "status": {
         "validators": [{ "required": true }]
       },
-      "clientID": {
+      "id": {
         "validators": [
           {
             "errorMessage": "Please select a client",

@@ -4,11 +4,11 @@ import formValidators from '../../formValidatorsConfig.json'
 const demandInputs = formValidators.demandForm.inputs
 
 export const demandSchema = yup.object().shape({
-  codeRequisition: demandInputs.demandCodeRequisition.validators[0].required && yup.string().required(),
+  codeRequisition: demandInputs.codeRequisition.validators[0].required && yup.string().required(),
   startDate:
     demandInputs.startDate.validators[0].required &&
     yup.string().required().matches(new RegExp(demandInputs.startDate.validators[0].pattern)),
-  clientID: demandInputs.clientID.validators[0].required && yup.string().required(),
+  id: demandInputs.id.validators[0].required && yup.string().required(),
   originatorName: demandInputs.originatorName.validators[0].required && yup.string().required(),
   skills: demandInputs.skills.validators[0].required && yup.string().required(),
   probability: demandInputs.probability.validators[0].required && yup.string().required(),

@@ -4,23 +4,21 @@ import { BarChart } from '../Components/BarChart'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { getAllDemand, getAllSupply, getSkills } from '../API'
-import { useSelector, useDispatch } from 'react-redux'
 
 export const Dashboard = () => {
   const navigate = useNavigate()
-  const authToken = useSelector((state) => state.user.authToken)
   const [allDemand, setAllDemand] = useState(null)
   const [allSupply, setAllSupply] = useState(null)
   const [allSkills, setAllSkills] = useState(null)
 
   useEffect(() => {
-    getAllDemand(authToken).then((data) => {
+    getAllDemand().then((data) => {
       setAllDemand(data)
     })
-    getAllSupply(authToken).then((data) => {
+    getAllSupply().then((data) => {
       setAllSupply(data)
     })
-    getSkills(authToken).then((data) => {
+    getSkills().then((data) => {
       setAllSkills(data)
     })
   }, [])
@@ -30,7 +28,6 @@ export const Dashboard = () => {
 
     navigate(`/list-${page}/${name}`)
   }
-
   return (
     <Col md={12} align='center' justify='center'>
       <CG.Box width={400} boxSizing='border-box' justifyContent='center'>

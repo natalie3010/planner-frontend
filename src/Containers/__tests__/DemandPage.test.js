@@ -170,6 +170,6 @@ describe('Testing <DemandPage/> component', () => {
       })
     )
 
-    expect(mockNavigate).toHaveBeenCalledWith('/protectedRoute/dashboard')
+    expect(mockNavigate).toHaveBeenCalledWith('/dashboard')
   })
 })

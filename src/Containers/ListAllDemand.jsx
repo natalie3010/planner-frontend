@@ -29,7 +29,7 @@ export const ListAllDemand =() =>{
     <Col md={12} align='center' justify='center'>
       <CG.Box ml='15px' mr='15px' mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
         <CG.Heading size='XS'>Demand List</CG.Heading>
-        <CG.Button primary text='Dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
+        <CG.Button primary text='Dashboard' onClick={() => navigate('/dashboard')}></CG.Button>
       </CG.Box>
       <CG.Box
         width='70rem'

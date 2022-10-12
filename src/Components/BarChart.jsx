@@ -25,6 +25,7 @@ export const BarChart = ({ navigateToListPage, allDemand, allSupply, allSkills }
       barchartData.supplyDataset,
       barchartData.demandDataset
     )
+    console.log(formattedDataset, 'formattedDataset');
     setFormattedStackedData(formattedDataset)
   }, [allDemand, allSupply, allSkills])
 

@@ -21,7 +21,6 @@ export const DemandPage = () => {
   useEffect(() => {
     const requestClients = getClients()
     requestClients.then((clientsResult) => setPickerClients(formatClients(clientsResult)))
-    console.log(pickerClients, 'pickerClients');
     const requestSkills = getSkills()
     requestSkills.then((skillsResult) =>
       setPickerSkills(formatSkills(skillsResult)[0])
@@ -34,13 +33,18 @@ export const DemandPage = () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
     if (formIsValid) {
-      const request = await addDemand(formData)
+      const demandReq = {
+        demand: formData
+      }
+      const request = await addDemand(demandReq)
       if (request) {
         try {
           const skillName = pickerSkills[formData.skills - 1].name
           dispatch(addDemandToDashboard(skillName))
-        } catch {}
-        navigate('/protectedRoute/dashboard')
+        } catch(err) {
+          console.log(err, 'err');
+        }
+        navigate('/dashboard')
       }
     }
   }
@@ -104,7 +108,7 @@ export const DemandPage = () => {
             primary
             text='cancel'
             onClick={() => {
-              navigate('/protectedRoute/dashboard')
+              navigate('/dashboard')
             }}
           />
         </CG.Box>

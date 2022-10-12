@@ -105,7 +105,7 @@ describe('Testing <ListDemand/> component', () => {
           cancelable: true,
         })
       )
-      expect(mockNavigate).toHaveBeenCalledWith('/protectedRoute/dashboard')
+      expect(mockNavigate).toHaveBeenCalledWith('/dashboard')
     })
   })
 

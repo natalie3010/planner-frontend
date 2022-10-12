@@ -38,7 +38,7 @@ export const ListSupply = () => {
       <CG.Box ml='15px' mr='15px' mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
         <CG.Button primary text='Add Supply' onClick={() => navigate('/supply')}></CG.Button>
         <CG.Heading size='XS'>Supply information for {skillname}</CG.Heading>
-        <CG.Button primary text='Dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
+        <CG.Button primary text='Dashboard' onClick={() => navigate('/dashboard')}></CG.Button>
       </CG.Box>
 
       <CG.Box

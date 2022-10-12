@@ -4,12 +4,12 @@ export const formatSkills = (data, skillId) => {
   const formatted_skills = []
   var default_skill
   data.forEach((skill) => {
-    if (skill.SkillsID === skillId) {
+    if (skill.id === skillId) {
       default_skill = skill.SkillName
     }
     formatted_skills.push({
-      name: skill.SkillName,
-      value: skill.SkillsID,
+      name: skill.name,
+      value: skill.id,
     })
   })
   return [formatted_skills, default_skill]
@@ -19,8 +19,8 @@ export const formatClients = (data) => {
   const formatted_Clients = []
   data.forEach((client) => {
     formatted_Clients.push({
-      name: client.ClientName,
-      value: client.ClientID,
+      name: client.name,
+      value: client.id,
     })
   })
   return formatted_Clients
@@ -46,8 +46,6 @@ export const clientFormFormatter = () => {
 }
 
 export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, demand_status) => {
-  console.log(pickerSkills, 'pickerSkills format');
-  console.log(pickerClients, 'pickerClients format');
   const inputValidator = formValidators.demandForm.inputs
   const inputDefaults = {
     codeRequisition: {
@@ -62,12 +60,12 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
       placeholder: 'DD/MM/YYYY',
       validators: inputValidator.startDate.validators,
     },
-    clientID: {
+    id: {
       options: pickerClients,
       label: 'Client Name',
       inputType: 'dropdown',
       placeholder: 'Select a client',
-      validators: inputValidator.clientID.validators,
+      validators: inputValidator.id.validators,
     },
     originatorName: {
       label: 'Originator',
@@ -195,20 +193,19 @@ export const formatDataForBarchart = (allSkills, filteredSupply, filteredDemand,
   }
 
   allSkills.forEach((skill, skillIndex) => {
-    const skillName = skill.SkillName
+    const skillName = skill.name
     dashboardDataset.labels.push(skillName)
 
-    const supplies = filteredSupply.filter((supply) => supply.SkillName === skillName)
-    const demands = filteredDemand.filter((demand) => demand.SkillName === skillName)
-
+    const supplies = filteredSupply.filter((supply) => supply.skillName === skillName)
+    const demands = filteredDemand.filter((demand) => demand.skillName === skillName)
     supplyDataset.forEach((obj) => {
       const label = obj.label
-      const labelSupplyCount = supplies.filter((supply) => supply.ApplicantStatus === label).length
+      const labelSupplyCount = supplies.filter((supply) => supply.applicantStatus === label).length
       obj.data[skillIndex] = labelSupplyCount
     })
     demandDataset.forEach((obj) => {
       const label = obj.label
-      const labelDemandCount = demands.filter((demand) => demand.Status === label).length
+      const labelDemandCount = demands.filter((demand) => demand.status === label).length
       obj.data[skillIndex] = labelDemandCount
     })
   })

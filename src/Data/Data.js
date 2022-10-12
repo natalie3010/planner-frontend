@@ -35,9 +35,9 @@ export const demand_grade = [
 ]
 
 export let demandForm = {
+  id:null,
   codeRequisition: null,
   startDate: null,
-  clientID: null,
   originatorName: null,
   skills: null,
   probability: null,
@@ -51,6 +51,7 @@ export let demandForm = {
 }
 
 export let supplyForm = {
+  id: '1',
   applicantFirstName: null,
   applicantLastName: null,
   applicantStatus: null,

@@ -8,7 +8,7 @@ import { login } from '../Slices/LoginSlice'
 
 export const Login = () => {
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn)
-  const pathname = useSelector((state) => state.user.pathname) ?? '/protectedRoute/dashboard'
+  const pathname = useSelector((state) => state.user.pathname) ?? '/dashboard'
   const dispatch = useDispatch()
   let navigate = useNavigate()
 

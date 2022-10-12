@@ -31,9 +31,7 @@ const App = () => {
       <Route
         path='/demand'
         element={
-          // <ProtectedRoute>
             <DemandPage />
-          // </ProtectedRoute>
         }
       />
       <Route
@@ -47,9 +45,7 @@ const App = () => {
       <Route
         path='/supply'
         element={
-          <ProtectedRoute>
             <SupplyPage />
-          </ProtectedRoute>
         }
       />
       <Route
@@ -77,11 +73,9 @@ const App = () => {
         }
       />
       <Route
-        path='/protectedRoute/dashboard'
+        path='/dashboard'
         element={
-          <ProtectedRoute>
             <Dashboard />
-          </ProtectedRoute>
         }
       />
       <Route
@@ -95,9 +89,7 @@ const App = () => {
       <Route
         path='/about'
         element={
-          // <ProtectedRoute>
             <About />
-          // </ProtectedRoute>
         }
       />
 
