@@ -26,7 +26,7 @@ jest.mock('../../API', () => ({
   getSkills: jest.fn(() => Promise.resolve([{ skillName: 'test-skill' }])),
 }))
 
-xdescribe('Testing <Dashboard/> component', () => {
+describe('Testing <Dashboard/> component', () => {
   describe('Different stages of Dashboard component', () => {
     it('should display "loading" initially', async () => {
       act(() => {
