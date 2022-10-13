@@ -2,24 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { CG } from 'cap-shared-components'
 import { Col } from 'react-grid-system'
 
-import { useNavigate, useParams } from 'react-router-dom'
-import { getClients, getSupplySkill } from '../API'
-import { useSelector, useDispatch } from 'react-redux'
-import { formatClients } from '../Data/Format'
+import { useNavigate } from 'react-router-dom'
+import { getAllSupply } from '../API'
 import { clientForm as form } from '../Data/Data'
-import { removeClient, setupClients } from '../Slices/DashboardSlice'
 
 export const ListAllSupply =() =>{
   const navigate = useNavigate()
-  const dispatch = useDispatch()
-
-  const authToken = useSelector((state) => state.user.authToken)
 
   const [data, setData] = useState([form])
 
-
   useEffect(() => {
-    const supply = getSupplySkill(authToken, "")
+    const supply = getAllSupply()
     
     supply.then((res) => { 
       setData(res)
@@ -46,17 +39,17 @@ export const ListAllSupply =() =>{
 
         <CG.Table
           customKeyNames={{
-            ApplicantID: 'Applicant ID',
-            SkillName: 'Skill Name',
-            ApplicantFirstName: 'Applicant First Name',
-            ApplicantLastName: 'Applicant Last Name',
-            ApplicantStatus: 'Applicant Status',
-            SkillsID: 'Skills ID',
-            ApplicantType: 'Applicant Type',
+            id: 'Applicant ID',
+            skillName: 'Skill Name',
+            applicantFirstName: 'Applicant First Name',
+            applicantLastName: 'Applicant Last Name',
+            applicantStatus: 'Applicant Status',
+            skillsID: 'Skills ID',
+            applicantType: 'Applicant Type',
           }}
           data={data}
           divider
-          selectedKeys={['ApplicantFirstName', 'ApplicantLastName' , 'ApplicantID', 'SkillName', 'ApplicantType', 'ApplicantStatus']}
+          selectedKeys={['applicantFirstName', 'applicantLastName' , 'id', 'skillName', 'applicantType', 'applicantStatus']}
         />
         
       </CG.Box>

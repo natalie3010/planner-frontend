@@ -103,9 +103,9 @@ export function getSingleClient(applicantID, token) {
     })
 }
 
-export function getSingleSupply(applicantID, token) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch(`${URL}/api/v2/supply/${applicantID}`, requestObject)
+export function getSingleSupply(applicantID) {
+  const requestObject = { method: 'GET'}
+  return fetch(`${URL}/api/supply/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -120,9 +120,9 @@ export function getSingleSupply(applicantID, token) {
     })
 }
 
-export function getSingleDemand(applicantID, token) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch(`${URL}/api/v2/demand/${applicantID}`, requestObject)
+export function getSingleDemand(applicantID) {
+  const requestObject = { method: 'GET' }
+  return fetch(`${URL}/api/demand/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -136,11 +136,10 @@ export function getSingleDemand(applicantID, token) {
       return error.status
     })
 }
-export function updateClient(token, applicantID, data) {
+export function updateClient(applicantID, data) {
   const requestObject = {
     method: 'PUT',
     headers: {
-      'x-access-token': token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
@@ -160,16 +159,15 @@ export function updateClient(token, applicantID, data) {
     })
 }
 
-export function updateSupply(token, applicantID, data) {
+export function updateSupply(applicantID, data) {
   const requestObject = {
     method: 'PUT',
     headers: {
-      'x-access-token': token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/api/v2/supply/${applicantID}`, requestObject)
+  return fetch(`${URL}/api/supply/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -184,16 +182,15 @@ export function updateSupply(token, applicantID, data) {
     })
 }
 
-export function updateDemand(token, applicantID, data) {
+export function updateDemand(applicantID, data) {
   const requestObject = {
     method: 'PUT',
     headers: {
-      'x-access-token': token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/api/v2/demand/${applicantID}`, requestObject)
+  return fetch(`${URL}/api/demand/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -242,9 +239,9 @@ export function getClients() {
     })
 }
 
-export function getDemandSkill(skillName) {
-  const requestObject = { method: 'GET' }
-  return fetch(`${URL}/api/demand`, requestObject)
+export function getDemandSkill(skillID) {
+  const requestObject = { method: 'GET', headers: { 'Content-Type': 'application/json' } }
+  return fetch(`${URL}/api/demand/skillID/${skillID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -259,8 +256,8 @@ export function getDemandSkill(skillName) {
     })
 }
 
-export function deleteDemand(token, demandId) {
-  const requestObject = { method: 'DELETE', headers: { 'x-access-token': token } }
+export function deleteDemand(demandId) {
+  const requestObject = { method: 'DELETE' }
   return fetch(`${URL}/api/demand/${demandId}`, requestObject)
     .then((res) => {
       if (!res.ok) {
@@ -276,9 +273,9 @@ export function deleteDemand(token, demandId) {
     })
 }
 
-export function getSupplySkill(token, skillName) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch(`${URL}/api/supply?selectedSkills=${skillName}`, requestObject)
+export function getSupplySkill(skillID) {
+  const requestObject = { method: 'GET' }
+  return fetch(`${URL}/api/supply/skillID/${skillID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -293,8 +290,8 @@ export function getSupplySkill(token, skillName) {
     })
 }
 
-export function deleteSupply(token, supplyId) {
-  const requestObject = { method: 'DELETE', headers: { 'x-access-token': token } }
+export function deleteSupply(supplyId) {
+  const requestObject = { method: 'DELETE' }
   return fetch(`${URL}/api/supply/${supplyId}`, requestObject)
     .then((res) => {
       if (!res.ok) {
@@ -310,11 +307,10 @@ export function deleteSupply(token, supplyId) {
     })
 }
 
-export function postClient(token, data) {
+export function postClient(data) {
   const requestObject = {
     method: 'POST',
     headers: {
-      'x-access-token': token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
@@ -328,11 +324,10 @@ export function postClient(token, data) {
     })
 }
 
-export function putClient(token, clientID, data) {
+export function putClient(clientID, data) {
   const requestObject = {
     method: 'PUT',
     headers: {
-      'x-access-token': token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),

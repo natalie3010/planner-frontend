@@ -10,9 +10,12 @@ export const BarChart = ({ navigateToListPage, allDemand, allSupply, allSkills }
   const clickedElementPassUp = (element) => {
     // datasetIndex is the label, it includes both supply and demand
     const type = element[0].datasetIndex <= 3 ? 'supply' : 'demand'
-    const skillName = allSkills[element[0].index].SkillName
+    console.log(type, 'type');
+    console.log(allSkills, 'allSkills');
+    console.log(element[0].index, 'element[0].index');
+    const skillID = allSkills[element[0].index].id
 
-    navigateToListPage(type, skillName)
+    navigateToListPage(type, skillID)
   }
 
   useEffect(() => {

@@ -139,7 +139,7 @@
 
   "addClientForm": {
     "inputs": {
-      "clientID": {
+      "id": {
         "validators": [
           {
             "errorDisplayed": "Please put in a Client ID",
@@ -147,7 +147,7 @@
           }
         ]
       },
-      "clientName": {
+      "name": {
         "validators": [
           {
             "errorDisplayed": "Please put in a Client Name",

@@ -37,9 +37,7 @@ const App = () => {
       <Route
         path='/edit-demand/:demandId'
         element={
-          <ProtectedRoute>
             <EditDemand />
-          </ProtectedRoute>
         }
       />
       <Route
@@ -51,25 +49,19 @@ const App = () => {
       <Route
         path='/listClients'
         element={
-          <ProtectedRoute>
             <ListClients />
-          </ProtectedRoute>
         }
       />
       <Route
         path='/listAllSupply'
         element={
-          <ProtectedRoute>
             <ListAllSupply />
-          </ProtectedRoute>
         }
       />
       <Route
         path='/listAllDemand'
         element={
-          <ProtectedRoute>
             <ListAllDemand />
-          </ProtectedRoute>
         }
       />
       <Route
@@ -81,9 +73,7 @@ const App = () => {
       <Route
         path='/edit-supply/:applicantId'
         element={
-          <ProtectedRoute>
             <EditSupply />
-          </ProtectedRoute>
         }
       />
       <Route
@@ -94,20 +84,16 @@ const App = () => {
       />
 
       <Route
-        path='/list-supply/:skillname'
+        path='/list-supply/:skillID'
         element={
-          <ProtectedRoute>
             <ListSupply />
-          </ProtectedRoute>
         }
       />
 
       <Route
-        path='/list-demand/:skillname'
+        path='/list-demand/:skillID'
         element={
-          <ProtectedRoute>
             <ListDemand />
-          </ProtectedRoute>
         }
       />
     </Routes>

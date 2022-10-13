@@ -11,7 +11,6 @@ import { clientSchema } from '../Validations/ListClientsValidation'
 export const ListClients = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const authToken = useSelector((state) => state.user.authToken)
   const clientData = useSelector((state) => state.dashboard.clientData)
   const [ClientID, setClientID] = useState(null)
   const [ClientName, setClientName] = useState(null)
@@ -22,7 +21,7 @@ export const ListClients = () => {
   const inputDefaults = clientFormFormatter()
 
   useEffect(() => {
-    const requestClients = getClients(authToken)
+    const requestClients = getClients()
     requestClients.then((clientResult) => {
       dispatch(setupClients(clientResult))
     })
@@ -32,7 +31,7 @@ export const ListClients = () => {
     setFormSubmitted(!clientsUpdated)
     const isFormValid = await checkIfFormIsValid()
     if (isFormValid) {
-      const response = await postClient(authToken, { ClientID, ClientName })
+      const response = await postClient({ ClientID, ClientName })
       if (response.status === 200) {
         setClientsUpdated(!clientsUpdated)
       }
@@ -42,7 +41,7 @@ export const ListClients = () => {
   const editClient = async (clientId) => {
     if(clientId && editClientName)
     {
-      const response = await putClient(authToken, clientId, { ClientName: editClientName })
+      const response = await putClient(clientId, { ClientName: editClientName })
       if (response) {
       setClientsUpdated(!clientsUpdated)
     }
@@ -51,7 +50,7 @@ export const ListClients = () => {
   }
 
   const checkIfFormIsValid = async () => {
-    return clientSchema.isValid({ clientID: ClientID, clientName: ClientName })
+    return clientSchema.isValid({ id: ClientID, clientName: ClientName })
   }
 
   const setClientIndex = (clientId) => {
@@ -94,16 +93,16 @@ export const ListClients = () => {
           height='30px'
         >
           <CG.Input
-            id='clientID'
+            id='id'
             label='Add'
-            name='clientID'
+            name='id'
             placeholder='Add Client Id'
             topLabel={false}
             onInput={(e) => {
               setClientID(e.target.value)
             }}
-            required={inputDefaults['clientID'].validators[0].required}
-            hasError={inputDefaults['clientID'].validators[0].required && !clientData['clientID'] && formSubmitted}
+            required={inputDefaults['id'].validators[0].required}
+            hasError={inputDefaults['id'].validators[0].required && !clientData['id'] && formSubmitted}
           />
           <CG.Input
             id='clientName'
@@ -113,8 +112,8 @@ export const ListClients = () => {
             onInput={(e) => {
               setClientName(e.target.value)
             }}
-            required={inputDefaults['clientName'].validators[0].required}
-            hasError={inputDefaults['clientName'].validators[0].required && !clientData['clientName'] && formSubmitted}
+            required={inputDefaults['name'].validators[0].required}
+            hasError={inputDefaults['name'].validators[0].required && !clientData['name'] && formSubmitted}
           />
           <CG.Button
             primary
@@ -127,11 +126,11 @@ export const ListClients = () => {
 
         <CG.Table
           customKeyNames={{
-            ClientName: 'Client Name',
+            name: 'ClientName',
           }}
           data={clientData}
           divider
-          selectedKeys={['ClientName']}
+          selectedKeys={['name']}
           icons={[
             {
               tableHeader: 'Edit',
@@ -139,15 +138,20 @@ export const ListClients = () => {
               width: '0.90rem',
               type: 'Edit2',
               handler: (value) => {
-                  clientData.find((data) => data.clientID)
-                  setEditClientIndex(clientData.findIndex((data) => data.clientID === value.clientID))
+                  const index = clientData.findIndex((data) => 
+                  data.id === value.id
+               )
+               console.log(index, 'index');
+               setEditClientIndex(index)
+                  console.log(editClientIndex, 'editClientIndex');
                   if (editClientIndex > -1) {
-                    setEditClientName(value.ClientName)
-                    editClient(value.ClientID)
+                    console.log('here');
+                    setEditClientName(value.name)
+                    editClient(value.id)
                   }
-                  setEditClientIndex(null)
+                  // setEditClientIndex(null)
                   setEditClientName(null)
-                  setClientIndex(value.ClientID)
+                  setClientIndex(value.id)
                 },
               },
             ]}

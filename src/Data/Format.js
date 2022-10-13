@@ -28,18 +28,18 @@ export const formatClients = (data) => {
 export const clientFormFormatter = () => {
   const inputValidator = formValidators.addClientForm.inputs
   const inputDefaults = {
-    clientID: {
+    id: {
       label: 'Client ID',
       placeholder: '',
       inputType: 'text',
-      validators: inputValidator.clientID.validators,
+      validators: inputValidator.id.validators,
     },
 
-    clientName: {
+    name: {
       label: 'Client Name',
       placeholder: '',
       inputType: 'text',
-      validators: inputValidator.clientName.validators,
+      validators: inputValidator.name.validators,
     },
   }
   return inputDefaults
