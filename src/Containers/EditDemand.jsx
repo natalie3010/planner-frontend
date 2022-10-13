@@ -54,10 +54,10 @@ export const EditDemand = () => {
 
       request.then((result) => {
         if (initialSkillName && newskillname && newskillname !== initialSkillName) {
-          try {
+          {
             dispatch(removeDemandFromDashboard(initialSkillName))
             dispatch(addDemandToDashboard(newskillname))
-          } catch {}
+          }
         }
         const routeName = newskillname.replace(/\//g, '-')
         navigate(`/list-Demand/${routeName}`)
