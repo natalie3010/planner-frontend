@@ -28,7 +28,6 @@ export const ListDemand = () => {
       dispatch(removeDemandFromDashboard(skillID))
     })
   }
-  console.log(data, 'data');
   return (
     <Col md={12} align='center' justify='center'>
       <CG.Box ml='15px' mr='15px' mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>

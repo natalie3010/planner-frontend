@@ -41,7 +41,7 @@ export const ListClients = () => {
   const editClient = async (clientId) => {
     if(clientId && editClientName)
     {
-      const response = await putClient(clientId, { ClientName: editClientName })
+      const response = await putClient(clientId, {client: { id: clientId, name: editClientName }})
       if (response) {
       setClientsUpdated(!clientsUpdated)
     }
@@ -50,19 +50,9 @@ export const ListClients = () => {
   }
 
   const checkIfFormIsValid = async () => {
-    return clientSchema.isValid({ id: ClientID, clientName: ClientName })
+    return clientSchema.isValid({ id: ClientID, name: ClientName })
   }
 
-  const setClientIndex = (clientId) => {
-    const clientIndex = clientData.findIndex((object) => {
-      return object.ClientID === clientId
-    })
-    /**
-     * Changed index to string as index 0 doesn't work
-     * index is an interger
-     */
-    setEditClientIndex(clientIndex.toString())
-  }
   if (!clientData) {
     return <>Loading...</>
   }
@@ -141,17 +131,11 @@ export const ListClients = () => {
                   const index = clientData.findIndex((data) => 
                   data.id === value.id
                )
-               console.log(index, 'index');
                setEditClientIndex(index)
-                  console.log(editClientIndex, 'editClientIndex');
-                  if (editClientIndex > -1) {
-                    console.log('here');
+                  if (index > -1) {
                     setEditClientName(value.name)
                     editClient(value.id)
                   }
-                  // setEditClientIndex(null)
-                  setEditClientName(null)
-                  setClientIndex(value.id)
                 },
               },
             ]}

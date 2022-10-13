@@ -162,7 +162,6 @@ describe('Testing <ListDemand/> component', () => {
       const row = screen.getAllByRole('row')[1]
       const editButtonEl = within(row).getAllByRole('cell')[7]
 
-      console.log(editButtonEl)
       fireEvent(
         editButtonEl,
         new MouseEvent('click', {
