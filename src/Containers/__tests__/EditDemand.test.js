@@ -133,17 +133,15 @@ it('should call addDemandToDashboard if form data  is successfully submitted', a
   store.dispatch = jest.fn(originalDispatch)
 
   await act(async () => {
-    renderWithProviders(<EditDemand />, { store }) // formIsValid is not part of state object but it is being set by checkIfFormIsValid method. Remove this line of code
+    renderWithProviders(<EditDemand />, { store })
   })
 
   fireEvent.input(screen.getByText('Code Requisition').nextSibling, {
     target: { value: 'test-code-requisition' },
   })
 
-  // screen.debug()
   const skillSelector = await screen.findByTestId('Skill')
   const skillButton = within(skillSelector).getByRole('button')
-  // await selectEvent.select(skillButton, ['test-skill'])
 
   await waitFor(() => {
     fireEvent(
@@ -184,7 +182,7 @@ it('should call addDemandToDashboard if form data  is successfully submitted', a
 })
 
 describe('User action on components', () => {
-  it('click cancel with navigate to DemandPage', async () => {
+  it('click cancel with navigate to EditDemand', async () => {
     await act(async () => {
       renderWithProviders(<EditDemand />)
     })

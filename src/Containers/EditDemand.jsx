@@ -110,7 +110,7 @@ export const EditDemand = () => {
               <CG.Input
                 label={inputDefaults[formItem].label}
                 initValue={formData[formItem] ?? ''}
-                onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
+                onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })}
                 margin={0.5}
                 placeholder={inputDefaults[formItem].placeholder}
                 required={required}
