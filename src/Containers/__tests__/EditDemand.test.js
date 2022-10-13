@@ -6,25 +6,17 @@ import { EditDemand } from '../EditDemand'
 import { setupStore } from '../../store'
 import { setupDashboard } from '../../Slices/DashboardSlice'
 import { demandSchema } from '../../Validations/DemandValidation'
-import format from '../../Data/Format'
 import { updateDemand, getClients, getSkills, getSingleDemand } from '../../API'
 
 const mockNavigate = jest.fn()
 jest.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
   useParams: () => ({ skillname: 'test-skill' }),
-  // formIsValid is not coming from route params but it is being set by checkIfFormIsValid method. Remove this line of code
 }))
 
 jest.mock('../../Validations/DemandValidation', () => ({
   demandSchema: { isValid: jest.fn(() => Promise.resolve(true)) },
 }))
-
-// jest.mock('../../Data/Format', () => ({
-//   formatSkills: jest.fn(() => [[{ SkillName: null, SkillsID: null }], null]),
-//   formatClients: jest.fn(() => null),
-//   demandFormFormatter: jest.fn(() => null),
-// }))
 
 jest.mock('../../API', () => ({
   getClients: jest.fn(() => Promise.resolve([{ ClientID: 'test-clients', ClientName: 'test-client-name' }])),
@@ -103,43 +95,6 @@ it('should not call api if form is invalid', async () => {
   expect(updateDemand).not.toHaveBeenCalled()
 })
 
-// describe('Actions on EditDemand page', () => {
-//   //Not sure this is needed, need further advice
-//   it('test all inputdefaults on EditDemand', async () => {
-//     await act(async () => {
-//       renderWithProviders(<EditDemand />)
-//     })
-//     await waitFor(() => {
-//       expect(screen.findByText('Code Requisition')).toBeDefined()
-//       expect(screen.findByText('Start Date')).toBeDefined()
-//       expect(screen.findByText('Client Name')).toBeDefined()
-//       expect(screen.findByText('Originator')).toBeDefined()
-//       expect(screen.findByText('Skill')).toBeDefined()
-//       expect(screen.findByText('Probability')).toBeDefined()
-//       expect(screen.findByText('Grade')).toBeDefined()
-//       expect(screen.findByText('Selected Applicant')).toBeDefined()
-//       expect(screen.findByText('Status')).toBeDefined()
-//       expect(screen.findByText('Notes')).toBeDefined()
-//       expect(screen.findByText('Proposed Applicant')).toBeDefined()
-//       expect(screen.findByText('Creation Date')).toBeDefined()
-//       expect(screen.findByText('Location')).toBeDefined()
-//     })
-//     screen.debug()
-//     const submitButton = screen.getByRole('button', {
-//       name: /submit/i,
-//     })
-//     await waitFor(() => {
-//       fireEvent(
-//         submitButton,
-//         new MouseEvent('click', {
-//           bubbles: true,
-//           cancelable: true,
-//         })
-//       )
-//       expect(updateDemand).toHaveBeenCalledTimes(0)
-//     })
-//   })
-
 it('should call updateDemand if form data is submitted accordingly', async () => {
   updateDemand.mockImplementation(() => Promise.resolve(true))
 
@@ -173,8 +128,6 @@ it('should call addDemandToDashboard if form data  is successfully submitted', a
       { skill_name: 'react', demand_count: 1 },
     ])
   )
-  //const state = { formIsValid: true, initialSkillName: 'skill-test', newskillname: 'one-test' }
-  // store = setupStore(state)
 
   const originalDispatch = store.dispatch
   store.dispatch = jest.fn(originalDispatch)
@@ -236,7 +189,6 @@ describe('User action on components', () => {
       renderWithProviders(<EditDemand />)
     })
 
-    // screen.debug()
     const cancelButton = screen.getByRole('button', {
       name: /cancel/i,
     })
@@ -254,4 +206,3 @@ describe('User action on components', () => {
     expect(mockNavigate).toHaveBeenCalledWith('/list-Demand/test-skill')
   })
 })
-// })

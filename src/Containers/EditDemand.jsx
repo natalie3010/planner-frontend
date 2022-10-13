@@ -38,7 +38,6 @@ export const EditDemand = () => {
       })
     })
   }, [])
-  // console.log(pickerClients, pickerSkills, formData)
 
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
 
@@ -47,15 +46,11 @@ export const EditDemand = () => {
     const formIsValid = await checkIfFormIsValid()
     navigate(`/list-Demand`)
 
-    console.log('formData', formData)
-    // console.log('formIsValid', formIsValid)
-
     if (formIsValid) {
       const skillSelected = formData.demandSkills && true
       const newskillname = skillSelected && pickerSkills[formData.demandSkills - 1].name
 
       const request = updateDemand(authToken, demandId, formData)
-      // console.log('request', request)
 
       request.then((result) => {
         if (initialSkillName && newskillname && newskillname !== initialSkillName) {
@@ -64,11 +59,6 @@ export const EditDemand = () => {
             dispatch(addDemandToDashboard(newskillname))
           } catch {}
         }
-        // else if (newskillname && !initialSkillName) {
-        //   try {
-        //     dispatch(addDemandToDashboard(newskillname))
-        //   } catch {}
-        // }
         const routeName = newskillname.replace(/\//g, '-')
         navigate(`/list-Demand/${routeName}`)
       })
