@@ -28,11 +28,11 @@ jest.mock('../../Validations/DemandValidation', () => ({
 
 jest.mock('../../API', () => ({
   getClients: jest.fn(() => Promise.resolve([{ ClientID: 'test-clients', ClientName: 'test-client-name' }])),
-  getSingleDemand: jest.fn(() => Promise.resolve({ DemandStatus: 'test-single-demand', demandSkills: '1' })),
+  getSingleDemand: jest.fn(() => Promise.resolve({ DemandStatus: 'test-single-demand', demandSkills: 1 })),
   getSkills: jest.fn(() =>
     Promise.resolve([
-      { SkillName: 'test-skill', SkillsID: '1' },
-      { SkillName: 'react', SkillsID: '2' },
+      { SkillName: 'test-skill', SkillsID: 1 },
+      { SkillName: 'react', SkillsID: 2 },
     ])
   ),
   updateDemand: jest.fn(() => Promise.resolve(true)),
@@ -163,7 +163,7 @@ it('should call updateDemand if form data is submitted accordingly', async () =>
   expect(await waitFor(() => updateDemand)).toHaveBeenCalledTimes(1)
 })
 
-it.only('should call addDemandToDashboard if form data  is successfully submitted', async () => {
+it('should call addDemandToDashboard if form data  is successfully submitted', async () => {
   updateDemand.mockImplementation(() => Promise.resolve({ SkillName: 'test-skill2', SkillsID: '1' }))
 
   const store = setupStore()
@@ -187,25 +187,14 @@ it.only('should call addDemandToDashboard if form data  is successfully submitte
     target: { value: 'test-code-requisition' },
   })
 
-  screen.debug()
+  // screen.debug()
   const skillSelector = await screen.findByTestId('Skill')
-  const clientNameSelector = await screen.findByTestId('Client Name')
   const skillButton = within(skillSelector).getByRole('button')
-  const clientButton = within(clientNameSelector).getByRole('button')
   // await selectEvent.select(skillButton, ['test-skill'])
 
   await waitFor(() => {
     fireEvent(
       skillButton,
-      new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-      })
-    )
-  })
-  await waitFor(() => {
-    fireEvent(
-      clientButton,
       new MouseEvent('click', {
         bubbles: true,
         cancelable: true,
@@ -223,27 +212,6 @@ it.only('should call addDemandToDashboard if form data  is successfully submitte
     })
   )
 
-  await waitFor(() => {
-    fireEvent(
-      clientButton,
-      new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-      })
-    )
-  })
-
-  const clientOption = await screen.findByRole('button', { name: /test-client-name/i })
-
-  await waitFor(() => {
-    fireEvent(
-      clientOption,
-      new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-      })
-    )
-  })
   fireEvent(
     screen.getByText(/submit/i),
     new MouseEvent('click', {

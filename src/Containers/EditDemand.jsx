@@ -83,7 +83,7 @@ export const EditDemand = () => {
   if (!pickerClients || !pickerSkills || !formData) {
     return <CG.Body>loading...</CG.Body>
   }
-  console.log(typeof pickerVal)
+
   return (
     <Col md={12} align='center' justify='center'>
       <CG.Box width='400px' mb={10}>
