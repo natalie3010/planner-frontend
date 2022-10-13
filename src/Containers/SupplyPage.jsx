@@ -35,9 +35,8 @@ export const SupplyPage = () => {
       const skillName = dataAllSkills[formData.applicantSkills - 1].name
       const request = await addSupply(authToken, formData)
       if (request) {
-        try {
-          dispatch(addSupplyToDashboard(skillName))
-        } catch {}
+        dispatch(addSupplyToDashboard(skillName))
+
         navigate('/protectedRoute/dashboard')
       }
     }

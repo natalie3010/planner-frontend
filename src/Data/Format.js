@@ -3,7 +3,7 @@ import formValidators from '../../formValidatorsConfig.json'
 export const formatSkills = (data, skillId) => {
   const formatted_skills = []
   var default_skill
-  data.forEach((skill) => {
+  data?.forEach((skill) => {
     if (skill.SkillsID === skillId) {
       default_skill = skill.SkillName
     }
@@ -17,7 +17,7 @@ export const formatSkills = (data, skillId) => {
 
 export const formatClients = (data) => {
   const formatted_Clients = []
-  data.forEach((client) => {
+  data?.forEach((client) => {
     formatted_Clients.push({
       name: client.ClientName,
       value: client.ClientID,
