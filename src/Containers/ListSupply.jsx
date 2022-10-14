@@ -62,13 +62,7 @@ export const ListSupply = () => {
             }}
             data={data}
             divider
-            selectedKeys={[
-              'id',
-              'applicantFirstName',
-              'applicantLastName',
-              'applicantStatus',
-              'applicantType',
-            ]}
+            selectedKeys={['id', 'applicantFirstName', 'applicantLastName', 'applicantStatus', 'applicantType']}
             icons={[
               {
                 tableHeader: 'Edit',
@@ -76,7 +70,7 @@ export const ListSupply = () => {
                 width: '0.90rem',
                 type: 'Edit2',
                 handler: (value) => {
-                  navigate(`/edit-supply/${value.id}`)
+                  navigate(`/supply/update/${value.id}`)
                 },
               },
               {

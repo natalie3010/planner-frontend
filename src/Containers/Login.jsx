@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { Col } from 'react-grid-system'
-import { submitUserLogin, getDashboard, getNewToken } from '../API'
+import { submitUserLogin } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
 import { login } from '../Slices/LoginSlice'
 
@@ -17,58 +17,33 @@ export const Login = () => {
   const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
-    const authToken = localStorage.getItem('authToken')
     if (userLoggedIn) {
       navigate(pathname)
-    } else if (authToken) {
-      const testToken = getDashboard(authToken)
-      testToken.then((result) => {
-        if (result == 401) {
-          const loginTime = Date.now().toString()
-          const refreshToken = localStorage.getItem('refreshToken')
-          getNewToken(refreshToken).then((result) => {
-            // if (result.token) {
-            //   localStorage.setItem('authToken', result.token)
-            //   localStorage.setItem('loginTime', loginTime)
-            //   dispatch(login(result.token))
-              navigate(pathname)
-            // }
-          })
-        } else if (typeof result === 'object') {
-          dispatch(login(authToken))
-          navigate(pathname)
-        }
-      })
     }
   }, [])
 
   const logIn = () => {
     const request = submitUserLogin(userName, password)
-    const loginTime = Date.now().toString()
     request.then((result) => {
-      // if (result.token) {
-        // const authToken = result.token
-        // localStorage.setItem('authToken', authToken)
-        // localStorage.setItem('refreshToken', result.refreshToken)
-        // localStorage.setItem('loginTime', loginTime)
-        // dispatch(login(authToken))
+      if (result) {
+        dispatch(login(result))
         navigate(pathname)
-      // } else {
-      //   let message = ''
-      //   switch (result) {
-      //     case (result = 403):
-      //       message = 'Wrong username or password'
-      //       break
-      //     default:
-      //       message = `Error: ${result}`
-      //       break
-      //   }
-      //   setErrorMessage(message)
-      //   const timeoutError = setTimeout(() => {
-      //     setErrorMessage('')
-      //   }, 5000)
-      //   timeoutError
-      // }
+      } else {
+        let message = ''
+        switch (result) {
+          case (result = 403):
+            message = 'Wrong username or password'
+            break
+          default:
+            message = `Error: ${result}`
+            break
+        }
+        setErrorMessage(message)
+        const timeoutError = setTimeout(() => {
+          setErrorMessage('')
+        }, 5000)
+        timeoutError
+      }
     })
   }
 
@@ -96,11 +71,10 @@ export const Login = () => {
           label='Username'
           required
           onKeyUp={(e) => {
-            if(e.key === 'Enter') 
-                  {
-                    logIn()
-                  }}
-          }
+            if (e.key === 'Enter') {
+              logIn()
+            }
+          }}
         />
         <CG.Input
           style={{ marginBottom: 20 }}
@@ -110,16 +84,15 @@ export const Login = () => {
           label='Password'
           inputType='password'
           onKeyUp={(e) => {
-            if(e.key === 'Enter') 
-                  {
-                    logIn()
-                  }}
-          }
+            if (e.key === 'Enter') {
+              logIn()
+            }
+          }}
           required
         />
         <CG.Box mb='20px' m='10px' p='10px'>
           <CG.Body size='S'>{errorMessage}</CG.Body>
-          <CG.Button text='Login' onClick={logIn}/>
+          <CG.Button text='Login' onClick={logIn} />
         </CG.Box>
       </CG.Box>
     </Col>

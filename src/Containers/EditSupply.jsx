@@ -41,7 +41,7 @@ export const EditSupply = () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
     if (formIsValid) {
-      const request = await updateSupply(applicantId, {supply: formData})
+      const request = await updateSupply(applicantId, { supply: formData })
       if (request) {
         // response is a bool true
         const newSkillName = formData.applicantSkills && dataAllSkills[formData.applicantSkills - 1].name
@@ -56,7 +56,7 @@ export const EditSupply = () => {
           } catch {}
         }
         const routeName = newSkillName.replace(/\//g, '-')
-        navigate(`/list-supply/${routeName}`)
+        navigate(`/supply/all/skill/${routeName}`)
       }
     }
   }
@@ -116,7 +116,7 @@ export const EditSupply = () => {
             text='cancel'
             onClick={() => {
               const routeName = initialSkillName.replace(/\//g, '-')
-              navigate(`/list-supply/${routeName}`)
+              navigate(`/supply/all/skill/${routeName}`)
             }}
           />
         </CG.Box>

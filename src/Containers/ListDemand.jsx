@@ -32,7 +32,7 @@ export const ListDemand = () => {
     <Col md={12} align='center' justify='center'>
       <CG.Box ml='15px' mr='15px' mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
         <CG.Button primary text='Add Demand' onClick={() => navigate('/demand')}></CG.Button>
-        <CG.Heading size='XS'>Demand information for {data && data [0] && data[0].skillName}</CG.Heading>
+        <CG.Heading size='XS'>Demand information for {data && data[0] && data[0].skillName}</CG.Heading>
         <CG.Button primary text='Dashboard' onClick={() => navigate('/dashboard')}></CG.Button>
       </CG.Box>
 
@@ -67,7 +67,7 @@ export const ListDemand = () => {
                 width: '0.90rem',
                 type: 'Edit2',
                 handler: (value) => {
-                  navigate(`/edit-demand/${value.id}`)
+                  navigate(`/demand/update/${value.id}`)
                 },
               },
               {

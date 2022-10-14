@@ -46,7 +46,7 @@ export const EditDemand = () => {
     if (formIsValid) {
       const skillSelected = formData.demandSkills && true
       const newskillname = skillSelected && pickerSkills[formData.demandSkills - 1].name
-      const request = updateDemand(demandId, {demand: formData})
+      const request = updateDemand(demandId, { demand: formData })
       request.then((result) => {
         if (initialSkillName && newskillname && newskillname !== initialSkillName) {
           try {
@@ -59,7 +59,7 @@ export const EditDemand = () => {
           } catch {}
         }
         const routeName = newskillname.replace(/\//g, '-')
-        navigate(`/list-Demand/${routeName}`)
+        navigate(`/demand/all/skill/${routeName}`)
       })
     }
   }
@@ -130,7 +130,7 @@ export const EditDemand = () => {
             text='cancel'
             onClick={() => {
               const routeName = initialSkillName.replace(/\//g, '-')
-              navigate(`/list-Demand/${routeName}`)
+              navigate(`/demand/all/skill/${routeName}`)
             }}
           />
         </CG.Box>

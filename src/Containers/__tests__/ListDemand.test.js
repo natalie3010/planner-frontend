@@ -169,7 +169,7 @@ describe('Testing <ListDemand/> component', () => {
           cancelable: true,
         })
       )
-      expect(mockNavigate).toHaveBeenCalledWith(`/edit-demand/${config.demandSkill[0].DemandID}`)
+      expect(mockNavigate).toHaveBeenCalledWith(`/demand/update${config.demandSkill[0].DemandID}`)
     })
   })
 })

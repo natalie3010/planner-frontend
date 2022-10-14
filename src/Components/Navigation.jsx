@@ -3,6 +3,7 @@ import { CG } from 'cap-shared-components'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../Slices/LoginSlice'
+import { logoutAPI } from '../API'
 
 export const Navigation = () => {
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn)
@@ -35,9 +36,8 @@ export const Navigation = () => {
                 text='Log out'
                 onClick={() => {
                   dispatch(logout())
-                  localStorage.removeItem('authToken')
-                  localStorage.removeItem('refreshToken')
-                  localStorage.removeItem('loginTime')
+                  logoutAPI()
+                  navigate('/')
                 }}
               />
             </CG.Box>
