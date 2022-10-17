@@ -11,9 +11,9 @@ export const lowerCaseKeys = (obj) => {
 export const getRequiredBarchartDemandStatus = (allDemand) => {
   return allDemand.filter((demand) => {
     return (
-      demand.Status === 'Profiles Required' ||
-      demand.Status === 'Demand Validation' ||
-      demand.Status === 'Profile Proposed'
+      demand.status === 'Profiles Required' ||
+      demand.status === 'Demand Validation' ||
+      demand.status === 'Profile Proposed'
     )
   })
 }
@@ -21,10 +21,10 @@ export const getRequiredBarchartDemandStatus = (allDemand) => {
 export const getRequiredBarchartSupplyStatus = (allSupply) => {
   return allSupply.filter((supply) => {
     return (
-      supply.ApplicantStatus === 'Screening' ||
-      supply.ApplicantStatus === 'L1 select' ||
-      supply.ApplicantStatus === 'L2 select' ||
-      supply.ApplicantStatus === 'Client select'
+      supply.applicantStatus === 'Screening' ||
+      supply.applicantStatus === 'L1 select' ||
+      supply.applicantStatus === 'L2 select' ||
+      supply.applicantStatus === 'Client select'
     )
   })
 }

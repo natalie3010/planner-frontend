@@ -12,14 +12,13 @@ import { supplySchema } from '../Validations/SupplyValidation'
 export const SupplyPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const authToken = useSelector((state) => state.user.authToken)
   // dataAllSkills are all the skill, formatted for the picker component
   const [dataAllSkills, setDataAllSkills] = useState(null)
   const [formData, setFormData] = useState(form)
   const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
-    const requestSkills = getSkills(authToken)
+    const requestSkills = getSkills()
     requestSkills.then((skillResult) => {
       const myArray = formatSkills(skillResult, 0)
       setDataAllSkills(myArray[0])
@@ -33,11 +32,15 @@ export const SupplyPage = () => {
     const formIsValid = await checkIfFormIsValid()
     if (formIsValid) {
       const skillName = dataAllSkills[formData.applicantSkills - 1].name
-      const request = await addSupply(authToken, formData)
+      const supplyReq = {
+        supply: formData
+      }
+      const request = await addSupply(supplyReq)
       if (request) {
-        dispatch(addSupplyToDashboard(skillName))
-
-        navigate('/protectedRoute/dashboard')
+        try {
+          dispatch(addSupplyToDashboard(skillName))
+        } catch {}
+        navigate('/dashboard')
       }
     }
   }
@@ -94,7 +97,7 @@ export const SupplyPage = () => {
             primary
             text='cancel'
             onClick={() => {
-              navigate('/protectedRoute/dashboard')
+              navigate('/dashboard')
             }}
           />
         </CG.Box>

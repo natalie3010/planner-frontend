@@ -13,18 +13,18 @@ import { demandSchema } from '../Validations/DemandValidation'
 export const DemandPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const authToken = useSelector((state) => state.user.authToken)
   const [pickerSkills, setPickerSkills] = useState(null)
   const [pickerClients, setPickerClients] = useState(null)
   const [formData, setFormData] = useState(form)
   const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
-    const requestClients = getClients(authToken)
+    const requestClients = getClients()
     requestClients.then((clientsResult) => setPickerClients(formatClients(clientsResult)))
-
-    const requestSkills = getSkills(authToken)
-    requestSkills.then((skillsResult) => setPickerSkills(formatSkills(skillsResult)[0]))
+    const requestSkills = getSkills()
+    requestSkills.then((skillsResult) =>
+      setPickerSkills(formatSkills(skillsResult)[0])
+    )
   }, [])
 
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
@@ -33,12 +33,18 @@ export const DemandPage = () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
     if (formIsValid) {
-      const request = await addDemand(authToken, formData)
+      const demandReq = {
+        demand: formData
+      }
+      const request = await addDemand(demandReq)
       if (request) {
-        const skillName = pickerSkills[formData.demandSkills - 1].name
-        dispatch(addDemandToDashboard(skillName))
-
-        navigate('/protectedRoute/dashboard')
+        try {
+          const skillName = pickerSkills[formData.skills - 1].name
+          dispatch(addDemandToDashboard(skillName))
+        } catch(err) {
+          console.log(err, 'err');
+        }
+        navigate('/dashboard')
       }
     }
   }
@@ -102,7 +108,7 @@ export const DemandPage = () => {
             primary
             text='cancel'
             onClick={() => {
-              navigate('/protectedRoute/dashboard')
+              navigate('/dashboard')
             }}
           />
         </CG.Box>

@@ -13,7 +13,6 @@ export const EditSupply = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { applicantId } = useParams()
-  const authToken = useSelector((state) => state.user.authToken)
   // dataSupply - selected supply from Get request
   const [initialSkill, setInitialSkill] = useState(null)
   const [initialSkillName, setInitialSkillName] = useState(null)
@@ -23,11 +22,11 @@ export const EditSupply = () => {
   const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
-    const request = getSingleSupply(applicantId, authToken)
+    const request = getSingleSupply(applicantId)
     request.then((supplyResult) => {
       setFormData(supplyResult)
       setInitialSkill(supplyResult.applicantSkills)
-      const requestSkills = getSkills(authToken)
+      const requestSkills = getSkills()
       requestSkills.then((skillResult) => {
         const [skillsArray, skillName] = formatSkills(skillResult, supplyResult.applicantSkills)
         setDataAllSkills(skillsArray)
@@ -42,7 +41,7 @@ export const EditSupply = () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
     if (formIsValid) {
-      const request = await updateSupply(authToken, applicantId, formData)
+      const request = await updateSupply(applicantId, { supply: formData })
       if (request) {
         // response is a bool true
         const newSkillName = formData.applicantSkills && dataAllSkills[formData.applicantSkills - 1].name
@@ -53,7 +52,7 @@ export const EditSupply = () => {
           dispatch(addSupplyToDashboard(newSkillName))
         }
         const routeName = newSkillName.replace(/\//g, '-')
-        navigate(`/list-supply/${routeName}`)
+        navigate(`/supply/all/skill/${routeName}`)
       }
     }
   }
@@ -113,7 +112,7 @@ export const EditSupply = () => {
             text='cancel'
             onClick={() => {
               const routeName = initialSkillName.replace(/\//g, '-')
-              navigate(`/list-supply/${routeName}`)
+              navigate(`/supply/all/skill/${routeName}`)
             }}
           />
         </CG.Box>

@@ -9,35 +9,31 @@ import { deleteDemand, getDemandSkill } from '../API'
 export const ListDemand = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  let { skillname } = useParams()
-  const token = useSelector((state) => state.user.authToken)
+  const { skillID } = useParams()
 
   const [data, setData] = useState([])
   const [tableChanged, setTableChanged] = useState(false)
 
   useEffect(() => {
-    const skillName = skillname?.replace(/\-/g, '/')
-    const skillData = getDemandSkill(token, skillName)
-
+    const skillData = getDemandSkill(skillID)
     skillData.then((allDemand) => {
       setData(allDemand)
     })
-  }, [skillname, tableChanged])
+  }, [skillID, tableChanged])
 
   const deleterow = (DemandID) => {
-    const deleted = deleteDemand(token, DemandID)
+    const deleted = deleteDemand(DemandID)
     deleted.then((response) => {
       setTableChanged(!tableChanged)
-      dispatch(removeDemandFromDashboard(skillname))
+      dispatch(removeDemandFromDashboard(skillID))
     })
   }
-
   return (
     <Col md={12} align='center' justify='center'>
       <CG.Box ml='15px' mr='15px' mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
         <CG.Button primary text='Add Demand' onClick={() => navigate('/demand')}></CG.Button>
-        <CG.Heading size='XS'>Demand information for {skillname}</CG.Heading>
-        <CG.Button primary text='Dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
+        <CG.Heading size='XS'>Demand information for {data && data[0] && data[0].skillName}</CG.Heading>
+        <CG.Button primary text='Dashboard' onClick={() => navigate('/dashboard')}></CG.Button>
       </CG.Box>
 
       <CG.Box
@@ -50,20 +46,20 @@ export const ListDemand = () => {
         boxSizing='border-box'
         fontSize='0.85rem'
       >
-        {data.length > 0 ? (
+        {data && data.length > 0 ? (
           <CG.Table
             customKeyNames={{
               firstname: 'ApplicantFirstName',
               lastname: 'ApplicantLastName',
-              DemandID: 'Demand ID',
-              CodeRequisition: 'Code Requisition',
-              ClientName: 'Client Name',
-              SkillsID: 'Skills ID',
-              StartDate: 'Start Date',
+              id: 'Demand ID',
+              codeRequisition: 'Code Requisition',
+              clientName: 'Client Name',
+              skillsID: 'Skills ID',
+              startDate: 'Start Date',
             }}
             data={data}
             divider
-            selectedKeys={['DemandID', 'CodeRequisition', 'ClientName', 'Probability', 'StartDate', 'Grade', 'Status']}
+            selectedKeys={['id', 'codeRequisition', 'clientName', 'probability', 'startDate', 'grade', 'status']}
             icons={[
               {
                 tableHeader: 'Edit',
@@ -71,7 +67,7 @@ export const ListDemand = () => {
                 width: '0.90rem',
                 type: 'Edit2',
                 handler: (value) => {
-                  navigate(`/edit-demand/${value.DemandID}`)
+                  navigate(`/demand/update/${value.id}`)
                 },
               },
               {
@@ -80,7 +76,7 @@ export const ListDemand = () => {
                 height: '0.90rem',
                 width: '0.90rem',
                 type: 'X',
-                handler: (value) => deleterow(value.DemandID),
+                handler: (value) => deleterow(value.id),
               },
             ]}
           />

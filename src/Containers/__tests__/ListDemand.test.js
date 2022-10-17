@@ -105,7 +105,7 @@ describe('Testing <ListDemand/> component', () => {
           cancelable: true,
         })
       )
-      expect(mockNavigate).toHaveBeenCalledWith('/protectedRoute/dashboard')
+      expect(mockNavigate).toHaveBeenCalledWith('/dashboard')
     })
   })
 
@@ -162,7 +162,6 @@ describe('Testing <ListDemand/> component', () => {
       const row = screen.getAllByRole('row')[1]
       const editButtonEl = within(row).getAllByRole('cell')[7]
 
-      console.log(editButtonEl)
       fireEvent(
         editButtonEl,
         new MouseEvent('click', {
@@ -170,7 +169,7 @@ describe('Testing <ListDemand/> component', () => {
           cancelable: true,
         })
       )
-      expect(mockNavigate).toHaveBeenCalledWith(`/edit-demand/${config.demandSkill[0].DemandID}`)
+      expect(mockNavigate).toHaveBeenCalledWith(`/demand/update${config.demandSkill[0].DemandID}`)
     })
   })
 })

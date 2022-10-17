@@ -3,13 +3,13 @@ import formValidators from '../../formValidatorsConfig.json'
 export const formatSkills = (data, skillId) => {
   const formatted_skills = []
   var default_skill
-  data?.forEach((skill) => {
-    if (skill.SkillsID === skillId) {
+  data.forEach((skill) => {
+    if (skill.id === skillId) {
       default_skill = skill.SkillName
     }
     formatted_skills.push({
-      name: skill.SkillName,
-      value: skill.SkillsID,
+      name: skill.name,
+      value: skill.id,
     })
   })
   return [formatted_skills, default_skill]
@@ -19,8 +19,8 @@ export const formatClients = (data) => {
   const formatted_Clients = []
   data?.forEach((client) => {
     formatted_Clients.push({
-      name: client.ClientName,
-      value: client.ClientID,
+      name: client.name,
+      value: client.id,
     })
   })
   return formatted_Clients
@@ -28,18 +28,18 @@ export const formatClients = (data) => {
 export const clientFormFormatter = () => {
   const inputValidator = formValidators.addClientForm.inputs
   const inputDefaults = {
-    clientID: {
+    id: {
       label: 'Client ID',
       placeholder: '',
       inputType: 'text',
-      validators: inputValidator.clientID.validators,
+      validators: inputValidator.id.validators,
     },
 
-    clientName: {
+    name: {
       label: 'Client Name',
       placeholder: '',
       inputType: 'text',
-      validators: inputValidator.clientName.validators,
+      validators: inputValidator.name.validators,
     },
   }
   return inputDefaults
@@ -48,87 +48,87 @@ export const clientFormFormatter = () => {
 export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, demand_status) => {
   const inputValidator = formValidators.demandForm.inputs
   const inputDefaults = {
-    demandCodeRequisition: {
+    codeRequisition: {
       label: 'Code Requisition',
       inputType: 'text',
       placeholder: '',
-      validators: inputValidator.demandCodeRequisition.validators,
+      validators: inputValidator.codeRequisition.validators,
     },
-    demandStartDate: {
+    startDate: {
       label: 'Start date',
       inputType: 'text',
       placeholder: 'DD/MM/YYYY',
-      validators: inputValidator.demandStartDate.validators,
+      validators: inputValidator.startDate.validators,
     },
-    demandClientID: {
+    id: {
       options: pickerClients,
       label: 'Client Name',
       inputType: 'dropdown',
       placeholder: 'Select a client',
-      validators: inputValidator.demandClientID.validators,
+      validators: inputValidator.id.validators,
     },
-    demandOriginatorName: {
+    originatorName: {
       label: 'Originator',
       inputType: 'text',
       placeholder: '',
-      validators: inputValidator.demandOriginatorName.validators,
+      validators: inputValidator.originatorName.validators,
     },
-    demandSkills: {
+    skills: {
       options: pickerSkills,
       label: 'Skill',
       inputType: 'dropdown',
       placeholder: 'Select a skill',
-      validators: inputValidator.demandSkills.validators,
+      validators: inputValidator.skills.validators,
     },
-    demandProbability: {
+    probability: {
       label: 'Probability',
       inputType: 'text',
       placeholder: '',
-      validators: inputValidator.demandProbability.validators,
+      validators: inputValidator.probability.validators,
     },
-    demandGrade: {
+    grade: {
       options: demand_grade,
       label: 'Grade',
       inputType: 'dropdown',
       placeholder: 'Select a grade',
-      validators: inputValidator.demandGrade.validators,
+      validators: inputValidator.grade.validators,
     },
-    demandSelectedApplicant: {
+    selectedApplicant: {
       label: 'Selected Applicant',
       inputType: 'text',
       placeholder: '',
-      validators: inputValidator.demandSelectedApplicant.validators,
+      validators: inputValidator.selectedApplicant.validators,
     },
-    demandStatus: {
+    status: {
       options: demand_status,
       label: 'Status',
       inputType: 'dropdown',
       placeholder: 'Select a status',
-      validators: inputValidator.demandStatus.validators,
+      validators: inputValidator.status.validators,
     },
-    demandNotes: {
+    notes: {
       label: 'Notes',
       inputType: 'text',
       placeholder: '',
-      validators: inputValidator.demandNotes.validators,
+      validators: inputValidator.notes.validators,
     },
-    demandProposedApplicant: {
+    proposedApplicant: {
       label: 'Proposed Applicant',
       inputType: 'text',
       placeholder: '',
-      validators: inputValidator.demandProposedApplicant.validators,
+      validators: inputValidator.proposedApplicant.validators,
     },
-    demandCreationDate: {
+    creationDate: {
       label: 'Creation date',
       inputType: 'text',
       placeholder: 'DD/MM/YYYY',
-      validators: inputValidator.demandCreationDate.validators,
+      validators: inputValidator.creationDate.validators,
     },
-    demandLocation: {
+    location: {
       label: 'Location',
       inputType: 'text',
       placeholder: '',
-      validators: inputValidator.demandLocation.validators,
+      validators: inputValidator.location.validators,
     },
   }
   return inputDefaults
@@ -193,20 +193,19 @@ export const formatDataForBarchart = (allSkills, filteredSupply, filteredDemand,
   }
 
   allSkills.forEach((skill, skillIndex) => {
-    const skillName = skill.SkillName
+    const skillName = skill.name
     dashboardDataset.labels.push(skillName)
 
-    const supplies = filteredSupply.filter((supply) => supply.SkillName === skillName)
-    const demands = filteredDemand.filter((demand) => demand.SkillName === skillName)
-
+    const supplies = filteredSupply.filter((supply) => supply.skillName === skillName)
+    const demands = filteredDemand.filter((demand) => demand.skillName === skillName)
     supplyDataset.forEach((obj) => {
       const label = obj.label
-      const labelSupplyCount = supplies.filter((supply) => supply.ApplicantStatus === label).length
+      const labelSupplyCount = supplies.filter((supply) => supply.applicantStatus === label).length
       obj.data[skillIndex] = labelSupplyCount
     })
     demandDataset.forEach((obj) => {
       const label = obj.label
-      const labelDemandCount = demands.filter((demand) => demand.Status === label).length
+      const labelDemandCount = demands.filter((demand) => demand.status === label).length
       obj.data[skillIndex] = labelDemandCount
     })
   })
