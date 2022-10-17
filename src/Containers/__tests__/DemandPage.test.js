@@ -21,8 +21,8 @@ jest.mock('../../API', () => ({
   getClients: jest.fn(() => Promise.resolve([{ ClientID: 'test-clients', ClientName: 'test-client-name' }])),
   getSkills: jest.fn(() =>
     Promise.resolve([
-      { SkillName: 'React', SkillsID: '1' },
-      { SkillName: 'Angular', SkillsID: '2' },
+      { name: 'React', id: '1' },
+      { name: 'Angular', id: '2' },
     ])
   ),
   addDemand: jest.fn(),
@@ -109,7 +109,7 @@ describe('Testing <DemandPage/> component', () => {
   })
 
   it('should call addDemandToDashboard if form data  is successfully submitted', async () => {
-    addDemand.mockImplementation(() => Promise.resolve({ SkillName: 'React', SkillsID: '1' }))
+    addDemand.mockImplementation(() => Promise.resolve({ name: 'React', id: '1' }))
 
     const store = setupStore()
     store.dispatch(setupDashboard([{ skill_name: 'React', demand_count: 1 }]))

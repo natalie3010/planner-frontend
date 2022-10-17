@@ -11,7 +11,7 @@ import { updateDemand, getClients, getSkills, getSingleDemand } from '../../API'
 const mockNavigate = jest.fn()
 jest.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
-  useParams: () => ({ skillname: 'test-skill' }),
+  useParams: () => ({ demandId: '1' }),
 }))
 
 jest.mock('../../Validations/DemandValidation', () => ({
@@ -19,12 +19,12 @@ jest.mock('../../Validations/DemandValidation', () => ({
 }))
 
 jest.mock('../../API', () => ({
-  getClients: jest.fn(() => Promise.resolve([{ ClientID: 'test-clients', ClientName: 'test-client-name' }])),
+  getClients: jest.fn(() => Promise.resolve([{ id: 'test-clients', name: 'test-client-name' }])),
   getSingleDemand: jest.fn(() => Promise.resolve({ DemandStatus: 'test-single-demand', demandSkills: 1 })),
   getSkills: jest.fn(() =>
     Promise.resolve([
-      { SkillName: 'test-skill', SkillsID: 1 },
-      { SkillName: 'react', SkillsID: 2 },
+      { name: 'test-skill', id: 1 },
+      { name: 'react', id: 2 },
     ])
   ),
   updateDemand: jest.fn(() => Promise.resolve(true)),
@@ -119,7 +119,7 @@ it('should call updateDemand if form data is submitted accordingly', async () =>
 })
 
 it('should call addDemandToDashboard if form data  is successfully submitted', async () => {
-  updateDemand.mockImplementation(() => Promise.resolve({ SkillName: 'test-skill2', SkillsID: '1' }))
+  updateDemand.mockImplementation(() => Promise.resolve('1', { demand: {name: 'test-skill2', id: '1'} }))
 
   const store = setupStore()
   store.dispatch(

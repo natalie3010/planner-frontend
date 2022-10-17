@@ -19,7 +19,7 @@ const mockNavigate = jest.fn()
 
 jest.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
-  useParams: () => ({ skillname: 'React' }),
+  useParams: () => ({ skillID: '1' }),
 }))
 
 // MOCK DATA FOR MOCK API
@@ -30,13 +30,14 @@ jest.mock('react-router-dom', () => ({
 const config = {
   demandSkill: [
     {
-      DemandID: 1,
-      CodeRequisition: 123,
-      ClientName: 'TestClientName',
-      Probabilitiy: null,
-      StartDate: '01/01/2023',
-      Grade: 'TestGrade',
-      Status: 'TestDemandStatus',
+      id: 1,
+      codeRequisition: 123,
+      skillsID: 1,
+      clientName: 'TestClientName',
+      probabilitiy: null,
+      startDate: '01/01/2023',
+      grade: 'TestGrade',
+      status: 'TestDemandStatus',
     },
   ],
 }
@@ -51,11 +52,7 @@ describe('Testing <ListDemand/> component', () => {
       api.getDemandSkill = jest.fn(() => Promise.resolve({}))
 
       await act(() => {
-        renderWithProviders(<ListDemand />, {
-          preloadedState: {
-            user: { authToken: 'test-token' },
-          },
-        })
+        renderWithProviders(<ListDemand />)
       })
 
       await waitFor(() => {

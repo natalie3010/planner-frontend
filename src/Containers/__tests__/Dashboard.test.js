@@ -67,7 +67,7 @@ describe('Testing <Dashboard/> component', () => {
           cancelable: true,
         })
       )
-      expect(mockNavigate).toHaveBeenCalledWith('/supply')
+      expect(mockNavigate).toHaveBeenCalledWith('/supply/new')
     })
     it('should test List Clients action', async () => {
       await act(async () => {
@@ -84,7 +84,7 @@ describe('Testing <Dashboard/> component', () => {
           cancelable: true,
         })
       )
-      expect(mockNavigate).toHaveBeenCalledWith('/listClients')
+      expect(mockNavigate).toHaveBeenCalledWith('/clients/all')
     })
     it('should test Add a demand button', async () => {
       await act(async () => {
@@ -101,7 +101,7 @@ describe('Testing <Dashboard/> component', () => {
           cancelable: true,
         })
       )
-      expect(mockNavigate).toHaveBeenCalledWith('/demand')
+      expect(mockNavigate).toHaveBeenCalledWith('/demand/new')
     })
     it('should test List All Supply button', async () => {
       await act(async () => {
@@ -118,7 +118,7 @@ describe('Testing <Dashboard/> component', () => {
           cancelable: true,
         })
       )
-      expect(mockNavigate).toHaveBeenCalledWith('/listAllSupply')
+      expect(mockNavigate).toHaveBeenCalledWith('/supply/all')
     })
     it('should test List All Demand button', async () => {
       await act(async () => {
@@ -135,7 +135,7 @@ describe('Testing <Dashboard/> component', () => {
           cancelable: true,
         })
       )
-      expect(mockNavigate).toHaveBeenCalledWith('/listAllDemand')
+      expect(mockNavigate).toHaveBeenCalledWith('/demand/all')
     })
   })
 })
