@@ -137,50 +137,50 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
 export const supplyFormFormatter = (pickerStatus, pickerSkills, pickerType) => {
   const inputValidator = formValidators.supplyForm.inputs
   const inputDefaults = {
-    applicantFirstName: {
+    firstName: {
       label: 'First name',
       placeholder: '',
       inputType: 'text',
-      validators: inputValidator.applicantFirstName.validators,
+      validators: inputValidator.firstName.validators,
     },
-    applicantLastName: {
+    lastName: {
       label: 'Last name',
       placeholder: '',
       inputType: 'text',
-      validators: inputValidator.applicantLastName.validators,
+      validators: inputValidator.lastName.validators,
     },
-    applicantStatus: {
+    status: {
       label: 'Status',
       placeholder: 'Select a status',
       options: pickerStatus,
       inputType: 'dropdown',
-      validators: inputValidator.applicantStatus.validators,
+      validators: inputValidator.status.validators,
     },
-    applicantSkills: {
+    skills: {
       label: 'Skill',
       placeholder: 'Select a skill',
       options: pickerSkills,
       inputType: 'dropdown',
-      validators: inputValidator.applicantSkills.validators,
+      validators: inputValidator.skills.validators,
     },
-    applicantNotes: {
+    notes: {
       label: 'Notes',
       placeholder: '',
       inputType: 'text',
-      validators: inputValidator.applicantNotes.validators,
+      validators: inputValidator.notes.validators,
     },
-    applicantType: {
+    type: {
       label: 'Applicant type',
       placeholder: 'Select type',
       options: pickerType,
       inputType: 'dropdown',
-      validators: inputValidator.applicantType.validators,
+      validators: inputValidator.type.validators,
     },
-    applicantLocation: {
+    location: {
       label: 'Location',
       placeholder: '',
       inputType: 'text',
-      validators: inputValidator.applicantLocation.validators,
+      validators: inputValidator.location.validators,
     },
   }
   return inputDefaults
@@ -200,7 +200,7 @@ export const formatDataForBarchart = (allSkills, filteredSupply, filteredDemand,
     const demands = filteredDemand.filter((demand) => demand.skillName === skillName)
     supplyDataset.forEach((obj) => {
       const label = obj.label
-      const labelSupplyCount = supplies.filter((supply) => supply.applicantStatus === label).length
+      const labelSupplyCount = supplies.filter((supply) => supply.status === label).length
       obj.data[skillIndex] = labelSupplyCount
     })
     demandDataset.forEach((obj) => {

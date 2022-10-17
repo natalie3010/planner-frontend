@@ -25,10 +25,10 @@ export const EditSupply = () => {
     const request = getSingleSupply(applicantId)
     request.then((supplyResult) => {
       setFormData(supplyResult)
-      setInitialSkill(supplyResult.applicantSkills)
+      setInitialSkill(supplyResult.skills)
       const requestSkills = getSkills()
       requestSkills.then((skillResult) => {
-        const [skillsArray, skillName] = formatSkills(skillResult, supplyResult.applicantSkills)
+        const [skillsArray, skillName] = formatSkills(skillResult, supplyResult.skills)
         setDataAllSkills(skillsArray)
         setInitialSkillName(skillName)
       })
@@ -44,7 +44,7 @@ export const EditSupply = () => {
       const request = await updateSupply(applicantId, { supply: formData })
       if (request) {
         // response is a bool true
-        const newSkillName = formData.applicantSkills && dataAllSkills[formData.applicantSkills - 1].name
+        const newSkillName = formData.skills && dataAllSkills[formData.skills - 1].name
         if (initialSkillName && newSkillName && newSkillName !== initialSkillName) {
           dispatch(removeSupplyFromDashboard(initialSkillName))
           dispatch(addSupplyToDashboard(newSkillName))

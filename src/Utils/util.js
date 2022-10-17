@@ -21,10 +21,10 @@ export const getRequiredBarchartDemandStatus = (allDemand) => {
 export const getRequiredBarchartSupplyStatus = (allSupply) => {
   return allSupply.filter((supply) => {
     return (
-      supply.applicantStatus === 'Screening' ||
-      supply.applicantStatus === 'L1 select' ||
-      supply.applicantStatus === 'L2 select' ||
-      supply.applicantStatus === 'Client select'
+      supply.status === 'Screening' ||
+      supply.status === 'L1 select' ||
+      supply.status === 'L2 select' ||
+      supply.status === 'Client select'
     )
   })
 }

@@ -54,15 +54,15 @@ export const ListSupply = () => {
               firstname: 'ApplicantFirstName',
               lastname: 'ApplicantLastName',
               id: 'Applicant ID',
-              applicantFirstName: 'Applicant First Name',
-              applicantLastName: 'Applicant Last Name',
-              applicantStatus: 'Applicant Status',
+              firstName: 'Applicant First Name',
+              lastName: 'Applicant Last Name',
+              status: 'Applicant Status',
               skillID: 'Skills ID',
-              applicantType: 'Applicant Type',
+              type: 'Applicant Type',
             }}
             data={data}
             divider
-            selectedKeys={['id', 'applicantFirstName', 'applicantLastName', 'applicantStatus', 'applicantType']}
+            selectedKeys={['id', 'firstName', 'lastName', 'status', 'type']}
             icons={[
               {
                 tableHeader: 'Edit',

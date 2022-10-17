@@ -41,15 +41,15 @@ export const ListAllSupply =() =>{
           customKeyNames={{
             id: 'Applicant ID',
             skillName: 'Skill Name',
-            applicantFirstName: 'Applicant First Name',
-            applicantLastName: 'Applicant Last Name',
-            applicantStatus: 'Applicant Status',
+            firstName: 'Applicant First Name',
+            lastName: 'Applicant Last Name',
+            status: 'Applicant Status',
             skillsID: 'Skills ID',
-            applicantType: 'Applicant Type',
+            type: 'Applicant Type',
           }}
           data={data}
           divider
-          selectedKeys={['applicantFirstName', 'applicantLastName' , 'id', 'skillName', 'applicantType', 'applicantStatus']}
+          selectedKeys={['firstName', 'lastName' , 'id', 'skillName', 'type', 'status']}
         />
         
       </CG.Box>
