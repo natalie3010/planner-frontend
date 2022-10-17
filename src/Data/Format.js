@@ -17,7 +17,7 @@ export const formatSkills = (data, skillId) => {
 
 export const formatClients = (data) => {
   const formatted_Clients = []
-  data.forEach((client) => {
+  data?.forEach((client) => {
     formatted_Clients.push({
       name: client.name,
       value: client.id,

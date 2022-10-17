@@ -46,14 +46,10 @@ export const EditSupply = () => {
         // response is a bool true
         const newSkillName = formData.applicantSkills && dataAllSkills[formData.applicantSkills - 1].name
         if (initialSkillName && newSkillName && newSkillName !== initialSkillName) {
-          try {
-            dispatch(removeSupplyFromDashboard(initialSkillName))
-            dispatch(addSupplyToDashboard(newSkillName))
-          } catch {}
+          dispatch(removeSupplyFromDashboard(initialSkillName))
+          dispatch(addSupplyToDashboard(newSkillName))
         } else if (newSkillName && !initialSkill) {
-          try {
-            dispatch(addSupplyToDashboard(newSkillName))
-          } catch {}
+          dispatch(addSupplyToDashboard(newSkillName))
         }
         const routeName = newSkillName.replace(/\//g, '-')
         navigate(`/supply/all/skill/${routeName}`)
