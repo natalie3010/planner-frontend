@@ -25,6 +25,24 @@ export function submitUserLogin(username, password) {
     })
 }
 
+export function getBarChartData(token) {
+  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+  return fetch(`${URL}/api/barchart`, requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+    .then((data) => {
+      return data
+    })
+
+    .catch((error) => {
+      return error.status
+    })
+}
+
 export function logoutAPI() {
   const requestObject = {
     method: 'GET',
