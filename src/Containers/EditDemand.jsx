@@ -15,7 +15,6 @@ export const EditDemand = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { demandId } = useParams()
-  const authToken = useSelector((state) => state.user.authToken)
   const [pickerSkills, setPickerSkills] = useState(null)
   const [pickerClients, setPickerClients] = useState(null)
   const [initialSkillName, setInitialSkillName] = useState(null)
@@ -23,16 +22,16 @@ export const EditDemand = () => {
   const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
-    const requestClients = getClients(authToken)
+    const requestClients = getClients()
     requestClients.then((clientsResult) => setPickerClients(formatClients(clientsResult)))
 
-    const requestDemand = getSingleDemand(demandId, authToken)
+    const requestDemand = getSingleDemand(demandId)
     requestDemand.then((demandResult) => {
       setFormData(demandResult)
 
-      const requestSkills = getSkills(authToken)
+      const requestSkills = getSkills()
       requestSkills.then((skillsResult) => {
-        const [skillsArray, skillName] = formatSkills(skillsResult, demandResult.demandSkills)
+        const [skillsArray, skillName] = formatSkills(skillsResult, demandResult?.demandSkills)
         setPickerSkills(skillsArray)
         setInitialSkillName(skillName)
       })
@@ -44,24 +43,19 @@ export const EditDemand = () => {
   const handleSubmit = async () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
-
     if (formIsValid) {
       const skillSelected = formData.demandSkills && true
       const newskillname = skillSelected && pickerSkills[formData.demandSkills - 1].name
-      const request = updateDemand(authToken, demandId, formData)
+      const request = updateDemand(demandId, { demand: formData })
       request.then((result) => {
         if (initialSkillName && newskillname && newskillname !== initialSkillName) {
-          try {
+          {
             dispatch(removeDemandFromDashboard(initialSkillName))
             dispatch(addDemandToDashboard(newskillname))
-          } catch {}
-        } else if (newskillname && !initialSkillName) {
-          try {
-            dispatch(addDemandToDashboard(newskillname))
-          } catch {}
+          }
         }
         const routeName = newskillname.replace(/\//g, '-')
-        navigate(`/list-Demand/${routeName}`)
+        navigate(`/demand/all/skill/${routeName}`)
       })
     }
   }
@@ -82,22 +76,24 @@ export const EditDemand = () => {
         {Object.keys(inputDefaults).map((formItem, index) => {
           const required = inputDefaults[formItem].validators[0].required
           if (inputDefaults[formItem].inputType === 'dropdown') {
-            const pickerVal = formItem === 'demandClientID' ? formData.demandClientName : formData[formItem]
+            const pickerVal = formItem === 'demandClientID' ? formData.clientName : formData[formItem]
             return (
               <CG.Container margin='10px' key={index}>
-                <CG.Picker
-                  id='Picker'
-                  name='Picker'
-                  pattern='*'
-                  topLabel
-                  onChange={(val) => setFormData({ ...formData, [formItem]: val })}
-                  options={inputDefaults[formItem].options}
-                  labelKey='name'
-                  label={inputDefaults[formItem].label}
-                  placeholder={typeof pickerVal === 'number' ? initialSkillName : pickerVal}
-                  required={required}
-                  hasError={required && !formData[formItem] && formSubmitted}
-                />
+                <div data-testid={inputDefaults[formItem].label}>
+                  <CG.Picker
+                    id='Picker'
+                    name='Picker'
+                    pattern='*'
+                    topLabel
+                    onChange={(val) => setFormData({ ...formData, [formItem]: val })}
+                    options={inputDefaults[formItem].options}
+                    labelKey='name'
+                    label={inputDefaults[formItem].label}
+                    placeholder={typeof pickerVal === 'number' ? initialSkillName : pickerVal}
+                    required={required}
+                    hasError={required && !formData[formItem] && formSubmitted}
+                  />
+                </div>
               </CG.Container>
             )
           }
@@ -109,7 +105,7 @@ export const EditDemand = () => {
               <CG.Input
                 label={inputDefaults[formItem].label}
                 initValue={formData[formItem] ?? ''}
-                onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })} // [] => computed property names
+                onInput={(e) => setFormData({ ...formData, [formItem]: e.target.value })}
                 margin={0.5}
                 placeholder={inputDefaults[formItem].placeholder}
                 required={required}
@@ -126,13 +122,14 @@ export const EditDemand = () => {
         })}
 
         <CG.Box width='300px' display='flex' flexDirection='row' justifyContent='space-between'>
-          <CG.Button primary text='submit' onClick={handleSubmit} />
+          <CG.Button primary text='submit' data-testid='submitButton' onClick={handleSubmit} />
           <CG.Button
             primary
             text='cancel'
+            data-testId='cancelButton'
             onClick={() => {
               const routeName = initialSkillName.replace(/\//g, '-')
-              navigate(`/list-Demand/${routeName}`)
+              navigate(`/demand/all/skill/${routeName}`)
             }}
           />
         </CG.Box>

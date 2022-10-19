@@ -1,7 +1,7 @@
 {
   "supplyForm": {
     "inputs": {
-      "applicantFirstName": {
+      "firstName": {
         "validators": [
           {
             "errorDisplayed": "Please put a first name",
@@ -9,7 +9,7 @@
           }
         ]
       },
-      "applicantLastName": {
+      "lastName": {
         "validators": [
           {
             "errorDisplayed": "Please put a last name",
@@ -17,7 +17,7 @@
           }
         ]
       },
-      "applicantStatus": {
+      "status": {
         "validators": [
           {
             "errorDisplayed": "Please select a status",
@@ -25,7 +25,7 @@
           }
         ]
       },
-      "applicantSkills": {
+      "skills": {
         "validators": [
           {
             "errorDisplayed": "Please select a skill",
@@ -33,14 +33,14 @@
           }
         ]
       },
-      "applicantNotes": {
+      "notes": {
         "validators": [
           {
             "required": false
           }
         ]
       },
-      "applicantType": {
+      "type": {
         "validators": [
           {
             "errorDisplayed": "Please select a type",
@@ -48,7 +48,7 @@
           }
         ]
       },
-      "applicantLocation": {
+      "location": {
         "validators": [
           {
             "required": false
@@ -60,10 +60,10 @@
 
   "demandForm": {
     "inputs": {
-      "demandCodeRequisition": {
+      "codeRequisition": {
         "validators": [{ "required": false }]
       },
-      "demandStartDate": {
+      "startDate": {
         "validators": [
           {
             "required": true,
@@ -72,22 +72,22 @@
           }
         ]
       },
-      "demandOriginatorName": {
+      "originatorName": {
         "validators": [{ "required": false }]
       },
-      "demandProbability": {
+      "probability": {
         "validators": [{ "required": false }]
       },
-      "demandSelectedApplicant": {
+      "selectedApplicant": {
         "validators": [{ "required": false }]
       },
-      "demandNotes": {
+      "notes": {
         "validators": [{ "required": false }]
       },
-      "demandProposedApplicant": {
+      "proposedApplicant": {
         "validators": [{ "required": false }]
       },
-      "demandCreationDate": {
+      "creationDate": {
         "validators": [
           {
             "errorDisplayed": "Please put a valid date following the pattern dd/MM/yyyy",
@@ -96,19 +96,19 @@
           }
         ]
       },
-      "demandLocation": {
+      "location": {
         "validators": [{ "required": false }]
       },
-      "demandSkills": {
+      "skills": {
         "validators": [{ "required": true }]
       },
-      "demandGrade": {
+      "grade": {
         "validators": [{ "required": true }]
       },
-      "demandStatus": {
+      "status": {
         "validators": [{ "required": true }]
       },
-      "demandClientID": {
+      "id": {
         "validators": [
           {
             "errorMessage": "Please select a client",
@@ -139,7 +139,7 @@
 
   "addClientForm": {
     "inputs": {
-      "clientID": {
+      "id": {
         "validators": [
           {
             "errorDisplayed": "Please put in a Client ID",
@@ -147,7 +147,7 @@
           }
         ]
       },
-      "clientName": {
+      "name": {
         "validators": [
           {
             "errorDisplayed": "Please put in a Client Name",

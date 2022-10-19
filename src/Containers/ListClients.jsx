@@ -11,7 +11,6 @@ import { clientSchema } from '../Validations/ListClientsValidation'
 export const ListClients = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const authToken = useSelector((state) => state.user.authToken)
   const clientData = useSelector((state) => state.dashboard.clientData)
   const [ClientID, setClientID] = useState(null)
   const [ClientName, setClientName] = useState(null)
@@ -22,7 +21,7 @@ export const ListClients = () => {
   const inputDefaults = clientFormFormatter()
 
   useEffect(() => {
-    const requestClients = getClients(authToken)
+    const requestClients = getClients()
     requestClients.then((clientResult) => {
       dispatch(setupClients(clientResult))
     })
@@ -32,7 +31,7 @@ export const ListClients = () => {
     setFormSubmitted(!clientsUpdated)
     const isFormValid = await checkIfFormIsValid()
     if (isFormValid) {
-      const response = await postClient(authToken, { ClientID, ClientName })
+      const response = await postClient({ ClientID, ClientName })
       if (response.status === 200) {
         setClientsUpdated(!clientsUpdated)
       }
@@ -40,27 +39,20 @@ export const ListClients = () => {
   }
 
   const editClient = async (clientId) => {
-    const response = await putClient(authToken, clientId, { ClientName: editClientName })
-    if (response.changes === 1) {
+    if(clientId && editClientName)
+    {
+      const response = await putClient(clientId, {client: { id: clientId, name: editClientName }})
+      if (response) {
       setClientsUpdated(!clientsUpdated)
+    }
       setEditClientIndex(null)
     }
   }
 
   const checkIfFormIsValid = async () => {
-    return clientSchema.isValid({ clientID: ClientID, clientName: ClientName })
+    return clientSchema.isValid({ id: ClientID, name: ClientName })
   }
 
-  const setClientIndex = (clientId) => {
-    const clientIndex = clientData.findIndex((object) => {
-      return object.ClientID === clientId
-    })
-    /**
-     * Changed index to string as index 0 doesn't work
-     * index is an interger
-     */
-    setEditClientIndex(clientIndex.toString())
-  }
   if (!clientData) {
     return <>Loading...</>
   }
@@ -68,7 +60,7 @@ export const ListClients = () => {
     <Col md={12} align='center' justify='center'>
       <CG.Box ml='15px' mr='15px' mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
         <CG.Heading size='XS'>Clients List</CG.Heading>
-        <CG.Button primary text='Dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
+        <CG.Button primary text='Dashboard' onClick={() => navigate('/dashboard')}></CG.Button>
       </CG.Box>
       <CG.Box
         width='70rem'
@@ -91,16 +83,16 @@ export const ListClients = () => {
           height='30px'
         >
           <CG.Input
-            id='clientID'
+            id='id'
             label='Add'
-            name='clientID'
+            name='id'
             placeholder='Add Client Id'
             topLabel={false}
             onInput={(e) => {
               setClientID(e.target.value)
             }}
-            required={inputDefaults['clientID'].validators[0].required}
-            hasError={inputDefaults['clientID'].validators[0].required && !clientData['clientID'] && formSubmitted}
+            required={inputDefaults['id'].validators[0].required}
+            hasError={inputDefaults['id'].validators[0].required && !clientData['id'] && formSubmitted}
           />
           <CG.Input
             id='clientName'
@@ -110,8 +102,8 @@ export const ListClients = () => {
             onInput={(e) => {
               setClientName(e.target.value)
             }}
-            required={inputDefaults['clientName'].validators[0].required}
-            hasError={inputDefaults['clientName'].validators[0].required && !clientData['clientName'] && formSubmitted}
+            required={inputDefaults['name'].validators[0].required}
+            hasError={inputDefaults['name'].validators[0].required && !clientData['name'] && formSubmitted}
           />
           <CG.Button
             primary
@@ -124,11 +116,11 @@ export const ListClients = () => {
 
         <CG.Table
           customKeyNames={{
-            ClientName: 'Client Name',
+            name: 'ClientName',
           }}
           data={clientData}
           divider
-          selectedKeys={['ClientName']}
+          selectedKeys={['name']}
           icons={[
             {
               tableHeader: 'Edit',
@@ -136,21 +128,17 @@ export const ListClients = () => {
               width: '0.90rem',
               type: 'Edit2',
               handler: (value) => {
-                if (editClientIndex && value.ClientID === clientData[editClientIndex].ClientID && editClientName) {
-                  editClient(value.ClientID)
-                } else if (
-                  editClientIndex &&
-                  value.ClientID === clientData[editClientIndex].ClientID &&
-                  !editClientName
-                ) {
-                  setClientsUpdated(!clientsUpdated)
-                  setEditClientIndex(null)
-                  return
-                }
-                setClientIndex(value.ClientID)
+                  const index = clientData.findIndex((data) => 
+                  data.id === value.id
+               )
+               setEditClientIndex(index)
+                  if (index > -1) {
+                    setEditClientName(value.name)
+                    editClient(value.id)
+                  }
+                },
               },
-            },
-          ]}
+            ]}
           editable
           editableColumn='0'
           editableRow={editClientIndex}

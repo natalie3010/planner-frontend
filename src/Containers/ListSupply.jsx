@@ -10,26 +10,23 @@ import { deleteSupply, getSupplySkill } from '../API'
 export const ListSupply = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  let { skillname } = useParams()
-
-  const token = useSelector((state) => state.user.authToken)
+  const { skillID } = useParams()
 
   const [data, setData] = useState([])
   const [tableChanged, setTableChanged] = useState(false)
 
   useEffect(() => {
-    const skillName = skillname.replace(/\-/g, '/')
-    const skillData = getSupplySkill(token, skillName)
+    const skillData = getSupplySkill(skillID)
     skillData.then((allSupply) => {
       setData(allSupply)
     })
-  }, [skillname, tableChanged])
+  }, [skillID, tableChanged])
 
   const deleterow = (ApplicantID) => {
-    const deleted = deleteSupply(token, ApplicantID)
+    const deleted = deleteSupply(ApplicantID)
     deleted.then(() => {
       setTableChanged(!tableChanged)
-      dispatch(removeSupplyFromDashboard(skillname))
+      dispatch(removeSupplyFromDashboard(skillID))
     })
   }
 
@@ -37,8 +34,8 @@ export const ListSupply = () => {
     <Col md={12} align='center' justify='center'>
       <CG.Box ml='15px' mr='15px' mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
         <CG.Button primary text='Add Supply' onClick={() => navigate('/supply')}></CG.Button>
-        <CG.Heading size='XS'>Supply information for {skillname}</CG.Heading>
-        <CG.Button primary text='Dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
+        <CG.Heading size='XS'>Supply information for {data && data[0] && data[0].skillName}</CG.Heading>
+        <CG.Button primary text='Dashboard' onClick={() => navigate('/dashboard')}></CG.Button>
       </CG.Box>
 
       <CG.Box
@@ -56,22 +53,16 @@ export const ListSupply = () => {
             customKeyNames={{
               firstname: 'ApplicantFirstName',
               lastname: 'ApplicantLastName',
-              ApplicantID: 'Applicant ID',
-              ApplicantFirstName: 'Applicant First Name',
-              ApplicantLastName: 'Applicant Last Name',
-              ApplicantStatus: 'Applicant Status',
-              SkillsID: 'Skills ID',
-              ApplicantType: 'Applicant Type',
+              id: 'Applicant ID',
+              firstName: 'Applicant First Name',
+              lastName: 'Applicant Last Name',
+              status: 'Applicant Status',
+              skillID: 'Skills ID',
+              type: 'Applicant Type',
             }}
             data={data}
             divider
-            selectedKeys={[
-              'ApplicantID',
-              'ApplicantFirstName',
-              'ApplicantLastName',
-              'ApplicantStatus',
-              'ApplicantType',
-            ]}
+            selectedKeys={['id', 'firstName', 'lastName', 'status', 'type']}
             icons={[
               {
                 tableHeader: 'Edit',
@@ -79,7 +70,7 @@ export const ListSupply = () => {
                 width: '0.90rem',
                 type: 'Edit2',
                 handler: (value) => {
-                  navigate(`/edit-supply/${value.ApplicantID}`)
+                  navigate(`/supply/update/${value.id}`)
                 },
               },
               {
@@ -87,7 +78,7 @@ export const ListSupply = () => {
                 height: '0.90rem',
                 width: '0.90rem',
                 type: 'X',
-                handler: (value) => deleterow(value.ApplicantID),
+                handler: (value) => deleterow(value.id),
               },
             ]}
           />

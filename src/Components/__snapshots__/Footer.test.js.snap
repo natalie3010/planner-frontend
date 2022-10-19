@@ -2,7 +2,7 @@
 
 exports[`Testing <Footer/> component tests snapshots 1`] = `
 <div
-  className="sc-bZkfAO hVLZbP"
+  className="sc-bYMpWt iaCdmq"
   style={
     {
       "marginTop": "auto",
@@ -10,10 +10,10 @@ exports[`Testing <Footer/> component tests snapshots 1`] = `
   }
 >
   <div
-    className="sc-himrzO dgpaeN"
+    className="sc-hhOBVt gWMruW"
   >
     <span
-      className="sc-ikZpkk jfARvA"
+      className="sc-ilhmMj igQPbE"
     >
       <svg
         alt="icon"
@@ -51,7 +51,7 @@ exports[`Testing <Footer/> component tests snapshots 1`] = `
       </svg>
     </span>
     <a
-      className="sc-jIZahH gfsEvI"
+      className="sc-jIRcFI ksqgpu"
       href="/workforcePlanner"
     >
       workforce Planner

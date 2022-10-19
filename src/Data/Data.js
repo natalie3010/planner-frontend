@@ -35,91 +35,33 @@ export const demand_grade = [
 ]
 
 export let demandForm = {
-  demandCodeRequisition: null,
-  demandStartDate: null,
-  demandClientID: null,
-  demandOriginatorName: null,
-  demandSkills: null,
-  demandProbability: null,
-  demandGrade: null,
-  demandSelectedApplicant: null,
-  demandStatus: null,
-  demandNotes: null,
-  demandProposedApplicant: null,
-  demandCreationDate: null,
-  demandLocation: null,
+  id:null,
+  codeRequisition: null,
+  startDate: null,
+  originatorName: null,
+  skills: null,
+  probability: null,
+  grade: null,
+  selectedApplicant: null,
+  status: null,
+  notes: null,
+  proposedApplicant: null,
+  creationDate: null,
+  location: null,
 }
 
 export let supplyForm = {
-  applicantFirstName: null,
-  applicantLastName: null,
-  applicantStatus: null,
-  applicantSkills: null,
-  applicantNotes: null,
-  applicantType: null,
-  applicantLocation: null,
+  id: '1',
+  firstName: null,
+  lastName: null,
+  status: null,
+  skills: null,
+  notes: null,
+  type: null,
+  location: null,
 }
 
 export let clientForm = {
   clientID: null,
   clientName: null,
-}
-
-export const supplyDataset = [
-  {
-    label: 'Client select',
-    data: [],
-    backgroundColor: '#FFA200',
-    stack: 'Stack 0',
-  },
-  {
-    label: 'L2 select',
-    data: [],
-    backgroundColor: '#FFB200',
-    stack: 'Stack 0',
-  },
-  {
-    label: 'L1 select',
-    data: [],
-    backgroundColor: '#FFCB42',
-    stack: 'Stack 0',
-  },
-
-  {
-    label: 'Screening',
-    data: [],
-    backgroundColor: '#FFF4CF',
-    stack: 'Stack 0',
-  },
-]
-export const demandDataset = [
-  {
-    label: 'Profile Proposed',
-    data: [],
-    backgroundColor: '#42855B',
-    stack: 'Stack 1',
-  },
-  {
-    label: 'Profiles Required',
-    data: [],
-    backgroundColor: '#90B77D',
-    stack: 'Stack 1',
-  },
-  {
-    label: 'Demand Validation',
-    data: [],
-    backgroundColor: '#D2D79F',
-    stack: 'Stack 1',
-  },
-]
-export const groupedOptions = {
-  scales: {
-    yAxes: [
-      {
-        ticks: {
-          beginAtZero: true,
-        },
-      },
-    ],
-  },
 }

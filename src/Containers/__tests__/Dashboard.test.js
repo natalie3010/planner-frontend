@@ -3,7 +3,7 @@ import 'jest-canvas-mock'
 import { act } from 'react-dom/test-utils'
 import { screen, waitFor, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '../../Utils/testSetup'
-import {setupStore} from '../../store'
+import { setupStore } from '../../store'
 import { login } from '../../Slices/LoginSlice'
 import { Dashboard } from '../Dashboard'
 
@@ -32,22 +32,22 @@ describe('Testing <Dashboard/> component', () => {
       act(() => {
         renderWithProviders(<Dashboard />, {
           preloadedState: {
-            user: {authToken: 'test-token'},
+            user: { authToken: 'test-token' },
           },
         })
-       })
+      })
       expect(
-         await waitFor(() => {
+        await waitFor(() => {
           screen.getByText("'loading...'", { exact: false })
-         })
+        })
       ).toBeInTheDocument
     })
 
     it('should display Bar chart after data is successfully loaded', async () => {
-      const store = setupStore();
+      const store = setupStore()
       store.dispatch(login('test-auth-token'))
       await act(async () => {
-        renderWithProviders(<Dashboard />, {store})
+        renderWithProviders(<Dashboard />, { store })
       })
       expect(
         await waitFor(() => {
@@ -58,9 +58,8 @@ describe('Testing <Dashboard/> component', () => {
   })
   describe('Actions on Dashboard page', () => {
     it('should test Add a supply action', async () => {
-      await act(async () => {
-        renderWithProviders(<Dashboard />)
-      })
+      renderWithProviders(<Dashboard />)
+      await waitFor(async () => {})
       fireEvent(
         screen.getByText(/add a supply/i),
         new MouseEvent('click', {
@@ -68,13 +67,13 @@ describe('Testing <Dashboard/> component', () => {
           cancelable: true,
         })
       )
-      expect(mockNavigate).toHaveBeenCalledWith('/supply')
+      expect(mockNavigate).toHaveBeenCalledWith('/supply/new')
     })
     it('should test List Clients action', async () => {
       await act(async () => {
         renderWithProviders(<Dashboard />, {
           preloadedState: {
-            user: {authToken: 'test-token'},
+            user: { authToken: 'test-token' },
           },
         })
       })
@@ -85,13 +84,13 @@ describe('Testing <Dashboard/> component', () => {
           cancelable: true,
         })
       )
-      expect(mockNavigate).toHaveBeenCalledWith('/listClients')
+      expect(mockNavigate).toHaveBeenCalledWith('/clients/all')
     })
     it('should test Add a demand button', async () => {
       await act(async () => {
         renderWithProviders(<Dashboard />, {
           preloadedState: {
-            user: {authToken: 'test-token'},
+            user: { authToken: 'test-token' },
           },
         })
       })
@@ -102,13 +101,13 @@ describe('Testing <Dashboard/> component', () => {
           cancelable: true,
         })
       )
-      expect(mockNavigate).toHaveBeenCalledWith('/demand')
+      expect(mockNavigate).toHaveBeenCalledWith('/demand/new')
     })
     it('should test List All Supply button', async () => {
       await act(async () => {
         renderWithProviders(<Dashboard />, {
           preloadedState: {
-            user: {authToken: 'test-token'},
+            user: { authToken: 'test-token' },
           },
         })
       })
@@ -119,13 +118,13 @@ describe('Testing <Dashboard/> component', () => {
           cancelable: true,
         })
       )
-      expect(mockNavigate).toHaveBeenCalledWith('/listAllSupply')
+      expect(mockNavigate).toHaveBeenCalledWith('/supply/all')
     })
     it('should test List All Demand button', async () => {
       await act(async () => {
         renderWithProviders(<Dashboard />, {
           preloadedState: {
-            user: {authToken: 'test-token'},
+            user: { authToken: 'test-token' },
           },
         })
       })
@@ -136,7 +135,7 @@ describe('Testing <Dashboard/> component', () => {
           cancelable: true,
         })
       )
-      expect(mockNavigate).toHaveBeenCalledWith('/listAllDemand')
+      expect(mockNavigate).toHaveBeenCalledWith('/demand/all')
     })
   })
 })

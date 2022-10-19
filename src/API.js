@@ -1,13 +1,14 @@
 const URL = process.env.NODE_ENV === 'development' ? process.env.DEVELOPMENT_URL : process.env.PRODUCTION_URL
 
 export function submitUserLogin(username, password) {
-  const data = { username: username, password: btoa(password) }
+  const data = { userName: username, password: password }
   const requestObject = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     body: JSON.stringify(data),
   }
-  return fetch(`${URL}/auth/login`, requestObject)
+  return fetch(`${URL}/api/account/login`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -24,9 +25,9 @@ export function submitUserLogin(username, password) {
     })
 }
 
-export function getDashboard(token) {
+export function getBarChartData(token) {
   const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch(`${URL}/api/dashboard`, requestObject)
+  return fetch(`${URL}/api/barchart`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -36,21 +37,45 @@ export function getDashboard(token) {
     .then((data) => {
       return data
     })
+
     .catch((error) => {
       return error.status
     })
 }
 
-export function addSupply(token, data) {
+export function logoutAPI() {
+  const requestObject = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  }
+  return fetch(`${URL}/api/account/logout`, requestObject)
+    .then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+
+    .then((data) => {
+      return data
+    })
+
+    .catch((error) => {
+      return error.status
+    })
+}
+
+export function addSupply(data) {
   const requestObject = {
     method: 'POST',
     headers: {
-      'x-access-token': token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
+    credentials: 'include',
   }
-  return fetch(`${URL}/api/v2/supply`, requestObject)
+  return fetch(`${URL}/api/supply`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -65,16 +90,16 @@ export function addSupply(token, data) {
     })
 }
 
-export function addDemand(token, data) {
+export function addDemand(data) {
   const requestObject = {
     method: 'POST',
     headers: {
-      'x-access-token': token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
+    credentials: 'include',
   }
-  return fetch(`${URL}/api/v2/demand`, requestObject)
+  return fetch(`${URL}/api/demand`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -88,8 +113,8 @@ export function addDemand(token, data) {
       return error
     })
 }
-export function getSingleClient(applicantID, token) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+export function getSingleClient(applicantID) {
+  const requestObject = { method: 'GET', credentials: 'include' }
   return fetch(`${URL}/api/clients/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
@@ -105,9 +130,9 @@ export function getSingleClient(applicantID, token) {
     })
 }
 
-export function getSingleSupply(applicantID, token) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch(`${URL}/api/v2/supply/${applicantID}`, requestObject)
+export function getSingleSupply(applicantID) {
+  const requestObject = { method: 'GET', credentials: 'include' }
+  return fetch(`${URL}/api/supply/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -122,9 +147,9 @@ export function getSingleSupply(applicantID, token) {
     })
 }
 
-export function getSingleDemand(applicantID, token) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch(`${URL}/api/v2/demand/${applicantID}`, requestObject)
+export function getSingleDemand(applicantID) {
+  const requestObject = { method: 'GET', credentials: 'include' }
+  return fetch(`${URL}/api/demand/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -138,14 +163,14 @@ export function getSingleDemand(applicantID, token) {
       return error.status
     })
 }
-export function updateClient(token, applicantID, data) {
+export function updateClient(applicantID, data) {
   const requestObject = {
     method: 'PUT',
     headers: {
-      'x-access-token': token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
+    credentials: 'include',
   }
   return fetch(`${URL}/api/clients/${applicantID}`, requestObject)
     .then((res) => {
@@ -162,16 +187,16 @@ export function updateClient(token, applicantID, data) {
     })
 }
 
-export function updateSupply(token, applicantID, data) {
+export function updateSupply(applicantID, data) {
   const requestObject = {
     method: 'PUT',
     headers: {
-      'x-access-token': token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
+    credentials: 'include',
   }
-  return fetch(`${URL}/api/v2/supply/${applicantID}`, requestObject)
+  return fetch(`${URL}/api/supply/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -186,16 +211,16 @@ export function updateSupply(token, applicantID, data) {
     })
 }
 
-export function updateDemand(token, applicantID, data) {
+export function updateDemand(applicantID, data) {
   const requestObject = {
     method: 'PUT',
     headers: {
-      'x-access-token': token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
+    credentials: 'include',
   }
-  return fetch(`${URL}/api/v2/demand/${applicantID}`, requestObject)
+  return fetch(`${URL}/api/demand/${applicantID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -210,8 +235,8 @@ export function updateDemand(token, applicantID, data) {
     })
 }
 
-export function getSkills(token) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+export function getSkills() {
+  const requestObject = { method: 'GET', credentials: 'include' }
   return fetch(`${URL}/api/skills`, requestObject)
     .then((res) => {
       if (!res.ok) {
@@ -227,8 +252,8 @@ export function getSkills(token) {
     })
 }
 
-export function getClients(token) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+export function getClients() {
+  const requestObject = { method: 'GET', credentials: 'include' }
   return fetch(`${URL}/api/clients`, requestObject)
     .then((res) => {
       if (!res.ok) {
@@ -244,9 +269,9 @@ export function getClients(token) {
     })
 }
 
-export function getDemandSkill(token, skillName) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch(`${URL}/api/demand?selectedSkills=${skillName}`, requestObject)
+export function getDemandSkill(skillID) {
+  const requestObject = { method: 'GET', headers: { 'Content-Type': 'application/json' }, credentials: 'include' }
+  return fetch(`${URL}/api/demand/skillID/${skillID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -261,8 +286,8 @@ export function getDemandSkill(token, skillName) {
     })
 }
 
-export function deleteDemand(token, demandId) {
-  const requestObject = { method: 'DELETE', headers: { 'x-access-token': token } }
+export function deleteDemand(demandId) {
+  const requestObject = { method: 'DELETE', credentials: 'include' }
   return fetch(`${URL}/api/demand/${demandId}`, requestObject)
     .then((res) => {
       if (!res.ok) {
@@ -278,9 +303,9 @@ export function deleteDemand(token, demandId) {
     })
 }
 
-export function getSupplySkill(token, skillName) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
-  return fetch(`${URL}/api/supply?selectedSkills=${skillName}`, requestObject)
+export function getSupplySkill(skillID) {
+  const requestObject = { method: 'GET', credentials: 'include' }
+  return fetch(`${URL}/api/supply/skillID/${skillID}`, requestObject)
     .then((res) => {
       if (!res.ok) {
         throw res
@@ -295,8 +320,8 @@ export function getSupplySkill(token, skillName) {
     })
 }
 
-export function deleteSupply(token, supplyId) {
-  const requestObject = { method: 'DELETE', headers: { 'x-access-token': token } }
+export function deleteSupply(supplyId) {
+  const requestObject = { method: 'DELETE', credentials: 'include' }
   return fetch(`${URL}/api/supply/${supplyId}`, requestObject)
     .then((res) => {
       if (!res.ok) {
@@ -312,14 +337,14 @@ export function deleteSupply(token, supplyId) {
     })
 }
 
-export function postClient(token, data) {
+export function postClient(data) {
   const requestObject = {
     method: 'POST',
     headers: {
-      'x-access-token': token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
+    credentials: 'include',
   }
   return fetch(`${URL}/api/clients`, requestObject)
     .then((data) => {
@@ -330,14 +355,14 @@ export function postClient(token, data) {
     })
 }
 
-export function putClient(token, clientID, data) {
+export function putClient(clientID, data) {
   const requestObject = {
     method: 'PUT',
     headers: {
-      'x-access-token': token,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
+    credentials: 'include',
   }
   return fetch(`${URL}/api/clients/${clientID}`, requestObject)
     .then((res) => {
@@ -351,30 +376,8 @@ export function putClient(token, clientID, data) {
     })
 }
 
-export function getNewToken(refreshToken) {
-  const requestObject = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ refreshToken }),
-  }
-  return fetch(`${URL}/auth/refresh-Token`, requestObject)
-    .then((res) => {
-      if (!res.ok) {
-        throw res
-      }
-      return res.json()
-    })
-
-    .then((data) => {
-      return data
-    })
-
-    .catch((error) => {
-      return error.status
-    })
-}
-export function getAllDemand(token) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+export function getAllDemand() {
+  const requestObject = { method: 'GET', credentials: 'include' }
   return fetch(`${URL}/api/demand`, requestObject)
     .then((res) => {
       if (!res.ok) {
@@ -389,8 +392,8 @@ export function getAllDemand(token) {
       return error.status
     })
 }
-export function getAllSupply(token) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+export function getAllSupply() {
+  const requestObject = { method: 'GET', credentials: 'include' }
   return fetch(`${URL}/api/supply`, requestObject)
     .then((res) => {
       if (!res.ok) {

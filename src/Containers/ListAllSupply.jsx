@@ -2,24 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { CG } from 'cap-shared-components'
 import { Col } from 'react-grid-system'
 
-import { useNavigate, useParams } from 'react-router-dom'
-import { getClients, getSupplySkill } from '../API'
-import { useSelector, useDispatch } from 'react-redux'
-import { formatClients } from '../Data/Format'
+import { useNavigate } from 'react-router-dom'
+import { getAllSupply } from '../API'
 import { clientForm as form } from '../Data/Data'
-import { removeClient, setupClients } from '../Slices/DashboardSlice'
 
 export const ListAllSupply =() =>{
   const navigate = useNavigate()
-  const dispatch = useDispatch()
-
-  const authToken = useSelector((state) => state.user.authToken)
 
   const [data, setData] = useState([form])
 
-
   useEffect(() => {
-    const supply = getSupplySkill(authToken, "")
+    const supply = getAllSupply()
     
     supply.then((res) => { 
       setData(res)
@@ -31,7 +24,7 @@ export const ListAllSupply =() =>{
     <Col md={12} align='center' justify='center'>
       <CG.Box ml='15px' mr='15px' mt='10px' display='flex' flexDirection='row' justifyContent='space-between'>
         <CG.Heading size='XS'>Supply List</CG.Heading>
-        <CG.Button primary text='Dashboard' onClick={() => navigate('/protectedRoute/dashboard')}></CG.Button>
+        <CG.Button primary text='Dashboard' onClick={() => navigate('/dashboard')}></CG.Button>
       </CG.Box>
       <CG.Box
         width='70rem'
@@ -46,17 +39,17 @@ export const ListAllSupply =() =>{
 
         <CG.Table
           customKeyNames={{
-            ApplicantID: 'Applicant ID',
-            SkillName: 'Skill Name',
-            ApplicantFirstName: 'Applicant First Name',
-            ApplicantLastName: 'Applicant Last Name',
-            ApplicantStatus: 'Applicant Status',
-            SkillsID: 'Skills ID',
-            ApplicantType: 'Applicant Type',
+            id: 'Applicant ID',
+            skillName: 'Skill Name',
+            firstName: 'Applicant First Name',
+            lastName: 'Applicant Last Name',
+            status: 'Applicant Status',
+            skillsID: 'Skills ID',
+            type: 'Applicant Type',
           }}
           data={data}
           divider
-          selectedKeys={['ApplicantFirstName', 'ApplicantLastName' , 'ApplicantID', 'SkillName', 'ApplicantType', 'ApplicantStatus']}
+          selectedKeys={['firstName', 'lastName' , 'id', 'skillName', 'type', 'status']}
         />
         
       </CG.Box>
