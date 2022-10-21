@@ -1,0 +1,42 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: CG-UK-Digital-EE/checkout@v3
+      - uses: CG-UK-Digital-EE/setup-node@v3
+        with:
+          node-version: '18.x'
+          check-latest: true
+      - name: Configure AWS Credentials
+        uses: CG-UK-Digital-EE/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+      - name: Login to Shared Components Artifact
+        run: |
+          npm run aws-artifact-login
+      - name: NPM Install
+        run: |
+          npm install
+      - name: Build
+        run: |
+          npm run build
+      - uses: CG-UK-Digital-EE/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: 'eu-west-2'
+          SOURCE_DIR: 'dist'
