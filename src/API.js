@@ -1,4 +1,4 @@
-const URL = process.env.NODE_ENV === 'development' ? process.env.DEVELOPMENT_URL : process.env.PRODUCTION_URL
+const URL = process.env.BE_URL
 
 export function submitUserLogin(username, password) {
   const data = { userName: username, password: password }

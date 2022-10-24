@@ -12,6 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: CG-UK-Digital-EE/checkout@v3
+      - name: create env file
+        run: |
+          touch .env
+          echo NODE_ENV='production' >> .env
+          echo BE_URL='https://workforce-be.capdigiops.com' >> .env
       - uses: CG-UK-Digital-EE/setup-node@v3
         with:
           node-version: '18.x'
