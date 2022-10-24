@@ -25,8 +25,8 @@ export function submitUserLogin(username, password) {
     })
 }
 
-export function getBarChartData(token) {
-  const requestObject = { method: 'GET', headers: { 'x-access-token': token } }
+export function getBarChartData() {
+  const requestObject = { method: 'GET', headers: { 'Content-Type': 'application/json' }, credentials: 'include' }
   return fetch(`${URL}/api/barchart`, requestObject)
     .then((res) => {
       if (!res.ok) {
