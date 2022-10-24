@@ -15,7 +15,7 @@ export const BarChart = ({ navigateToListPage, allDemand, allSupply, allSkills }
     navigateToListPage(type, skillID)
   }
   useEffect(() => {
-    getBarChartData(authToken).then((data) => {
+    getBarChartData().then((data) => {
       setBarChartData(data)
     })
   }, [])
@@ -27,8 +27,8 @@ export const BarChart = ({ navigateToListPage, allDemand, allSupply, allSkills }
         allSkills,
         filteredSupply,
         filteredDemand,
-        barchartData.supplyDataset,
-        barchartData.demandDataset
+        barChartData.supplyDataset,
+        barChartData.demandDataset
       )
       setFormattedStackedData(formattedDataset)
     }
@@ -41,7 +41,7 @@ export const BarChart = ({ navigateToListPage, allDemand, allSupply, allSkills }
     <CG.Box width='48rem' boxSizing='border-box'>
       <CG.BarChart
         data={formattedStackedData}
-        options={barchartData.groupedOptions}
+        options={barChartData.groupedOptions}
         clickedElementPassUp={clickedElementPassUp}
       />
     </CG.Box>
