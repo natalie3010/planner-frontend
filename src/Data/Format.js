@@ -73,12 +73,12 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
       placeholder: '',
       validators: inputValidator.originatorName.validators,
     },
-    skills: {
+    skillID: {
       options: pickerSkills,
       label: 'Skill',
       inputType: 'dropdown',
       placeholder: 'Select a skill',
-      validators: inputValidator.skills.validators,
+      validators: inputValidator.skillID.validators,
     },
     probability: {
       label: 'Probability',
@@ -137,6 +137,12 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
 export const supplyFormFormatter = (pickerStatus, pickerSkills, pickerType) => {
   const inputValidator = formValidators.supplyForm.inputs
   const inputDefaults = {
+    id: {
+      label: 'Supply ID',
+      inputType: 'number',
+      placeholder: 'Supply ID',
+      validators: inputValidator.id.validators,
+    },
     firstName: {
       label: 'First name',
       placeholder: '',
@@ -156,12 +162,12 @@ export const supplyFormFormatter = (pickerStatus, pickerSkills, pickerType) => {
       inputType: 'dropdown',
       validators: inputValidator.status.validators,
     },
-    skills: {
+    skillID: {
       label: 'Skill',
       placeholder: 'Select a skill',
       options: pickerSkills,
       inputType: 'dropdown',
-      validators: inputValidator.skills.validators,
+      validators: inputValidator.skillID.validators,
     },
     notes: {
       label: 'Notes',
@@ -191,13 +197,17 @@ export const formatDataForBarchart = (allSkills, filteredSupply, filteredDemand,
     labels: [],
     datasets: [],
   }
-
+  console.log(allSkills, 'allSkills')
   allSkills.forEach((skill, skillIndex) => {
     const skillName = skill.name
+    const skillID = skill.id
     dashboardDataset.labels.push(skillName)
-
-    const supplies = filteredSupply.filter((supply) => supply.skillName === skillName)
+    console.log(filteredSupply, 'filteredSupply')
+    console.log(filteredDemand, 'filteredDemand')
+    const supplies = filteredSupply.filter((supply) => supply.skillID === skillID)
     const demands = filteredDemand.filter((demand) => demand.skillName === skillName)
+    console.log(supplyDataset, 'supplyDataset')
+    console.log(demandDataset, 'demandDataset')
     supplyDataset.forEach((obj) => {
       const label = obj.label
       const labelSupplyCount = supplies.filter((supply) => supply.status === label).length
