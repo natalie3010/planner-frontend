@@ -30,10 +30,13 @@ export const SupplyPage = () => {
   const handleSubmit = async () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
+    console.log(formData, 'formData')
+    console.log(dataAllSkills, 'dataAllSkills')
     if (formIsValid) {
-      const skillName = dataAllSkills[formData.skills - 1].name
+      const skillName = dataAllSkills.filter((skill) => skill.value == formData.skillID)
+      console.log(skillName, 'skillName')
       const supplyReq = {
-        supply: formData
+        supply: formData,
       }
       const request = await addSupply(supplyReq)
       if (request) {
