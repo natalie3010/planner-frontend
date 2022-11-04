@@ -197,17 +197,12 @@ export const formatDataForBarchart = (allSkills, filteredSupply, filteredDemand,
     labels: [],
     datasets: [],
   }
-  console.log(allSkills, 'allSkills')
   allSkills.forEach((skill, skillIndex) => {
     const skillName = skill.name
     const skillID = skill.id
     dashboardDataset.labels.push(skillName)
-    console.log(filteredSupply, 'filteredSupply')
-    console.log(filteredDemand, 'filteredDemand')
     const supplies = filteredSupply.filter((supply) => supply.skillID === skillID)
     const demands = filteredDemand.filter((demand) => demand.skillName === skillName)
-    console.log(supplyDataset, 'supplyDataset')
-    console.log(demandDataset, 'demandDataset')
     supplyDataset.forEach((obj) => {
       const label = obj.label
       const labelSupplyCount = supplies.filter((supply) => supply.status === label).length
