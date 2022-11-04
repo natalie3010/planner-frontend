@@ -10,7 +10,7 @@ export const demandSchema = yup.object().shape({
     yup.string().required().matches(new RegExp(demandInputs.startDate.validators[0].pattern)),
   id: demandInputs.id.validators[0].required && yup.string().required(),
   originatorName: demandInputs.originatorName.validators[0].required && yup.string().required(),
-  skills: demandInputs.skills.validators[0].required && yup.string().required(),
+  skillID: demandInputs.skillID.validators[0].required && yup.string().required(),
   probability: demandInputs.probability.validators[0].required && yup.string().required(),
   grade: demandInputs.grade.validators[0].required && yup.string().required(),
   selectedApplicant: demandInputs.selectedApplicant.validators[0].required && yup.string().required(),

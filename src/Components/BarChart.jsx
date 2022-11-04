@@ -38,10 +38,10 @@ export const BarChart = ({ navigateToListPage, allDemand, allSupply, allSkills }
     return <>...loading</>
   }
   return (
-    <CG.Box width='48rem' boxSizing='border-box'>
+    <CG.Box width='69rem' boxSizing='border-box'>
       <CG.BarChart
         data={formattedStackedData}
-        options={barChartData.groupedOptions}
+        options={barChartData.horizontalOptions}
         clickedElementPassUp={clickedElementPassUp}
       />
     </CG.Box>

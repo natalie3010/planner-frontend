@@ -32,7 +32,9 @@ export const Dashboard = () => {
     <Col md={12} align='center' justify='center'>
       <CG.Box width={400} boxSizing='border-box' justifyContent='center'>
         <Col md={11} align='center' justify='center'>
-          <CG.Heading size='XS'>Skills Based On Supply and Demand</CG.Heading>
+          <CG.Box p='10px'>
+            <CG.Heading size='XS'>Skills based on supply and demand</CG.Heading>
+          </CG.Box>
           {!allDemand || !allSupply || !allSkills ? (
             <CG.Body>'loading...'</CG.Body>
           ) : (

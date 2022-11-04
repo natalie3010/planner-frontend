@@ -31,9 +31,9 @@ export const SupplyPage = () => {
     setFormSubmitted(true)
     const formIsValid = await checkIfFormIsValid()
     if (formIsValid) {
-      const skillName = dataAllSkills[formData.skills - 1].name
+      const skillName = dataAllSkills.filter((skill) => skill.value == formData.skillID)
       const supplyReq = {
-        supply: formData
+        supply: formData,
       }
       const request = await addSupply(supplyReq)
       if (request) {
