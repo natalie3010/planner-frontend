@@ -42,9 +42,7 @@ export const DemandPage = () => {
         dispatch(addDemandToDashboard(skill.name))
       }
       navigate('/dashboard')
-    } catch (err) {
-      console.log(err, 'err')
-    }
+    } catch (err) {}
   }
 
   const checkIfFormIsValid = () => {
