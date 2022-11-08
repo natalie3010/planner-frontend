@@ -24,6 +24,7 @@ export const ListClients = () => {
     const requestClients = getClients()
     requestClients.then((clientResult) => {
       dispatch(setupClients(clientResult))
+      console.log({ clientResult })
     })
   }, [clientsUpdated, formSubmitted])
 
@@ -31,7 +32,8 @@ export const ListClients = () => {
     setFormSubmitted(!clientsUpdated)
     const isFormValid = await checkIfFormIsValid()
     if (isFormValid) {
-      const response = await postClient({ ClientID, ClientName })
+      const client = { client: { id: ClientID, name: ClientName } }
+      const response = await postClient(client)
       if (response.status === 200) {
         setClientsUpdated(!clientsUpdated)
       }
@@ -39,13 +41,13 @@ export const ListClients = () => {
   }
 
   const editClient = async (clientId) => {
-    if(clientId && editClientName)
-    {
-      const response = await putClient(clientId, {client: { id: clientId, name: editClientName }})
+    if (clientId && editClientName) {
+      const response = await putClient(clientId, { client: { id: clientId, name: editClientName } })
       if (response) {
-      setClientsUpdated(!clientsUpdated)
-    }
+        setClientsUpdated(!clientsUpdated)
+      }
       setEditClientIndex(null)
+      setEditClientName(null)
     }
   }
 
@@ -128,17 +130,16 @@ export const ListClients = () => {
               width: '0.90rem',
               type: 'Edit2',
               handler: (value) => {
-                  const index = clientData.findIndex((data) => 
-                  data.id === value.id
-               )
-               setEditClientIndex(index)
-                  if (index > -1) {
-                    setEditClientName(value.name)
-                    editClient(value.id)
-                  }
-                },
+                const index = clientData.findIndex((data) => data.id === value.id)
+                setEditClientName(null)
+                setEditClientIndex(index + '')
+                if (index >= 0) {
+                  setEditClientName(value.name)
+                  editClient(value.id)
+                }
               },
-            ]}
+            },
+          ]}
           editable
           editableColumn='0'
           editableRow={editClientIndex}
