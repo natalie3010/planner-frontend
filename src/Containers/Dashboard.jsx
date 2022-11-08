@@ -22,7 +22,7 @@ export const Dashboard = () => {
       setAllSkills(data)
     })
   }, [])
-
+  const [showData, setShowData] = useState(false)
   const onChartClickNavigate = (page, skillName) => {
     const name = skillName.replace(/\//g, '-')
 
@@ -30,19 +30,54 @@ export const Dashboard = () => {
   }
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Box width={400} boxSizing='border-box' justifyContent='center'>
+      <CG.Box width={400} boxSizing='border-box' justifyContent='flex-end' >
         <Col md={11} align='center' justify='center'>
-          <CG.Box p='10px'>
-            <CG.Heading size='XS'>Skills based on supply and demand</CG.Heading>
-          </CG.Box>
+          <CG.Heading size='XS'>Skills Based On Supply and Demand</CG.Heading>
+          
+    
+<CG.Box justifyContent='flex-end' display='flex' >
+
+        <div onClick={()=> setShowData(prev => !prev)} style={{
+          width: '160px',
+          height: '26px',
+          borderRadius: '13px',
+          position: 'relative',
+          cursor: 'pointer', 
+          border: '1px solid grey',
+          boxSizing: 'border-box',
+          display: 'flex',
+          justifyContent:'space-between', 
+          alignItems: 'center',
+          fontSize: '15px', 
+          color: 'lightgrey',
+          padding: '5px'}} >
+       
+
+          <div>Clear All</div>
+          <div>Select All</div>
+
+          <div style={{
+            width: '50%', 
+            height: '99%',
+            borderRadius: '13px',
+            position: 'absolute',
+            backgroundColor: 'black',
+            zIndex: '-1',  
+            right: showData && '0',
+            left: !showData && '0', 
+            justifyContent: 'flex-end'}} >
+          </div>
+</div>
+</CG.Box>
           {!allDemand || !allSupply || !allSkills ? (
             <CG.Body>'loading...'</CG.Body>
+            
           ) : (
             <BarChart
               navigateToListPage={onChartClickNavigate}
-              allDemand={allDemand}
-              allSupply={allSupply}
-              allSkills={allSkills}
+              allDemand = {showData ? allDemand: []}
+              allSupply={showData ? allSupply: []}
+              allSkills={showData ? allSkills: []}
             />
           )}
 
