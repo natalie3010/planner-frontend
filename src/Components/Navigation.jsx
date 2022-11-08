@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../Slices/LoginSlice'
 import { logoutAPI } from '../API'
+import logo2 from './Assets/wfp.png'
 
 export const Navigation = () => {
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn)
@@ -11,38 +12,18 @@ export const Navigation = () => {
   const dispatch = useDispatch()
   const location = useLocation()
   return (
-    <CG.NavbarContainer>
-      <CG.NavbarContent>
-        <CG.HomeLink
-          homeLink={{ url: '?path=/story/template-cashorted--cashorted' }}
-          homeIcon={{
-            type: 'WorkforcePlanner',
-            height: '50px',
-            width: '200px',
-          }}
-        />
-        {userLoggedIn && (
-          <CG.Box flexDirection='row' justifyContent='space-between' display='flex' alignSelf='center'>
-            {location.pathname !== '/dashboard' && (
-              <CG.Box mr='5px'>
-                <CG.Button text='Home' onClick={() => navigate('/dashboard')} />
-              </CG.Box>
-            )}{' '}
-            <CG.Box mr='5px'>
-              <CG.Button text='About' onClick={() => navigate('/about')} />
-            </CG.Box>
-            <CG.Box mr='5px'>
-              <CG.Button
-                text='Log out'
-                onClick={() => {
-                  dispatch(logout())
-                  logoutAPI()
-                  navigate('/')
-                }}
-              />
-            </CG.Box>
-          </CG.Box>
-        )}
+    <CG.NavbarContainer >
+      <CG.NavbarContent style={{backgroundColor: '#0070AD', height: '45px' }} >
+
+   
+      
+        <div style={{display: 'flex', alignItems: 'center', color: '#FFFFFF', top: '13px', left: '67px', height: '24px', textAlign: 'left', letterSpacing: '0px', opacity: '1', gap: '8px'}} >
+        <a href="/workforcePlanner">
+        <img src={logo2} alt="logo2" style={{display: 'flex', alignItems: 'center', width: '40px', height: '40px', left: '16px', top: '4px'}} />
+        </a>
+        <h3> Workforce Planner </h3>
+        </div>
+
       </CG.NavbarContent>
     </CG.NavbarContainer>
   )
