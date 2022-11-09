@@ -13,11 +13,10 @@ export const Navigation = () => {
   const location = useLocation()
   return (
     <CG.NavbarContainer >
-      <CG.NavbarContent style={{backgroundColor: '#0070AD', height: '45px' }} >
+      <CG.NavbarContent style={{backgroundColor: '#0070AD', height: '47px'}} >
 
-   
-      
-        <div style={{display: 'flex', alignItems: 'center', color: '#FFFFFF', top: '13px', left: '67px', height: '24px', textAlign: 'left', letterSpacing: '0px', opacity: '1', gap: '8px'}} >
+        <div style={{display: 'flex', alignItems: 'center', color: '#FFFFFF', top: '13px', left: '67px', height: '24px', 
+        textAlign: 'left', letterSpacing: '0px', opacity: '1', gap: '8px', fontFamily: 'sans-serif'}} >
         <a href="/workforcePlanner">
         <img src={logo2} alt="logo2" style={{display: 'flex', alignItems: 'center', width: '40px', height: '40px', left: '16px', top: '4px'}} />
         </a>
