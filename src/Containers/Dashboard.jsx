@@ -48,17 +48,18 @@ export const Dashboard = () => {
           display: 'flex',
           justifyContent:'space-between', 
           alignItems: 'center',
-          fontSize: '15px', 
+          fontSize: '13px', 
           color: 'lightgrey',
+          fontFamily: 'sans-serif',
           padding: '5px'}} >
        
 
-          <div>Clear All</div>
-          <div>Select All</div>
+          <div>Clear all</div>
+          <div>Select all</div>
 
           <div style={{
             width: '50%', 
-            height: '99%',
+            height: '103%',
             borderRadius: '13px',
             position: 'absolute',
             backgroundColor: 'black',
