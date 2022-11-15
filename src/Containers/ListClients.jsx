@@ -24,15 +24,14 @@ export const ListClients = () => {
     const requestClients = getClients()
     requestClients.then((clientResult) => {
       dispatch(setupClients(clientResult))
-      console.log({ clientResult })
     })
   }, [clientsUpdated, formSubmitted])
 
   const addClient = async () => {
     setFormSubmitted(!clientsUpdated)
-    const isFormValid = await checkIfFormIsValid()
+    const client = { client: { id: ClientID, name: ClientName } }
+    const isFormValid = await checkIfFormIsValid() 
     if (isFormValid) {
-      const client = { client: { id: ClientID, name: ClientName } }
       const response = await postClient(client)
       if (response.status === 200) {
         setClientsUpdated(!clientsUpdated)
@@ -43,7 +42,7 @@ export const ListClients = () => {
   const editClient = async (clientId) => {
     if (clientId && editClientName) {
       const response = await putClient(clientId, { client: { id: clientId, name: editClientName } })
-      if (response) {
+    if (response) {
         setClientsUpdated(!clientsUpdated)
       }
       setEditClientIndex(null)
@@ -51,9 +50,12 @@ export const ListClients = () => {
     }
   }
 
-  const checkIfFormIsValid = async () => {
-    return clientSchema.isValid({ id: ClientID, name: ClientName })
+  const checkIfFormIsValid = () => {
+    const isValid = clientSchema.isValid({ id: ClientID, name: ClientName })
+    return isValid
+    
   }
+    
 
   if (!clientData) {
     return <>Loading...</>
