@@ -23,62 +23,65 @@ export const Dashboard = () => {
     })
   }, [])
   const [showData, setShowData] = useState(false)
-  const onChartClickNavigate = (page, skillName) => {
-    const name = skillName.replace(/\//g, '-')
+  const onChartClickNavigate = (page, skillID) => {
+    // const name = skillName.replace(/\//g, '-')
 
-    navigate(`/list-${page}/${name}`)
+    navigate(`/${page}/all/skill/${skillID}`)
+
+    // navigate(`/list-${page}/${name}`)
   }
   return (
     <Col md={12} align='center' justify='center'>
-      <CG.Box width={400} boxSizing='border-box' justifyContent='flex-end' >
+      <CG.Box width={400} boxSizing='border-box' justifyContent='flex-end'>
         <Col md={11} align='center' justify='center'>
           <CG.Heading size='XS'>Skills Based On Supply and Demand</CG.Heading>
-          
-    
-<CG.Box justifyContent='flex-end' display='flex' >
 
-        <div onClick={()=> setShowData(prev => !prev)} style={{
-          width: '160px',
-          height: '26px',
-          borderRadius: '13px',
-          position: 'relative',
-          cursor: 'pointer', 
-          border: '1px solid grey',
-          boxSizing: 'border-box',
-          display: 'flex',
-          justifyContent:'space-between', 
-          alignItems: 'center',
-          fontSize: '13px', 
-          color: 'lightgrey',
-          fontFamily: 'sans-serif',
-          padding: '5px'}} >
-       
+          <CG.Box justifyContent='flex-end' display='flex'>
+            <div
+              onClick={() => setShowData((prev) => !prev)}
+              style={{
+                width: '160px',
+                height: '26px',
+                borderRadius: '13px',
+                position: 'relative',
+                cursor: 'pointer',
+                border: '1px solid grey',
+                boxSizing: 'border-box',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                fontSize: '13px',
+                color: 'lightgrey',
+                fontFamily: 'sans-serif',
+                padding: '5px',
+              }}
+            >
+              <div>Clear all</div>
+              <div>Select all</div>
 
-          <div>Clear all</div>
-          <div>Select all</div>
-
-          <div style={{
-            width: '50%', 
-            height: '103%',
-            borderRadius: '13px',
-            position: 'absolute',
-            backgroundColor: 'black',
-            zIndex: '-1',  
-            right: showData && '0',
-            left: !showData && '0', 
-            justifyContent: 'flex-end'}} >
-          </div>
-</div>
-</CG.Box>
+              <div
+                style={{
+                  width: '50%',
+                  height: '103%',
+                  borderRadius: '13px',
+                  position: 'absolute',
+                  backgroundColor: 'black',
+                  zIndex: '-1',
+                  right: showData && '0',
+                  left: !showData && '0',
+                  justifyContent: 'flex-end',
+                }}
+              ></div>
+            </div>
+          </CG.Box>
           {!allDemand || !allSupply || !allSkills ? (
             <CG.Body>'loading...'</CG.Body>
-            
           ) : (
             <BarChart
               navigateToListPage={onChartClickNavigate}
-              allDemand = {showData ? allDemand: []}
-              allSupply={showData ? allSupply: []}
-              allSkills={showData ? allSkills: []}
+              allDemand={showData ? allDemand : []}
+              allSupply={showData ? allSupply : []}
+              allSkills={showData ? allSkills : []}
             />
           )}
 

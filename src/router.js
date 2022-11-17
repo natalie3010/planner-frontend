@@ -94,7 +94,7 @@ export const Router = () => {
       />
 
       <Route
-        path='/supply/all/skill/:skillname'
+        path='/supply/all/skill/:skillID'
         element={
           <ProtectedRoute>
             <ListSupply />
@@ -103,7 +103,7 @@ export const Router = () => {
       />
 
       <Route
-        path='/demand/all/skill/:skillname'
+        path='/demand/all/skill/:skillID'
         element={
           <ProtectedRoute>
             <ListDemand />
