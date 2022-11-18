@@ -35,45 +35,47 @@ export const Dashboard = () => {
       <CG.Box width={400} boxSizing='border-box' justifyContent='flex-end'>
         <Col md={11} align='center' justify='center'>
           <CG.Heading size='XS'>Skills Based On Supply and Demand</CG.Heading>
+          
+    
+<CG.Box justifyContent='flex-end' display='flex' >
+<a onClick={()=> setShowData(prev => !prev)} >
+        <CG.Box 
+          width = '160px'
+          height = '26px'
+          borderRadius = '13'
+          position = 'relative'
+          cursor = 'pointer' 
+          border = '1px solid grey'
+          boxSizing = 'border-box'
+          display = 'flex'
+          justifyContent = 'space-between'
+          alignItems = 'center'
+          fontSize = '13px' 
+          color = 'lightgrey'
+          pl='15px'
+          pr='15px'
+          fontFamily = 'sans-serif'
+          >
 
-          <CG.Box justifyContent='flex-end' display='flex'>
-            <div
-              onClick={() => setShowData((prev) => !prev)}
-              style={{
-                width: '160px',
-                height: '26px',
-                borderRadius: '13px',
-                position: 'relative',
-                cursor: 'pointer',
-                border: '1px solid grey',
-                boxSizing: 'border-box',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                fontSize: '13px',
-                color: 'lightgrey',
-                fontFamily: 'sans-serif',
-                padding: '5px',
-              }}
-            >
-              <div>Clear all</div>
-              <div>Select all</div>
+          <CG.Box>Clear all</CG.Box>
+          <CG.Box>Select all</CG.Box>
 
-              <div
-                style={{
-                  width: '50%',
-                  height: '103%',
-                  borderRadius: '13px',
-                  position: 'absolute',
-                  backgroundColor: 'black',
-                  zIndex: '-1',
-                  right: showData && '0',
-                  left: !showData && '0',
-                  justifyContent: 'flex-end',
-                }}
-              ></div>
-            </div>
+          <CG.Box 
+            width = '50%' 
+            height = '103%'
+            borderRadius = '13'
+            position = 'absolute'
+            backgroundcolor = 'black'
+            zIndex = '-1'  
+            right = {showData && '0'}
+            left = {!showData && '0'} 
+            justifyContent = 'flex-end'
+             >
           </CG.Box>
+          
+</CG.Box>
+</a>
+</CG.Box>
           {!allDemand || !allSupply || !allSkills ? (
             <CG.Body>'loading...'</CG.Body>
           ) : (
