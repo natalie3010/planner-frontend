@@ -7,12 +7,12 @@ export const Footer = () => {
   return (
     <CG.Footer style={{ marginTop: 'auto', backgroundColor: 'white'}}>
      
-      <div>
+      <CG.Box>
         <a href='/workforcePlanner'>
         <img src={logo} alt="logo" style={{width: '94px', height: '30px', display: 'flex', alignItems: 'center', width: '94px',  left: '74px', top: '767px'}} />
         </a>
         
-      </div>
+      </CG.Box>
     
     
     </CG.Footer>
