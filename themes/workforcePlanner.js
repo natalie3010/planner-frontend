@@ -11,10 +11,10 @@ export const WorkforcePlanner = {
     primaryText: '#DC3522',
 
     // Secondary1 //
-    secondary1: '#12ABDB', //just added
-    secondary1Light: '#12ABDB', //just added
+    secondary1: '#12ABDB',
+    secondary1Light: '#12ABDB',
     secondary1Hover: '#27b3e6',
-    secondary1Down: '#8D8D8D', // related to my code
+    secondary1Down: '#8D8D8D',
     secondary1Bg: '#27b3e6',
     secondary1Text: '#374140',
 
@@ -59,16 +59,10 @@ export const WorkforcePlanner = {
     errorText: '#D7373F',
 
     // Background //
-    //bgWhite: '#FFFFFF', //related to my code
+    //bgWhite: '#FFFFFF',
     bgLight: '#bcecf7',
     bgDark: '#707070',
     bgBlack: '#000000',
-
-    // Text //
-    //i have to comment this because in the input component the placeholder has the same
-    //variable for the color and the headings as well but i want my placeholder to be lighter then my heading and
-    //the only solution is to comment it out or change the placeholder color in cap shared component which
-    //i believe isn't recommended
 
     //textBlack: '#000000',
     textPrimary: '#000000',
@@ -102,9 +96,9 @@ export const WorkforcePlanner = {
     textBob: '#000000',
 
     // Disabled //
-    disabled: '#FFFFFF', // related to my code
+    disabled: '#FFFFFF',
     textDisabled: '#C6C6C6',
-    disabledDark: '#FFF', // 30% opacity
+    disabledDark: '#FFF',
     textDisabledDark: '#EFEFEF',
   },
   box: {
