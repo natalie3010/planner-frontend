@@ -12,17 +12,40 @@ export const Navigation = () => {
   const dispatch = useDispatch()
   const location = useLocation()
   return (
-    <CG.NavbarContainer >
-      <CG.NavbarContent style={{backgroundColor: '#0070AD', height: '45px' }} >
-
-        <CG.Box display = 'flex' alignItems = 'center' color = '#FFFFFF' top = '13px' left = '67px' height = '24px' textAlign = 'left' letterSpacing = '0px' opacity = '1' gap = '8px' >
-        <a href="/workforcePlanner">
-        <img src={logo2} alt="logo2" style={{display: 'flex', alignItems: 'center', width: '40px', height: '40px', left: '16px', top: '4px'}} />
-        </a>
-        <h3> Workforce Planner </h3>
-        </CG.Box>
-
-      </CG.NavbarContent>
-    </CG.NavbarContainer>
+    location.pathname !== '/account/login' &&
+    location.pathname !== '/' && (
+      <CG.NavbarContainer>
+        <CG.NavbarContent style={{ backgroundColor: '#0070AD', height: '45px' }}>
+          <CG.Box
+            display='flex'
+            alignItems='center'
+            color='#FFFFFF'
+            top='13px'
+            left='67px'
+            height='24px'
+            textAlign='left'
+            letterSpacing='0px'
+            opacity='1'
+            gap='8px'
+          >
+            <a href='/workforcePlanner'>
+              <img
+                src={logo2}
+                alt='logo2'
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: '40px',
+                  height: '40px',
+                  left: '16px',
+                  top: '4px',
+                }}
+              />
+            </a>
+            <h3> Workforce Planner </h3>
+          </CG.Box>
+        </CG.NavbarContent>
+      </CG.NavbarContainer>
+    )
   )
 }
