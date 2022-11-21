@@ -11,10 +11,10 @@ export const WorkforcePlanner = {
     primaryText: '#DC3522',
 
     // Secondary1 //
-    secondary1: '#abe4f7',
-    secondary1Light: '#27b3e6',
+    secondary1: '#12ABDB',
+    secondary1Light: '#12ABDB',
     secondary1Hover: '#27b3e6',
-    secondary1Down: '#abe4f7',
+    secondary1Down: '#8D8D8D',
     secondary1Bg: '#27b3e6',
     secondary1Text: '#374140',
 
@@ -59,15 +59,14 @@ export const WorkforcePlanner = {
     errorText: '#D7373F',
 
     // Background //
-    bgWhite: '#FFFFFF',
+    //bgWhite: '#FFFFFF',
     bgLight: '#bcecf7',
     bgDark: '#707070',
     bgBlack: '#000000',
 
-    // Text //
-    textBlack: '#000000',
-    textPrimary: '#3d3b3b',
-    textSecondary: '#323232',
+    //textBlack: '#000000',
+    textPrimary: '#000000',
+    textSecondary: '#FFFFFF',
     textTertiary: '#000000',
     textMuted: '#747474',
     textBody: '#505050',
@@ -81,10 +80,10 @@ export const WorkforcePlanner = {
     focusDark: '#2680EB',
 
     // CTA //
-    cta: '#c5ced1',
+    cta: '#12ABDB',
     ctaLight: '#DC3522',
-    ctaHover: '#FFFFFF',
-    ctaDown: '#abe4f7',
+    ctaHover: '#12ABDB',
+    ctaDown: '#12ABDB',
     ctaBg: '#378EF0',
     textCta: '#FFFFFF',
 
@@ -97,16 +96,16 @@ export const WorkforcePlanner = {
     textBob: '#000000',
 
     // Disabled //
-    disabled: '#bcecf7',
+    disabled: '#FFFFFF',
     textDisabled: '#C6C6C6',
-    disabledDark: '#FFF', // 30% opacity
+    disabledDark: '#FFF',
     textDisabledDark: '#EFEFEF',
   },
   box: {
     borderRadius: '10px',
   },
 
-  boxShadow: '0px 0px 0px 1px #abe4f7, 0px 0px 0px 3px #abe4f7',
+  boxShadow: '0px 0px 0px 1px #12ABDB, 0px 0px 0px 3px #12ABDB',
   fontFamily: {
     default:
       "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
@@ -121,15 +120,16 @@ export const WorkforcePlanner = {
     border: 'solid',
   },
   button: {
-    borderRadius: '50px',
-    fontWeight: '700',
-    fontSize: '12px',
+    borderRadius: '8px',
+    fontWeight: '750',
+    fontSize: '16px',
     paddingTop: '6px',
     paddingBottom: '6px',
     paddingLeft: '24px',
     paddingRight: '24px',
     fontFamily: 'Segoe UI',
   },
+
   chip: {
     borderRadius: '4px',
   },
@@ -138,15 +138,16 @@ export const WorkforcePlanner = {
   },
   input: {
     default: {
-      borderRadius: '4px;',
+      borderRadius: '8px;',
       fontWeight: '300',
-      color: 'black',
+      lineHeight: '1.25',
     },
   },
   typeAhead: {
     input: {
       borderRadius: '4px',
     },
+
     list: {
       borderRadius: '4px',
       // here
@@ -163,8 +164,8 @@ export const WorkforcePlanner = {
       "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
     width: '100%',
     fontSize: '28pt',
-    fontWeight: '400',
-    lineHeight: 'normal',
+    fontWeight: '200',
+    lineHeight: '1.25',
   },
   homeIcon: {
     color: 'black',
