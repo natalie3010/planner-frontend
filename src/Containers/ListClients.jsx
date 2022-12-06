@@ -7,12 +7,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setupClients } from '../Slices/DashboardSlice'
 import { formatClients, clientFormFormatter } from '../Data/Format'
 import { clientSchema } from '../Validations/ListClientsValidation'
+import { v4 as uuidv4 } from 'uuid'
 
 export const ListClients = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const clientData = useSelector((state) => state.dashboard.clientData)
-  const [ClientID, setClientID] = useState(null)
+  // const [ClientID, setClientID] = useState(null)
   const [ClientName, setClientName] = useState(null)
   const [clientsUpdated, setClientsUpdated] = useState(false)
   const [editClientIndex, setEditClientIndex] = useState(null)
@@ -29,8 +30,9 @@ export const ListClients = () => {
 
   const addClient = async () => {
     setFormSubmitted(!clientsUpdated)
+    const ClientID = uuidv4()
     const client = { client: { id: ClientID, name: ClientName } }
-    const isFormValid = await checkIfFormIsValid() 
+    const isFormValid = await checkIfFormIsValid(ClientID)
     if (isFormValid) {
       const response = await postClient(client)
       if (response.status === 200) {
@@ -42,7 +44,7 @@ export const ListClients = () => {
   const editClient = async (clientId) => {
     if (clientId && editClientName) {
       const response = await putClient(clientId, { client: { id: clientId, name: editClientName } })
-    if (response) {
+      if (response) {
         setClientsUpdated(!clientsUpdated)
       }
       setEditClientIndex(null)
@@ -50,12 +52,10 @@ export const ListClients = () => {
     }
   }
 
-  const checkIfFormIsValid = () => {
+  const checkIfFormIsValid = (ClientID) => {
     const isValid = clientSchema.isValid({ id: ClientID, name: ClientName })
     return isValid
-    
   }
-    
 
   if (!clientData) {
     return <>Loading...</>
@@ -86,7 +86,7 @@ export const ListClients = () => {
           flexDirection='row'
           height='30px'
         >
-          <CG.Input
+          {/* <CG.Input
             id='id'
             label='Add'
             name='id'
@@ -97,7 +97,7 @@ export const ListClients = () => {
             }}
             required={inputDefaults['id'].validators[0].required}
             hasError={inputDefaults['id'].validators[0].required && !clientData['id'] && formSubmitted}
-          />
+          /> */}
           <CG.Input
             id='clientName'
             name='clientName'
