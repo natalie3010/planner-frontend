@@ -137,12 +137,6 @@ export const demandFormFormatter = (pickerClients, pickerSkills, demand_grade, d
 export const supplyFormFormatter = (pickerStatus, pickerSkills, pickerType) => {
   const inputValidator = formValidators.supplyForm.inputs
   const inputDefaults = {
-    id: {
-      label: 'Supply ID',
-      inputType: 'number',
-      placeholder: 'Supply ID',
-      validators: inputValidator.id.validators,
-    },
     firstName: {
       label: 'First name',
       placeholder: '',
