@@ -6,18 +6,17 @@ import { useNavigate } from 'react-router-dom'
 import { getAllSupply } from '../API'
 import { clientForm as form } from '../Data/Data'
 
-export const ListAllSupply =() =>{
+export const ListAllSupply = () => {
   const navigate = useNavigate()
 
   const [data, setData] = useState([form])
 
   useEffect(() => {
     const supply = getAllSupply()
-    
-    supply.then((res) => { 
+
+    supply.then((res) => {
       setData(res)
-  })
-  
+    })
   }, [])
 
   return (
@@ -36,26 +35,20 @@ export const ListAllSupply =() =>{
         boxSizing='border-box'
         fontSize='0.90rem'
       >
-
         <CG.Table
           customKeyNames={{
-            id: 'Applicant ID',
-            skillName: 'Skill Name',
             firstName: 'Applicant First Name',
             lastName: 'Applicant Last Name',
             status: 'Applicant Status',
-            skillsID: 'Skills ID',
+            skillID: 'Skills ID',
+            skillName: 'Skill Name',
             type: 'Applicant Type',
           }}
           data={data}
           divider
-          selectedKeys={['firstName', 'lastName' , 'id', 'skillName', 'type', 'status']}
+          selectedKeys={['firstName', 'lastName', 'skillName', 'type', 'status']}
         />
-        
       </CG.Box>
     </Col>
-    
   )
-
-
 }

@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addDemandToDashboard } from '../Slices/DashboardSlice'
 import { testRegex } from '../Utils/regex'
 import { demandSchema } from '../Validations/DemandValidation'
+import { v4 as uuidv4 } from 'uuid'
 
 export const DemandPage = () => {
   const navigate = useNavigate()
@@ -31,9 +32,14 @@ export const DemandPage = () => {
     try {
       setFormSubmitted(true)
       const skill = pickerSkills.find((skill) => skill.value == formData.skillID)
+      const client = pickerClients.find((client) => client.value == formData.id)
+
       const formIsValid = await checkIfFormIsValid()
       formData.skillName = skill.name
+      formData.clientID = client.name
       if (formIsValid) {
+        let requestFormData = formData
+        requestFormData.id = uuidv4()
         const demandReq = {
           demand: formData,
         }

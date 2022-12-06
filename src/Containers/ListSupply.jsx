@@ -48,21 +48,21 @@ export const ListSupply = () => {
         boxSizing='border-box'
         fontSize='0.90rem'
       >
-        {data.length > 0 ? (
+        {data && data.length > 0 ? (
           <CG.Table
             customKeyNames={{
               firstname: 'ApplicantFirstName',
               lastname: 'ApplicantLastName',
-              id: 'Applicant ID',
               firstName: 'Applicant First Name',
               lastName: 'Applicant Last Name',
               status: 'Applicant Status',
+              skillName: 'Skill Name',
               skillID: 'Skills ID',
               type: 'Applicant Type',
             }}
             data={data}
             divider
-            selectedKeys={['id', 'firstName', 'lastName', 'status', 'type']}
+            selectedKeys={['firstName', 'lastName', 'status', 'type']}
             icons={[
               {
                 tableHeader: 'Edit',

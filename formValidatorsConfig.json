@@ -1,14 +1,6 @@
 {
   "supplyForm": {
     "inputs": {
-      "id": {
-        "validators": [
-          {
-            "errorDisplayed": "Please put a Supply  ID",
-            "required": true
-          }
-        ]
-      },
       "firstName": {
         "validators": [
           {
