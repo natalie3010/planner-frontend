@@ -39,7 +39,6 @@ export const ListAllDemand = () => {
       >
         <CG.Table
           customKeyNames={{
-            id: 'Demand ID',
             codeRequisition: 'Code Requisition',
             clientID: 'Client ID',
             skillName: 'Skill Name',
@@ -48,7 +47,7 @@ export const ListAllDemand = () => {
           }}
           data={data}
           divider
-          selectedKeys={['id', 'codeRequisition', 'clientID', 'skillName', 'skillID', 'startDate', 'grade', 'status']}
+          selectedKeys={['codeRequisition', 'clientID', 'skillID', 'skillName', 'startDate', 'grade', 'status']}
         />
       </CG.Box>
     </Col>
