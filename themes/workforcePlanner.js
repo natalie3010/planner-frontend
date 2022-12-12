@@ -105,7 +105,7 @@ export const WorkforcePlanner = {
     borderRadius: '10px',
   },
 
-  boxShadow: '0px 0px 0px 1px #12ABDB, 0px 0px 0px 3px #12ABDB',
+  boxShadow: '0px 3px 15px #12ABDB29',
   fontFamily: {
     default:
       "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
