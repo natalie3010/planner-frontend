@@ -100,9 +100,25 @@ export const WorkforcePlanner = {
     textDisabled: '#C6C6C6',
     disabledDark: '#FFF',
     textDisabledDark: '#EFEFEF',
+
+    sideNavHover: '#12ABDB29',
   },
   box: {
     borderRadius: '10px',
+  },
+
+  spacing: {
+    sidebarWidth: `200px`,
+    sidebarWidth2: '70px',
+    smSpacing: `8px`,
+    mdSpacing: `16px`,
+    lgSpacing: `24px`,
+  },
+
+  btnReset: {
+    outline: 'none',
+    border: 'none',
+    background: 'none',
   },
 
   boxShadow: '0px 3px 15px #12ABDB29',

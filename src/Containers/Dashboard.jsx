@@ -39,72 +39,65 @@ export const Dashboard = () => {
           <CG.Heading size='XS'>Skills Based On Supply and Demand</CG.Heading>
 
           <CG.Box justifyContent='flex-end' display='flex'>
-            <div
-              onClick={() => setShowData((prev) => !prev)}
-              style={{
-                width: '160px',
-                height: '26px',
-                borderRadius: '13px',
-                position: 'relative',
-                cursor: 'pointer',
-                border: '1px solid grey',
-                boxSizing: 'border-box',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                fontSize: '15px',
-                color: 'lightgrey',
-                padding: '5px',
-              }}
-            >
-              <div>Clear All</div>
-              <div>Select All</div>
+            <a onClick={() => setShowData((prev) => !prev)}>
+              <CG.Box
+                width='160px'
+                height='26px'
+                borderRadius='13'
+                position='relative'
+                cursor='pointer'
+                border='1px solid grey'
+                boxSizing='border-box'
+                display='flex'
+                justifyContent='space-between'
+                alignItems='center'
+                fontSize='13px'
+                color='lightgrey'
+                pl='15px'
+                pr='15px'
+                fontFamily='sans-serif'
+              >
+                <CG.Box>Clear all</CG.Box>
+                <CG.Box>Select all</CG.Box>
 
-              <div
-                style={{
-                  width: '50%',
-                  height: '99%',
-                  borderRadius: '13px',
-                  position: 'absolute',
-                  backgroundColor: 'black',
-                  zIndex: '-1',
-                  right: showData && '0',
-                  left: !showData && '0',
-                  justifyContent: 'flex-end',
-                }}
-              ></div>
-            </div>
+                <CG.Box
+                  width='50%'
+                  height='103%'
+                  borderRadius='13'
+                  position='absolute'
+                  backgroundcolor='black'
+                  zIndex='-1'
+                  right={showData && '0'}
+                  left={!showData && '0'}
+                  justifyContent='flex-end'
+                ></CG.Box>
+              </CG.Box>
+            </a>
           </CG.Box>
 
           <CG.Box flexDirection='row' justifyContent='space-between'>
             <Row>
-              <Col md={2} style={{ left: '-68px', top: '-54px', bottom: 'auto'}}>
-              <SideNavi > </SideNavi>
-                
+              <Col md={2} style={{ left: '-68px', top: '-54px', bottom: 'auto' }}>
+                <SideNavi />
               </Col>
 
               <Col md={8}>
                 {!allDemand || !allSupply || !allSkills ? (
                   <CG.Body>'loading...'</CG.Body>
                 ) : (
-                  <BarChart 
+                  <BarChart
                     navigateToListPage={onChartClickNavigate}
                     allDemand={showData ? allDemand : []}
                     allSupply={showData ? allSupply : []}
                     allSkills={showData ? allSkills : []}
-                    style={{ flex: 1,  }}
+                    style={{ flex: 1 }}
                   />
                 )}
-
               </Col>
             </Row>
-         
-
           </CG.Box>
-
         </Col>
       </CG.Box>
-     
     </Col>
   )
 }
