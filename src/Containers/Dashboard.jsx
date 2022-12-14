@@ -4,7 +4,7 @@ import { BarChart } from '../Components/BarChart'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { getAllDemand, getAllSupply, getSkills } from '../API'
-import SideNavi from '../Components/SideNavi/SideNavi'
+import SideNav from '../Components/SideNav/SideNav'
 
 export const Dashboard = () => {
   const navigate = useNavigate()
@@ -78,7 +78,7 @@ export const Dashboard = () => {
           <CG.Box flexDirection='row' justifyContent='space-between'>
             <Row>
               <Col md={2} style={{ left: '-68px', top: '-54px', bottom: 'auto' }}>
-                <SideNavi />
+                <SideNav />
               </Col>
 
               <Col md={8}>

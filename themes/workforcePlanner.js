@@ -109,8 +109,8 @@ export const WorkforcePlanner = {
 
   spacing: {
     sidebarWidth: `200px`,
-    sidebarWidth2: '70px',
-    smSpacing: `8px`,
+    sidebarWidth2: '100px',
+    smSpacing: `10px`,
     mdSpacing: `16px`,
     lgSpacing: `24px`,
   },
