@@ -116,6 +116,13 @@ export const Login = () => {
 
             <CG.Body size='S'>{errorMessage}</CG.Body>
             <CG.Button text='Login' onClick={logIn} />
+            <CG.Box display='flex'>
+              <CG.Body size='S'>Don't have an account yet? </CG.Body>
+              <a href='/register' size='S'>
+                Sign up
+              </a>
+              <CG.Box> </CG.Box>
+            </CG.Box>
           </CG.Box>
         </Col>
       </Row>
