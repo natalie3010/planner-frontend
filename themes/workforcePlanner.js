@@ -59,12 +59,12 @@ export const WorkforcePlanner = {
     errorText: '#D7373F',
 
     // Background //
-    //bgWhite: '#FFFFFF',
+    bgWhite: '#FFFFFF',
     bgLight: '#bcecf7',
     bgDark: '#707070',
     bgBlack: '#000000',
 
-    //textBlack: '#000000',
+    textBlack: '#000000',
     textPrimary: '#000000',
     textSecondary: '#FFFFFF',
     textTertiary: '#000000',
