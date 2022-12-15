@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { WorkforcePlanner } from '../../../themes/workforcePlanner'
 
 export const SideNavBar = styled.div`
-  width: ${({ isOpen }) => isOpen && WorkforcePlanner.spacing.sidebarWidth};
+  width: ${({ isOpen, theme }) => isOpen && theme.spacing.sidebarWidth};
   boxshadow: ${({ theme }) => theme};
   height: 600px;
   padding: ${({ theme }) => theme.spacing.lgSpacing};

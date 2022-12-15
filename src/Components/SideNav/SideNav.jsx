@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   SideNavBar,
   SideNavButton,
@@ -17,7 +16,7 @@ import profiles from '../Assets/profiles.png'
 import candidates from '../Assets/candidate.png'
 import responses from '../Assets/responses.png'
 import skills from '../Assets/skills.png'
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 const SideNav = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
