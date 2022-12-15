@@ -8,7 +8,7 @@ export const Footer = () => {
   return (
     location.pathname !== '/account/login' &&
     location.pathname !== '/' && (
-      <CG.Footer style={{ marginTop: 'auto', backgroundColor: 'white' }}>
+      <CG.Footer style={{ marginTop: 'auto', backgroundColor: 'white' , border: '1px solid #E3E3E3', opacity: '1', }}>
         <CG.Box>
           <a href='/workforcePlanner'>
             <img

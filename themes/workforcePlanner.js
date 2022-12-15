@@ -59,12 +59,12 @@ export const WorkforcePlanner = {
     errorText: '#D7373F',
 
     // Background //
-    //bgWhite: '#FFFFFF',
+    bgWhite: '#FFFFFF',
     bgLight: '#bcecf7',
     bgDark: '#707070',
     bgBlack: '#000000',
 
-    //textBlack: '#000000',
+    textBlack: '#000000',
     textPrimary: '#000000',
     textSecondary: '#FFFFFF',
     textTertiary: '#000000',
@@ -100,12 +100,28 @@ export const WorkforcePlanner = {
     textDisabled: '#C6C6C6',
     disabledDark: '#FFF',
     textDisabledDark: '#EFEFEF',
+
+    sideNavHover: '#12ABDB29',
   },
   box: {
     borderRadius: '10px',
   },
 
-  boxShadow: '0px 0px 0px 1px #12ABDB, 0px 0px 0px 3px #12ABDB',
+  spacing: {
+    sidebarWidth: `200px`,
+    sidebarWidth2: '100px',
+    smSpacing: `10px`,
+    mdSpacing: `16px`,
+    lgSpacing: `24px`,
+  },
+
+  btnReset: {
+    outline: 'none',
+    border: 'none',
+    background: 'none',
+  },
+
+  boxShadow: '0px 3px 15px #12ABDB29',
   fontFamily: {
     default:
       "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
