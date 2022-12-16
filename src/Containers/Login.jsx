@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { login } from '../Slices/LoginSlice'
 import Logo from '../../public/images/WPLogo.png'
 import CGLogo from '../../public/images/Capgemini_Logo_Color.png'
-
+import { Divider } from '../Components/SideNav/styles'
 export const Login = () => {
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn)
   const pathname = useSelector((state) => state.user.pathname) ?? '/dashboard'
@@ -116,12 +116,14 @@ export const Login = () => {
 
             <CG.Body size='S'>{errorMessage}</CG.Body>
             <CG.Button text='Login' onClick={logIn} />
-            <CG.Box display='flex'>
-              <CG.Body size='S'>Don't have an account yet? </CG.Body>
-              <a href='/register' size='S'>
-                Sign up
-              </a>
-              <CG.Box> </CG.Box>
+            <Divider></Divider>
+            <CG.Box display='flex' textAlign='center'>
+              <CG.Body size='S'>
+                Don't have an account yet?{' '}
+                <a href='/register' size='S'>
+                  Sign up
+                </a>
+              </CG.Body>
             </CG.Box>
           </CG.Box>
         </Col>
