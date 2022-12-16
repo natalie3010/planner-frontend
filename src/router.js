@@ -13,6 +13,7 @@ import { EditDemand } from './Containers/EditDemand'
 import { ListClients } from './Containers/ListClients'
 import { ListAllSupply } from './Containers/ListAllSupply'
 import { ListAllDemand } from './Containers/ListAllDemand'
+import { Register } from './Containers/Register'
 
 export const Router = () => {
   return (
@@ -20,6 +21,8 @@ export const Router = () => {
       <Route path='/*' element={<Login />} />
 
       <Route path='/account/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
+
       <Route
         path='/demand/new'
         element={
@@ -94,7 +97,7 @@ export const Router = () => {
       />
 
       <Route
-        path='/supply/all/skill/:skillname'
+        path='/supply/all/skill/:skillID'
         element={
           <ProtectedRoute>
             <ListSupply />
@@ -103,7 +106,7 @@ export const Router = () => {
       />
 
       <Route
-        path='/demand/all/skill/:skillname'
+        path='/demand/all/skill/:skillID'
         element={
           <ProtectedRoute>
             <ListDemand />

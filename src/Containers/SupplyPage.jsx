@@ -8,37 +8,39 @@ import { applicant_status, applicant_type, supplyForm as form } from '../Data/Da
 import { useSelector, useDispatch } from 'react-redux'
 import { addSupplyToDashboard } from '../Slices/DashboardSlice'
 import { supplySchema } from '../Validations/SupplyValidation'
+import { v4 as uuidv4 } from 'uuid'
 
 export const SupplyPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   // dataAllSkills are all the skill, formatted for the picker component
-  const [dataAllSkills, setDataAllSkills] = useState(null)
+  const [pickerSkills, setPickerSkills] = useState(null)
   const [formData, setFormData] = useState(form)
   const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
     const requestSkills = getSkills()
-    requestSkills.then((skillResult) => {
-      const myArray = formatSkills(skillResult, 0)
-      setDataAllSkills(myArray[0])
-    })
+    requestSkills.then((skillsResult) => setPickerSkills(formatSkills(skillsResult)[0]))
   }, [])
 
-  const inputDefaults = supplyFormFormatter(applicant_status, dataAllSkills, applicant_type)
+  const inputDefaults = supplyFormFormatter(applicant_status, pickerSkills, applicant_type)
 
   const handleSubmit = async () => {
     setFormSubmitted(true)
+    const skill = pickerSkills.find((skill) => skill.value == formData.skillID)
     const formIsValid = await checkIfFormIsValid()
+    formData.skillName = skill.name
     if (formIsValid) {
-      const skillName = dataAllSkills[formData.skills - 1].name
+      // const skillName = dataAllSkills.filter((skill) => skill.value == formData.skillID)
+      let requestFormData = formData
+      requestFormData.id = uuidv4()
       const supplyReq = {
-        supply: formData
+        supply: formData,
       }
       const request = await addSupply(supplyReq)
       if (request) {
         try {
-          dispatch(addSupplyToDashboard(skillName))
+          dispatch(addSupplyToDashboard(skill.name))
         } catch {}
         navigate('/dashboard')
       }
@@ -50,7 +52,7 @@ export const SupplyPage = () => {
     return formIsValid
   }
 
-  if (!dataAllSkills) {
+  if (!pickerSkills) {
     return <CG.Body>loading...</CG.Body>
   }
   return (

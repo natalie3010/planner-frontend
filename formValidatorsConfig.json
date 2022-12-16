@@ -25,7 +25,7 @@
           }
         ]
       },
-      "skills": {
+      "skillID": {
         "validators": [
           {
             "errorDisplayed": "Please select a skill",
@@ -99,7 +99,7 @@
       "location": {
         "validators": [{ "required": false }]
       },
-      "skills": {
+      "skillID": {
         "validators": [{ "required": true }]
       },
       "grade": {

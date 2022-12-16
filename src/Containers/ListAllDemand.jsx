@@ -7,7 +7,7 @@ import { getAllDemand } from '../API'
 import { useDispatch } from 'react-redux'
 import { clientForm as form } from '../Data/Data'
 
-export const ListAllDemand =() =>{
+export const ListAllDemand = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -15,11 +15,10 @@ export const ListAllDemand =() =>{
 
   useEffect(() => {
     const demand = getAllDemand()
-    
-    demand.then((res) => { 
+
+    demand.then((res) => {
       setData(res)
-  })
-  
+    })
   }, [])
 
   return (
@@ -38,10 +37,8 @@ export const ListAllDemand =() =>{
         boxSizing='border-box'
         fontSize='0.90rem'
       >
-
         <CG.Table
           customKeyNames={{
-            id: 'Demand ID',
             codeRequisition: 'Code Requisition',
             clientID: 'Client ID',
             skillName: 'Skill Name',
@@ -50,14 +47,9 @@ export const ListAllDemand =() =>{
           }}
           data={data}
           divider
-          selectedKeys={['id', 'codeRequisition', 'clientID', 'skillName', 'skillID', 'startDate', 'grade', 'status']
-        }
+          selectedKeys={['codeRequisition', 'clientID', 'skillID', 'skillName', 'startDate', 'grade', 'status']}
         />
-        
       </CG.Box>
     </Col>
-    
   )
-
-
 }

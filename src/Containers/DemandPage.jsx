@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addDemandToDashboard } from '../Slices/DashboardSlice'
 import { testRegex } from '../Utils/regex'
 import { demandSchema } from '../Validations/DemandValidation'
+import { v4 as uuidv4 } from 'uuid'
 
 export const DemandPage = () => {
   const navigate = useNavigate()
@@ -22,31 +23,32 @@ export const DemandPage = () => {
     const requestClients = getClients()
     requestClients.then((clientsResult) => setPickerClients(formatClients(clientsResult)))
     const requestSkills = getSkills()
-    requestSkills.then((skillsResult) =>
-      setPickerSkills(formatSkills(skillsResult)[0])
-    )
+    requestSkills.then((skillsResult) => setPickerSkills(formatSkills(skillsResult)[0]))
   }, [])
 
   const inputDefaults = demandFormFormatter(pickerClients, pickerSkills, demand_grade, demand_status)
 
   const handleSubmit = async () => {
-    setFormSubmitted(true)
-    const formIsValid = await checkIfFormIsValid()
-    if (formIsValid) {
-      const demandReq = {
-        demand: formData
-      }
-      const request = await addDemand(demandReq)
-      if (request) {
-        try {
-          const skillName = pickerSkills[formData.skills - 1].name
-          dispatch(addDemandToDashboard(skillName))
-        } catch(err) {
-          console.log(err, 'err');
+    try {
+      setFormSubmitted(true)
+      const skill = pickerSkills.find((skill) => skill.value == formData.skillID)
+      const client = pickerClients.find((client) => client.value == formData.id)
+
+      const formIsValid = await checkIfFormIsValid()
+      formData.skillName = skill.name
+      formData.clientID = client.name
+      if (formIsValid) {
+        let requestFormData = formData
+        requestFormData.id = uuidv4()
+        const demandReq = {
+          demand: formData,
         }
-        navigate('/dashboard')
+        const request = await addDemand(demandReq)
+
+        dispatch(addDemandToDashboard(skill.name))
       }
-    }
+      navigate('/dashboard')
+    } catch (err) {}
   }
 
   const checkIfFormIsValid = () => {

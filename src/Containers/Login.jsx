@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
-import { Col } from 'react-grid-system'
+import { Col, Row } from 'react-grid-system'
 import { submitUserLogin } from '../API'
 import { useSelector, useDispatch } from 'react-redux'
 import { login } from '../Slices/LoginSlice'
-
+import Logo from '../../public/images/WPLogo.png'
+import CGLogo from '../../public/images/Capgemini_Logo_Color.png'
+import { Divider } from '../Components/SideNav/styles'
 export const Login = () => {
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn)
   const pathname = useSelector((state) => state.user.pathname) ?? '/dashboard'
@@ -48,53 +50,84 @@ export const Login = () => {
   }
 
   return (
-    <Col md={12} align='center' justify='center'>
-      <CG.Box
-        width='300px'
-        p='15px'
-        borderBottomWidth={1}
-        borderLeftWidth={1}
-        borderRightWidth={1}
-        borderStyle='solid'
-        borderTopWidth={1}
-        borderWidth={1}
-        m='57px'
-      >
-        <CG.Heading weight='bold' size='S'>
-          Login
-        </CG.Heading>
-        <CG.Input
-          style={{ marginBottom: 20 }}
-          onInput={(e) => setUserName(e.target.value)}
-          name='textInput'
-          placeholder='Username'
-          label='Username'
-          required
-          onKeyUp={(e) => {
-            if (e.key === 'Enter') {
-              logIn()
-            }
-          }}
-        />
-        <CG.Input
-          style={{ marginBottom: 20 }}
-          onInput={(e) => setPassword(e.target.value)}
-          name='textInput'
-          placeholder='Password'
-          label='Password'
-          inputType='password'
-          onKeyUp={(e) => {
-            if (e.key === 'Enter') {
-              logIn()
-            }
-          }}
-          required
-        />
-        <CG.Box mb='20px' m='10px' p='10px'>
-          <CG.Body size='S'>{errorMessage}</CG.Body>
-          <CG.Button text='Login' onClick={logIn} />
-        </CG.Box>
-      </CG.Box>
+    <Col md={12} style={{ width: '88%' }}>
+      <Row>
+        <Col md={6} style={{ backgroundColor: '#F7FCFD' }}>
+          <CG.Box display='flex' flexDirection='column' p='10px' m='15px'>
+            <img style={{ width: '55%', margin: '100px' }} src={Logo} alt=' Workforce Planner Logo ' />{' '}
+            <img style={{ width: '28%' }} src={CGLogo} alt=' Workforce Planner Logo ' />
+          </CG.Box>
+        </Col>
+        <Col md={6}>
+          <CG.Box
+            fontSize='16px'
+            width='400px'
+            display='flex'
+            flexDirection='column'
+            fontFamily=' Roboto'
+            p='25px'
+            m='50px'
+          >
+            <CG.Box fontSize='22px' display='flex' flexDirection='column' textAlign='center' p='20px' m='20px'>
+              <CG.Heading fontWeight='normal' size='M'>
+                Welcome to
+              </CG.Heading>
+              <CG.Heading size='S'>Workforce Planner Application</CG.Heading>
+            </CG.Box>
+            <CG.Input
+              style={{
+                width: '400px',
+                border: '1px solid #ACACAC',
+                fontSize: '14px',
+                margin: '4px',
+                marginBottom: '20px',
+              }}
+              onInput={(e) => setUserName(e.target.value)}
+              name='textInput'
+              label='User name'
+              placeholder='Enter your user name'
+              required
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') {
+                  logIn()
+                }
+              }}
+            />
+            <CG.Input
+              style={{
+                marginBottom: '20px',
+                margin: '4px',
+                width: '400px',
+                border: '1px solid #ACACAC',
+                fontSize: '14px',
+              }}
+              onInput={(e) => setPassword(e.target.value)}
+              name='textInput'
+              placeholder='Enter password'
+              label='Password'
+              inputType='password'
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') {
+                  logIn()
+                }
+              }}
+              required
+            />
+
+            <CG.Body size='S'>{errorMessage}</CG.Body>
+            <CG.Button text='Login' onClick={logIn} />
+            <Divider></Divider>
+            <CG.Box display='flex' textAlign='center'>
+              <CG.Body size='S'>
+                Don't have an account yet?{' '}
+                <a href='/register' size='S'>
+                  Sign up
+                </a>
+              </CG.Body>
+            </CG.Box>
+          </CG.Box>
+        </Col>
+      </Row>
     </Col>
   )
 }

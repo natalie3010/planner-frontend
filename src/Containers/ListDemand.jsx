@@ -51,15 +51,15 @@ export const ListDemand = () => {
             customKeyNames={{
               firstname: 'ApplicantFirstName',
               lastname: 'ApplicantLastName',
-              id: 'Demand ID',
               codeRequisition: 'Code Requisition',
+              clientID: 'Client ID',
               clientName: 'Client Name',
-              skillsID: 'Skills ID',
+              skillID: 'Skills ID',
               startDate: 'Start Date',
             }}
             data={data}
             divider
-            selectedKeys={['id', 'codeRequisition', 'clientName', 'probability', 'startDate', 'grade', 'status']}
+            selectedKeys={['codeRequisition', 'clientID', 'probability', 'startDate', 'grade', 'status']}
             icons={[
               {
                 tableHeader: 'Edit',

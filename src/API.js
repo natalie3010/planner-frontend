@@ -304,7 +304,7 @@ export function deleteDemand(demandId) {
 }
 
 export function getSupplySkill(skillID) {
-  const requestObject = { method: 'GET', credentials: 'include' }
+  const requestObject = { method: 'GET', headers: { 'Content-Type': 'application/json' }, credentials: 'include' }
   return fetch(`${URL}/api/supply/skillID/${skillID}`, requestObject)
     .then((res) => {
       if (!res.ok) {

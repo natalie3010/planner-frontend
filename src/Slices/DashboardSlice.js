@@ -20,17 +20,18 @@ export const dashboardSlice = createSlice({
     },
     removeSupplyFromDashboard: (state, action) => {
       const skillName = action.payload
-      if(state.dashboardData)
-      state.dashboardData.filter((skill) => skill.skill_name === skillName)[0].supply_count -= 1
+      if (state.dashboardData)
+        state.dashboardData.filter((skill) => skill.skill_name === skillName)[0].supply_count -= 1
     },
     addDemandToDashboard: (state, action) => {
       const skillName = action.payload
-      state.dashboardData.filter((skill) => skill.skill_name === skillName)[0].demand_count += 1
+      if (state.dashboardData)
+        state.dashboardData.filter((skill) => skill.skill_name === skillName)[0].demand_count += 1
     },
     removeDemandFromDashboard: (state, action) => {
       const skillName = action.payload
-      if(state.dashboardData)
-      state.dashboardData.filter((skill) => skill.skill_name === skillName)[0].demand_count -= 1
+      if (state.dashboardData)
+        state.dashboardData.filter((skill) => skill.skill_name === skillName)[0].demand_count -= 1
     },
     selectClientID: (state, action) => {
       const clientID = action.payload
