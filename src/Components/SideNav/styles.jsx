@@ -49,3 +49,10 @@ export const SideNavLinkContainer = styled.div`
   }
   justify-content: left;
 `
+export const Divider = styled.div`
+  height: 0.5px;
+  width: 100%;
+  opacity: 100%;
+  background: ${({ theme }) => theme.color.divider};
+  margin: ${({ theme }) => theme.spacing.lgSpacing} 0;
+`

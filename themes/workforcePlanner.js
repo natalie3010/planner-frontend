@@ -101,6 +101,9 @@ export const WorkforcePlanner = {
     disabledDark: '#FFF',
     textDisabledDark: '#EFEFEF',
 
+    // Divider //
+    divider: '#ACACAC',
+
     sideNavHover: '#12ABDB29',
   },
   box: {
@@ -112,7 +115,7 @@ export const WorkforcePlanner = {
     sidebarWidth2: '100px',
     smSpacing: `10px`,
     mdSpacing: `16px`,
-    lgSpacing: `24px`,
+    lgSpacing: `22px`,
   },
 
   btnReset: {
