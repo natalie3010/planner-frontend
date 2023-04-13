@@ -5,7 +5,6 @@ import { Navigation } from './Components/Navigation'
 import { Footer } from './Components/Footer'
 import { setupStore } from '../src/store'
 import { Provider } from 'react-redux'
-import { CG } from 'cap-shared-components'
 import { WorkforcePlanner } from '../themes/workforcePlanner'
 import { Router } from './router'
 

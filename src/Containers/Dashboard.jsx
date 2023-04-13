@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-grid-system'
 import { BarChart } from '../Components/BarChart'
-import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { getAllDemand, getAllSupply, getSkills } from '../API'
 import SideNav from '../Components/SideNav/SideNav'

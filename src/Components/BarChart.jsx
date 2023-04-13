@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { CG } from 'cap-shared-components'
 import { getRequiredBarchartDemandStatus, getRequiredBarchartSupplyStatus } from '../Utils/util'
 import { formatDataForBarchart } from '../Data/Format'
 import { getBarChartData } from '../API'

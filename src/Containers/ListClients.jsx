@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { CG } from 'cap-shared-components'
 import { Col } from 'react-grid-system'
 import { useNavigate } from 'react-router-dom'
 import { getClients, postClient, putClient } from '../API'

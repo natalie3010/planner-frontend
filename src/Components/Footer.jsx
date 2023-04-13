@@ -1,5 +1,4 @@
 import React from 'react'
-import { CG } from 'cap-shared-components'
 import { useLocation } from 'react-router-dom'
 import logo from './Assets/Capture.PNG'
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { CG } from 'cap-shared-components'
 import { useNavigate } from 'react-router-dom'
 import { Col, Row } from 'react-grid-system'
 import { submitUserLogin } from '../API'

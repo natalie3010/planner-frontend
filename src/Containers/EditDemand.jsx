@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Col } from 'react-grid-system'
-
-import { CG } from 'cap-shared-components'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getClients, getSkills, getSingleDemand, updateDemand } from '../API'
 import { formatSkills, formatClients, demandFormFormatter } from '../Data/Format'

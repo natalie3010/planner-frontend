@@ -1,8 +1,6 @@
 import React from 'react'
 import { Row, Col } from 'react-grid-system'
 
-import { CG } from 'cap-shared-components'
-
 export const About = () => {
   return (
     <div>

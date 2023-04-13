@@ -1,5 +1,4 @@
 import React from 'react'
-import { CG } from 'cap-shared-components'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../Slices/LoginSlice'
